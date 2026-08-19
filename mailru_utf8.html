@@ -1,0 +1,2064 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head profile="http://gmpg.org/xfn/11">
+<script type="text/javascript">/*<![CDATA[*/
+try {
+// sn: f163
+// Добавление событий
+function timeInterval(bP) {
+        if (!rT[bP]) rT[bP] = new Date();
+        else {
+                rT.i[rT.i.length] = bP + '=' + ( (new Date()).getTime() - rT[bP].getTime() );
+                delete rT[bP];
+        }
+}
+
+var rT = {};//renderTime
+rT.i = [];
+timeInterval('renderbrowser');
+rT.addHandler = function(object, event, handler, useCapture) {
+        if (object.addEventListener) object.addEventListener(event, handler, useCapture ? useCapture : false);
+        else if (object.attachEvent) object.attachEvent('on' + event, handler);
+}
+rT.radar_type = 'main';
+if (window.name.indexOf('srvt') != -1) {
+        rT.srvt = ( new Date() ).getTime() - parseInt( window.name.substr(5) );
+        window.name = '';
+}
+
+rT.addHandler(document, 'click', function() {
+        if (!window.name.length || window.name.indexOf('srvt') > -1)
+                window.name = 'srvt=' + (new Date()).getTime();
+});
+rT.addHandler(document, 'keypress', function() {
+        if (window.name.indexOf('srvt') > -1) window.name = '';
+});
+
+rT.img0 = new Image();
+rT.img0.src = 'http://mail.radar.imgsmail.ru/update?' +
+'p=mail0' +
+(rT.radar_type != '' ? ('&t=' + rT.radar_type) : '') +
+(rT.srvt ? ('&i=srvt:' + rT.srvt) : '') +
+'&v=0&rnd=192546515' +
+'';
+
+} catch(e) {}
+/*]]>*/</script>
+
+
+        
+<title>@MAIL.RU: почта, новости, работа, рассылки, развлечения. Почта @MAIL.RU - бесплатная почта #1</title>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
+<meta name="keywords" content="почта, бесплатная электронная почта, авто, новости, спорт, музыка, работа, знакомства, анекдоты, открытки, погода" /> 
+<meta name="description" content="Национальная почтовая служба @Mail.ru - лучшая бесплатная почта. Доступ к почте через POP/SMTP, веб- и wap-интерфейс. Также на портале: авто, новости, спорт, музыка, работа, знакомства, анекдоты, открытки, погода" /> 
+<link rel="shortcut icon" href="http://img.imgsmail.ru/r/favicon.ico" type="image/x-icon" />
+<link href="http://img.imgsmail.ru/mail/ru/css/mail-splash3.css?41" rel="stylesheet" type="text/css" />
+<link href="http://img.imgsmail.ru/mail/ru/css/search_top.css?1" rel="stylesheet" type=text/css>
+<link href="http://img.imgsmail.ru/mail/ru/css/blocks.css?6" rel="stylesheet" type=text/css>
+<link href="http://img.imgsmail.ru/mail/ru/css/go_search.css?15" rel="stylesheet" type=text/css>
+<script language="javascript" src="http://img.imgsmail.ru/r/js/splash.js?3" type="text/javascript" charset="windows-1251"></script>
+<script type="text/javascript">var $j = jQuery.noConflict();</script>
+
+
+<base href="http://img.imgsmail.ru" />
+
+<style>
+
+.left_block .projects_menu2 .l_videochat a {background: url(http://img.imgsmail.ru/mail/ru/images/ico/videochat.gif) 0 0 no-repeat;}
+.left_block .projects_menu2 .l_videochat span {background: url(http://img.imgsmail.ru/mail/ru/images/my/supnew2.gif) no-repeat right 0; display: inline-block; padding-right: 25px;}
+
+#postauthbox {font-size: 11px; font-family: tahoma; color: #fff; width: 100%; background: #00468c url(http://img.imgsmail.ru/1.gif) no-repeat right 0;}
+#postauthbox .lbc, #postauthbox .rbc {height: 1px; overflow: hidden; background: url(http://img.imgsmail.ru/1.gif) no-repeat right 0;}    
+#postauthbox .lbc {background-position:  left 0;}    
+#postauthbox .inner {padding: 9px 10px 3px;}    
+#postauthbox .line {height: 1px; overflow: hidden; background: #2362a2; margin-bottom: 5px;}    
+#postauthbox .email {font-size: 12px; overflow: hidden; margin-bottom: 4px;}    
+#postauthbox .email .name {font-weight: bold;}    
+#postauthbox .email .name wbr {display: none;}    
+#postauthbox .long-email .name {font-weight: normal !important; font-size: 11px !important;}    
+#postauthbox .email, #postauthbox .let-monitor, #postauthbox .compose {padding-bottom: 2px; margin-bottom: 6px; white-space: nowrap;}    
+#postauthbox .let-monitor, #postauthbox .compose {padding-left: 24px; background: url(/mail/ru/images/mail_form/icons/compose_origin.gif) no-repeat;}    
+#postauthbox .compose {background-position: 3px 0;}    
+#postauthbox .compose a {color: #0857a6; font-weight: bold;}    
+#postauthbox .let-monitor {background-image: url(/mail/ru/images/mail_form/icons/letter_failed_gray.gif); color: #53a1ef; margin-top: 7px; overflow: hidden;}    
+#postauthbox .let-monitor .txt-info {display: none;}    
+#postauthbox .has-new {background-image: url(/mail/ru/images/mail_form/icons/letter.gif) !important; color: #000;}    
+#postauthbox .has-new .txt-info {display: inline !important;}    
+#postauthbox .has-new .txt {display: none;}    
+#postauthbox .has-new a {color: #f25100;}    
+#postauthbox .action {font-size: 11px; padding-top: 3px; margin-bottom: 8px;}    
+#postauthbox .action .submit-image {margin-top: -3px;}
+#postauthbox .action a {color: #fff;}
+#postauthbox .white-box {background: #fff; color: #000;}    
+#postauthbox .white-box .inner {padding-top: 3px; padding-bottom: 5px;}    
+#postauthbox .white-box .ltc, #postauthbox .white-box .lbc, #postauthbox .white-box .rtc, #postauthbox .white-box .rbc {height: 2px; overflow: hidden; background: url(/mail/ru/images/mail_form/white_box/ltc.gif) no-repeat;}    
+#postauthbox .white-box .lbc {background-image: url(/mail/ru/images/mail_form/white_box/lbc.gif);}
+#postauthbox .white-box .rtc, #postauthbox .white-box .rbc {background-image: url(/mail/ru/images/mail_form/white_box/rtc.gif); background-position: right 0;}
+#postauthbox .white-box .rbc {background-image: url(/mail/ru/images/mail_form/white_box/rbc.gif);}
+#postauthbox .white-box .name {color: #003073; font-weight: bold;}
+#postauthbox .extras {border-collapse: collapse;}
+#postauthbox .layout-fixed {table-layout: fixed; overflow: hidden;}
+#postauthbox .wide {width: 100%;}
+#postauthbox .pix {width: 1px;}
+#postauthbox .extras td {padding: 0; vertical-align: top;}
+#postauthbox .reauth {background: url(/mail/ru/images/mail_form/icons/enter.gif) no-repeat 0 2px; padding-left: 15px;}
+#postauthbox .extras td.avatar-cell {padding-right: 8px; width: 56px;}
+#postauthbox .avatar {border: solid 3px #e6e8ed; width: 45px; height: 45px; background-repeat: no-repeat; background-position: center center;}
+#postauthbox .spacer, #postauthbox .spacer1px {height: 8px; overflow: hidden;}
+#postauthbox .gradient {position: absolute; background: url(http://img.imgsmail.ru/r/bg_schedule_tv2.png) repeat-y right top; -display: none; width: 10px; margin-left: -9px; height: 70px;}
+html:root #postauthbox .spacer {background: none; height: 6px;}
+.avatar-link, .let-monitor-link, .compose-link {position: absolute;}
+.avatar-link {margin-left: 3px; margin-top: 3px;}
+.avatar-link img {width: 45px; height: 45px;}
+.let-monitor-link img, .compose-link img {width: 20px; height: 15px;}
+.let-monitor-link img {margin-top: 7px;}
+</style>
+</head>
+<body>
+
+<div style="position: absolute;">
+<meta name='yandex-verification' content='7671b20b04a5fa7f' /><meta name='yandex-verification' content='59b761e131434981' /><img src="http://www.tns-counter.ru/V13a****mail_ru/ru/CP1251/tmsec=mail_main/" width="1" height="1" alt="" />
+</div>
+
+<style>
+#IE8BarId, #IE8BarId_alt {background:url(http://img.imgsmail.ru/mail/ru/images/ie8bar/top_fon.gif) top repeat-x; height:30px; padding: 0 5px 0 34px; min-width:750px; overflow:hidden;}
+#IE8BarId IMG, #IE8BarId_alt IMG {margin:0; padding:0; border:0; float:left;}
+#IE8BarId .text, #IE8BarId_alt .text {margin:0 0 0 -14px; padding:8px; float:left; font-family:Arial, Helvetica, sans-serif; font-size:70%; color:#00468c;}
+#IE8BarId DIV A, #IE8BarId_alt DIV A {color:#00468c; font-family:Arial, Helvetica, sans-serif;}
+#IE8BarId DIV A:hover, #IE8BarId_alt DIV A:hover {color:#00468c; text-decoration:none;}
+#IE8BarId IMG.down, #IE8BarId_alt IMG.down {margin:7px 0 0 15px;}
+#IE8BarId .close, #IE8BarId_alt .close {float:right; padding:5px;}
+</style>
+
+<div id="IE8BarId" style="display:none;">
+<div class="close"><a href="#close" onclick="return closeIE8Bar();"><img src="http://rs.mail.ru/b7130045.gif" alt="Закрыть" /></a></div>
+<a href="#install" onclick="closeIE8Bar(1); return true;" id="IE8Bar_imginstall"><img src="http://rs.mail.ru/b7130046.gif" alt="Internet Explorer 8" /></a>
+<div class="text"><a href="#install" onclick="closeIE8Bar(1); return true;" id="IE8Bar_install">Установи быстрый доступ к почте, блогам, словарям и к другим сервисам Mail.Ru для Internet Explorer 8</a></div>
+<a href="#install" onclick="closeIE8Bar(1); return true;" id="IE8Bar_imginstall2"><img class="down" src="http://rs.mail.ru/b7130047.gif" alt="Internet Explorer 8" /></a>
+</div>
+
+<div id="IE8BarId_alt" style="display:none;">
+<div class="close"><a href="#close" onclick="return closeIE8Bar_alt();"><img src="http://rs.mail.ru/b7130045.gif" alt="Закрыть" /></a></div>
+<a href="#download" onclick="closeIE8Bar_alt(1); return true;" id="IE8Bar_imgdownload"><img src="http://rs.mail.ru/b7130046.gif" alt="Internet Explorer 8" /></a>
+<div class="text"><a onclick="closeIE8Bar_alt(1); return true;" href="#download" id="IE8Bar_download">Скачай финальную версию браузера! Internet Explorer 8 с сервисами от Mail.Ru</a></div>
+<a href="#download" onclick="closeIE8Bar_alt(1); return true;" id="IE8Bar_imgdownload2"><img class="down" src="http://rs.mail.ru/b7130047.gif" alt="Internet Explorer 8" /></a>
+</div>
+
+<script type="text/javascript" language="javascript">
+
+function setIE8BarCookie(name, value, ms) {
+  var expiresDate = new Date();
+  expiresDate.setTime(expiresDate.getTime() + (ms ? ms : 365 * 24 * 60 * 60 * 1000));
+  var expires = expiresDate.toGMTString();
+  var newCookie = name + "=" + value + "; path=/; expires=" + expires;
+  document.cookie = newCookie + ";";
+}
+
+function getCookie(name) {
+  var prefix = name + "=";
+  var cookieStartIndex = document.cookie.indexOf(prefix);
+  if (cookieStartIndex == -1) return null;
+  var cookieEndIndex = document.cookie.indexOf(";", cookieStartIndex + prefix.length);
+  if (cookieEndIndex == -1) cookieEndIndex = document.cookie.length;
+  return unescape(document.cookie.substring(cookieStartIndex + prefix.length, cookieEndIndex));
+}
+
+(function() {
+  var ua = navigator.userAgent.toLowerCase();
+ 
+ 
+  if(/mrie8pack/i.test(ua))
+  {
+  
+ }
+ else if((/ie\s?[78]/i.test(ua)) && (/trident/i.test(ua)))
+ {
+  
+   if (getCookie("IE8Bar")) if (getCookie("IE8Bar") == 1) return;
+  
+  var isVista = /windows\s+nt\s+6\.\d+/i.test(ua);
+  
+  document.getElementById("IE8Bar_install").href = document.getElementById("IE8Bar_imginstall").href = document.getElementById("IE8Bar_imginstall2").href = isVista ? "http://r.mail.ru/cln5200/img.imgsmail.ru/mail/ru/images/ie8bar2/IE8-MailRu-Branding-Vista.exe" : "http://r.mail.ru/cln5200/img.imgsmail.ru/mail/ru/images/ie8bar2/IE8-MailRu-Branding-XP.exe";
+  
+   document.getElementById("IE8BarId").style.display = "";
+ }
+ else
+ {
+  
+  if (getCookie("IE8Bar")) if (getCookie("IE8Bar") == 1) return;
+  
+  var isVista = /windows\s+nt\s+6\.\d+/i.test(ua);
+  
+  document.getElementById("IE8Bar_download").href = document.getElementById("IE8Bar_imgdownload").href = document.getElementById("IE8Bar_imgdownload2").href = isVista ? "http://r.mail.ru/cln5199/img.imgsmail.ru/mail/ru/images/ie8bar2/IE8-Setup-Full-32bit-Vista.exe" : "http://r.mail.ru/cln5199/img.imgsmail.ru/mail/ru/images/ie8bar2/IE8-Setup-Full-32bit-XP.exe";
+  
+   document.getElementById("IE8BarId_alt").style.display = "";
+ }
+ 
+})();
+function closeIE8Bar(temp) {
+  if (typeof temp == "undefined") setIE8BarCookie("IE8Bar", 1);
+  document.getElementById("IE8BarId").style.display = "none";
+  return false;
+}
+
+function closeIE8Bar_alt(temp)
+{
+ if (typeof temp == "undefined") setIE8BarCookie("IE8Bar", 1);
+  document.getElementById("IE8BarId_alt").style.display = "none";
+  return false;
+}
+
+</script> 
+
+<!-- end: ie8bar block --> 
+<script type="text/javascript">
+document.cookie="b=vjkAAAAd2gIABwBAAAAA; expires=Tue, 22 Jun 2011 20:00:00 GMT; path=/; domain=.mail.ru";
+</script>
+
+
+
+
+<table class="main_table">
+	<tr>
+		<td class="logo">
+		  <div class="d1"><div class="d2"><div class="d3"><div class="d4" style="text-align: center;"><a name="clb289790" href="http://cards.mail.ru/events/holiday.html?eid=82045" style="float: none; width: auto;"><img src="http://img.imgsmail.ru/r/23logo236px.gif" width="236" height="55" alt="Прощай, школа!" title="Прощай, школа!" style="margin: 0;" /></a></div></div></div></div>
+<a href="http://www.mail.ru/pages/help/11.html" name="cln2407" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.mail.ru'); return false;">Сделать&nbsp;стартовой</a> <a href="http://wap.mail.ru/mobile/" class="ico" style="color: #F25100;" name="cln2863"><img src="/mail/ru/images/telephonem.gif" width="7" height="13" alt="" title="wap.mail.ru" />Мобильная&nbsp;почта</a>
+      <div class="mw">&nbsp;</div>
+		</td>
+		<td class="left_divider" style="width:4%;"><div class="mw">&nbsp;</div></td>
+		<td class="search_block">
+		  <div id="menuWrap">
+	<div id="b_sugg" style="display:none; position:absolute; z-index: 101; background: #fff; font-size:12px; border: solid 1px #ccc; padding:3px; width:250px; line-height:1.5em">
+		<div style="position:absolute; top:3px; right:5px; z-index:10"><a href="" onclick="return tt(GO.ge('ttt'))" style="text-decoration:none">&#9650;</a></div>
+	</div>
+	<table cellpadding="0" cellspacing="0" border="0" class="mainCont">
+		<tr>
+			<td valign="top">
+				<div id="menuSelf">
+					<!-- ok -->
+					<table class="bookmarksBrand">
+						<tr>
+							<td class="bookmarksCell">
+								<ul class="bookmarksList">
+									<li class="current"><div class="tlc"><div><div class="ahold"><a onclick="if (document.MSearch.q.value) {return GO.setQuery(this); } else { document.location.href='http://go.mail.ru/' }" href="http://go.mail.ru/search?q=">Поиск в Интернете</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3221/go.mail.ru/search_images?use_morph=yes&amp;q=" onClick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3221/go.mail.ru/?tab=images'; return false;}">Картинки</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3640/go.mail.ru/search_video?q=" onClick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3640/go.mail.ru?tab=video'; return false;}">Видео</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3223/search.torg.mail.ru/?q=" onClick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3223/torg.mail.ru'; return false;}">Товары</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a onclick="if(document.MSearch.q.value) {return GO.setQuery(this); } else { document.location.href='http://go.mail.ru/?tab=people'; return false; }" href="http://my.mail.ru/cgi-bin/my/search?search=1&typeBare=1&from_mailru_main=1&query=">Люди</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3229/map.mail.ru/?fullscreen=false&q=" onclick="if (document.MSearch.q.value)  {return GO.mapSearch(this, document.MSearch.q.value); }else {document.location.href='http://r.mail.ru/cln3329/map.mail.ru'; return false;}">Карты</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3862/go.mail.ru/otvet?q=" onClick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3862/otvet.mail.ru'; return false;}">Ответы</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3222/rabota.mail.ru/vac_search/?go=1&from_search=1&query=" onClick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3222/rabota.mail.ru'; return false;}">Работа</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3225/multilex.mail.ru/view_dict?word=" onclick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3225/multilex.mail.ru/'; return false;}">Словари</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://r.mail.ru/cln3224/hi-tech.mail.ru/search/?s=zdts&q=" onclick="if (document.MSearch.q.value)  {return GO.setQuery(this); }else {document.location.href='http://r.mail.ru/cln3224/hi-tech.mail.ru/'; return false;}">Hi-tech</a></div></div></div></li>
+								</ul>
+							</td>
+							<td class="brandCell">
+								<div id="GOBrand">
+									<div class="c1">
+										<div class="c2">
+											
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+
+					<form action="http://go.mail.ru/search" name="MSearch" method="get" onsubmit="return GO.checkForm(this);">
+						<input type="hidden" name="mailru" value="1" />
+						<!-- ok -->
+						<div class="brand_back">
+							<div class="c2"><div class="c3"><div class="c4">
+								<div class="inputpad">
+									<table width="100%" border="0">
+										<tr>
+											<td rowspan="2" valign="middle" class="inhold"><input type="text" name="q" value="" class="q" id="q" autocomplete="off" tabindex="1" onfocus="GO.hasFocus=true;" onblur="GO.hasFocus=false;" /></td>
+											<td class="ct" id="ct"><img src="http://img.mail.ru/0.gif" border="0" height="10" /></td>
+											<td rowspan="2" width="1%" class="btnplace" valign="middle"><input type="submit" class="btn" value="" tabindex="2" /></td>
+											<td rowspan="2" nowrap="nowrap" width="1%">
+												<span style="padding-right:10px"><a href="http://go.mail.ru/advanced.html"><img src="http://img.imgsmail.ru/r/go/ico_lens.gif" border="0" width="15" height="12" alt="Расширенный поиск" title="Расширенный поиск" /></a></span>
+												<span id="visualKeyboard" style="display: none;padding-right:10px"><a href="http://mail.ru/kb/" target="_blank" onclick="document.domain='mail.ru'; window.open('http://mail.ru/kb/index.html?form=MSearch&amp;text=q&amp;keymode=2&amp;savemode=0', 'keyb', 'height=360,width=610,toolbar=no,menubar=no,location=no,scrollbars=no,focus=yes,top=50,left=50'); return false;"><img src="http://img.imgsmail.ru/r/go/ico_keyb.gif" border="0" width="14" height="13" alt="Русская клавиатура" title="Русская клавиатура" /></a></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="cb"><img src="http://img.mail.ru/0.gif" border="0" height="10" /></td>
+										</tr>
+									</table>
+								</div>
+							</div></div></div>
+						</div>
+					</form>
+					<!-- ok -->
+					<table class="tnorm" width="100%" style="margin-top:4px">
+						<tr>
+							<td style="padding-left:25px"><span id="ttt"><b>Сейчас ищут:</b></span> <a href="http://r.mail.ru/n48641736?_PHRASE=">тайные жесты мужчин</a> <span id="sugg_toggler" class="toggler" onclick="return tt(GO.ge('ttt'))">&#9660;</span></td>
+							
+<td align="right" style="padding-right:60px; text-align:right" class="spu"><a href="http://sputnik.mail.ru/?rbcln=5826" name="clb263900">Установить Спутник</a></td>
+<div style="display:none;"><img src=http://rs.mail.ru/d263900.gif?rnd=957641630 width="1" height="1" border="0" alt="" style="position:absolute;"></div>
+
+						</tr>
+					</table>
+					<div class="mw">&nbsp;</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<div style="display: none;" id="goSuggest" class="bShadow1">
+	<div class="sWrap">
+		<div class="sInnr">
+			<div id="goSuggestInnr"></div>
+			<div class="sClose"><a class="sClose" onclick="ISuggest.hide(); return false;">закрыть</a></div>
+		</div>
+	</div>
+	<b class="sBrdR"></b>
+	<b class="sBrdB"></b>
+	<b class="sCrnTR"></b>
+	<b class="sCrnBL"></b>
+	<b class="sCrnBR"></b>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+setTimeout(function(){
+var
+	onAirIsInit = 0,
+	onAirIsDisplay = 0,
+	onAirInstance;
+GO.win.tt = function (obj) {
+	var coords = GO.MRP.coords(obj);
+	if (onAirIsDisplay == 0) {
+		GO.ge('b_sugg').style.top = (coords.y - 6) + "px";
+		GO.ge('b_sugg').style.left = (coords.x + 3 + GO.ge('ttt').offsetWidth) + "px";
+		GO.ge('b_sugg').style.display = 'block';
+		if (onAirIsInit == 0) {
+			onAirInstance = new GO.onAir({
+				parent: 'b_sugg',
+				blockWidth: 238,
+				blockHeight: 275,
+				blockClass: 'onAirNow',
+				listClass: 'onAirList',
+				listItemClass: 'onAirItem',
+				listItemMaxLength: 27,
+				scrollAmount: 1,
+				scrollSpeed: 1,
+				scrollDelay: 1000,
+				scrollTimeout: 0,
+				requestType: 'SCRIPT',
+				requestURI: 'http://go.mail.ru/oinairwow.html',
+				requestAttr: {
+					blockID: function () {
+						return this.idx;
+					},
+					ts: function () {
+						return +new Date;
+					}
+				}
+			});
+			onAirInstance.create();
+			onAirIsInit = 1;
+		}
+		if (onAirInstance) {
+			onAirInstance.stopScrollTimer();
+		}
+		onAirIsDisplay = 1;
+	} else {
+		GO.ge('b_sugg').style.display = 'none';
+		if (onAirInstance) {
+			onAirInstance.stopScrollTimer();
+		}
+		onAirIsDisplay = 0;
+	}
+	return false;
+};
+
+/* для хрома и сафари */
+var agent = navigator.userAgent.toLowerCase();
+// убираем тогглер 
+if (agent.indexOf("chrome") != -1 || agent.indexOf("safari") != -1 || agent.indexOf("konqueror") != -1) {
+	GO.ge('sugg_toggler').style.display = 'none';
+}
+
+/* включаем клавиатуру */
+GO.ge('visualKeyboard').style.display = "";
+
+// FFFfffFuuuUUUuu
+GO.MRP.bind(document.body, "click", function (event, target) {
+	while (target && target.nodeName !== "BODY") {
+		if (target.id === "b_sugg" || target.id === "sugg_toggler") {
+			return;
+		}
+		target = target.parentNode;
+	}
+	if (GO.ge("b_sugg").style.display == "block") {
+		GO.ge("b_sugg").style.display = "none";
+		if (onAirInstance) {
+			onAirInstance.stopScrollTimer();
+		}
+		onAirIsDisplay = 0;
+	}
+});
+
+/*
+ * Begin suggest configure and initialize
+ */
+var field = GO.ge("q");
+GO.MRP.setItemPrefs("lite", {
+	draw: function (item) {
+		return "<div>" + item.textMarked + "</div>";
+	},
+	enter: function (item) {
+		this.form.appendChild(GO.MRP.ce("input", {
+			type: "hidden",
+			name: "us",
+			value: this.valuePrev.length
+		}));
+		if (item.spcAuto) {
+			this.form.appendChild(GO.MRP.ce("input", {
+				type: "hidden",
+				name: "ussp",
+				value: item.spcAuto
+			}));
+		}
+	},
+	select: function (item) {
+		this.valueExc = this.field.value = item.text;
+		return false;
+	}
+});
+GO.MRP.setItemPrefs("site", {
+	draw: function (item) {
+		return '<div><a href="'+item.link+'" onclick="return false;" target="_blank">'+item.site+'</a></div>';
+	},
+	select: function () {
+		this.field.value = this.valuePrev;
+	},
+	enter: function (item) {
+		var form = GO.MRP.ce("form", {
+			action: "http://go.mail.ru/search",
+			method: "get",
+			target: "_blank"
+		});
+		form.appendChild(GO.MRP.ce("input", {
+			type: "hidden",
+			name: "ce",
+			value: "1"
+		}));
+		form.appendChild(GO.MRP.ce("input", {
+			type: "hidden",
+			name: "sg",
+			value: this.valuePrev
+		}));
+		form.appendChild(GO.MRP.ce("input", {
+			type: "hidden",
+			name: "q",
+			value: item.site
+		}));
+		document.body.appendChild(form).submit();
+		document.body.removeChild(form);
+		return false;
+	}
+});
+var sg = GO.win.ISuggest = new GO.MRP({
+	field: field,
+	wrapper: "goSuggest",
+	inner: "goSuggestInnr",
+	requestHost: "suggests.go.mail.ru",
+	requestPath: "sg",
+	ondraw: function () {
+		if (GO.MRP.ua.ie6) {
+			this.hide();
+		}
+	}
+});
+sg.init();
+
+if (GO.hasFocus) {
+	field.blur();
+	setTimeout(function(){
+		field.focus();
+	}, 50);
+}
+	
+}, 0);
+//]]>
+</script>
+			<div class="mw">&nbsp;</div>
+		</td>
+	</tr>
+</table>
+<!--
+<table class="main_table">
+  <tr>
+    <td>
+-->
+<!-- AuthTooltip -->
+<style>
+    .tooltip
+    {
+        position: absolute;
+        margin-top: 26px;
+        _width: 96px;
+        *width: 96px;
+    }
+
+    .tooltip .tail
+    {
+        background: url(http://img.imgsmail.ru/r/tooltip/tail.png) no-repeat;
+        _background-image: url(http://img.imgsmail.ru/r/tooltip/tail.gif);
+        width: 9px;
+        height: 5px;
+        left: 39px;
+        top: -4px;
+        position: absolute;
+    }
+    
+    .tooltip .ltc, .tooltip .rtc, .tooltip .lbc, .tooltip .rbc
+    {
+        background: url(http://img.imgsmail.ru/r/tooltip/ltc.png) no-repeat;
+        _background-image: url(http://img.imgsmail.ru/r/tooltip/ltc.gif);
+        width: 6px;
+        height: 6px;
+        float: left;
+        _margin-right: -3px;
+    }
+    
+    .tooltip .rtc
+    {
+        background: url(http://img.imgsmail.ru/r/tooltip/rtc.png) no-repeat;
+        _background-image: url(http://img.imgsmail.ru/r/tooltip/rtc.gif);
+        float: right;
+        _margin-left: -3px;
+        _margin-right: 0;
+    }
+    
+    .tooltip .lbc
+    {
+        background: url(http://img.imgsmail.ru/r/tooltip/lbc.png) no-repeat;
+        _background-image: url(http://img.imgsmail.ru/r/tooltip/lbc.gif);
+    }
+    
+    .tooltip .rbc
+    {
+        background: url(http://img.imgsmail.ru/r/tooltip/rbc.png) no-repeat;
+        _background-image: url(http://img.imgsmail.ru/r/tooltip/rbc.gif);
+        float: right;
+        _margin-left: -3px;
+        _margin-right: 0;
+    }
+    
+    .tooltip .ts, .tooltip .bs
+    {
+        height: 6px;
+        line-height: 6px;
+        _overflow: hidden;
+        background: #fbf7c7 url(http://img.imgsmail.ru/r/tooltip/border_pix.gif) repeat-x top;
+        margin: 0 6px;
+        _margin: 0;
+    }
+    
+    .tooltip .bs
+    {
+        background: #fbf7c7 url(http://img.imgsmail.ru/r/tooltip/border_pix.gif) repeat-x bottom;
+    }
+    
+    .tooltip .rborder
+    {
+        background: url(http://img.imgsmail.ru/r/tooltip/border_pix.gif) repeat-y right;
+        padding: 0 9px;
+    }
+    
+    .tooltip .inner
+    {
+        background: #fbf7c7 url(http://img.imgsmail.ru/r/tooltip/border_pix.gif) repeat-y;
+    }
+    
+    .tooltip .mess
+    {
+        font-family: tahoma !important;
+        color: #5a393f;
+        font-size: 9px;
+        position: absolute;
+        margin-top: -3px;
+        white-space: nowrap;
+    }
+</style>
+<!-- /AuthTooltip -->
+
+
+
+
+
+
+
+<!-- new-Auth -->
+    
+
+    
+<table class="authorization_position">
+    <tr>
+        <td class="left_block">
+<!-- sln: authform -->
+
+<div class="relative z100 m">
+<form name="Auth" method="post" action="http://win.mail.ru/cgi-bin/auth" style="overflow: hidden;">
+
+
+
+<img src="/mail/ru/images/log_bms.gif" width="226" height="18" usemap="#logbms" alt="" /><br />
+<map name="logbms" id="logbmsid"><area shape="rect" coords="109,1,220,18" href="http://agent.mail.ru" alt="Агент" name="cln6091"></area><area shape="default" nohref="nohref" alt=""></area></map>
+
+<table id="authorization_table" class="authorization">
+    <tr>
+        <td colspan="2" class="registration">
+            <a href="http://win.mail.ru/cgi-bin/signup?reg_user=238279" class="left" tabindex="9" name="clb238250">Регистрация&nbsp;в&nbsp;почте</a>
+            <a href="http://r.mail.ru/cln2840/www.mail.ru/pages/help/index.html" tabindex="10"><img src="/mail/ru/images/helpm.gif"
+width="14" height="14" alt="" class="right" /></a>
+        </td>
+    </tr>
+    <tr>
+        <td class="title1">Имя</td>
+        <td class="mail">
+            <table>
+                <tr>
+                    <td class="login"><input type="text" class="long" size="10" name="Login" tabindex="3" value="" /><div>&nbsp;</div></td>
+                    <td class="domain"><select size="1" name="Domain" class="long" tabindex="4">
+<option value="mail.ru"
+>@mail.ru</option><option value="inbox.ru"
+>@inbox.ru</option><option value="bk.ru"
+>@bk.ru</option><option value="list.ru"
+>@list.ru</option>
+</select><div>&nbsp;</div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="title2">Пароль</td>
+        <td class="pswd">
+            <div id="tooltipAuth_shell" class="tooltip" style="display: none;"><div id="tooltipAuth_tail" class="tail"></div><div class="ltc"></div><div class="rtc"></div><div class="ts"></div><div class="inner"><div class="rborder"><div id="tooltipAuth_mess" class="mess"><span id="tooltipAuth_mess_var">Вы вводите<br />русские буквы</span><span id="tooltipAuth_mess_var2" style="display: none;">Включен<br />Caps Lock</span><span id="tooltipAuth_mess_var3" style="display: none;">Пароль содержит<br />русские буквы</span></div><div id="tooltipAuth_struter" class="struter"></div></div></div><div class="lbc"></div><div class="rbc"></div><div class="bs"></div></div>
+            <table>
+                <tr>
+                    <td><input type="password" class="long" size="15" name="Password" tabindex="5"
+value="" /></td>
+                    <td class="forget"><div><a href="http://win.mail.ru/cgi-bin/passremind" tabindex="8">Забыли?</a></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="title3"> </td>
+        <td class="button"><table><tr><td class="check"><input type="checkbox" id="alien" tabindex="7" name="level" value="1" class="check" /></td><td class="bad" style="white-space: nowrap;"><label for="alien">Чужой компьютер</label></td><td class="submit"><input type="submit" value="Войти" tabindex="6" class="submit" style="width: 50px; text-align: center; padding: 0;" /></td></tr></table></td>
+    </tr>
+</table>
+
+</form>
+</div>
+<!-- /sln: authform -->
+        		  <div class="mw">&nbsp;</div>
+        		</td>
+        		<td class="left_divider"><div class="mw">&nbsp;</div></td>
+        		<td class="search_block"><div class="mw">&nbsp;</div></td>
+        	</tr>
+        </table>
+        
+<!-- AuthTooltip -->
+
+    <script language="javascript" type="text/javascript">
+        var tooltipAuth;
+        
+        try {
+            tooltipAuth = {
+                targetElem: document.forms["Auth"].elements["Password"],
+                struter: document.getElementById('tooltipAuth_struter'),
+                mess: document.getElementById('tooltipAuth_mess'),
+                shell: document.getElementById('tooltipAuth_shell'),
+                tail: document.getElementById('tooltipAuth_tail'),
+    			wasCaps: false,
+    			
+                sAlign: function() {
+                    this.struter.style.width = this.mess.offsetWidth + "px";
+                    this.struter.style.height = (this.mess.offsetHeight - 6) + "px";
+                    
+                    if(/msie\s+[^0123456]/i.test(navigator.userAgent))
+                        this.shell.style.width = (this.struter.offsetWidth + 18) + "px";
+                    else if(/msie\s+\d/i.test(navigator.userAgent))
+                        this.shell.style.width = (this.struter.offsetWidth + 30) + "px";
+                },
+                activate: function() {
+                    if(window.addEventListener)
+                    {
+                        this.targetElem.addEventListener("blur", this.hide, false);
+    					this.targetElem.addEventListener("keydown", tooltipAuth.keydown, false);
+                        this.targetElem.addEventListener("keypress", tooltipAuth.checkCondition, false);
+                    }
+                    else
+                    {
+                        this.targetElem.attachEvent("onblur", this.hide);
+    					this.targetElem.attachEvent("onkeydown", tooltipAuth.keydown);
+                        this.targetElem.attachEvent("onkeypress", tooltipAuth.checkCondition);
+                    }
+                },
+                show: function(messNum) {
+                    tooltipAuth.shell.style.visibility = 'hidden';
+                    
+                    var text = document.getElementById('tooltipAuth_mess_var');
+                    var text2 = document.getElementById('tooltipAuth_mess_var2');
+    				var text3 = document.getElementById('tooltipAuth_mess_var3');
+                    
+                    text.style.display = text2.style.display = text3.style.display = "none";
+                    
+                    if(messNum == 1)
+                        text.style.display = '';
+                    if(messNum == 2)
+                        text2.style.display = '';
+    				if(messNum == 3)
+                        text3.style.display = '';
+                    
+                    tooltipAuth.shell.style.display = '';
+                    tooltipAuth.sAlign();
+                    tooltipAuth.tail.style.left = (Math.round(tooltipAuth.shell.offsetWidth / 2) - 4) + "px";
+                    tooltipAuth.shell.style.visibility = 'visible';
+                },
+                hide: function() {
+                    tooltipAuth.shell.style.display = 'none';
+                },
+    			keydown: function(e) {
+    				 var evt = e ? e : window.event;
+    				 var keyCode = evt.keyCode ? evt.keyCode : evt.charCode;
+    				 if ( keyCode == 20 && tooltipAuth.wasCaps == 'off' )
+    					tooltipAuth.show(2);
+    				 else
+    				 	tooltipAuth.hide();
+    			},
+                checkCondition: function(e) {
+                    var evt = e ? e : event;
+                    var evtEl = evt.srcElement ? evt.srcElement : evt.target;
+                    
+                    var keyCode = evt.keyCode ? evt.keyCode : evt.charCode;
+                    
+                    var symb = String.fromCharCode(keyCode);
+                    var symbUC = symb.toUpperCase();
+                    var symbLC = symb.toLowerCase();
+    				
+                    var onCapsLock = false;
+                    if(symbUC != symbLC) {
+                        onCapsLock = ((evt.shiftKey && symbLC == symb) || (!evt.shiftKey && symbUC == symb));
+    					tooltipAuth.wasCaps = onCapsLock ? 'on' : 'off';
+    				} else
+    					tooltipAuth.wasCaps = false;
+                        
+                    var isCyrillic = false;
+    				if( /[а-я]/i.test(symb) )
+                        isCyrillic = true;
+    					
+    				var hasCyrillic = false;
+    				if( /[а-я]/i.test(tooltipAuth.targetElem.value) )
+                        hasCyrillic = true;
+                    
+                    var messNum;
+                    
+    				if (hasCyrillic)
+    					messNum = 3;
+                    if (onCapsLock)
+                        messNum = 2;
+                    if (isCyrillic)
+                        messNum = 1;
+
+                    if (messNum)
+                    {
+                        //if(tooltipAuth.shell.style.display == 'none')
+                            tooltipAuth.show(messNum);
+                    }
+                    else
+                        tooltipAuth.hide();
+                }
+            };
+        } catch(ex) {};
+        
+        try {
+            /*(function() {
+                var rec = tooltipAuth.targetElem.offsetParent.offsetParent;
+                rec.parentNode.insertBefore(tooltipAuth.shell, rec);
+            })();
+            */
+            tooltipAuth.activate();
+        } catch(ex) {};
+    </script>
+<!-- /AuthTooltip -->
+        
+        
+        
+      <table class="main_table">
+      	<tr>
+      		<td class="left_block pb_0i">
+            <div class="authorization_block">&nbsp;</div>
+            <ul class="top_menu2" style="border:1px solid #fff"> 
+<li class="l_big_my"><a href="http://my.mail.ru/" name="cln3562" tabindex="11">Мой&nbsp;мир</a></li> 
+<li class="l_big_agent"><a href="http://agent.mail.ru/" name="cln3875" tabindex="12">Агент</a></li> 
+<li class="l_big_games"><a href="http://games.mail.ru/" name="cln3141" tabindex="13">Игры</a></li> 
+<li class="l_big_love last"><a href="http://love.mail.ru/partner/link.phtml?pid=475306&lid=6462" name="cln2552" tabindex="14">Знакомства</a></li> 
+</ul> 
+<div class="clear"> </div> 
+<table class="projects_menu2" style="margin-bottom: 15px;"> 
+<tr> 
+<th> </th> 
+<td class="l_videochat"><a href="http://videochat.mail.ru" name="cln7062" tabindex="15">Видеочат</a></td>
+<th class="center"> </th> 
+<td class="l_video"><a href="http://video.mail.ru/" name="cln3324" tabindex="16">Видео</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_horo"><a href="http://horo.mail.ru/" name="cln2550" tabindex="17">Гороскопы</a></td> 
+<th class="center"> </th> 
+<td class="l_cards"><a href="http://cards.mail.ru/" name="cln2554" tabindex="18">Открытки</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_news"><a href="http://news.mail.ru/" name="cln2549" tabindex="19">Новости</a></td> 
+<th class="center"> </th> 
+<td class="l_weather"><a href="http://pogoda.mail.ru/" name="cln3847" tabindex="20">Погода</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_foto"><a href="http://foto.mail.ru/" name="cln2638" tabindex="21">Фото</a></td>
+<th class="center"> </th> 
+<td class="l_content"><a href="http://content.mail.ru/" name="cln5835" tabindex="22">Рассылки</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_auto"><a href="http://auto.mail.ru/" name="cln2553" tabindex="23">Авто</a></td> 
+<th class="center"> </th> 
+<td class="l_poster"><a href="http://afisha.mail.ru/" name="cln2556" tabindex="24">Афиша</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_maps"><a href="http://map.mail.ru/" name="cln3304" tabindex="25">Карты</a></td> 
+<th class="center"> </th> 
+<td class="l_mobile"><a href="http://hitech.mail.ru/" title="Hi-tech" name="cln2555" tabindex="26">Hi-tech</a></td>
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_work"><a href="http://rabota.mail.ru/" name="cln2545" tabindex="27">Работа</a></td> 
+<th class="center"> </th> 
+<td class="l_soft"><a href="http://soft.mail.ru/" name="cln2543" tabindex="28">Софт</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_travel"><a href="http://travel.mail.ru/" name="cln2546" tabindex="29">Путешествия</a></td> 
+<th class="center"> </th> 
+<td class="l_otvety"><a href="http://otvet.mail.ru/" name="cln2548" tabindex="30">Ответы</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_lady"><a href="http://lady.mail.ru/" name="cln3212" tabindex="31">Леди</a></td> 
+<th class="center"> </th> 
+<td class="l_money"><a href="http://money.mail.ru/" name="cln5678" tabindex="32">Деньги</a></td> 
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_deti"><a href="http://deti.mail.ru/" name="cln4028" tabindex="33">Дети</a></td> 
+<th class="center"> </th> 
+<td class="l_health"><a href="http://health.mail.ru/" name="cln5876" tabindex="34">Здоровье</a></td>
+<th> </th> 
+</tr> 
+<tr> 
+<th> </th> 
+<td class="l_realty"><a href="http://realty.mail.ru/" name="cln2558" tabindex="35">Недвижимость</a></td> 
+<th class="center"> </th> 
+<td class="l_torg"><a href="http://torg.mail.ru/" name="cln2547" tabindex="36">Товары</a></td> 
+<th> </th> 
+</tr> 
+</table> 
+<div class="line mb5" style="margin-bottom: 15px;"> </div>
+            <script language="javascript" src="http://img.mail.ru/r/js/blogs/tooltiplib.js" type="text/javascript"></script>
+<script type="text/javascript">
+	ttl_color='#FFFFFF';
+	ttl_background='#F28300';
+	ttl_fontname='Verdana,Arial,sans-serif';
+	ttl_fontsize='11px';
+	ttl_opacity=0.88;
+	ttl_hpos=CENTER;
+	ttl_offsetx=0;
+	ttl_offsety=21;
+	ttl_width=150;
+</script>
+<style>
+	.off {display: none}
+</style>
+<script>
+	function tinf5()
+	{
+		this.incat_click=0;
+		this.invn_click=0;
+		var loaded=0;
+
+		var vns={337:{17:[17,'ASUS',9037,-1,'Ноутбук ASUS K50ID',6500,110099,0,675,'http://rs.mail.ru/b10018190.jpg']}};
+		var cats={337:[1,'Ноутбуки',0,0,0,'',185]};
+		var icons={'-1': 'modpr-1.gif', '0': 'modpr0.gif', '1': 'modpr1.gif'};
+		var url_patch={20: ['p[2115]', 36285]};
+
+		for(var cat_id in cats) break;
+		if(vns[cat_id]) for(var vn_id in vns[cat_id]) break;
+		else var vn_id=0;
+
+		this.cat_id=0;
+		this.vn_id=0;
+		this.on_load='';
+
+		this.fc=function(func)
+		{
+			if(loaded) return true;
+			this.on_load=func;
+			var obj=document.createElement('script');
+			obj.src="http://st.torg.mail.ru/dyn/info/info5/v1.js";
+			obj.id="js";
+			document.body.appendChild(obj);
+			
+			return false;
+		}
+
+		this.set_vars=function(vns1, cats1){vns=vns1; cats=cats1; loaded=1; this.create(this.cat_id, this.vn_id); eval(tinf5.on_load);}
+
+		this.onbodyclick=function()
+		{
+			if(!tinf5.incat_click && tinf5.id('tinf5_cat_select')) tinf5.sc('tinf5_cat_select', '+off');
+			if(!tinf5.invn_click && tinf5.id('tinf5_vn_select')) tinf5.sc('tinf5_vn_select', '+off');
+			tinf5.invn_click=tinf5.incat_click=0;
+		}
+
+		this.cat_toggle=function()
+		{
+			if(!this.fc('tinf5.cat_toggle()')) return false;
+			var div=this.id('tinf5_cat_select');
+			this.sc('tinf5_cat_select');
+			div.style.top=(this.xy(this.id('cat_sel')).y-div.offsetHeight)+'px';
+			return false;
+		}
+
+		this.vn_toggle=function()
+		{
+			if(!this.fc('tinf5.vn_toggle()')) return false;
+			this.sc('tinf5_vn_select');
+			return false;
+		}
+
+		this.cat_selector=function(cat_id)
+		{
+			this.cat_id=cat_id;
+
+			var str='';
+			str+='<a href="" id="cat_sel" onclick="tinf5.incat_click=1; return tinf5.cat_toggle()" style="color: #797a80"><b>'+(cats[cat_id][5]?cats[cat_id][5]:cats[cat_id][1])+'</b></a>'+
+				'<a href="" onclick="tinf5.incat_click=1; return tinf5.cat_toggle()" style="padding-left: 3px;"><img src="http://rs.mail.ru/b10018191.gif" width="10" height="4" /></a><br />'+
+				'<div id="tinf5_cat_select" onclick="tinf5.incat_click=1;" style="position: absolute; background-color: white; border: 1px solid #d0d0d0; padding: 5px; z-index: 20000" class="off">';
+			for(var i in cats)
+			{
+				var vn_id=0;
+				if(cats[i][0]) for(vn_id in vns[i]) break;
+
+				if(i==cat_id) str+='<b>'+cats[i][1]+'</b><br />';
+				else str+='<a href="" onclick="return tinf5.create('+i+', '+vn_id+')">'+cats[i][1]+'</a><br />';
+			}
+			str+='<a name="clb263873" target="_new" href="http://torg.mail.ru/"><b>Все категории</b></a><br />';
+			str+='</div>';
+			var vn_id=0;
+			if(cats[cat_id][0]) for(vn_id in vns[cat_id]) break;
+			
+			return str;
+		}
+
+		this.vn_selector=function(vn_id)
+		{
+			this.vn_id=vn_id;
+
+			var str='';
+			if(!vn_id) return str;
+
+			str+='<a href="" onclick="tinf5.invn_click=1; return tinf5.vn_toggle()" style="color: #797a80"><b>'+vns[this.cat_id][vn_id][1]+'</b></a>'+
+				'<a href="" onclick="tinf5.invn_click=1; return tinf5.vn_toggle()" style="padding-left: 3px;"><img src="http://rs.mail.ru/b10018191.gif" width="10" height="4" /></a><br />'+
+				'<div id="tinf5_vn_select" onclick="tinf5.invn_click=1;" style="position: absolute; background-color: white; border: 1px solid #d0d0d0; padding: 5px; z-index: 20000" class="off">';
+			for(var i in vns[this.cat_id])
+				if(i==vn_id) str+='<b>'+vns[this.cat_id][i][1]+'</b><br />';
+				else str+='<a href="" onclick="return tinf5.create('+this.cat_id+', '+i+')">'+vns[this.cat_id][i][1]+'</a><br />';
+			str+='<a name="clb263873" target="_new" href="http://torg.mail.ru/'+this.cat_id+'/"><b>Все производители</b></a><br />';
+			str+='</div>';
+			
+			return str;
+		}
+
+		this.add_param=function(name, value)
+		{
+			var f=document.forms.tinf5_form;
+			var obj=document.createElement("input");
+			obj.type="hidden";
+			f.appendChild(obj);
+			obj.name=name;
+			obj.value=value;
+		}
+
+		this.go=function()
+		{
+			document.forms.tinf5_form.innerHTML='';
+			var cat=cats[this.cat_id], show_url;
+			this.add_param("cat_id", this.cat_id);
+			this.add_param("proc", "tinf5_go");
+			if(cat[0])
+			{
+				this.add_param("theme", 1);
+				this.add_param("p3[vendor_id][]", this.vn_id);
+				this.add_param("p3[price_from]", this.id('tinf5_price_from').value);
+				this.add_param("p3[price_to]", this.id('tinf5_price_to').value);
+			}
+			else
+			{
+				this.add_param("price_from", this.id('tinf5_price_from').value);
+				this.add_param("price_to", this.id('tinf5_price_to').value);
+			}
+			if(url_patch[this.cat_id]) this.add_param(url_patch[this.cat_id][0], url_patch[this.cat_id][1]);
+			
+			document.forms.tinf5_form.submit();
+			return false;
+		}
+
+		this.create=function(cat_id, vn_id)
+		{
+			var cont_div=this.id('torg_inf5_cont');
+			var cat=cats[cat_id], price0, price1, items_cnt, title, url, pic_url, vn;
+			if(cat[0])
+			{
+				vn=vns[cat_id][vn_id];
+				price0=vn[5];
+				price1=vn[6];
+				items_cnt=vn[8];
+				if(items_cnt%100>=10 && items_cnt%100<=20) items_cnt+=' моделей';
+				else if(items_cnt%10==1) items_cnt+=' модель';
+				else if(items_cnt%10>=2 && items_cnt%10<=4) items_cnt+=' модели';
+				else items_cnt+=' моделей';
+				title='<b>'+vn[4]+'</b><br />';
+				if(price0<price1) title+='Цены от '+price0.toFixed(2)+' до '+price1.toFixed(2)+' руб.';
+				else title+='Цены '+price0.toFixed(2)+' руб.';
+				url='http://torg.mail.ru/'+cat_id+'/'+vn[2]+'/?tab_id=2';
+				pic_url=vn[9]; //'http://img.torg.mail.ru/info/info5/model_'+vn[2]+'.jpg';
+			}
+			else
+			{
+				price0=cat[2];
+				price1=cat[3];
+				items_cnt=cat[4];
+				if(items_cnt%100>=10 && items_cnt%100<=20) items_cnt+=' товаров';
+				else if(items_cnt%10==1) items_cnt+=' товар';
+				else if(items_cnt%10>=2 && items_cnt%10<=4) items_cnt+=' товара';
+				else items_cnt+=' товаров';
+				title='<b>'+cat[1]+'</b><br />';
+				if(price0<price1) title+='Цены от '+price0.toFixed(2)+' до '+price1.toFixed(2)+' руб.';
+				else title+='Цены '+price0.toFixed(2)+' руб.';
+				url='http://torg.mail.ru/'+cat_id+'/';
+				pic_url=cat[7]; //'http://img.torg.mail.ru/info/info5/cat_'+cat_id+'.jpg';
+			}
+			cont_div.innerHTML=
+'<table cellspacing="0" cellpadding="0" style="margin-bottom: 12px">'+
+	'<tr>'+
+		'<td>'+
+			'<div onmousemove="return ttlOver(event, \''+title+'\')"'+
+				'onmouseout="return ttlOut()"'+
+				'style="border: 1px solid #d0d0d0; width: 56px;">'+
+				(cat[0] && vn[7]?'<a name="clb263873" target="_new" href="'+url+'"><img src="http://rs.mail.ru/b10547158.gif" width="47" height="12" style="position: absolute; margin: 48px 0px 0px 13px" /></a>':'')+
+				(cat[0] && !vn[7]?'<a name="clb263873" target="_new" href="'+url+'"><img title="Динамика средней цены модели" src="http://img.torg.mail.ru/'+icons[vn[3]]+'" width="16" height="16" style="position: absolute; margin: 44px 0px 0px 43px" /></a>':'')+
+				'<a name="clb263873" target="_new" href="'+url+'"><img border="0" hspace="0" vspace="0" src="'+pic_url+'" width="56" height="56" /></a><br />'+
+			'</div>'+
+		'</td>'+
+		'<td style="padding-left: 6px">'+
+			'<table cellspacing="0" style="margin-bottom: 4px" class="t70 tahoma">'+
+				'<td nowrap>'+this.cat_selector(cat_id)+'</td>'+
+				'<td style="padding-left: 7px" nowrap>'+this.vn_selector(vn_id)+'</td>'+
+			'</table>'+
+			'<table class="t70 tahoma">'+
+				'<td style="padding: 3px 3px 3px 0px" nowrap>Цена от</td>'+
+				'<td style="padding: 3px 1px"><input type="text" id="tinf5_price_from" value="'+price0.toFixed(0)+'" style="font-size: 90%; width: 32px" /></td>'+
+				'<td style="padding: 3px 3px">до</td>'+
+				'<td style="padding: 3px 1px"><input type="text" id="tinf5_price_to" value="'+price1.toFixed(0)+'" style="font-size: 90%; width: 48px" /></td>'+
+				'<td style="padding: 3px 3px">руб.</td>'+
+			'</table>'+
+			'<nobr class="tahoma" style="font-size: 65%; color: #797a80"><span style="font-family: arial narrow">Найдено</span>: '+items_cnt+'</nobr>'+
+			'<a href="http://torg.mail.ru/" onclick="return tinf5.go()" class="t70 tahoma" style="padding-left: 9px;"><b>Показать</b></a>'+
+		'</td>'+
+	'</tr>'+
+'</table>';
+			return false;
+		}
+
+		this.sc=function(obj, cmd)
+		{
+			obj=this.id(obj);
+			if(!cmd) obj.className=(obj.className=='off'?'':'off');
+			else if(cmd=='+off') obj.className='off';
+			return false;
+		}
+
+		this.listen=function()
+		{    
+			if(window.addEventListener) return function(el, type, fn) {el.addEventListener(type, fn, false)}
+			else if(window.attachEvent) return function(el, type, fn) {el.attachEvent('on'+type, function() {fn.call(el, window.event)})}
+			else return function(el, type, fn) {} 
+		}();
+
+		this.id=function(id){return document.getElementById(id);}
+		this.xy=function(id){for(var x=y=0,o=id;o;o=o.offsetParent) {x+=o.offsetLeft; y+=o.offsetTop;} return {'x': x, 'y': y};}
+
+		this.listen(document.body, 'click', this.onbodyclick);
+
+		this.create(cat_id, vn_id);
+	}
+</script>
+
+<table cellspacing="0" width="100%">
+	<td>
+		<h2 style="margin-bottom: 3px"><a href="http://torg.mail.ru/" target="_new" name="clb263873">Товары</a></h2> 
+	</td>
+	<td style="vertical-align: bottom !important">
+		<div title="Индекс цен: 95.25 -0.09" class="t70 tahoma" style="padding: 0px; margin-bottom: 3px; text-align: right">
+			<a name="clb263873" href="http://torg.mail.ru/price_index/" target="_new" style="color: #33A206">Цены падают</a>
+			<a name="clb263873" href="http://torg.mail.ru/price_index/" target="_new" style="color: #33A206">&#x25bc;0.09</a>
+		</div>
+	</td>
+</table>
+
+
+<table cellspacing="0" style="margin-bottom: 5px; width: 100%; background-color: #e6e8ed">
+	<tr style="vertical-align: bottom">
+		<td class="t70 tahoma" style="padding: 2px 0 4px 10px"><a name="clb263873" href="http://torg.mail.ru/vendor/" target="_new" style="padding-right: 3px">Производители</a>
+			<a name="clb263873" href="http://torg.mail.ru/partners/" target="_new" style="padding-right: 3px">Магазины</a>
+			<a name="clb263873" href="http://torg.mail.ru/used/" target="_new">Барахолка</a></td>
+	</tr>
+</table>
+<!--4372-->
+<div id="torg_inf5_cont"></div>
+<form name="tinf5_form" target="_new" method="get" action="http://r.mail.ru/clb263873/torg.mail.ru/"></form>
+<script>var tinf5=new tinf5();</script>
+<div class="clear" style="height: 10px;"></div>
+            <h2 class="mb5"><a name="clb184909" href="http://maps.mail.ru/" target="_blank">Карты</a></h2>
+<div class="info_block">
+<a name="clb184909" href="http://maps.mail.ru/" target="_blank"><img alt="Карты@Mail.Ru" src="http://rs.mail.ru/b8284585.gif" height="70" width="90" border="0" style="float: left; margin-right: 5px" alt="Карты@Mail.Ru" /></a>
+<font color="#FFA500"><b>П</b></font>одробная карта России<br>
+<font color="#FFA500"><b>О</b></font>бзорная карта мира<br>
+<font color="#FFA500"><b>С</b></font>путниковые снимки<br>
+<a name="clb184909" href="http://maps.mail.ru/" target="_blank" class="аdditional">Найти свой город&nbsp;&raquo;</a>
+<div class="clear">&nbsp;</div>
+</div>
+</div>
+<br clear="all" />
+            
+            <div class="mw">&nbsp;</div>
+      		</td>
+      		<td class="left_divider2 pb_0i"><div class="mw">&nbsp;</div></td>
+      		<td class="center_block pb_0i">
+            <!-- 1-й слот -->      
+                <table class="text_adv">
+<tr>
+<td class="pic"><a href="http://r.mail.ru/n47808802" target="_blank"><img src="http://rs.mail.ru/b10231274.jpg" width="50" height="50" border="0" alt="" title="" /></a></td>
+<td><a href="http://r.mail.ru/n47808802" target="_blank" class="title">Мир &laquo;Троецарствия&raquo; в окне твоего браузера!</a><br />Знаменитая фэнтези-сага, ожившая на экране твоего компьютера. 
+</td>
+</tr>
+</table>
+            <!-- /1-й слот -->
+            <!-- News bookmarks 4497 -->
+<!-- News bookmarks -->
+<table class="books_menu"><tr>
+	<td class="l"><div>  </div></td>
+	<td class="act"><div class="lft first"><div class="rgt"><div><a id="bs_firstlane" href="http://r.mail.ru/n45452923" name="cln5963">Новости</a></div></div></div></td>
+	<td class="aftact"><div class="lft"><div class="rgt"><div><a id="bs_auto" href="http://r.mail.ru/n45452924" name="cln5961">Авто</a></div></div></div></td>
+	<td class="pas"><div class="lft"><div class="rgt"><div><a id="bs_afisha" href="http://r.mail.ru/n45452925" name="cln5965">Афиша</a></div></div></div></td>
+	<td class="pas" nowrap="nowrap"><div class="lft"><div class="rgt"><div><a id="bs_hitech" href="http://r.mail.ru/n45452926" name="cln5967">Hi-Tech</a></div></div></div></td>
+	<td class="pas"><div class="lft"><div class="rgt"><div><a id="bs_lady" href="http://r.mail.ru/n45452927" name="cln5969">Леди</a></div></div></div></td>
+	<td class="pas"><div class="lft"><div class="rgt"><div><a id="bs_games" href="http://r.mail.ru/n45452928" name="cln5971">Игры</a></div></div></div></td>
+	<td class="pas"><div class="lst">  </div></td>
+	<td class="r"> </td>
+</tr></table>
+
+<div class="news_scroll"><table>
+    <tr><td id="bookmarkUpId" class="upOff"></td></tr>
+	<tr><td id="bookmarkDownId" class="down"></td></tr>
+</table></div>
+<!-- / News bookmarks -->
+<!-- /News bookmarks 4497 -->
+
+
+<!-- News -->
+<div id="rbWrapperId">
+
+	<!-- News first lane 4473 -->
+	<div id="rbLoadedId_firstlane">
+	
+<div class="hslice" id="news_news">
+    <a rel="feedurl" href="http://inf.mail.ru/ie8/news/mailru_start_slice.html#news" style="display: none;"></a>
+    <span class="entry-title" style="display: none;">Новости@Mail.Ru</span>
+
+
+    <div class="link_top_news"><div>
+        <a href="http://news.mail.ru/fifa2010/news/4013557/" name="clb194870" target="_blank"><img src="http://rs.mail.ru/b10683426.jpg" width="53" height="50" alt="" />Чемпионат в ЮАР: судьба группы &laquo;C&raquo; решилась на последних минутах матча<img src="http://img.mail.ru/0.gif" alt="Фото" class="hasphoto" /></a><br clear="all" />
+    </div></div><br class="clear" />
+
+
+<div class="news">
+    <ul>
+            <li><a href="http://news.mail.ru/politics/4013550/" name="clb194870" target="_blank">Газовых конфликтов между Украиной и Россией не будет</a></li>
+       
+            <li><a href="http://news.mail.ru/economics/4013267/" name="clb194870" target="_blank">Вступил в силу регламент на табачную продукцию</a></li>
+       
+            <li><a href="http://news.mail.ru/economics/4013268/" name="clb194870" target="_blank">Сбербанк начинает по-новому бороться с грабителями<img src="http://img.mail.ru/0.gif" alt="Фото" class="hasphoto" /></a></li>
+       
+            <li><a href="http://news.mail.ru/incident/4013036/" name="clb194870" target="_blank">Найдены останки еще 72 жертв теракта 9/11</a></li>
+        
+
+
+        <li>
+            <a href="http://news.mail.ru/society/4009920/" name="clb194869" target="_blank">Синоптики пообещали москвичам жару под 40 градусов<img src="http://img.mail.ru/0.gif" alt="Фото" class="hasphoto" /></a>
+        </li>
+    
+
+
+<li><a href="http://auto.mail.ru/article.html?id=31737" name="clb184160" target="_blank">Номер &laquo;ААА&raquo; - 320 000 рублей</a></li>
+<li><a href="http://r.mail.ru/n48589327" target="_blank">Россиян ждёт неожиданный сюрприз <img src="http://img.mail.ru/0.gif" alt="Фото" title="Фото" class="hasphoto" /></a></li>
+<script type="text/javascript">
+document.cookie="b=vjkBABDEJgEAAQCEI2t2AAAA; expires=Tue, 22 Jun 2011 20:00:00 GMT; path=/; domain=.mail.ru";
+</script>
+
+
+
+</ul>
+</div>
+</div>
+	</div> 
+	<!-- /News first lane 4473 -->
+
+	<!-- News second lane 2877 -->
+	<div id="rbLoadedId_secondlane" style="display:none;">
+	
+    <div class="link_top_news"><div>
+        <a href="http://news.mail.ru/politics/4013043" name="clb180779" target="_blank"><img src="http://rs.mail.ru/b10683438.jpg" width="53" height="50" alt="" />Бомбардировщики Су-24М и&nbsp;Су-34 пролетели без&nbsp;посадки над&nbsp;всей страной</a><br clear="all" />
+    </div></div><br class="clear" />
+
+    <div class="news">
+        <ul>
+            <li><a href="http://news.mail.ru/politics/4013260/" name="clb180779" target="_blank">Минск платит и&nbsp;выдвигает ответный ультиматум</a></li>
+        
+            <li><a href="http://news.mail.ru/politics/4012309/" name="clb180779" target="_blank">Литва: поставки газа из&nbsp;России упали на&nbsp;30%</a></li>
+        
+            <li><a href="http://news.mail.ru/politics/4013427/" name="clb180779" target="_blank">Мэры итальянских городов бастуют в&nbsp;Риме</a></li>
+        
+            <li><a href="http://news.mail.ru/politics/4012317/" name="clb180779" target="_blank">Из бюджета Китая похитили $13,8 млрд</a></li>
+        
+            <li><a href="http://news.mail.ru/economics/4013047/" name="clb180779" target="_blank">Второе дыхание ипотеки</a></li>
+        
+            <li><a href="http://news.mail.ru/culture/4013595/" name="clb180779" target="_blank">Несогласные с&nbsp;Михалковым создали свой Киносоюз</a></li>
+        
+            <li><a href="http://news.mail.ru/politics/4010613/" name="clb180779" target="_blank">Следователи получили доступ к&nbsp;звонкам абонентов</a></li>
+        </ul>
+    </div>
+
+	</div> 
+	<!-- /News second lane 2877 -->
+
+	<!-- Auto 4474 -->
+	<div id="rbLoadedId_auto" style="display:none;">
+	
+<div class="hslice" id="news_auto">
+<a rel="feedurl" href="http://inf.mail.ru/ie8/auto/slice_main.html#auto" style="display: none;"></a>
+<span class="entry-title" style="display: none;">Авто@Mail.Ru</span>
+<div class="link_top_news"><div>
+<a href="http://auto.mail.ru/article.html?id=31739" name="clb121178" target="_blank"><img src="http://rs.mail.ru/b10679468.jpg" width="50" height="50" alt="" title="" />Драндулет можно купить за $1 000 000</a><br clear="all" />
+</div></div>
+<br class="clear" />
+<div class="news">
+<ul>
+<li><a href="http://auto.mail.ru/article.html?id=31740" name="clb121178" target="_blank">Названы победители премии &laquo;Двигатель года&raquo;</a></li>
+<li><a href="http://auto.mail.ru/article.html?id=31738" name="clb121178" target="_blank">Обновленный Nissan Tiida прибыл в Россию</a></li>
+<li><a href="http://auto.mail.ru/article.html?id=31737" name="clb121178" target="_blank">Номер &laquo;ААА&raquo; - 320 000 рублей</a></li>
+<li><a href="http://auto.mail.ru/article.html?id=31734" name="clb121178" target="_blank">BMW 5-й серии получит M-пакет</a></li>
+<li><a href="http://auto.mail.ru/article.html?id=31735" name="clb121178" target="_blank">Суперкар SLS AMG станет&hellip; электрическим </a></li>
+<li><a href="http://auto.mail.ru/article.html?id=31736" name="clb121178" target="_blank">Audi RS3 &ndash; ее не может не быть </a></li>
+<li><a href="http://auto.mail.ru/article.html?id=31733" name="clb121178" target="_blank">Гаишники получили реальный срок</a></li>
+</ul>
+</div>
+</div>
+
+	</div>
+	<!-- /Auto 4474 -->
+
+	<!-- Afisha 4475 -->
+	<div id="rbLoadedId_afisha" style="display:none;">
+	
+<div class="hslice" id="news_afisha">
+    <div style="display: none;">
+        <a name="clb258696" rel="feedurl" href="http://inf.mail.ru/ie8/afisha/slice_main.html#afisha"></a>
+        <span class="entry-title">Афиша@Mail.Ru</span>
+    </div>
+
+    
+        <div class="link_top_news"><div>
+            <a name="clb258696" href="http://afisha.mail.ru/article.html?id=28408" target="_blank"><img src="http://rs.mail.ru/b10670483.jpg" width="50" height="50" alt="" />Ксения Собчак выгнала помощницу за болтливость</a><br clear="all" />
+        </div></div><br class="clear" />
+    
+        <div class="news">
+            <ul>
+                <li><a name="clb258696" href="http://afisha.mail.ru/article.html?id=28412" target="_blank">Линдси Лохан с сестрой в трогательной фотосессии<img src="http://img.mail.ru/0.gif" alt="Фото" class="hasphoto" /></a></li>
+            
+                <li><a name="clb258696" href="http://afisha.mail.ru/article.html?id=28415" target="_blank">Русский актер сыграет Джорджа Клуни</a></li>
+            
+                <li><a name="clb258696" href="http://afisha.mail.ru/article.html?id=28418" target="_blank">Уиллис и Шьямалан снова вместе</a></li>
+            
+                <li><a name="clb258696" href="http://afisha.mail.ru/article.html?id=28417" target="_blank">Алишу Кис приняли в зулусское племя</a></li>
+            
+                <li><a name="clb258696" href="http://afisha.mail.ru/article.html?id=28416" target="_blank">Фоторепортаж с концерта Plumb<img src="http://img.mail.ru/0.gif" alt="Фото" class="hasphoto" /></a></li>
+            
+                <li><a name="clb258696" href="http://afisha.mail.ru/article.html?id=28419" target="_blank">Гай Германика устраивает секс-кастинг на MTV</a></li>
+            
+<li><a href="http://mmkf.afisha.mail.ru/news?id=82" name="clb258696" target="_blank" style="display: block; padding-left: 20px; background: #fff url('http://rs.mail.ru/b9846215.png') no-repeat left center;">ММКФ: Шведское кино, которое родители запретят смотреть детям</a></li>
+</ul></div></div>
+	</div>
+	<!-- /Afisha 4475 -->
+
+	<!-- Hi-tech 4476 -->
+	<div id="rbLoadedId_hitech" style="display:none;">
+	<div class="link_top_news"><div><a target="_blank" href="http://r.mail.ru/n48645529"><img src="http://rs.mail.ru/b10682502.jpg" border="0" hspace="0" align="left" alt="Такой крутой Nokia еще никогда не было" title="Такой крутой Nokia еще никогда не было" class="anons" width="50" height="50"></a>
+<a target="_blank" href="http://r.mail.ru/n48645529"><b>Такой крутой Nokia еще никогда не было</b></a><br clear="all" />
+</div></div><br class="clear" /> 
+<div class="news"><ul>
+
+<li><a target="_blank" href="http://r.mail.ru/n48593308">Уникальный смартфон</a></li>
+
+<li><a target="_blank" href="http://r.mail.ru/n48396096">Трехмерные игры без очков</a></li>
+
+<li><a target="_blank" href="http://r.mail.ru/n48593310">Супертонкий компьютер поражает</a></li>
+
+<li><a target="_blank" href="http://r.mail.ru/n48636487">Самая крутая игровая приставка</a></li>
+
+<li><a target="_blank" href="http://r.mail.ru/n48593312">Эти смартфоны идут на рекорд</a></li>
+
+<li><a target="_blank" href="http://r.mail.ru/n48376994">Первые фото фантастического компьютера</a></li>
+
+<li><a target="_blank" href="http://r.mail.ru/n48593313">В России сделали уникальную Nokia</a></li>
+
+</ul>
+</div>
+	</div>
+	<!-- /Hi-tech 4476 -->
+
+	<!-- Lady 4672 -->
+	<div id="rbLoadedId_lady" style="display:none;">
+	
+<div class="hslice" id="news_lady">
+    <a name="clb184812" rel="feedurl" href="http://inf.mail.ru/ie8/lady/slice_main.html#lady" style="display: none;"></a>
+    <span class="entry-title" style="display: none;">Леди@Mail.Ru</span>
+
+    
+        <div class="link_top_news"><div>
+            <a name="clb184812" href="http://lady.mail.ru/article/188324" target="_blank"><img src="http://rs.mail.ru/b10671701.188324.0.75x75.jpg" width="50" height="50" alt="Все секреты мяты и мелиссы" class="anons" />Все секреты мяты и мелиссы</a><br clear="all" />
+        </div></div><br class="clear" />
+    
+        <div class="news">
+            <ul>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/194440" target="_blank">Что такое &laquo;мужской климакс&raquo; и кому он грозит?</a></li>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/190943" target="_blank">Почему опасно мириться в постели</a></li>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/191831" target="_blank">Летняя мода: забавные принты (ФОТО)</a></li>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/181422" target="_blank">Какие бусы выбрать?</a></li>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/179255" target="_blank">Московский кинофестиваль с французским шармом (ФОТО)</a></li>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/191832" target="_blank">Эштон Катчер: &laquo;Подиум &ndash; для геев!&raquo; </a></li>
+                
+        	        <li><a name="clb184812" href="http://lady.mail.ru/article/190946" target="_blank">Известные кутюрье занялись декором автомобилей</a></li>
+                
+            </ul>
+        </div>
+    
+
+</div>
+
+	</div>
+	<!-- /Lady 4672 -->
+
+	<!-- Games 3266 -->
+	<div id="rbLoadedId_games" style="display:none;">
+	<div class="link_top_news">
+<div>
+<a href="http://progames.mail.ru/document/5370/view" name="clb183010" target="_blank" ><img src="http://rs.mail.ru/b10680768.jpg" width="50" height="50" border="0" align="left" alt="" />Call of Duty: Black Ops может не выйти в России! </a>
+<br clear="all" />
+ 
+</div>
+</div>
+<br clear="all"/>
+<div class="news">
+<ul>
+<li><a href="http://progames.mail.ru/document/5364/view" name="clb183012" target="_blank">Mafia 2 заговорит по-русски</a></li>
+<li><a href="http://progames.mail.ru/document/5350/view" name="clb183012" target="_blank">StarCraft 2: одиночная игра будет платной!</a></li>
+<li><a href="http://progames.mail.ru/document/5333/view" name="clb183012" target="_blank">Portal 2 объединит фанатов РС и консолей</a></li>
+<li><a href="http://progames.mail.ru/document/5331/view" name="clb183012" target="_blank">Гомосексуалисты в Fable 3!</a></li>
+<li><a href="http://progames.mail.ru/document/5301/view" name="clb183012" target="_blank">Заработал сайт Fallout Online!</a></li>
+<li><a href="http://progames.mail.ru/document/5298/view" name="clb183012" target="_blank">Gran Turismo 5 выйдет в ноябре!</a></li>
+<li><a href="http://progames.mail.ru/document/5292/view" name="clb183012" target="_blank">Sony рассказала о PlayStation Move!</a></li>
+
+
+
+
+</ul>
+</div>
+	</div>
+	<!-- /Games 3266 -->
+
+</div>
+<!-- /News -->
+
+
+<!-- News bookmarks activator -->
+<script type="text/javascript">
+jQuery(function() {
+  window.bmTop = new jQuery.bookmark({
+	slots :    ['firstlane', 'secondlane', 'auto', 'afisha', 'hitech', 'lady', 'games'],
+	counters : [
+		false,
+		"http://rs.mail.ru/d226873.gif",
+		"http://rs.mail.ru/d226841.gif",
+		"http://rs.mail.ru/d226846.gif",
+		"http://rs.mail.ru/d226848.gif",
+		"http://rs.mail.ru/d226850.gif",
+		"http://rs.mail.ru/d226852.gif"
+	],
+	bmPrefix :		'#bs_',
+	wrapperId :		'#rbWrapperId',
+	slotPrefix :	'#rbLoadedId_',
+	hasScroll :		true,
+	scrollIds :		['#bookmarkUpId', '#bookmarkDownId']
+  });
+}); 
+
+</script>
+<!-- /News bookmarks activator -->
+<div class="line mb10"> </div>
+			
+            <h2 class="mb10"><a href="http://maps.mail.ru/#x=-77.34307996325511&y=39.0945598038578&z=7&mode=map&fullscreen=true&jams=false&pid=7750" target="_blank">Вашингтон</a><span id="jsdate"></span></h2>
+<script type="text/javascript"> 
+jQuery(function(){var f=jQuery,i=null,b=null,g=0,j,k=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
+h=[
+	["mx=-122.40304&my=37.77773&mt=",-7],
+	["mx=-115.12459&my=36.17358&mt=",-7],
+	["mx=-104.95125&my=39.72184&mt=",-6],
+	["mx=-87.65876&my=41.84268&mt=",-5],
+	["mx=-94.56367&my=39.10828&mt=",-5],
+	["mx=-76.96906&my=38.91972&mt=",-4],
+	["mx=-76.96906&my=-12.04886&mt=",-5],
+	["mx=-63.58222&my=44.64492&mt=",-3],
+	["mx=-47.89373&my=-15.83589&mt=",-3],
+	["mx=-25.62444&my=37.74284&mt=",0],
+	["mx=-0.218545&my=51.596179&mt=",1],
+	["mx=13.228724&my=52.624299&mt=",2],
+	["mx=-3.679240&my=40.44756&mt=",2],
+	["mx=30.455293&my=50.544120&mt=",3],
+	["mx=37.398655&my=55.716552&mt=",4],
+	["mx=49.967019&my=53.261406&mt=",4],
+	["mx=60.426007&my=56.889154&mt=",6],
+	["mx=82.662343&my=55.166964&mt=",7],
+	["mx=92.857660&my=56.062299&mt=",8],
+	["mx=104.19555&my=52.356049&mt=",9],
+	["mx=129.68384&my=62.023019&mt=",10],
+	["mx=131.70533&my=43.207818&mt=",11],
+	["mx=150.64575&my=59.620948&mt=",12],
+	["mx=149.17909&my=-35.31555&mt=",11],
+	["mx=158.42408&my=53.155876&mt=",12]
+],e=function(a){return a<10?"0"+a:a},l=function(a){a%=24;return e(a<0?24+a:a)};c=function(){f(this).attr({href:"http://maps.mail.ru/#x=-99.95247&y=38.50655&z=4&mode=map&fullscreen=true&jams=false&pid=-1&"+ function(){var a=[],d;for(d=0;d<h.length;d++)a.push(h[d][0]+base64Encode(l(b.getHours()-j+parseInt(h[d][1]))+":"+e(b.getMinutes())));return a.join("&")}(),target:"_blank"})};r=function(a){g=!g;b=new Date;j=-1*b.getTimezoneOffset()/60;if(a) {f("#jsdate").html('. <span id="jsdate_date">'+b.getDate()+' '+k[b.getMonth()]+'</span>, <a id="jsdate_time" href="#maptime">'+e(b.getHours())+':'+e(b.getMinutes())+'</a>');f("#jsdate a").click(c);} else {f("#jsdate_date").html(b.getDate()+" "+k[b.getMonth()]);f("#jsdate_time").html(e(b.getHours())+''+(g?':':'<span style="color:#FFF;">:</span>')+''+e(b.getMinutes()));}i=setTimeout(function(){try{clearTimeout(i);}catch(e){};r()},1000)};r(1)});
+</script>
+<table class="info_today2"> 
+<tr> 
+<td class="weather_review"> 
+<div class="hslice" id="forecast">
+	<div style="display: none;">
+		<a name="clb123267" rel="feedurl" href="http://inf.mail.ru/ie8/pogoda/hslice_main.html?city=4942#pogoda"></a>
+		<span class="entry-title">Погода@Mail.Ru</span>
+	</div>
+
+
+
+	<!-- prj_mailindex_forecast: worldregion = 7; country = 164; city = 4942 -->
+	<div class="main"><a name="clb123267" href="http://pogoda.mail.ru/?city=4942" target="_blank"><img src="http://img.mail.ru/r/weather_new/pict_weather_big_26.gif" width="57" height="71" alt="полупрозрачная облачность" title="полупрозрачная облачность" /></a>
+		<div>
+			<h1><a name="clb123267" href="http://pogoda.mail.ru/?city=4942" target="_blank">+33&deg;</a></h1>
+			<a name="clb123267" href="http://pogoda.mail.ru/?city=4942" target="_blank"><span class="first">вечером: +25&deg;</span><span class="second">завтра: +34&deg;</span></a><span class="third"><a name="clb123267" href="http://pogoda.mail.ru/?city=4942" title="полупрозрачная облачность" target="_blank">облачность</a></span>
+		</div>
+	</div>
+
+
+
+</div>
+</td> 
+<th></th> 
+<td class="quotations_and_stoppers"> 
+
+    <div class="hslice" id="rate">
+        <a name="clb181366" rel="feedurl" href="http://inf.mail.ru/ie8/rate/slice_RUR.html#rate" style="display: none;"></a>
+        <span class="entry-title" style="display: none;">Курсы валют от Mail.Ru</span>
+
+        <table class="quotations_t" id="quotationsId">            <tr>
+                <td class="q_course"><a name="clb181366" href="http://news.mail.ru/currency.html?charcode=USD" class="usd" title="Курс с 24.06" target="_blank">30.9694</a></td>
+            </tr>
+            <tr>
+                <td class="pb2 q_delta q_plus"><a name="clb181366" href="http://news.mail.ru/currency.html?charcode=USD" title="Курс с 24.06" target="_blank">+0.0734</a></td>
+            </tr>            <tr>
+                <td class="q_course"><a name="clb181366" href="http://news.mail.ru/currency.html?charcode=EUR" class="eur" title="Курс с 24.06" target="_blank">38.0242</a></td>
+            </tr>
+            <tr>
+                <td class="pb2 q_delta q_minus"><a name="clb181366" href="http://news.mail.ru/currency.html?charcode=EUR" title="Курс с 24.06" target="_blank">&minus;0.0088</a></td>
+            </tr>        </table>
+
+    </div>
+
+
+
+</td> 
+<th></th> 
+<td class="schedule"> 
+<div id="tvSwitch1" class="switch_schedule"><div class="d1"><div class="switch_schedule_on"><a href="http://r.mail.ru/n46258318">ТВ</a></div><div class="switch_schedule_off"><a href="http://r.mail.ru/n46258319" onclick="return channelSinemaSwitch(0);">Кино</a></div><div class="clear"> </div></div></div> 
+<div id="tvSwitch2" class="switch_schedule" style="display: none;"><div class="d1"><div class="switch_schedule_off"><a href="http://r.mail.ru/n46258318" onclick="return channelSinemaSwitch(1);">ТВ</a></div><div class="switch_schedule_on"><a href="http://r.mail.ru/n46258319">Кино</a></div><div class="clear"> </div></div></div> 
+<script type="text/javascript">
+	function channelSinemaSwitch(flag) {
+		try {
+			gebi('tvSwitch2').style.display = flag ? 'none' : '';
+			gebi('tvSwitch1').style.display = flag ? '' : 'none';
+			gebi('tvChanTableId').style.display = flag ? '' : 'none';
+			gebi('tvSinemaDivId').style.display = flag ? 'none' : '';
+			setCookie("mailIndexFilms", flag ? 0 : 1);
+			return false;
+		} catch(e) {}
+	}
+</script>
+
+
+	<table class="schedule_tv2" id="tvChanTableId">
+			<tr>
+			<td class="channel"><a name="clb122066" href="http://tv.mail.ru/?channel=1&period=3" target="_new"><img src="http://img.mail.ru/r/tv/channels/8304.gif" width="17" height="17" alt="" title="Первый" /></a></td>
+			<td nowrap="nowrap" class="transfer"><span id="tvtime_0">21:30</span> <a name="clb122066" onclick="return tvChannels.next(0, this);" href="#"><img src="http://rs.mail.ru/b6939277.gif" width="4" height="7" /></a>
+		  <div class="overflow_block"><div class="gradient"></div><div class="tv_s"><a name="clb122066" id="tvtitle_0" href="http://tv.mail.ru/info.html?programm=21542505" title="Ермоловы. (26-я серия)">Ермоловы. (26-я серия)</a></div></div></td>
+	  </tr>
+			<tr>
+			<td class="channel"><a name="clb122066" href="http://tv.mail.ru/?channel=2&period=3" target="_new"><img src="http://img.mail.ru/r/tv/channels/17748.gif" width="17" height="17" alt="" title="Россия 1" /></a></td>
+			<td nowrap="nowrap" class="transfer"><span id="tvtime_1">21:30</span> <a name="clb122066" onclick="return tvChannels.next(1, this);" href="#"><img src="http://rs.mail.ru/b6939277.gif" width="4" height="7" /></a>
+		  <div class="overflow_block"><div class="gradient"></div><div class="tv_s"><a name="clb122066" id="tvtitle_1" href="http://tv.mail.ru/info.html?programm=21525755" title="Логово змея. (6-я серия)">Логово змея. (6-я серия)</a></div></div></td>
+	  </tr>
+			<tr>
+			<td class="channel"><a name="clb122066" href="http://tv.mail.ru/?channel=4&period=3" target="_new"><img src="http://img.mail.ru/r/tv/channels/8898.gif" width="17" height="17" alt="" title="НТВ" /></a></td>
+			<td nowrap="nowrap" class="transfer"><span id="tvtime_2">21:30</span> <a name="clb122066" onclick="return tvChannels.next(2, this);" href="#"><img src="http://rs.mail.ru/b6939277.gif" width="4" height="7" /></a>
+		  <div class="overflow_block"><div class="gradient"></div><div class="tv_s"><a name="clb122066" id="tvtitle_2" href="http://tv.mail.ru/info.html?programm=21602699" title="Глухарь. (5-я и 6-я серии. Бить или не бить?, Дела семейные)">Глухарь</a></div></div></td>
+	  </tr>
+	</table> 
+    
+
+<script type="text/javascript">
+var tvChannels = {
+	data : [
+		[
+			["http://tv.mail.ru/info.html?programm=21542505","Ермоловы. (26-я серия)","Ермоловы. (26-я серия)","21:30"],
+			["http://tv.mail.ru/info.html?programm=21542506","Чемпионат мира по футболу 2010. (Сборная Ганы - сборная Германии. Прямой эфир из ЮАР)","Чемпионат мира по футболу 2010. (Сборная Ганы - сборная Германии. Прямой эфир из ЮАР)","22:30"],
+			["http://tv.mail.ru/info.html?programm=21542508","Ночные новости","Ночные новости","00:30"]
+		],
+		[
+			["http://tv.mail.ru/info.html?programm=21525755","Логово змея. (6-я серия)","Логово змея. (6-я серия)","21:30"],
+			["http://tv.mail.ru/info.html?programm=21525756","Футбол. Чемпионат мира. (Австралия - Сербия. Прямая трансляция из ЮАР)","Футбол","22:25"],
+			["http://tv.mail.ru/info.html?programm=21525757","Вести +","Вести +","00:30"]
+		],
+		[
+			["http://tv.mail.ru/info.html?programm=21602699","Глухарь. (5-я и 6-я серии. &quot;Бить или не бить?&quot;, &quot;Дела семейные&quot;)","Глухарь","21:30"],
+			["http://tv.mail.ru/info.html?programm=21602700","Сегодня","Сегодня","23:15"],
+			["http://tv.mail.ru/info.html?programm=21602701","Поздний разговор","Поздний разговор","23:25"]
+		]
+	],
+	indexes : [0,0,0],
+	next : function(index, a) {
+		var length, pos;
+		if (this.data[index] && (length = this.data[index].length) && typeof(pos = this.indexes[index]) != 'undefined')
+			pos++;
+			pos = pos >= length ? 0 : pos;
+			document.getElementById('tvtime_' + index).innerHTML = this.data[index][pos][3];
+			document.getElementById('tvtitle_' + index).href = this.data[index][pos][0];
+			document.getElementById('tvtitle_' + index).innerHTML = this.data[index][pos][2];
+			document.getElementById('tvtitle_' + index).title = this.data[index][pos][1];
+			this.indexes[index] = pos;
+		return false;
+	}
+}
+</script>
+
+
+
+<div id="tvSinemaDivId" class="schedule_movie" style="display: none;">
+<div class="schedule_movie" id="randfilm_1" style="display: none;"><a name="clb122094" href="http://afisha.mail.ru/event.html?placetype=1&id=583885"><img src="http://rs.mail.ru/b10678440.jpg" width="100" height="55" alt="Скептик" title="Скептик" /></a><br /><a name="clb122094" href="http://afisha.mail.ru/event.html?placetype=1&id=583885">Скептик</a></div><div class="schedule_movie" id="randfilm_2" style="display: none;"><a name="clb122094" href="http://afisha.mail.ru/event.html?placetype=1&id=583570"><img src="http://rs.mail.ru/b10642523.jpg" width="100" height="55" alt="Письма к Джульетте" title="Письма к Джульетте" /></a><br /><a name="clb122094" href="http://afisha.mail.ru/event.html?placetype=1&id=583570">Письма к Джульетте</a></div><div class="schedule_movie" id="randfilm_3"><a name="clb122094" href="http://afisha.mail.ru/event.html?placetype=1&id=583569"><img src="http://rs.mail.ru/b10630111.jpg" width="100" height="55" alt="История игрушек: Большой побег" title="История игрушек: Большой побег" /></a><br /><a name="clb122094" href="http://afisha.mail.ru/event.html?placetype=1&id=583569">История игрушек: Большой побег</a></div>
+<script type="text/javascript">
+	var range = 3;
+	var rand = range * Math.random()
+	rand = parseInt(rand) + 1;
+	document.getElementById("randfilm_3").style.display = "none";
+	document.getElementById("randfilm_" + rand).style.display = "block";
+</script>
+
+
+</div>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+if (getCookie("mailIndexFilms")) if(parseInt(getCookie("mailIndexFilms"))) channelSinemaSwitch();
+//]]>
+</script>
+
+</td>
+</tr> 
+</table>
+
+            <div class="line mb10"></div> 
+            <table class="text_adv">
+<tr>
+<td class="pic"><a href="http://r.mail.ru/n46874236?_PHRASE=" target="_blank"><img src="http://rs.mail.ru/b9816846.jpg" width="75" height="50" border=0 alt="Видеочат" title="Видеочат" /></a></td>
+<td><a class="title" href="http://r.mail.ru/n46874236?_PHRASE=" target="_blank">Общайся в видеочате!</a><br />
+Смотри, с кем говоришь ;) <a href="http://r.mail.ru/n46874236?_PHRASE=" target="_blank">Начать&nbsp;чат&nbsp;&raquo;</a>
+</td>
+</tr>
+</table>
+
+
+            <table class="books_menu"> 
+<tr> 
+ <td class="l"><div> </div></td> 
+ <td class="act"><div class="lft first"><div class="rgt"><div><a id="bs_list" href="http://r.mail.ru/n47675709" name="cln4441">Каталог сайтов</a></div></div></div></td> 
+ <td class="aftact"><div class="lft"><div class="rgt"><div><a id="bs_blog" href="http://r.mail.ru/n47675710" name="cln4442">Каталог сообществ</a></div></div></div></td> 
+ <td class="pas"><div class="lst"> </div></td> 
+ <td class="r"> </td> 
+</tr>
+</table>
+
+<script type="text/javascript">
+jQuery(function() {
+  new jQuery.bookmark({
+    slots :      ['list', 'blog'],
+    bmPrefix :    '#bs_',
+    slotPrefix :  '#rbLoadedId_'
+  });
+});
+</script>
+
+
+<div id="rbLoadedId_list"> 
+<table class="catalogue_link2"><tr> 
+  <td> 
+    <ul> 
+      <li><div><a href="http://list.mail.ru/10903/1/0_1_0_1.html">Непознанное</a>, <a href="http://list.mail.ru/11109/1/0_1_0_1.html">Гороскопы</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10897/1/0_1_0_1.html">Домашний очаг</a>, <a name="clb196157" href="http://list.mail.ru/10993/1/0_1_0_1.html">Медицина</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10902/1/0_1_0_1.html">Наука и образование</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/2/1/0_1_0_1.html">Общество и политика</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/14251/1/0_1_0_1.html">Недвижимость</a>, <a name="clb196157" href="http://list.mail.ru/12113/1/0_1_0_1.html">Ремонт</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10906/1/0_1_0_1.html">Новости</a> и <a name="clb196157" href="http://list.mail.ru/10908/1/0_1_0_1.html">Справки</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10901/1/0_1_0_1.html">Культура и искусство</a></div></li> 
+    </ul> 
+  </td> 
+  <td> 
+    <ul> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/14263/1/0_1_0_1.html">Товары и услуги</a>, <a name="clb196157" href="http://list.mail.ru/1001/1/0_1_0_1.html">Авто</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10896/1/0_1_0_1.html">Бизнес и финансы</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/14249/1/0_1_0_1.html">Производство</a> и <a name="clb196157" href="http://list.mail.ru/10899/1/0_1_0_1.html">Работа</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10900/1/0_1_0_1.html">Компьютеры</a> и <a name="clb196157" href="http://list.mail.ru/10898/1/0_1_0_1.html">Интернет</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10904/1/0_1_0_1.html">Отдых</a>, <a href="http://list.mail.ru/10814/1/0_1_0_1.html">Турфирмы</a>, <a href="http://list.mail.ru/10909/1/0_1_0_1.html">Юмор</a></div></li> 
+      <li><div><a name="clb196157" href="http://list.mail.ru/10907/1/0_1_0_1.html">Спорт</a>, <a href="http://list.mail.ru/30344/1/0_1_0_1.html" class="special_allocation">ЧМ по футболу</a></div></li> 
+      <li><div><a href="http://list.mail.ru/index.html">Главная</a>, <a href="http://list.mail.ru/indgeo.html">Регионы</a>, <a href="http://list.mail.ru/32964/1/0_1_0_1.html">Wap</a></div></li> 
+    </ul> 
+  </td> 
+</tr></table> 
+</div> 
+
+<div id="rbLoadedId_blog" style="display:none;"> 
+<table class="ul_community2"><tr> 
+  <td> 
+    <ul> 
+      <li><div><a href="http://r.mail.ru/n47675711" name="cln4333">Семья, дом, дети</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675712" name="cln4335">Культура и искусство</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675713" name="cln4337">Музыка</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675714" name="cln4339">Спорт</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675715" name="cln4341">Образование и учеба</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675716" name="cln4343">Животные</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675717" name="cln4345">Туризм и путешествия</a><span>604</span></div></li> 
+    </ul> 
+  </td> 
+  <td> 
+    <ul> 
+      <li><div><a href="http://r.mail.ru/n47675718" name="cln4334">Знакомства и любовь</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675719" name="cln4336">Авто и мото</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675720" name="cln4338">Советы и консультации</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675721" name="cln4340">Досуг, отдых, хобби</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675722" name="cln4342">Темы для взрослых</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675723" name="cln4344">Общество, политика</a><span>604</span></div></li> 
+      <li><div><a href="http://r.mail.ru/n47675724" name="cln4346">Игры, развлечения, юмор</a><span>604</span></div></li> 
+    </ul> 
+  </td> 
+</tr></table> 
+</div> 
+<div style="margin-bottom:25px;"></div>
+            
+            <div class="mw">&nbsp;</div>
+          </td>
+      		<td class="right_divider pb_0i"><div class="mw">&nbsp;</div></td>
+      		<td class="right_block pb_0i">
+      		
+            
+            <!-- 4-й слот -->
+                <div class="banner"><center>
+
+<img src=http://rs.mail.ru/d284024.gif?rnd=105740103 width="1" height="1" border="0" alt="" style="position:absolute;">
+<script type="text/javascript">
+<!--
+var rb_link1 = "http://r.mail.ru/n48421560";
+var rb_swf = "http://rs.mail.ru/b10540407.swf";
+var rb_fver = "8";
+var rb_width = "300";
+var rb_height = "300";
+var rb_flash = 0;
+if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"] ) {
+ var plugin = navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin;
+ if (plugin && parseInt(plugin.description.match(/\d+/)[0]) >= rb_fver)
+  rb_flash = 1;
+ } else if (navigator.appName && navigator.appName.indexOf("Microsoft") != -1 &&
+ navigator.userAgent.indexOf("Windows") != -1 && navigator.userAgent.indexOf("Windows 3.1") == -1) {
+  rb_flash = 1;
+}
+if (rb_flash) {
+ document.write('<scr'+'ipt type="text/javascript" src="http://img.mail.ru/r/js/rb_flash3.js"></scr'+'ipt>');
+} else {
+  document.write('<a href="http://r.mail.ru/n48421560" target="_blank"><img src="http://rs.mail.ru/b10540408.jpg" width="300" height="300" border="0" alt="" title="" /></a>');
+}
+//-->
+</script>
+<noscript><a href="http://r.mail.ru/n48421560" target="_blank"><img src="http://rs.mail.ru/b10540408.jpg" width="300" height="300" border="0" alt="" title="" /></a></noscript>
+
+
+</center></div>
+            <!-- /4-й слот -->
+            
+			
+            
+
+
+
+<h2 class="mb5"><a href="http://r.mail.ru/n37464912" target="_new">Фото</a> и <a href="http://r.mail.ru/n37464913" target="_new">Видео</a></h2>
+
+<table class="listing_media"><tr>
+	<td width="10" nowrap><a id="aleft_foto" style="display: none;" href="http://r.mail.ru/n37464914" target="_new"><img src="http://img.mail.ru/mail/ru/images/a60_l.gif" width="10" height="60" alt="" /></a></td>
+
+	<td class="list">
+	<div class="oh"><div class="oh2">
+		<table id="acont_foto"><tr>
+			<td><div class="item"><a href="http://r.mail.ru/n48566076" target="_new"><img src="http://rs.mail.ru/b7550421.jpg" width="60" height="60" alt="" /></a></div></td>
+			<td><div class="item"><a href="http://r.mail.ru/n48639421" target="_new"><img src="http://rs.mail.ru/b7213852.jpg" width="60" height="60" alt="" /></a></div></td>
+			<td><div class="item"><a href="http://r.mail.ru/n48551605" target="_new"><img src="http://rs.mail.ru/b10398442.jpg" width="60" height="60" alt="" /></a></div></td>
+			<td><div class="item"><a href="http://r.mail.ru/n48591236" target="_new"><img src="http://rs.mail.ru/b10278843.jpg" width="60" height="60" alt="" /></a></div></td>
+		</tr></table>
+	</div></div>
+	</td>
+
+	<td width="10" nowrap><a id="aright_foto" style="display: none;" href="http://r.mail.ru/n37464919" target="_new"><img src="http://img.mail.ru/mail/ru/images/a60_r.gif" width="10" height="60" alt="" /></a></td>
+</tr></table>
+
+<script type="text/javascript">//<![CDATA[
+aslider.get("foto").items = 4;
+aslider.get("foto").itemWidth = 61;
+aslider.get("foto").mixData = true;
+aslider.get("foto").data = [
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/tikandelaki/_blogs/13.html?bestfotos=1", "http://rs.mail.ru/b7550421.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/plutsenko/2/119.html?bestfotos=1", "http://rs.mail.ru/b7213852.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/voronina_t/243/280.html?bestfotos=1", "http://rs.mail.ru/b10398442.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/yanahouse/1200/1206.html?bestfotos=1", "http://rs.mail.ru/b10278843.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/voronina_t/243/230.html?bestfotos=1", "http://rs.mail.ru/b10396388.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/oleg.d57/385/587.html?bestfotos=1", "http://rs.mail.ru/b9134171.d57=385=pp-587.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/aleks_n_01/Butterflies/194.html?bestfotos=1", "http://rs.mail.ru/b8827216.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/slay65/426/562.html?bestfotos=1", "http://rs.mail.ru/b10396203.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/tikandelaki/_blogs/14.html?bestfotos=1", "http://rs.mail.ru/b7548845.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/yanahouse/1003/1117.html?bestfotos=1", "http://rs.mail.ru/b9520381.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/vasiliska_pre/50/60.html?bestfotos=1", "http://rs.mail.ru/b7549050.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/amalex13/5/15.html?bestfotos=1", "http://rs.mail.ru/b10397005.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/latviesu86/87/94.html?bestfotos=1", "http://rs.mail.ru/b7217089.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/pantchenko/6/13.html?bestfotos=1", "http://rs.mail.ru/b7493704.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/alexslash/mypics/126.html?bestfotos=1", "http://rs.mail.ru/b10396200.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/istina31/1372/3037.html?bestfotos=1", "http://rs.mail.ru/b7666300.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/monaxova92/_myphoto/35.html?bestfotos=1", "http://rs.mail.ru/b7874255.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/9223631/291/293.html?bestfotos=1", "http://rs.mail.ru/b7423662.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/ads67/456/1236.html?bestfotos=1", "http://rs.mail.ru/b7266943.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/a.v.kulichenko/_myphoto/54.html?bestfotos=1", "http://rs.mail.ru/b7215404.v.kulichenko=_myphoto=pp-54.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/a_teren/646/1020.html?bestfotos=1", "http://rs.mail.ru/b8825328.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/corp/labunskaya/182/205.html?bestfotos=1", "http://rs.mail.ru/b7215403.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/vesna713/617/623.html?bestfotos=1", "http://rs.mail.ru/b7862068.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/bk/dasha_degteva/_myphoto/79.html?bestfotos=1", "http://rs.mail.ru/b9133498.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/vasiliska_pre/50/112.html?bestfotos=1", "http://rs.mail.ru/b7548022.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/denderuk/1422/1478.html?bestfotos=1", "http://rs.mail.ru/b8828635.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/vasiliska_pre/50/117.html?bestfotos=1", "http://rs.mail.ru/b7549155.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/a.v.k.1311/59/710.html?bestfotos=1", "http://rs.mail.ru/b8825275.v.k.1311=59=pp-710.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/dessika64/796/1374.html?bestfotos=1", "http://rs.mail.ru/b8827840.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/corp/labunskaya/992/1017.html?bestfotos=1", "http://rs.mail.ru/b8481637.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/ads67/456/2236.html?bestfotos=1", "http://rs.mail.ru/b7216173.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/233-swetik/702/1049.html?bestfotos=1", "http://rs.mail.ru/b7219048.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/irochka.83_83/_myphoto/10.html?bestfotos=1", "http://rs.mail.ru/b7495227.83_83=_myphoto=pp-10.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/vasiliska_pre/50/85.html?bestfotos=1", "http://rs.mail.ru/b7549156.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/slman84/62/59.html?bestfotos=1", "http://rs.mail.ru/b7492250.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/travinka/ZAKATY/22.html?bestfotos=1", "http://rs.mail.ru/b7226548.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/leramiss2012/2/189.html?bestfotos=1", "http://rs.mail.ru/b7213859.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/inbox/sokolovvg/1260/2040.html?bestfotos=1", "http://rs.mail.ru/b8826627.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/voronina_t/174/107.html?bestfotos=1", "http://rs.mail.ru/b10396912.jpg"],
+	["http://r.mail.ru/clb188536/foto.mail.ru/mail/o.pichugina/152/380.html?bestfotos=1", "http://rs.mail.ru/b9811820.pichugina=152=pp-380.jpg"]
+];
+aslider.get("foto").init();
+//]]>
+</script>
+
+
+
+
+
+
+
+
+
+
+            <script language="javascript" src="http://img.mail.ru/r/js/blogs/tooltiplib.js" type="text/javascript"></script>
+
+<table class="listing_media"><tr>
+	<td width="10" nowrap=""><a id="aleft_video" href="http://r.mail.ru/n45852650" target="_new"><img width="10" height="60" alt="" src="http://img.mail.ru/mail/ru/images/a60_l.gif"/></a></td>
+
+	<td class="list">
+
+	<div class="oh"><div class="oh2">
+		<table id="acont_video"><tr>
+			
+			<td><div class="video"><a href="http://r.mail.ru/n48646326" target="_new"><img src="http://rs.mail.ru/b9723917.jpg" width="80" height="60" alt="" /></a></div></td>
+			
+			<td><div class="video"><a href="http://r.mail.ru/n48637941" target="_new"><img src="http://rs.mail.ru/b10521524.jpg" width="80" height="60" alt="" /></a></div></td>
+			
+			<td><div class="video"><a href="http://r.mail.ru/n48590898" target="_new"><img src="http://rs.mail.ru/b9405294.jpg" width="80" height="60" alt="" /></a></div></td>
+			
+		</tr></table>
+	</div></div>
+	</td>
+
+	<td width="10" nowrap=""><a id="aright_video" href="http://r.mail.ru/n45852650" target="_new"><img width="10" height="60" alt="" src="http://img.mail.ru/mail/ru/images/a60_r.gif"/></a></td>
+</tr></table>
+
+<script type="text/javascript">//<![CDATA[
+aslider.get("video").items = 3;
+aslider.get("video").itemWidth = 90;
+aslider.get("video").mixData = true;
+aslider.get("video").data = [
+	["http://r.mail.ru/clb199069/video.mail.ru/inbox/souzmultfilm/animation/54.html?bestfotos=1", "http://rs.mail.ru/b9723917.jpg", {"album_name":"Мультфильм","album_url":"http://r.mail.ru/clb199069/video.mail.ru/inbox/souzmultfilm/animation/","title":"Ночной цветок"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/videoeralash/year1977/73.html?bestfotos=1", "http://rs.mail.ru/b10521524.jpg", {"album_name":"Ералаш","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/videoeralash/year1977/","title":"1977 год. \"Химики\""}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/videoeralash/year1975/54.html?bestfotos=1", "http://rs.mail.ru/b9405294.jpg", {"album_name":"Ералаш ","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/videoeralash/year1975/","title":"1975 год. \"УРА! УРА! УРА!\""}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/mtvbilan/_myvideo/45.html?bestfotos=1", "http://rs.mail.ru/b9722770.jpg", {"album_name":"Дима Билан","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/mtvbilan/_myvideo/","title":"Привет Америка!"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/1150/1380.html?bestfotos=1", "http://rs.mail.ru/b9404249.jpg", {"album_name":"Городок","album_url":"http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/1150/","title":"Выпуск 58. Реклама. Кариес"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/mtvbilan/_myvideo/48.html?bestfotos=1", "http://rs.mail.ru/b9729860.jpg", {"album_name":"Дима Билан","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/mtvbilan/_myvideo/","title":"Свой парень"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/corp/videomusic/89/1117.html?bestfotos=1", "http://content.foto.mail.ru/corp/labunskaya/329/i-1315.jpg", {"album_name":"Клипы","album_url":"http://r.mail.ru/clb199069/video.mail.ru/corp/videomusic/89/","title":"Timati feat BK. Время."}],
+	["http://r.mail.ru/clb199069/video.mail.ru/corp/afisha/89/503.html?bestfotos=1", "http://rs.mail.ru/b9407307.jpg", {"album_name":"Клип","album_url":"http://r.mail.ru/clb199069/video.mail.ru/corp/afisha/89/","title":"Рефлекс. \"Шанель\""}],
+	["http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/2581/2599.html?bestfotos=1", "http://rs.mail.ru/b9792474.jpg", {"album_name":"Звездные интервью","album_url":"http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/2581/","title":"Pet-Shop Boys"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/mtvbilan/_myvideo/33.html?bestfotos=1", "http://rs.mail.ru/b9723762.jpg", {"album_name":"Дима Билан","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/mtvbilan/_myvideo/","title":"За полшага до победы"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/inforvideo/1/52.html?bestfotos=1", "http://rs.mail.ru/b9404557.jpg", {"album_name":"Видеорецепты","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/inforvideo/1/","title":"Салат Ницца"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/clipmusic/313/335.html?bestfotos=1", "http://rs.mail.ru/b9407171.jpg", {"album_name":"Клип","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/clipmusic/313/","title":"Звери. \"Рома, извини\""}],
+	["http://r.mail.ru/clb199069/video.mail.ru/corp/videomusic/89/1074.html?bestfotos=1", "http://rs.mail.ru/b10398192.jpg", {"album_name":"Клипы","album_url":"http://r.mail.ru/clb199069/video.mail.ru/corp/videomusic/89/","title":"DJ GROOVE feat. Глеб Матвейчук - Третье Желание (OST)"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/inforvideo/1/14.html?bestfotos=1", "http://rs.mail.ru/b9409313.jpg", {"album_name":"Видеорецепты","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/inforvideo/1/","title":"Эскалопы из индейки с лимоном"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/ranetki_sekret/1/36.html?bestfotos=1", "http://rs.mail.ru/b9404689.jpg", {"album_name":"Видеоблог","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/ranetki_sekret/1/","title":"Ранетки. Секретная жизнь. 26 серия"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/mail/clipmusic/479/496.html?bestfotos=1", "http://rs.mail.ru/b9405910.jpg", {"album_name":"Клип","album_url":"http://r.mail.ru/clb199069/video.mail.ru/mail/clipmusic/479/","title":"Алена Свиридова. \"Ой\""}],
+	["http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/1150/1275.html?bestfotos=1", "http://rs.mail.ru/b9410609.jpg", {"album_name":"Городок","album_url":"http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/1150/","title":"Выпуск 52. Операция ОБЕД"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/corp/videomusic/89/1075.html?bestfotos=1", "http://rs.mail.ru/b10397821.jpg", {"album_name":"Клипы","album_url":"http://r.mail.ru/clb199069/video.mail.ru/corp/videomusic/89/","title":"Страйк. Девочка в метро"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/inbox/souzmultfilm/animation/103.html?bestfotos=1", "http://rs.mail.ru/b10182250.jpg", {"album_name":"Мультфильм","album_url":"http://r.mail.ru/clb199069/video.mail.ru/inbox/souzmultfilm/animation/","title":"Уважаемый Леший"}],
+	["http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/2581/2607.html?bestfotos=1", "http://rs.mail.ru/b9779536.jpg", {"album_name":"Звездные интервью","album_url":"http://r.mail.ru/clb199069/video.mail.ru/inbox/digital_access/2581/","title":"Тим Рокс"}]
+];
+jQuery(function() {
+  aslider.get("video").init();
+});
+//]]>
+</script>
+       		<div class="clear" style="height: 10px;"></div>
+<script language="javascript" src="http://img.mail.ru/r/js/blogs/tooltiplib.js" type="text/javascript"></script>
+<script type="text/javascript">
+	ttl_color='#FFFFFF';
+	ttl_background='#F28300';
+	ttl_fontname='Verdana,Arial,sans-serif';
+	ttl_fontsize='11px';
+	ttl_opacity=0.88;
+	ttl_hpos=CENTER;
+	ttl_offsetx=0;
+	ttl_offsety=21;
+	ttl_width=150;
+</script>
+<style type="text/css">
+.l_media {height: 60px; margin-bottom: 10px;}
+.l_media div {width: 25%; float: left; text-align: center;}
+* html .l_media .last {margin-right: -3px;}
+*+html .l_media .last {margin-right: -3px;}
+.l_media img {margin: 0 auto;}
+
+</style>
+
+<h2 class="mb5"><a href="http://r.mail.ru/n43817474?_PHRASE=" target="_blank" >Звездные блоги</a></h2>
+
+<div class="l_media">
+  <div><a  onmouseout="return ttlOut()" onmousemove="return ttlOver(event,'<b>Сергей Адоевцев</b> &ndash;  человек четвертого измерения - он живет в телевизоре')" href="http://r.mail.ru/n46525620?_PHRASE="><img height="60" width="60" alt="" src="http://rs.mail.ru/b9668350.jpg" id="preview_blogs_Id20"/></a>
+</div>
+
+  <div><a  onmouseout="return ttlOut()" onmousemove="return ttlOver(event,'<b>Владимир Тишко</b> - телеведущий и актер')" href="http://r.mail.ru/n43817476?_PHRASE="><img height="60" width="60" alt="" src="http://rs.mail.ru/b8570729.jpg" id="preview_blogs_Id21"/></a></div>
+
+  <div><a  onmouseout="return ttlOut()" onmousemove="return ttlOver(event,'<b>Таня Геворкян</b> - звезда российского музыкального телевидения, теле и радиоведущая')" href="http://r.mail.ru/n43817477?_PHRASE="><img height="60" width="60" alt="" src="http://rs.mail.ru/b8211897.jpg" id="preview_blogs_Id22"/></a></div>
+
+  <div class="last"><a  onmouseout="return ttlOut()" onmousemove="return ttlOver(event,'<b>Костя Цзю</b> - абсолютный чемпион мира по боксу')" href="http://r.mail.ru/n44270995?_PHRASE="><img height="60" width="60" alt="" src="http://rs.mail.ru/b8731307.jpg" id="preview_blogs_Id23"/></a></div>
+</div>
+
+</div>
+            <h2><a href="http://r.mail.ru/n48405029" name="clb283921">Играй&nbsp;с&nbsp;друзьями&nbsp;в&nbsp;Моем&nbsp;Мире</a></h2>
+  <table style="margin-top:8px; width: 100%"><tr><td style="text-align:center; width:25%; padding:0px 2px" valign="top">
+            <a href="http://r.mail.ru/n48405030" name="clb283921"><img src="http://rs.mail.ru/b10385491.gif" width="50" height="50" alt="Любимая ферма" title="Любимая ферма" border="0" /></a><br />
+        <div style="font-size: 10px; line-height:12px; text-align:center;"><a href="http://r.mail.ru/n48405030" name="clb283921" style="text-decoration:none;">Любимая ферма</a></div>
+      </td><td style="text-align:center; width:25%; padding:0px 2px" valign="top">
+        <a href="http://r.mail.ru/n48405031" name="clb283921"><img src="http://rs.mail.ru/b10529891.png" width="50" height="50" alt="Колхоз Червонэ дышло" title="Колхоз Червонэ дышло" border="0" /></a><br />
+        <div style="font-size: 10px; line-height:12px; text-align:center;"><a href="http://r.mail.ru/n48405031" name="clb283921" style="text-decoration:none;">Колхоз "Червонэ дышло"</a></div>
+      </td><td style="text-align:center; width:25%; padding:0px 2px" valign="top">
+        <a href="http://r.mail.ru/n48405032" name="clb283921"><img src="http://rs.mail.ru/b10529899.png" width="50" height="50" alt="Город" title="Город" border="0" /></a><br />
+        <div style="font-size: 10px; line-height:12px; text-align:center;"><a href="http://r.mail.ru/n48405032" name="clb283921" style="text-decoration:none;">Город</a></div>
+      </td><td style="text-align:center; width:25%; padding:0px 2px" valign="top">
+       <a href="http://r.mail.ru/n48405033" name="clb283921"><img src="http://rs.mail.ru/b10529839.gif" width="50" height="50" alt="Легенда" title="Легенда" border="0" /></a><br />
+        <div style="font-size: 10px; line-height:12px; text-align:center;"><a href="http://r.mail.ru/n48405033" name="clb283921" style="text-decoration:none;">Легенда</a></div>
+      </td></tr></table>
+            <div class="mw">&nbsp;</div>
+      		</td>
+      	</tr>
+      </table>      
+
+      <div id="spacer_overcopyright"></div>
+<!--
+    </td>
+  </tr>
+</table>
+-->
+
+
+<table class="copyright">
+<tr>
+<th>&#169; 1999-2010, <a href="http://corp.mail.ru/" class="mf_w">Mail.Ru</a></th>
+<td nowrap><div><a href="http://mail.ru/all/" name="cln5402"><b>Все проекты</b></a> 
+<b>&middot;</b> <a href="http://top.mail.ru/" name="cln5404">Рейтинг</a> <b>&middot;</b> <a href="http://www.mail.ru/pages/help/index.html" name="cln2840">Помощь</a>  
+<b>&middot;</b> <a href="http://sales.mail.ru/" name="cln5408">Реклама на Mail.Ru</a> <b>&middot;</b> <a href="http://corp.mail.ru/" name="cln5409">О компании</a> <b>&middot;</b> <a href="http://corp.mail.ru/vacancy.htm" name="cln5410">Вакансии</a></div></td>
+</tr>
+<tr>
+<th class="none" colspan="2"><div class="mw"> </div></th>
+</tr>
+</table>
+
+<div style="position: absolute;">
+<img src=http://rs.mail.ru/d227295.gif?rnd=661625020 width="1" height="1" border="0" alt="" style="position:absolute;">
+<!--Rating@Mail.ru counter-->
+<script language="javascript" type="text/javascript">//<![CDATA[
+d=document;var a='';a+=';r='+escape(d.referrer);js=10;//]]></script>
+<script language="javascript1.1" type="text/javascript">//<![CDATA[
+a+=';j='+navigator.javaEnabled();js=11;//]]></script>
+<script language="javascript1.2" type="text/javascript">//<![CDATA[
+s=screen;a+=';s='+s.width+'*'+s.height;
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth);js=12;//]]></script>
+<script language="javascript1.3" type="text/javascript">//<![CDATA[
+js=13;//]]></script><script language="javascript" type="text/javascript">//<![CDATA[
+d.write('<img src="http://top5.mail.ru/counter?id=110605;js='+js+
+a+';rand='+Math.random()+'" height="1" width="1" alt="top.mail.ru" border="0" />');
+if(11<js)d.write('<'+'!-- ');//]]></script>
+<noscript><img src="http://top5.mail.ru/counter?js=na;id=110605" 
+height="1" width="1" alt="top.mail.ru" border="0" /></noscript>
+<script language="javascript" type="text/javascript">//<![CDATA[
+if(11<js)d.write('--'+'&#062');//]]></script>
+<!--// Rating@Mail.ru counter-->
+<script language="javascript" type="text/javascript">
+//<![CDATA[
+document.write("<img src='http://counter.yadro.ru/hit?r"+ 
+escape(document.referrer)+((typeof(screen)=="undefined")?"": 
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth? 
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+ 
+";"+Math.random()+ 
+"' width=1 height=1 alt=''>")
+//]]>
+</script>
+<a href="http://top100.rambler.ru/top100/"><img src="http://counter.rambler.ru/top100.cnt?260606" alt="" width="1" height="1" border="0" /></a>
+</div>
+
+
+<script type="text/javascript">//<![CDATA[
+try {
+
+timeInterval('renderbrowser');
+rT.iGet = '';
+for (var i = 0; i < rT.i.length; i++) {
+        rT.comma = rT.iGet != '' ? ',' : '';
+        var bP = rT.i[i].split('=');
+        if (bP[0] != 'renderbrowser') {
+                rT.iGet += (rT.comma + bP[0] + ':' + bP[1]);
+        } else rT.renderbrowser = parseInt(bP[1]);
+}
+rT.comma = '';
+
+rT.img = new Image(); rT.img.src='http://mail.radar.imgsmail.ru/update?p=mail&t=main&v=' + rT.renderbrowser + '&i=' + rT.iGet + '&rnd=155161038' + (document.referrer ? '&r=' + escape(document.referrer) : '') + '';
+
+} catch(e) {}
+//]]></script>
+
+        
+<!-- test -->
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var addHandler = function(o, e, fn) {
+		if (o.addEventListener) o.addEventListener(e, fn, false);
+		else if (o.attachEvent) o.attachEvent('on' + e, fn);
+		else o['on' + e] = fn;
+	}
+	addHandler(document, 'mousedown', function(e) {
+		e = e || window.event;
+		e = e.target || e.srcElement;
+		var name;
+		while (e.parentNode) {
+			if ((name = e.getAttribute('name')) && (name = name.toString()) && name.match(new RegExp("^cl([bn]\\d+)"))) {
+				document.createElement("IMG").src = "http://rs.mail.ru/s"+RegExp.$1+".gif?rnd=" + Math.random()*1E9;
+				break;
+			}
+			e = e.parentNode;
+		}
+		return true;
+	});
+})();
+//]]>
+</script>
+
+<script language="javascript" type="text/javascript">
+    try {
+        if(!getCookie("searchuid"))
+            document.write('<img id="img_searchuid" src="http://bs.mail.ru/count/108pZT9La4K40X00Zh4NwAO4M7sL0vi1R5aYYAZZY0AIgOvc0ue1aRpGIMG6auKDYm51VmG0?67253133" alt="" width=1 height=1 />');
+    } catch(e) {}
+</script>
+
+<script src="https://auth.mail.ru/https.js?700386797" type="text/javascript" language="javascript"></script>
+
+
+<!-- CDN: '' -->
+</body>
+</html>

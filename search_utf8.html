@@ -1,0 +1,603 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	
+	<!-- Radar Start -->
+
+
+<script type="text/javascript">//<![CDATA[
+function timeInterval(bP) {
+	if (!rT[bP]) {
+		rT[bP] = rT.now();
+	} else {
+		rT.i[rT.i.length] = bP + '=' + (rT.now() - rT[bP]);
+		delete rT[bP];
+	}
+}
+
+var rT = { //renderTime
+	i: [],
+	base: "http://gomail.radar.imgsmail.ru/update?",
+	radar_type: "",
+	show_result: typeof show_result !== "undefined",
+	now: function () {
+		return (new Date).getTime();
+	},
+	addHandler: function(object, event, handler) {
+		if (object.addEventListener) object.addEventListener(event, handler, false);
+		else if (object.attachEvent) object.attachEvent('on' + event, handler);
+	}
+};
+rT.rnd = Math.round( Math.random() * rT.now()) + 1000;
+
+if (window.name.indexOf('srvt') != -1) {
+	rT.srvt = rT.now() - parseInt(window.name.substr(5));
+	window.name = '';
+}
+
+rT.addHandler(document, 'click', function() {
+	if (!window.name.length || window.name.indexOf('srvt') != -1) window.name = 'srvt=' + rT.now();
+});
+rT.addHandler(document, 'keypress', function() {
+	if (window.name.indexOf('srvt') != -1) window.name = '';
+});
+
+(rT.img0 = new Image).src = rT.base + 'p=gomail0' +
+	(rT.radar_type ? '&t=' + rT.radar_type : '') + 
+	(rT.srvt ? '&i=srvt:' + rT.srvt : '') + 
+	'&v=0&rnd=' + rT.rnd;
+
+timeInterval('renderdocument');
+//]]></script>
+
+
+<script type="text/javascript">//<![CDATA[
+try {
+	timeInterval("loadcomplete");
+	rT.addHandler(window, "load", function() {
+		timeInterval("loadcomplete");
+		for (var l = rT.i.length, time; l--;) {
+			if ((time = rT.i[l].split("="))[0] === "loadcomplete") {
+				(rT.img2 = new Image).src = rT.base + "p=gomail2&t=" + rT.radar_type + "&v=" + parseInt(time[1]) + "&rnd=" + rT.rnd;
+				break;
+			}
+		}
+	});
+} catch(e){}
+//]]></script>
+
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+	<title>Поиск@Mail.Ru</title>
+	<link rel="SHORTCUT ICON" href="/favicon.ico" />
+	<link rel="search" href="/opensearch.xml" title="Поиск@Mail.Ru" type="application/opensearchdescription+xml" />
+	
+	<link rel="stylesheet" type="text/css" href="/css/gomail.css?191010" />
+	<!--[if lt IE 7]><style type="text/css">body{width:expression(document.documentElement.clientWidth>=1335?"1335px":"");}</style><![endif]-->
+	<script type="text/javascript" src="http://go.imgsmail.ru/js/jquery/1.4.2.js"></script>
+	<script type="text/javascript" src="/js/harmony.js?031110"></script>
+</head>
+<body id="section-www">
+
+<!-- BEGIN Header -->
+
+<div id="menuWrap">
+<table id="tableitself">
+	<tr>
+		<td id="menuLogo" valign="top">
+			<!-- logo -->
+			<div class="logoholder">
+				<div class="c1"><div class="c2"><div class="c3"><div class="c4">
+
+					<div class="lb-wrap">
+						<h1 class="logoback fixPNG"><a href="/" title="Поиск@Mail.Ru" class="prj"><span>Поиск</span></a><a class="prt" href="http://mail.ru/" title="@Mail.Ru"><span>@Mail.Ru</span></a></h1>
+					</div>
+
+				</div></div></div></div>
+			</div>
+			
+
+
+			
+			
+			<!-- /logo -->
+		</td>
+		<td id="menuSelf" valign="top">
+			<!-- self -->
+			<form name="Msearch" id="Msearch" action="/search" onsubmit="return check_q(this);">
+				
+				<input type="hidden" name="rch" value="r" />
+				
+
+				<div id="parentZaklId">
+					<table cellpadding="0" cellspacing="0" border="0" id="allMarkTable">
+						<tr>
+							<td class="current"><div class="tlc"><div><div class="ahold"><a id="int_href"    href="/search?q=">Поиск в Интернете</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="pic_href"    href="/search_images?q=">Картинки</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="video_href"  href="/search_video?q=">Видео</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="lot_href"    href="http://torg.mail.ru/search/?q=">Товары</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="people_href" href="http://my.mail.ru/cgi-bin/my/search?search=1&amp;typeBare=1">Люди</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="map_href"    href="http://r.mail.ru/cln3329/s.maps.mail.ru/?q=">Карты</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="otvet_href"  href="/search_otvet?q=">Ответы</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="job_href"    href="http://rabota.mail.ru/vac_search/?go=1&amp;from_search=1&amp;query=">Работа</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="dict_href"   href="http://lingvo.mail.ru/?text=">Словари</a></div></div></div></td>
+							<td class="common" ><div class="tlc"><div><div class="ahold"><a id="hitech_href" href="http://hi-tech.mail.ru/search/?s=zdts&amp;q=">Hi-Tech</a></div></div></div></td>
+							<td align="right" width="100%"><!-- brand holder --></td>
+						</tr>
+					</table>			
+				</div>
+				<div>
+					<div class="brand_back">			
+						<div id="wrc1">
+							<div class="c2"><div class="c3"><div class="c4">
+								<div style="width:100%"><div style="padding:8px 7px">
+								<table border="0" width="100%">
+									<tr>
+										<td rowspan="2" valign="middle" class="inhold" style="width:98%;">
+											<div class="strin"><input type="text" name="q" class="q" id="q" value="" onfocus="this.hasFocus = true;" onblur="this.hasFocus = false;" /></div>
+										</td>
+										<td class="ct" style="width:2%;"><img src="http://go.imgsmail.ru/img/0.gif" height="9" border="0" /></td>
+										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="" /></td>
+										<td rowspan="2" nowrap="nowrap">
+											<span style="padding-right: 10px;"><a href="/advanced.html?q=&amp;num=10&amp;rch=r" title="Расширенный поиск"><img src="http://go.imgsmail.ru/img/mail/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
+										</td>
+										<td rowspan="2" nowrap="nowrap"><span id="visualKeyboard" style="display: none; padding-right:10px"><a href="http://mail.ru/kb/" title="Русская клавиатура" target="_blank" onclick="document.domain='mail.ru'; window.open('http://mail.ru/kb/index.html?form=Msearch&amp;text=q&amp;keymode=2&amp;savemode=0', 'keyb','height=360,width=610,toolbar=no,menubar=no,location=no,scrollbars=no,focus=yes,top=50,left=50'); return false;"><img src="http://go.imgsmail.ru/img/mail/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" /></a></span></td>
+									</tr>
+									<tr>
+										<td class="cb"><img src="http://go.imgsmail.ru/img/0.gif" height="9" border="0" /></td>
+									</tr>
+								</table>
+								</div></div>
+							</div></div></div>
+						</div>
+					</div>
+					<div class="pl5" style="padding-top:3px">
+						<table border="0" cellpadding="0" cellspacing="0" class="t80" width="100%">
+							<tr valign="top">
+
+
+		
+
+
+<!-- PNT: Num Results -->
+								<td align="right" style="width: 100%; white-space: nowrap;">
+									<div id="sres" style="visibility: hidden; color: #999;">
+										Найдено:
+										<span class="sites">сайтов <b>0</b>,</span>
+										<span class="docs">документов <b>0</b></span>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</form>		
+		<!-- /self -->
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><div class="dista">&nbsp;</div></td>
+	</tr>
+</table>
+</div>
+
+<!-- END Header -->
+
+<!-- END 1PRT -->
+<!-- BEGIN 2PRT -->
+
+
+<script type="text/javascript">//<![CDATA[
+try {
+	timeInterval("renderserp");
+} catch(e){}
+//]]></script>
+
+
+
+
+<!-- TNS Counter -->
+<div class="cntBlock"><img src="http://www.tns-counter.ru/V13a****mail_ru/ru/CP1251/tmsec=mail_go-search/" width="1" height="1" alt="" /></div>
+
+
+
+<div style="position: absolute; left: 3%; top: .8em; margin-top: 1px;"><img src="http://18.afs.googleadservices.com/images/partners//mailru-ws.png" width="1" height="15" alt="mailru-ws" /></div>
+
+
+	
+<script type="text/javascript">//<![CDATA[
+var STP = {
+	query: "null",
+	drch:
+		
+			"e"
+		,
+
+	rch: "r",
+	
+	
+	isQuerySite: false,
+
+	surl: "",
+	geo: 200,
+	mrcu: "36104CDD406D3DDA1B65B95D49B8",
+	section: "www",
+	bookmark:
+
+		"int_href"
+,
+	yato: -1,
+	cphraserVideo: 0,
+	suid: "465526431289553661",
+	userType: "21",
+	qid: "15dd1aea3e0005cb",
+
+	totalSites:
+	
+		0
+	,
+	totalSitesF:
+	
+		"0"
+	,
+	totalDocs:
+	
+		0
+	,
+	totalDocsF:
+	
+		
+		""
+		
+	
+
+};
+//]]></script>
+
+
+
+
+
+
+<script type="text/javascript">redirect("/")</script>
+
+
+<!-- WRAPPING: BEGIN -->
+<div id="wrapper">
+	<div class="colls">
+		<!-- LEFT COL: START -->
+		<div id="collMain" class="collRightYes">
+			<div class="inner">
+
+
+	
+
+	
+	
+	
+	
+		
+
+	
+	
+	
+	
+	
+	
+	
+		
+		
+		
+		
+		
+			
+			
+			
+		
+		
+		
+	
+		
+	
+		
+	
+
+	
+				
+				<div class="notFound">
+		<!-- QRY NULL? -->
+		
+		<!-- QRY NULL: YES -->
+        <!-- REDIR -->
+        
+		<p>Пожалуйста, введите запрос для начала поиска.</p>
+        
+        <!-- /REDIR -->
+		<!-- /QRY NULL: YES -->
+        
+</div>
+
+	
+
+
+			</div>
+		</div>
+		<!-- LEFT COL: END -->
+		
+		<!-- RIGHT COL: START -->
+		<div id="collRight">
+			<div class="inner">
+
+
+
+	
+
+	
+	
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+				<!-- 2515 -->
+				<div id="rbNotFoundQueryExample" class="queryExample mb15"><script type="text/javascript"><!--
+var rb_link = "http://r.mail.ru/n45435995";
+var rb_swf = "http://rs.mail.ru/b8816951.swf";
+var rb_fver = "8";
+var rb_width = "240";
+var rb_height = "400";
+var rb_flash = 0;
+if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"] ) {
+ var plugin = navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin;
+ if (plugin && parseInt(plugin.description.match(/\d+/)[0]) >= rb_fver)
+  rb_flash = 1;
+ } else if (navigator.appName && navigator.appName.indexOf("Microsoft") != -1 &&
+ navigator.userAgent.indexOf("Windows") != -1 && navigator.userAgent.indexOf("Windows 3.1") == -1) {
+  rb_flash = 1;
+}
+if (rb_flash) {
+ document.write('<scr'+'ipt type="text/javascript" src="http://img.mail.ru/r/js/rb_flash.js"></scr'+'ipt>');
+} else {
+ 
+}
+//--></script></div>
+				<!-- /2515 -->
+
+
+			</div>
+		</div>
+		<!-- RIGHT COL: END -->
+	</div>
+</div>
+<!-- WRAPPING: END -->
+
+
+
+<!-- goes always too -->
+
+<!-- footer START -->
+
+<div id="footer">
+	<div style="padding-left:3%; width:100%">
+		<div class="bluespacer">
+			<div class="crnPixTL"><div class="crnPixTR"><div class="crnPixBL"><div class="crnPixBR">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bluefooter">
+					<tr>
+						<td class="white">&copy; 1999-2010, <a href="http://corp.mail.ru/">Mail.Ru</a></td>
+						<td class="white">
+							<div align="right">
+								<a href="/help.html">Помощь</a>
+								&middot; <a href="mailto:go@corp.mail.ru" title="Сообщить в службу поддержки">Служба поддержки</a>
+
+								&middot; <a href="/addurl">Добавить сайт</a>
+
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div></div></div></div>
+		</div>
+	</div>
+	<div class="t80 pt10 pb10" style="text-align:center">
+		<a href="http://news.mail.ru/">Новости</a>
+		<b>&middot;</b> <a href="http://auto.mail.ru/">Авто</a>
+		<b>&middot;</b> <a href="http://afisha.mail.ru/">Афиша</a>
+		<b>&middot;</b> <a href="http://torg.ru/">Покупки</a>
+		<b>&middot;</b> <a href="http://travel.mail.ru/">Путешествия</a>
+		<b>&middot;</b> <a href="http://otvet.mail.ru">Ответы</a>
+		<b>&middot;</b> <a href="http://love.mail.ru/">Знакомства</a>
+		<b>&middot;</b> <a href="http://cards.mail.ru/">Открытки</a>
+		<b>&middot;</b> <a href="http://content.mail.ru/">Рассылки</a>
+		<b>&middot;</b> <a href="http://list.mail.ru/">Каталог</a>
+		<b>&middot;</b> <a href="http://agent.mail.ru/">Агент</a>
+	</div>
+</div>
+
+<!-- footer END -->
+
+
+
+
+
+
+
+	
+
+
+<div style="display: none;" id="goSuggest" class="shadow-rb12">
+	<div class="sWrap">
+		<div class="sInnr">
+			<div id="goSuggestInnr">
+				<div id="suggest-loading" class="loading"></div>
+				<div id="suggest-notfound" class="notfound">Нет предложений</div>
+			</div>
+			<div class="opts">
+				<form name="SGSESelect" id="SGSESelect">
+					
+					<label>
+
+						<input type="radio" name="rch" value="r" />
+
+						искать в Рунете
+					</label>
+					<label>
+
+						<input checked="checked" type="radio" name="rch" value="e" />
+
+						искать в мире
+					</label>
+					<div class="sClose"><a id="suggest-close-lnk">закрыть</a></div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<b class="b-r"></b>
+	<b class="b-b"></b>
+	<b class="c-rt"></b>
+	<b class="c-rb"></b>
+	<b class="c-lb"></b>
+</div>
+
+
+
+<!-- BEGIN HotKey -->
+
+
+
+
+
+
+
+
+
+	
+
+<!-- END HotKey -->
+
+
+
+<script type="text/javascript">//<![CDATA[
+_init(
+{
+	
+	censure: false,
+		
+
+		
+		
+		
+	hotKey: {
+		qurl: null,
+		mistype: false,
+		mapaddr: false
+	}
+	
+}
+);
+//]]></script>
+
+
+
+<!-- BEGIN Counters -->
+
+<div style="position:absolute;top:0;height:0;overflow:hidden;visibility:hidden;">
+<!--Rating@Mail.ru counter-->
+<script language="javascript" type="text/javascript"><!--
+d=document;var a='';a+=';r='+escape(d.referrer);js=10;//--></script>
+<script language="javascript1.1" type="text/javascript"><!--
+a+=';j='+navigator.javaEnabled();js=11;//--></script>
+<script language="javascript1.2" type="text/javascript"><!--
+s=screen;a+=';s='+s.width+'*'+s.height;
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth);js=12;//--></script>
+<script language="javascript1.3" type="text/javascript"><!--
+js=13;//--></script><script language="javascript" type="text/javascript"><!--
+d.write('<img src="http://de.cb.b0.a0.top.mail.ru/counter'+'?id=48844;js='+js+
+a+';rand='+Math.random()+'" height="1" width="1" alt="top.mail.ru" border="0">');
+if(11<js)d.write('<'+'!-- ')//--></script>
+<noscript><img src="http://de.cb.b0.a0.top.mail.ru/counter?js=na;id=48844" 
+height="1" width="1" alt="top.mail.ru" border="0"></noscript>
+<script language="javascript" type="text/javascript"><!--
+if(11<js)d.write('--'+'>');//--></script>
+<!--// Rating@Mail.ru counter-->
+<script type="text/javascript">//<![CDATA[
+new Image().src = "http://counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random();//]]></script>
+<img src="/0c.gif?megarandom=15dd1aea3e0005cb&amp;h=r" width="1" height="1" alt="" />
+</div>
+<!-- END Counters -->
+
+
+
+<!-- Radar Stop -->
+
+
+<script type="text/javascript">//<![CDATA[
+try {
+(function(){
+	timeInterval("renderserp");
+	timeInterval("renderdocument");
+	
+	var iGet = [];
+	
+	for (var i = 0, l = rT.i.length, bP; i < l; i++) {
+		bP = rT.i[i].split('=');
+		bP[1] = parseInt(bP[1]);
+		switch (bP[0]) {
+			case "renderserp":
+				(rT.img1 = new Image).src = rT.base + 'p=gomail1&t=' + rT.radar_type +
+					'&v=' + bP[1] +
+					'&rnd=' + rT.rnd;
+			break;
+			case "renderdocument":
+				rT[bP[0]] = bP[1];
+			break;
+			default:
+				iGet[iGet.length] = bP.join(":");
+			break;
+		}
+	}
+
+	(rT.img = new Image).src = rT.base + 'p=gomail&t=' + rT.radar_type +
+		'&v=' + rT.renderdocument +
+		'&i=' + iGet.join(",") +
+		'&rnd=' + rT.rnd +
+		(document.referrer ? '&r=' + escape(document.referrer) : '');
+	
+	if (rT.show_result) {
+		rT.addHandler(window, 'load', function() {
+			var d = document.createElement('DIV');
+			d.id = 'radar_result';
+			d.className = 'radar_result';
+			d.style.padding = '5px';
+			d.style.fontSize = '10px';
+			d.innerHTML = rT.img.src;
+			document.body.appendChild(d);
+		});
+	}
+})();
+} catch(e) {}
+//]]></script>
+
+
+<!-- END 2PRT -->
+
+</body>
+</html>
+
+

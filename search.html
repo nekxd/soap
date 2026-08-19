@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+<title>Поиск@soap.nekxd.fun</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="assets/css/gomail.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/go_search.css" />
+<style>
+/* local result styling in the spirit of go.mail.ru 2010 */
+.search_list {margin: 0; padding: 0;}
+.search_list .res {margin: 0 0 1.6em 5.2em; position: relative;}
+.search_list .res-head {margin: 0 0 .2em; font-size: 1.3em; font-weight: normal; line-height: 1.2em;}
+.search_list .res-head a {color: #0857A6; text-decoration: underline;}
+.search_list .res-head a:visited {color: #551A8B;}
+.search_list .res-head a:hover {text-decoration: none;}
+.search_list .res-desc {margin: .3em 0 0; color: #000;}
+.search_list .res-url {margin: .2em 0 0; color: #060; font-size: .95em;}
+.search_list .res-favicon {position: absolute; left: -2.2em; top: .2em;}
+.search_list .res-favicon img {width: 16px; height: 16px; border: 0;}
+#pager {margin: 1em 0 2em 5.2em; font-size: .9em;}
+#pager a, #pager b {margin-right: .6em;}
+#loading {margin: 2em 0 2em 5.2em; color: #666;}
+#errbox {margin: 1em 0 1em 5.2em; color: #333; font-size: .95em;}
+#errbox a {color: #0857A6;}
+</style>
+</head>
+<body id="section-www">
+
+<!-- Header -->
+<div id="menuWrap">
+<table id="tableitself">
+	<tr>
+		<td id="menuLogo" valign="top">
+			<div class="logoholder">
+				<div class="c1"><div class="c2"><div class="c3"><div class="c4">
+					<div class="lb-wrap">
+						<h1 class="logoback fixPNG"><a href="search.html" title="Поиск@soap.nekxd.fun" class="prj"><span>Поиск</span></a><a class="prt" href="index.html" title="@soap.nekxd.fun"><span>@soap.nekxd.fun</span></a></h1>
+					</div>
+				</div></div></div></div>
+			</div>
+		</td>
+		<td id="menuSelf" valign="top">
+			<form name="Msearch" id="Msearch" action="search.html" onsubmit="return doSearch(this);">
+				<div id="parentZaklId">
+					<table cellpadding="0" cellspacing="0" border="0" id="allMarkTable">
+						<tr>
+							<td class="current" id="tab_int"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></td>
+							<td class="common" id="tab_pic"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?iax=images&ia=images&q=">Картинки</a></div></div></div></td>
+							<td class="common" id="tab_video"><div class="tlc"><div><div class="ahold"><a href="https://www.youtube.com/results?search_query=">Видео</a></div></div></div></td>
+							<td class="common" id="tab_lot"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Товары</a></div></div></div></td>
+							<td class="common" id="tab_people"><div class="tlc"><div><div class="ahold"><a href="https://openvk.org/search">Люди</a></div></div></div></td>
+							<td class="common" id="tab_map"><div class="tlc"><div><div class="ahold"><a href="https://www.google.com/maps/search/">Карты</a></div></div></div></td>
+							<td class="common" id="tab_otvet"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?q=ответы">Ответы</a></div></div></div></td>
+							<td class="common" id="tab_job"><div class="tlc"><div><div class="ahold"><a href="https://hh.ru/search/vacancy?text=">Работа</a></div></div></div></td>
+							<td class="common" id="tab_dict"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=dict&q=">Словари</a></div></div></div></td>
+							<td class="common" id="tab_hitech"><div class="tlc"><div><div class="ahold"><a href="https://habr.com/ru/search/?q=">Hi-Tech</a></div></div></div></td>
+							<td align="right" width="100%"></td>
+						</tr>
+					</table>
+				</div>
+				<div>
+					<div class="brand_back">
+						<div id="wrc1">
+							<div class="c2"><div class="c3"><div class="c4">
+								<div style="width:100%"><div style="padding:8px 7px">
+								<table border="0" width="100%">
+									<tr>
+										<td rowspan="2" valign="middle" class="inhold" style="width:98%;">
+											<div class="strin"><input type="text" name="q" class="q" id="q" value="" /></div>
+										</td>
+										<td class="ct" style="width:2%;"><img src="assets/img/gi/img/0.gif" height="9" border="0" /></td>
+										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="" /></td>
+										<td rowspan="2" nowrap="nowrap">
+											<span style="padding-right: 10px;"><a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
+										</td>
+										<td rowspan="2" nowrap="nowrap"><span style="padding-right:10px"><a href="#" title="Русская клавиатура" onclick="return false;"><img src="assets/img/ii/r/go/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" /></a></span></td>
+									</tr>
+									<tr>
+										<td class="cb"><img src="assets/img/gi/img/0.gif" height="9" border="0" /></td>
+									</tr>
+								</table>
+								</div></div>
+							</div></div></div>
+						</div>
+					</div>
+					<div class="pl5" style="padding-top:3px">
+						<table border="0" cellpadding="0" cellspacing="0" class="t80" width="100%">
+							<tr valign="top">
+								<td align="right" style="width: 100%; white-space: nowrap;">
+									<div id="sres" style="visibility: hidden; color: #999;">
+										Найдено:
+										<span class="sites">сайтов <b id="cntSites">0</b>,</span>
+										<span class="docs">документов <b id="cntDocs">0</b></span>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><div class="dista">&nbsp;</div></td>
+	</tr>
+</table>
+</div>
+
+<!-- Results -->
+<div id="wrapper">
+	<div class="colls">
+		<div id="collMain" class="collRightYes">
+			<div class="inner">
+				<div id="loading" style="display:none;">Идёт поиск…</div>
+				<div id="errbox" style="display:none;"></div>
+				<div class="search_list" id="results"></div>
+				<div id="pager"></div>
+			</div>
+		</div>
+		<div id="collRight">
+			<div class="inner">
+				<div class="mb15" style="font-size:.85em; color:#666;">
+					Поиск работает на <a href="https://duckduckgo.com/" style="color:#0857A6;">DuckDuckGo</a>.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Footer -->
+<div id="footer">
+	<div style="padding-left:3%; width:100%">
+		<div class="bluespacer">
+			<div class="crnPixTL"><div class="crnPixTR"><div class="crnPixBL"><div class="crnPixBR">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bluefooter">
+					<tr>
+						<td class="white">&copy; 2025-2026, <a href="https://nekxd.fun/">soap.nekxd.fun</a></td>
+						<td class="white">
+							<div align="right">
+								<a href="#">Помощь</a>
+								&middot; <a href="#" title="Сообщить в службу поддержки">Служба поддержки</a>
+								&middot; <a href="#">Добавить сайт</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div></div></div></div>
+		</div>
+	</div>
+	<div class="t80 pt10 pb10" style="text-align:center">
+		<a href="https://habr.com/ru/news/">Новости</a>
+		<b>&middot;</b> <a href="https://auto.ru/">Авто</a>
+		<b>&middot;</b> <a href="https://duckduckgo.com/?q=афиша">Афиша</a>
+		<b>&middot;</b> <a href="https://www.avito.ru/">Покупки</a>
+		<b>&middot;</b> <a href="https://duckduckgo.com/?q=путешествия">Путешествия</a>
+		<b>&middot;</b> <a href="https://duckduckgo.com/?q=ответы">Ответы</a>
+		<b>&middot;</b> <a href="https://duckduckgo.com/?q=знакомства">Знакомства</a>
+		<b>&middot;</b> <a href="https://duckduckgo.com/?q=открытки">Открытки</a>
+		<b>&middot;</b> <a href="https://duckduckgo.com/?q=рассылки">Рассылки</a>
+		<b>&middot;</b> <a href="https://openvk.org/">OpenVK</a>
+		<b>&middot;</b> <a href="https://mrim.su/">Агент</a>
+	</div>
+</div>
+
+<script src="assets/js/common.js"></script>
+<script>
+var curQuery = '', curPage = 1;
+
+function getParam(name){
+  var m = location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+  return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+}
+
+function doSearch(f){
+  var q = f.q.value.trim();
+  if(!q){ f.q.focus(); return false; }
+  location.href = 'search.html?q=' + encodeURIComponent(q);
+  return false;
+}
+
+function resolveDdgHref(href){
+  // DDG html results use //duckduckgo.com/l/?uddg=<encoded>&rut=...
+  try {
+    if(href.indexOf('uddg=') !== -1){
+      var m = href.match(/uddg=([^&]+)/);
+      if(m) return decodeURIComponent(m[1]);
+    }
+  } catch(e){}
+  if(href.indexOf('//') === 0) return 'https:' + href;
+  return href;
+}
+
+function parseDdgHtml(text){
+  var doc = new DOMParser().parseFromString(text, 'text/html');
+  var out = [];
+  doc.querySelectorAll('.result').forEach(function(r){
+    var a = r.querySelector('.result__a');
+    if(!a) return;
+    var sn = r.querySelector('.result__snippet');
+    var ur = r.querySelector('.result__url');
+    var icon = r.querySelector('.result__icon img');
+    out.push({
+      title: a.textContent,
+      url: resolveDdgHref(a.getAttribute('href') || ''),
+      snippet: sn ? sn.innerHTML : '',
+      displayUrl: ur ? ur.textContent.trim() : '',
+      favicon: icon ? icon.getAttribute('src') : ''
+    });
+  });
+  return out;
+}
+
+function parseJinaMarkdown(text){
+  // r.jina.ai returns markdown: ## [Title](url) blocks
+  var out = [];
+  var lines = text.split('\n');
+  var cur = null;
+  for(var i=0;i<lines.length;i++){
+    var line = lines[i];
+    var h = line.match(/^##\s+\[(.+?)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/);
+    if(h){
+      if(cur) out.push(cur);
+      cur = { title: h[1], url: resolveDdgHref(h[2]), snippet: '', displayUrl: '', favicon: '' };
+      continue;
+    }
+    if(cur){
+      var img = line.match(/\[!\[Image \d+\]\(([^)]+)\)\]/);
+      if(img && !cur.favicon) cur.favicon = img[1];
+      var dom = line.match(/^\[([^\]!][^\]]*)\]\(/);
+      if(dom && !cur.displayUrl) cur.displayUrl = dom[1];
+      var p = line.match(/^\[(.+?)\]\(https:\/\/duckduckgo\.com\/l\//);
+      if(p && !cur.snippet){
+        cur.snippet = p[1].replace(/\*\*/g,'');
+      }
+    }
+  }
+  if(cur) out.push(cur);
+  // dedupe by url
+  var seen = {}, res = [];
+  out.forEach(function(r){
+    if(!seen[r.url]){ seen[r.url]=1; res.push(r); }
+  });
+  return res;
+}
+
+function renderResults(items){
+  var box = document.getElementById('results');
+  if(!items.length){
+    box.innerHTML = '<div class="notFound"><p>Ничего не найдено. Попробуйте изменить запрос.</p></div>';
+    return;
+  }
+  var html = '';
+  items.forEach(function(r){
+    var fav = r.favicon ? '<span class="res-favicon"><img src="'+esc(r.favicon)+'" alt="" onerror="this.style.display=\'none\'" /></span>' : '';
+    html += '<div class="res">'+fav+
+      '<div class="res-head"><a href="'+esc(r.url)+'" target="_blank">'+esc(r.title)+'</a></div>'+
+      (r.snippet ? '<div class="res-desc">'+r.snippet+'</div>' : '')+
+      (r.displayUrl ? '<div class="res-url">'+esc(r.displayUrl)+'</div>' : '')+
+      '</div>';
+  });
+  box.innerHTML = html;
+  document.getElementById('cntSites').textContent = items.length;
+  document.getElementById('cntDocs').textContent = items.length;
+  document.getElementById('sres').style.visibility = 'visible';
+}
+
+function renderPager(total){
+  var p = document.getElementById('pager');
+  if(total < 5){ p.innerHTML = ''; return; }
+  var html = '';
+  if(curPage > 1) html += '<a href="search.html?q='+encodeURIComponent(curQuery)+'&page='+(curPage-1)+'">&larr; назад</a>';
+  html += '<b>стр. '+curPage+'</b>';
+  html += '<a href="search.html?q='+encodeURIComponent(curQuery)+'&page='+(curPage+1)+'">дальше &rarr;</a>';
+  p.innerHTML = html;
+}
+
+async function runSearch(){
+  curQuery = getParam('q');
+  curPage = parseInt(getParam('page') || '1', 10) || 1;
+  document.getElementById('q').value = curQuery;
+  if(!curQuery){
+    document.getElementById('results').innerHTML = '<div class="notFound"><p>Введите запрос в строку поиска.</p></div>';
+    return;
+  }
+  document.title = curQuery + ' — Поиск@soap.nekxd.fun';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('errbox').style.display = 'none';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('pager').innerHTML = '';
+
+  var s = (curPage-1)*30;
+  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(curQuery) +
+    (s ? '&s=' + s + '&dc=' + (s+1) : '') + '&kl=ru-ru';
+
+  var items = [];
+  try {
+    var text = await fetchViaProxy(ddgUrl, 25000);
+    if(text && text.jina){
+      items = parseJinaMarkdown(text.text);
+    } else {
+      items = parseDdgHtml(text);
+    }
+  } catch(e) {
+    // last resort
+  }
+
+  document.getElementById('loading').style.display = 'none';
+  if(!items.length){
+    var eb = document.getElementById('errbox');
+    eb.style.display = 'block';
+    eb.innerHTML = 'Не удалось получить результаты (поиск DuckDuckGo недоступен из этой сети). ' +
+      '<a href="https://duckduckgo.com/?q='+encodeURIComponent(curQuery)+'" target="_blank">Открыть результаты на DuckDuckGo &rarr;</a>';
+    return;
+  }
+  renderResults(items);
+  renderPager(items.length);
+}
+
+document.addEventListener('DOMContentLoaded', runSearch);
+</script>
+</body>
+</html>
