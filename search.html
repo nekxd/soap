@@ -46,12 +46,12 @@
 					<table cellpadding="0" cellspacing="0" border="0" id="allMarkTable">
 						<tr>
 							<td class="current" id="tab_int"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></td>
-							<td class="common" id="tab_pic"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?iax=images&ia=images&q=">Картинки</a></div></div></div></td>
+							<td class="common" id="tab_pic"><div class="tlc"><div><div class="ahold"><a href="http://duckduckgo.com/?iax=images&ia=images&q=">Картинки</a></div></div></div></td>
 							<td class="common" id="tab_video"><div class="tlc"><div><div class="ahold"><a href="https://www.youtube.com/results?search_query=">Видео</a></div></div></div></td>
 							<td class="common" id="tab_lot"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Товары</a></div></div></div></td>
 							<td class="common" id="tab_people"><div class="tlc"><div><div class="ahold"><a href="https://openvk.org/search">Люди</a></div></div></div></td>
 							<td class="common" id="tab_map"><div class="tlc"><div><div class="ahold"><a href="https://www.google.com/maps/search/">Карты</a></div></div></div></td>
-							<td class="common" id="tab_otvet"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?q=ответы">Ответы</a></div></div></div></td>
+							<td class="common" id="tab_otvet"><div class="tlc"><div><div class="ahold"><a href="http://duckduckgo.com/?q=ответы">Ответы</a></div></div></div></td>
 							<td class="common" id="tab_job"><div class="tlc"><div><div class="ahold"><a href="https://hh.ru/search/vacancy?text=">Работа</a></div></div></div></td>
 							<td class="common" id="tab_dict"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=dict&q=">Словари</a></div></div></div></td>
 							<td class="common" id="tab_hitech"><div class="tlc"><div><div class="ahold"><a href="https://habr.com/ru/search/?q=">Hi-Tech</a></div></div></div></td>
@@ -72,7 +72,7 @@
 										<td class="ct" style="width:2%;"><img src="assets/img/gi/img/0.gif" height="9" border="0" /></td>
 										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="" /></td>
 										<td rowspan="2" nowrap="nowrap">
-											<span style="padding-right: 10px;"><a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
+											<span style="padding-right: 10px;"><a href="http://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
 										</td>
 										<td rowspan="2" nowrap="nowrap"><span style="padding-right:10px"><a href="#" title="Русская клавиатура" onclick="return false;"><img src="assets/img/ii/r/go/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" /></a></span></td>
 									</tr>
@@ -121,7 +121,7 @@
 		<div id="collRight">
 			<div class="inner">
 				<div class="mb15" style="font-size:.85em; color:#666;">
-					Поиск работает на <a href="https://duckduckgo.com/" style="color:#0857A6;">DuckDuckGo</a>.
+					Поиск работает на <a href="http://duckduckgo.com/" style="color:#0857A6;">DuckDuckGo</a>.
 				</div>
 			</div>
 		</div>
@@ -159,7 +159,7 @@
 		<b>&middot;</b> <a href="https://duckduckgo.com/?q=открытки">Открытки</a>
 		<b>&middot;</b> <a href="https://duckduckgo.com/?q=рассылки">Рассылки</a>
 		<b>&middot;</b> <a href="https://openvk.org/">OpenVK</a>
-		<b>&middot;</b> <a href="https://mrim.su/">Агент</a>
+		<b>&middot;</b> <a href="http://mrim.su/">Агент</a>
 	</div>
 </div>
 
@@ -218,7 +218,7 @@ function parseJinaMarkdown(text){
   var cur = null;
   for(var i=0;i<lines.length;i++){
     var line = lines[i];
-    var h = line.match(/^##\s+\[(.+?)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/);
+    var h = line.match(/^##\s+\[(.+?)\]\((http:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/);
     if(h){
       if(cur) out.push(cur);
       cur = { title: h[1], url: resolveDdgHref(h[2]), snippet: '', displayUrl: '', favicon: '' };
@@ -229,7 +229,7 @@ function parseJinaMarkdown(text){
       if(img && !cur.favicon) cur.favicon = img[1];
       var dom = line.match(/^\[([^\]!][^\]]*)\]\(/);
       if(dom && !cur.displayUrl) cur.displayUrl = dom[1];
-      var p = line.match(/^\[(.+?)\]\(https:\/\/duckduckgo\.com\/l\//);
+      var p = line.match(/^\[(.+?)\]\(http:\/\/duckduckgo\.com\/l\//);
       if(p && !cur.snippet){
         cur.snippet = p[1].replace(/\*\*/g,'');
       }
@@ -290,7 +290,7 @@ async function runSearch(){
   document.getElementById('pager').innerHTML = '';
 
   var s = (curPage-1)*30;
-  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(curQuery) +
+  var ddgUrl = 'http://html.duckduckgo.com/html/?q=' + encodeURIComponent(curQuery) +
     (s ? '&s=' + s + '&dc=' + (s+1) : '') + '&kl=ru-ru';
 
   var items = [];
@@ -310,7 +310,7 @@ async function runSearch(){
     var eb = document.getElementById('errbox');
     eb.style.display = 'block';
     eb.innerHTML = 'Не удалось получить результаты (поиск DuckDuckGo недоступен из этой сети). ' +
-      '<a href="https://duckduckgo.com/?q='+encodeURIComponent(curQuery)+'" target="_blank">Открыть результаты на DuckDuckGo &rarr;</a>';
+      '<a href="http://duckduckgo.com/?q='+encodeURIComponent(curQuery)+'" target="_blank">Открыть результаты на DuckDuckGo &rarr;</a>';
     return;
   }
   renderResults(items);
