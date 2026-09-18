@@ -7,22 +7,51 @@
 <link rel="stylesheet" type="text/css" href="assets/css/gomail.css" />
 <link rel="stylesheet" type="text/css" href="assets/css/go_search.css" />
 <style>
-/* local result styling in the spirit of go.mail.ru 2010 */
+/* Clean 2010 search page styling & layout */
+html, body {margin: 0; padding: 0; font-family: Arial, Tahoma, sans-serif;}
+body {background: #fff; min-width: 980px;}
+
+/* Header */
+#menuWrap {margin-left: 3%; padding-top: 10px; width: 94%; max-width: 1200px; font-family: Arial, Helvetica, sans-serif;}
+#tableitself {width: 100%; border-collapse: collapse;}
+#tableitself td {padding: 0; vertical-align: top;}
+#menuLogo {width: 240px; padding-right: 15px;}
+#menuSelf {width: auto;}
+
+/* Results & Sidebar */
+#wrapper {margin-left: 3%; padding: 15px 0 40px 0; width: 94%; max-width: 1200px;}
+#wrapper .colls {width: 100%; position: relative;}
+#wrapper .colls:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+#collMain {width: 100%; float: left;}
+.collRightYes .inner {margin-right: 290px; padding-right: 25px;}
+#collRight {float: left; width: 270px; margin-left: -270px;}
+
+/* Search list */
 .search_list {margin: 0; padding: 0;}
-.search_list .res {margin: 0 0 1.6em 5.2em; position: relative;}
-.search_list .res-head {margin: 0 0 .2em; font-size: 1.3em; font-weight: normal; line-height: 1.2em;}
+.search_list .res {margin: 0 0 16px 0; position: relative; padding-left: 24px;}
+.search_list .res-favicon {position: absolute; left: 0; top: 2px;}
+.search_list .res-favicon img {width: 16px; height: 16px; border: 0; vertical-align: middle; display: block;}
+.search_list .res-head {margin: 0 0 2px 0; font-size: 15px; font-weight: normal; line-height: 1.25em;}
 .search_list .res-head a {color: #0857A6; text-decoration: underline;}
 .search_list .res-head a:visited {color: #551A8B;}
-.search_list .res-head a:hover {text-decoration: none;}
-.search_list .res-desc {margin: .3em 0 0; color: #000;}
-.search_list .res-url {margin: .2em 0 0; color: #060; font-size: .95em;}
-.search_list .res-favicon {position: absolute; left: -2.2em; top: .2em;}
-.search_list .res-favicon img {width: 16px; height: 16px; border: 0;}
-#pager {margin: 1em 0 2em 5.2em; font-size: .9em;}
-#pager a, #pager b {margin-right: .6em;}
-#loading {margin: 2em 0 2em 5.2em; color: #666;}
-#errbox {margin: 1em 0 1em 5.2em; color: #333; font-size: .95em;}
-#errbox a {color: #0857A6;}
+.search_list .res-head a:hover {color: #F26D00; text-decoration: underline;}
+.search_list .res-desc {margin: 2px 0 2px 0; color: #222; font-size: 13px; line-height: 1.35em; word-wrap: break-word;}
+.search_list .res-desc b {font-weight: bold; color: #000;}
+.search_list .res-url {margin: 2px 0 0 0; font-size: 12px; line-height: 1.25em; word-break: break-all;}
+.search_list .res-url a {color: #008000; text-decoration: none;}
+.search_list .res-url a:hover {text-decoration: underline;}
+
+/* Pager & Status */
+#pager {margin: 20px 0 30px 0; font-size: 13px;}
+#pager a {color: #0857A6; text-decoration: underline; margin-right: 8px; padding: 2px 6px;}
+#pager a:hover {color: #F26D00;}
+#pager b {background: #eef3f8; border: 1px solid #c0d0e0; font-weight: bold; margin-right: 8px; padding: 2px 6px; border-radius: 2px;}
+#loading {margin: 20px 0; color: #666; font-size: 13px;}
+#errbox {margin: 15px 0; padding: 12px 15px; background: #fffbe6; border: 1px solid #ffe58f; color: #333; font-size: 13px; line-height: 1.5em; border-radius: 2px;}
+#errbox a {color: #0857A6; font-weight: bold;}
+
+/* Sidebar Banner */
+#searchBanner img {max-width: 100%; height: auto; border-radius: 3px; display: block; margin: 0 auto;}
 </style>
 </head>
 <body id="section-www">
@@ -46,12 +75,12 @@
 					<table cellpadding="0" cellspacing="0" border="0" id="allMarkTable">
 						<tr>
 							<td class="current" id="tab_int"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></td>
-							<td class="common" id="tab_pic"><div class="tlc"><div><div class="ahold"><a href="http://duckduckgo.com/?iax=images&ia=images&q=">Картинки</a></div></div></div></td>
+							<td class="common" id="tab_pic"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?iax=images&ia=images&q=">Картинки</a></div></div></div></td>
 							<td class="common" id="tab_video"><div class="tlc"><div><div class="ahold"><a href="https://www.youtube.com/results?search_query=">Видео</a></div></div></div></td>
 							<td class="common" id="tab_lot"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Товары</a></div></div></div></td>
 							<td class="common" id="tab_people"><div class="tlc"><div><div class="ahold"><a href="https://openvk.org/search">Люди</a></div></div></div></td>
 							<td class="common" id="tab_map"><div class="tlc"><div><div class="ahold"><a href="https://www.google.com/maps/search/">Карты</a></div></div></div></td>
-							<td class="common" id="tab_otvet"><div class="tlc"><div><div class="ahold"><a href="http://duckduckgo.com/?q=ответы">Ответы</a></div></div></div></td>
+							<td class="common" id="tab_otvet"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?q=ответы">Ответы</a></div></div></div></td>
 							<td class="common" id="tab_job"><div class="tlc"><div><div class="ahold"><a href="https://hh.ru/search/vacancy?text=">Работа</a></div></div></div></td>
 							<td class="common" id="tab_dict"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=dict&q=">Словари</a></div></div></div></td>
 							<td class="common" id="tab_hitech"><div class="tlc"><div><div class="ahold"><a href="https://habr.com/ru/search/?q=">Hi-Tech</a></div></div></div></td>
@@ -72,7 +101,7 @@
 										<td class="ct" style="width:2%;"><img src="assets/img/gi/img/0.gif" height="9" border="0" /></td>
 										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="" /></td>
 										<td rowspan="2" nowrap="nowrap">
-											<span style="padding-right: 10px;"><a href="http://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
+											<span style="padding-right: 10px;"><a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
 										</td>
 										<td rowspan="2" nowrap="nowrap"><span style="padding-right:10px"><a href="#" title="Русская клавиатура" onclick="return false;"><img src="assets/img/ii/r/go/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" /></a></span></td>
 									</tr>
@@ -120,8 +149,14 @@
 		</div>
 		<div id="collRight">
 			<div class="inner">
-				<div class="mb15" style="font-size:.85em; color:#666;">
-					Поиск работает на <a href="http://duckduckgo.com/" style="color:#0857A6;">DuckDuckGo</a>.
+				<div class="banner" id="searchBanner" style="text-align: center; margin-bottom: 15px;">
+					<a href="http://inori.faero.top" target="_blank"><img src="assets/img/banners/inori.png" width="260" height="224" border="0" alt="Inori Aizawa" /></a>
+				</div>
+				<div class="mb15" style="font-size:12px; color:#666; line-height: 1.6em; border-top: 1px solid #e0e0e0; padding-top: 10px; text-align: left;">
+					<b>Другие поисковики:</b><br />
+					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a><br />
+					&bull; <a href="https://ya.ru/search/?text=" id="linkYa" target="_blank" style="color:#0857A6;">Яндекс</a><br />
+					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a>
 				</div>
 			</div>
 		</div>
@@ -159,7 +194,7 @@
 		<b>&middot;</b> <a href="https://duckduckgo.com/?q=открытки">Открытки</a>
 		<b>&middot;</b> <a href="https://duckduckgo.com/?q=рассылки">Рассылки</a>
 		<b>&middot;</b> <a href="https://openvk.org/">OpenVK</a>
-		<b>&middot;</b> <a href="http://mrim.su/">Агент</a>
+		<b>&middot;</b> <a href="https://mrim.su/">Агент</a>
 	</div>
 </div>
 
@@ -180,7 +215,6 @@ function doSearch(f){
 }
 
 function resolveDdgHref(href){
-  // DDG html results use //duckduckgo.com/l/?uddg=<encoded>&rut=...
   try {
     if(href.indexOf('uddg=') !== -1){
       var m = href.match(/uddg=([^&]+)/);
@@ -191,72 +225,156 @@ function resolveDdgHref(href){
   return href;
 }
 
+function extractHostname(url){
+  try {
+    var u = new URL(url);
+    return u.hostname || '';
+  } catch(e){
+    return '';
+  }
+}
+
+function formatDisplayUrl(url, rawDisplayUrl){
+  if(rawDisplayUrl && rawDisplayUrl.indexOf('http') !== 0 && rawDisplayUrl.indexOf('duckduckgo.com') === -1){
+    return rawDisplayUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  }
+  try {
+    var u = new URL(url);
+    var disp = u.hostname + (u.pathname !== '/' ? u.pathname : '') + (u.search || '');
+    if(disp.length > 85) disp = disp.slice(0, 82) + '...';
+    return disp;
+  } catch(e){
+    return url;
+  }
+}
+
+function cleanSnippet(text){
+  if(!text) return '';
+  var s = String(text);
+  // Remove markdown image badges [![Image N](...)](...) or ![Image N](...)
+  s = s.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
+  // Bold highlights
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  // Strip stray markdown links [link text](url) -> link text
+  s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  // Clean whitespace
+  s = s.replace(/\s+/g, ' ').trim();
+  return s;
+}
+
 function parseDdgHtml(text){
-  var doc = new DOMParser().parseFromString(text, 'text/html');
-  var out = [];
-  doc.querySelectorAll('.result').forEach(function(r){
-    var a = r.querySelector('.result__a');
-    if(!a) return;
-    var sn = r.querySelector('.result__snippet');
-    var ur = r.querySelector('.result__url');
-    var icon = r.querySelector('.result__icon img');
-    out.push({
-      title: a.textContent,
-      url: resolveDdgHref(a.getAttribute('href') || ''),
-      snippet: sn ? sn.innerHTML : '',
-      displayUrl: ur ? ur.textContent.trim() : '',
-      favicon: icon ? icon.getAttribute('src') : ''
+  try {
+    var doc = new DOMParser().parseFromString(text, 'text/html');
+    var out = [];
+    doc.querySelectorAll('.result').forEach(function(r){
+      var a = r.querySelector('.result__a');
+      if(!a) return;
+      var url = resolveDdgHref(a.getAttribute('href') || '');
+      var sn = r.querySelector('.result__snippet');
+      var ur = r.querySelector('.result__url');
+      var icon = r.querySelector('.result__icon img');
+      var disp = ur ? ur.textContent.trim() : '';
+      var fav = icon ? icon.getAttribute('src') : '';
+      var host = extractHostname(url);
+      if(!fav && host) fav = 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico';
+
+      out.push({
+        title: a.textContent.trim(),
+        url: url,
+        snippet: sn ? sn.innerHTML : '',
+        displayUrl: formatDisplayUrl(url, disp),
+        favicon: fav
+      });
     });
-  });
-  return out;
+    return out;
+  } catch(e) {
+    return [];
+  }
 }
 
 function parseJinaMarkdown(text){
-  // r.jina.ai returns markdown: ## [Title](url) blocks
   var out = [];
-  var lines = text.split('\n');
-  var cur = null;
-  for(var i=0;i<lines.length;i++){
-    var line = lines[i];
-    var h = line.match(/^##\s+\[(.+?)\]\((http:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/);
-    if(h){
-      if(cur) out.push(cur);
-      cur = { title: h[1], url: resolveDdgHref(h[2]), snippet: '', displayUrl: '', favicon: '' };
-      continue;
+  var sections = text.split(/(?:\r?\n)+(?=##\s+\[)/);
+  
+  for(var i = 0; i < sections.length; i++){
+    var sec = sections[i];
+    var hMatch = sec.match(/^##\s+\[([^\]]+)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/m);
+    if(!hMatch) continue;
+    
+    var title = hMatch[1].trim();
+    var rawUrl = hMatch[2];
+    var url = resolveDdgHref(rawUrl);
+    var rest = sec.slice(hMatch.index + hMatch[0].length);
+    var host = extractHostname(url);
+    
+    // Favicon: [![Image N](url.ico)] or ![Image N](url.ico)
+    var favMatch = rest.match(/\[?!\[(?:Image \d+)?\]\((https?:\/\/[^\s)]+\.(?:ico|png|jpg|gif)[^)]*)\)\]?/);
+    var favicon = favMatch ? favMatch[1] : (host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '');
+    
+    // Display URL
+    var dispMatch = rest.match(/\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]\(https:\/\/duckduckgo/);
+    if(!dispMatch){
+      dispMatch = rest.match(/\]\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]/);
     }
-    if(cur){
-      var img = line.match(/\[!\[Image \d+\]\(([^)]+)\)\]/);
-      if(img && !cur.favicon) cur.favicon = img[1];
-      var dom = line.match(/^\[([^\]!][^\]]*)\]\(/);
-      if(dom && !cur.displayUrl) cur.displayUrl = dom[1];
-      var p = line.match(/^\[(.+?)\]\(http:\/\/duckduckgo\.com\/l\//);
-      if(p && !cur.snippet){
-        cur.snippet = p[1].replace(/\*\*/g,'');
+    var rawDisplay = dispMatch ? dispMatch[1].trim() : '';
+    var displayUrl = formatDisplayUrl(url, rawDisplay);
+    
+    // Snippet extraction
+    var cleanedRest = rest.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
+    var snipMatches = cleanedRest.match(/\[([^\]]+)\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)/g) || [];
+    var snipParts = [];
+    for(var j = 0; j < snipMatches.length; j++){
+      var sm = snipMatches[j].replace(/^\[|\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)$/g, '').trim();
+      if(sm === rawDisplay || sm.indexOf('Image ') === 0 || sm.length < 2) continue;
+      snipParts.append(sm);
+    }
+    
+    var snippet = snipParts.join(' ');
+    if(!snippet){
+      var lines = cleanedRest.split('\n');
+      for(var k = 0; k < lines.length; k++){
+        var line = lines[k].trim();
+        if(line && !line.startsWith('##') && !line.startsWith('[') && line.length > 5){
+          snippet = line;
+          break;
+        }
       }
     }
+    
+    snippet = cleanSnippet(snippet);
+    
+    out.push({
+      title: title,
+      url: url,
+      displayUrl: displayUrl,
+      favicon: favicon,
+      snippet: snippet
+    });
   }
-  if(cur) out.push(cur);
-  // dedupe by url
+  
   var seen = {}, res = [];
-  out.forEach(function(r){
-    if(!seen[r.url]){ seen[r.url]=1; res.push(r); }
-  });
+  for(var n = 0; n < out.length; n++){
+    if(!seen[out[n].url]){
+      seen[out[n].url] = 1;
+      res.push(out[n]);
+    }
+  }
   return res;
 }
 
 function renderResults(items){
   var box = document.getElementById('results');
-  if(!items.length){
+  if(!items || !items.length){
     box.innerHTML = '<div class="notFound"><p>Ничего не найдено. Попробуйте изменить запрос.</p></div>';
     return;
   }
   var html = '';
   items.forEach(function(r){
-    var fav = r.favicon ? '<span class="res-favicon"><img src="'+esc(r.favicon)+'" alt="" onerror="this.style.display=\'none\'" /></span>' : '';
+    var fav = r.favicon ? '<span class="res-favicon"><img src="'+esc(r.favicon)+'" alt="" width="16" height="16" onerror="this.onerror=null; this.style.display=\'none\';" /></span>' : '';
     html += '<div class="res">'+fav+
       '<div class="res-head"><a href="'+esc(r.url)+'" target="_blank">'+esc(r.title)+'</a></div>'+
       (r.snippet ? '<div class="res-desc">'+r.snippet+'</div>' : '')+
-      (r.displayUrl ? '<div class="res-url">'+esc(r.displayUrl)+'</div>' : '')+
+      (r.displayUrl ? '<div class="res-url"><a href="'+esc(r.url)+'" target="_blank">'+esc(r.displayUrl)+'</a></div>' : '')+
       '</div>';
   });
   box.innerHTML = html;
@@ -267,7 +385,7 @@ function renderResults(items){
 
 function renderPager(total){
   var p = document.getElementById('pager');
-  if(total < 5){ p.innerHTML = ''; return; }
+  if(total < 3){ p.innerHTML = ''; return; }
   var html = '';
   if(curPage > 1) html += '<a href="search.html?q='+encodeURIComponent(curQuery)+'&page='+(curPage-1)+'">&larr; назад</a>';
   html += '<b>стр. '+curPage+'</b>';
@@ -275,44 +393,140 @@ function renderPager(total){
   p.innerHTML = html;
 }
 
+async function fetchWikiSearch(q){
+  var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
+  var url = proto + '//ru.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(q) + '&limit=8&namespace=0&format=json';
+  try {
+    var resp = await fetch(url);
+    var d = await resp.json();
+    if(d && d[1] && d[1].length){
+      var res = [];
+      for(var i=0; i<d[1].length; i++){
+        var pageUrl = d[3][i] || ('https://ru.wikipedia.org/wiki/' + encodeURIComponent(d[1][i]));
+        res.push({
+          title: d[1][i],
+          snippet: d[2][i] || ('Статья из свободной энциклопедии: ' + d[1][i]),
+          url: pageUrl,
+          displayUrl: 'ru.wikipedia.org/wiki/' + d[1][i],
+          favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
+        });
+      }
+      return res;
+    }
+  } catch(e){}
+  return [];
+}
+
+async function fetchDdgApi(q){
+  try {
+    var url = 'https://api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1';
+    var resp = await fetch(url);
+    var d = await resp.json();
+    var res = [];
+    if(d.AbstractText && d.AbstractURL){
+      res.push({
+        title: d.Heading || q,
+        snippet: d.AbstractText,
+        url: d.AbstractURL,
+        displayUrl: formatDisplayUrl(d.AbstractURL, d.AbstractSource || d.AbstractURL),
+        favicon: d.Image || ''
+      });
+    }
+    if(d.RelatedTopics && d.RelatedTopics.length){
+      d.RelatedTopics.forEach(function(t){
+        if(t.Text && t.FirstURL){
+          res.push({
+            title: t.Text.slice(0, 70) + (t.Text.length > 70 ? '...' : ''),
+            snippet: t.Text,
+            url: t.FirstURL,
+            displayUrl: formatDisplayUrl(t.FirstURL, ''),
+            favicon: (t.Icon && t.Icon.URL) ? t.Icon.URL : ''
+          });
+        }
+      });
+    }
+    return res;
+  } catch(e){}
+  return [];
+}
+
 async function runSearch(){
+  initBannerRotator('searchBanner', 6000);
   curQuery = getParam('q');
   curPage = parseInt(getParam('page') || '1', 10) || 1;
   document.getElementById('q').value = curQuery;
+
+  var linkDdg = document.getElementById('linkDdg');
+  var linkYa = document.getElementById('linkYa');
+  var linkGg = document.getElementById('linkGg');
+  if(linkDdg) linkDdg.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(curQuery);
+  if(linkYa) linkYa.href = 'https://ya.ru/search/?text=' + encodeURIComponent(curQuery);
+  if(linkGg) linkGg.href = 'https://www.google.com/search?q=' + encodeURIComponent(curQuery);
+
   if(!curQuery){
     document.getElementById('results').innerHTML = '<div class="notFound"><p>Введите запрос в строку поиска.</p></div>';
     return;
   }
   document.title = curQuery + ' — Поиск@soap.nekxd.fun';
+
+  // 1. Check sessionStorage cache
+  var cacheKey = 'search_' + curQuery + '_' + curPage;
+  var cached = null;
+  try {
+    var raw = sessionStorage.getItem(cacheKey);
+    if(raw) cached = JSON.parse(raw);
+  } catch(e){}
+
+  if(cached && cached.length){
+    renderResults(cached);
+    renderPager(cached.length);
+    return;
+  }
+
   document.getElementById('loading').style.display = 'block';
   document.getElementById('errbox').style.display = 'none';
   document.getElementById('results').innerHTML = '';
   document.getElementById('pager').innerHTML = '';
 
   var s = (curPage-1)*30;
-  var ddgUrl = 'http://html.duckduckgo.com/html/?q=' + encodeURIComponent(curQuery) +
+  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(curQuery) +
     (s ? '&s=' + s + '&dc=' + (s+1) : '') + '&kl=ru-ru';
 
   var items = [];
   try {
-    var text = await fetchViaProxy(ddgUrl, 25000);
+    var text = await fetchViaProxy(ddgUrl, 3500);
     if(text && text.jina){
       items = parseJinaMarkdown(text.text);
     } else {
       items = parseDdgHtml(text);
     }
-  } catch(e) {
-    // last resort
+  } catch(e) {}
+
+  // Fallback to Wikipedia and DDG Instant API if proxy returned 0 items
+  if(!items.length){
+    try {
+      var wikiItems = await fetchWikiSearch(curQuery);
+      var apiItems = await fetchDdgApi(curQuery);
+      items = apiItems.concat(wikiItems);
+    } catch(e){}
   }
 
   document.getElementById('loading').style.display = 'none';
+
   if(!items.length){
     var eb = document.getElementById('errbox');
     eb.style.display = 'block';
-    eb.innerHTML = 'Не удалось получить результаты (поиск DuckDuckGo недоступен из этой сети). ' +
-      '<a href="http://duckduckgo.com/?q='+encodeURIComponent(curQuery)+'" target="_blank">Открыть результаты на DuckDuckGo &rarr;</a>';
+    eb.innerHTML = 'Не удалось загрузить внешние результаты. Вы можете открыть поиск напрямую:<br />' +
+      '&bull; <a href="https://ya.ru/search/?text='+encodeURIComponent(curQuery)+'" target="_blank">Искать в Яндекс &rarr;</a><br />' +
+      '&bull; <a href="https://duckduckgo.com/?q='+encodeURIComponent(curQuery)+'" target="_blank">Искать в DuckDuckGo &rarr;</a><br />' +
+      '&bull; <a href="https://www.google.com/search?q='+encodeURIComponent(curQuery)+'" target="_blank">Искать в Google &rarr;</a>';
     return;
   }
+
+  try {
+    sessionStorage.setItem(cacheKey, JSON.stringify(items));
+  } catch(e){}
+
   renderResults(items);
   renderPager(items.length);
 }
@@ -321,3 +535,4 @@ document.addEventListener('DOMContentLoaded', runSearch);
 </script>
 </body>
 </html>
+
