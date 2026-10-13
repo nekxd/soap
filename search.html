@@ -3,23 +3,143 @@
 <head>
 <title>Поиск@soap.nekxd.fun</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="assets/css/gomail.css" />
 <link rel="stylesheet" type="text/css" href="assets/css/go_search.css" />
 <style>
-/* Clean 2010 search page styling & layout */
-html, body {margin: 0; padding: 0; font-family: Arial, Tahoma, sans-serif;}
-body {background: #fff; min-width: 980px;}
+/* Clean 2010 search page styling — full screen stretch & mobile responsive */
+html, body {margin: 0; padding: 0; font-family: Arial, Tahoma, sans-serif; width: 100%;}
+body {background: #fff; min-width: 0;}
 
-/* Header */
-#menuWrap {margin-left: 3%; padding-top: 10px; width: 94%; max-width: 1200px; font-family: Arial, Helvetica, sans-serif;}
+/* Header - 100% full screen stretch */
+#menuWrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 10px 20px 4px 20px !important;
+  box-sizing: border-box !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
 #tableitself {width: 100%; border-collapse: collapse;}
 #tableitself td {padding: 0; vertical-align: top;}
-#menuLogo {width: 240px; padding-right: 15px;}
+#menuLogo {width: 240px; min-width: 240px; padding-right: 15px;}
 #menuSelf {width: auto;}
 
-/* Results & Sidebar */
-#wrapper {margin-left: 3%; padding: 15px 0 40px 0; width: 94%; max-width: 1200px;}
+/* Force tabs strictly into ONE single horizontal line (Photo 1), NEVER wrapping into 4 rows (Photo 2) */
+#parentZaklId {
+  width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+}
+#parentZaklId::-webkit-scrollbar {display: none;}
+
+#allMarkTable {
+  border-collapse: collapse !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  table-layout: auto !important;
+  margin: 0 !important;
+}
+#allMarkTable tr {
+  white-space: nowrap !important;
+}
+#allMarkTable td.current,
+#allMarkTable td.common {
+  float: none !important;
+  display: table-cell !important;
+  vertical-align: bottom !important;
+  white-space: nowrap !important;
+  height: 22px !important;
+}
+#allMarkTable td.current {
+  background: #00468c url('assets/img/ii/r/go/crn_inv.gif') bottom right no-repeat !important;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 0 !important;
+}
+#allMarkTable td.current .tlc {
+  background: url('assets/img/ii/1.gif') top left no-repeat;
+  padding-left: 10px;
+}
+#allMarkTable td.current .ahold {
+  padding: 3px 25px 2px 0;
+  margin: 0;
+  color: #fff;
+}
+#allMarkTable td.current .ahold a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+#allMarkTable td.common {
+  padding: 0 8px 3px 8px !important;
+  font-size: 12px;
+}
+#allMarkTable td.common a {
+  color: #0857a6;
+  text-decoration: underline;
+}
+#allMarkTable td.common a:hover {
+  color: #f26d00;
+  text-decoration: underline;
+}
+
+/* Full width search bar */
+.brand_back {
+  background: #00468c !important;
+  width: 100% !important;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+.brand_back table {width: 100%; border-collapse: collapse;}
+.brand_back .inhold {
+  background: #fff;
+  border: 1px solid #7f9db9;
+  padding: 2px 4px;
+}
+.brand_back .q {
+  width: 100%;
+  font-size: 14px;
+  height: 22px;
+  border: none;
+  outline: none;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.brand_back .btn {
+  height: 22px;
+  width: 60px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: no-repeat top left url('assets/img/ii/r/go/btn_back.png');
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  line-height: 20px;
+  padding: 0;
+}
+.brand_back .btnplace {
+  padding: 0 8px;
+}
+
+/* Results & Sidebar - full screen stretch */
+#wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 12px 20px 40px 20px !important;
+  box-sizing: border-box !important;
+}
 #wrapper .colls {width: 100%; position: relative;}
 #wrapper .colls:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
 #collMain {width: 100%; float: left;}
@@ -52,6 +172,79 @@ body {background: #fff; min-width: 980px;}
 
 /* Sidebar Banner */
 #searchBanner img {max-width: 100%; height: auto; border-radius: 3px; display: block; margin: 0 auto;}
+
+/* Mobile adaptation (< 768px) */
+@media (max-width: 768px) {
+  #menuWrap {
+    padding: 8px 10px !important;
+  }
+  #tableitself,
+  #tableitself tbody,
+  #tableitself tr,
+  #tableitself td {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #menuLogo {
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    padding-bottom: 8px !important;
+  }
+  #menuLogo .logoholder {
+    display: inline-block !important;
+  }
+  #menuSelf {
+    width: 100% !important;
+  }
+  #parentZaklId {
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 4px !important;
+  }
+  #allMarkTable {
+    white-space: nowrap !important;
+    display: table !important;
+    width: auto !important;
+  }
+  #allMarkTable tr {
+    display: table-row !important;
+  }
+  #allMarkTable td {
+    display: table-cell !important;
+    float: none !important;
+  }
+  #wrapper {
+    padding: 10px 10px 40px 10px !important;
+  }
+  #collMain {
+    width: 100% !important;
+    float: none !important;
+  }
+  .collRightYes .inner {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+  #collRight {
+    float: none !important;
+    width: 100% !important;
+    margin: 25px 0 0 0 !important;
+    text-align: center !important;
+  }
+  #searchBanner img {
+    margin: 0 auto;
+  }
+  #footer {
+    position: static !important;
+    margin-top: 30px !important;
+  }
+  #footer .bluespacer {
+    width: 100% !important;
+  }
+}
 </style>
 </head>
 <body id="section-www">
@@ -92,21 +285,21 @@ body {background: #fff; min-width: 980px;}
 					<div class="brand_back">
 						<div id="wrc1">
 							<div class="c2"><div class="c3"><div class="c4">
-								<div style="width:100%"><div style="padding:8px 7px">
-								<table border="0" width="100%">
+								<div style="width:100%"><div style="padding:6px 7px">
+								<table border="0" width="100%" cellpadding="0" cellspacing="0">
 									<tr>
-										<td rowspan="2" valign="middle" class="inhold" style="width:98%;">
-											<div class="strin"><input type="text" name="q" class="q" id="q" value="" /></div>
+										<td rowspan="2" valign="middle" class="inhold" style="width:100%;">
+											<div class="strin"><input type="text" name="q" class="q" id="q" value="" autocomplete="off" /></div>
 										</td>
-										<td class="ct" style="width:2%;"><img src="assets/img/gi/img/0.gif" height="9" border="0" /></td>
-										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="" /></td>
-										<td rowspan="2" nowrap="nowrap">
-											<span style="padding-right: 10px;"><a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" /></a></span>
+										<td class="ct" style="width:18px;"><img src="assets/img/gi/img/0.gif" height="9" width="18" border="0" alt="" /></td>
+										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="Найти" /></td>
+										<td rowspan="2" nowrap="nowrap" style="padding-right:8px;">
+											<a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" border="0" /></a>
 										</td>
-										<td rowspan="2" nowrap="nowrap"><span style="padding-right:10px"><a href="#" title="Русская клавиатура" onclick="return false;"><img src="assets/img/ii/r/go/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" /></a></span></td>
+										<td rowspan="2" nowrap="nowrap" style="padding-right:8px;"><a href="#" title="Русская клавиатура" onclick="return false;"><img src="assets/img/ii/r/go/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" border="0" /></a></td>
 									</tr>
 									<tr>
-										<td class="cb"><img src="assets/img/gi/img/0.gif" height="9" border="0" /></td>
+										<td class="cb" style="width:18px;"><img src="assets/img/gi/img/0.gif" height="9" width="18" border="0" alt="" /></td>
 									</tr>
 								</table>
 								</div></div>
@@ -141,7 +334,7 @@ body {background: #fff; min-width: 980px;}
 	<div class="colls">
 		<div id="collMain" class="collRightYes">
 			<div class="inner">
-				<div id="loading" style="display:none;">Идёт поиск…</div>
+				<div id="loading" style="display:none;">Идёт поиск по всему интернету…</div>
 				<div id="errbox" style="display:none;"></div>
 				<div class="search_list" id="results"></div>
 				<div id="pager"></div>
@@ -253,10 +446,10 @@ function cleanSnippet(text){
   var s = String(text);
   // Remove markdown image badges [![Image N](...)](...) or ![Image N](...)
   s = s.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
-  // Bold highlights
-  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  // Bold highlights — function replacer preserves unicode words
+  s = s.replace(/\*\*([^*]+)\*\*/g, function(m, g1){ return '<b>' + g1 + '</b>'; });
   // Strip stray markdown links [link text](url) -> link text
-  s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, function(m, g1){ return g1; });
   // Clean whitespace
   s = s.replace(/\s+/g, ' ').trim();
   return s;
@@ -307,7 +500,7 @@ function parseJinaMarkdown(text){
     var rest = sec.slice(hMatch.index + hMatch[0].length);
     var host = extractHostname(url);
     
-    // Favicon: [![Image N](url.ico)] or ![Image N](url.ico)
+    // Favicon
     var favMatch = rest.match(/\[?!\[(?:Image \d+)?\]\((https?:\/\/[^\s)]+\.(?:ico|png|jpg|gif)[^)]*)\)\]?/);
     var favicon = favMatch ? favMatch[1] : (host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '');
     
@@ -326,7 +519,7 @@ function parseJinaMarkdown(text){
     for(var j = 0; j < snipMatches.length; j++){
       var sm = snipMatches[j].replace(/^\[|\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)$/g, '').trim();
       if(sm === rawDisplay || sm.indexOf('Image ') === 0 || sm.length < 2) continue;
-      snipParts.append(sm);
+      snipParts.push(sm);
     }
     
     var snippet = snipParts.join(' ');
@@ -393,30 +586,6 @@ function renderPager(total){
   p.innerHTML = html;
 }
 
-async function fetchWikiSearch(q){
-  var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
-  var url = proto + '//ru.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(q) + '&limit=8&namespace=0&format=json';
-  try {
-    var resp = await fetch(url);
-    var d = await resp.json();
-    if(d && d[1] && d[1].length){
-      var res = [];
-      for(var i=0; i<d[1].length; i++){
-        var pageUrl = d[3][i] || ('https://ru.wikipedia.org/wiki/' + encodeURIComponent(d[1][i]));
-        res.push({
-          title: d[1][i],
-          snippet: d[2][i] || ('Статья из свободной энциклопедии: ' + d[1][i]),
-          url: pageUrl,
-          displayUrl: 'ru.wikipedia.org/wiki/' + d[1][i],
-          favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
-        });
-      }
-      return res;
-    }
-  } catch(e){}
-  return [];
-}
-
 async function fetchDdgApi(q){
   try {
     var url = 'https://api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1';
@@ -450,6 +619,51 @@ async function fetchDdgApi(q){
   return [];
 }
 
+async function fetchWebSearch(q, page){
+  var s = (page - 1) * 30;
+  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q) +
+    (s ? '&s=' + s + '&dc=' + (s + 1) : '') + '&kl=ru-ru';
+
+  // 1. Primary: Direct fetch of DuckDuckGo via fast CORS-enabled Jina reader
+  try {
+    var jinaUrl = 'https://r.jina.ai/' + ddgUrl;
+    var resp = await fetch(jinaUrl, { mode: 'cors' });
+    if(resp.ok){
+      var text = await resp.text();
+      if(text && text.length > 200){
+        var items = parseJinaMarkdown(text);
+        if(items && items.length > 0){
+          return items;
+        }
+      }
+    }
+  } catch(e){}
+
+  // 2. Secondary: Parallel proxy race (via common.js fetchViaProxy)
+  try {
+    var raw = await window.fetchViaProxy(ddgUrl, 5000);
+    if(raw){
+      if(raw.jina && raw.text){
+        var items2 = parseJinaMarkdown(raw.text);
+        if(items2 && items2.length > 0) return items2;
+      } else if(typeof raw === 'string'){
+        var items3 = parseDdgHtml(raw);
+        if(items3 && items3.length > 0) return items3;
+      }
+    }
+  } catch(e){}
+
+  // 3. Third: DuckDuckGo Web Instant API (searches across entire web, CORS enabled)
+  try {
+    var apiItems = await fetchDdgApi(q);
+    if(apiItems && apiItems.length > 0){
+      return apiItems;
+    }
+  } catch(e){}
+
+  return [];
+}
+
 async function runSearch(){
   initBannerRotator('searchBanner', 6000);
   curQuery = getParam('q');
@@ -469,7 +683,7 @@ async function runSearch(){
   }
   document.title = curQuery + ' — Поиск@soap.nekxd.fun';
 
-  // 1. Check sessionStorage cache
+  // Check sessionStorage cache
   var cacheKey = 'search_' + curQuery + '_' + curPage;
   var cached = null;
   try {
@@ -488,28 +702,7 @@ async function runSearch(){
   document.getElementById('results').innerHTML = '';
   document.getElementById('pager').innerHTML = '';
 
-  var s = (curPage-1)*30;
-  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(curQuery) +
-    (s ? '&s=' + s + '&dc=' + (s+1) : '') + '&kl=ru-ru';
-
-  var items = [];
-  try {
-    var text = await fetchViaProxy(ddgUrl, 3500);
-    if(text && text.jina){
-      items = parseJinaMarkdown(text.text);
-    } else {
-      items = parseDdgHtml(text);
-    }
-  } catch(e) {}
-
-  // Fallback to Wikipedia and DDG Instant API if proxy returned 0 items
-  if(!items.length){
-    try {
-      var wikiItems = await fetchWikiSearch(curQuery);
-      var apiItems = await fetchDdgApi(curQuery);
-      items = apiItems.concat(wikiItems);
-    } catch(e){}
-  }
+  var items = await fetchWebSearch(curQuery, curPage);
 
   document.getElementById('loading').style.display = 'none';
 

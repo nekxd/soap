@@ -3,6 +3,7 @@
 <head>
 <title>@ SOAP.NEKXD.FUN: почта, поиск, новости, знакомства, видеочат. Почта @ SOAP.NEKXD.FUN - бесплатная почта #1</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
 <link href="assets/css/mail-splash3.css" rel="stylesheet" type="text/css" />
 <link href="assets/css/search_top.css" rel="stylesheet" type="text/css" />
@@ -15,6 +16,116 @@
 .left_block .projects_menu2 .l_myworld a {background: url(assets/img/openvk_icon_24.png) 0 0 no-repeat; background-size: 16px 16px;}
 /* Мой мир -> OpenVK favicon */
 .left_block .top_menu2 .l_big_my a {background: url(assets/img/openvk_icon.png) 50% 0 no-repeat; background-size: 24px 24px; padding-top: 28px;}
+
+/* Mobile responsive styles (< 800px) */
+@media (max-width: 800px) {
+  html, body {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
+  .main_table,
+  .authorization_position,
+  .authorization_position tbody,
+  .authorization_position tr,
+  .main_table tbody,
+  .main_table tr {
+    display: block !important;
+    width: 100% !important;
+  }
+  .main_table td,
+  .authorization_position td {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .logo {
+    text-align: center !important;
+    width: 100% !important;
+    padding: 10px 0 !important;
+  }
+  .left_divider {
+    display: none !important;
+  }
+  .search_block {
+    width: 100% !important;
+    padding: 5px 10px !important;
+  }
+  .bookmarksBrand,
+  .bookmarksCell {
+    width: 100% !important;
+    display: block !important;
+  }
+  .bookmarksList {
+    width: 100% !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: flex !important;
+    scrollbar-width: none;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bookmarksList::-webkit-scrollbar {
+    display: none;
+  }
+  .bookmarksList li {
+    flex-shrink: 0 !important;
+    float: none !important;
+    display: inline-block !important;
+  }
+  .left_block, .center_block, .right_block {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 8px 10px !important;
+    float: none !important;
+  }
+  .authorization_block {
+    display: none !important;
+  }
+  .authorization_position .left_block {
+    padding: 10px !important;
+  }
+  #authorization_table {
+    width: 100% !important;
+  }
+  #authorization_table input.long,
+  #authorization_table select.long {
+    width: 95% !important;
+  }
+  .top_menu2 {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-around !important;
+  }
+  .top_menu2 li {
+    float: none !important;
+    flex: 1 !important;
+    text-align: center !important;
+  }
+  .projects_menu2 {
+    width: 100% !important;
+  }
+  .photo_and_video {
+    width: 100% !important;
+    overflow-x: auto !important;
+  }
+  .main_footer {
+    width: 100% !important;
+    display: block !important;
+  }
+  .main_footer tr, .main_footer td {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  #mainBanner img {
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
 </style>
 </head>
 <body>

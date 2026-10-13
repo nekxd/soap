@@ -120,21 +120,21 @@
   }
 
   window.fetchViaProxy = async function (url, timeoutMs) {
-    timeoutMs = timeoutMs || 4000;
+    timeoutMs = timeoutMs || 4500;
     var encUrl = encodeURIComponent(url);
 
     // List of fast proxy endpoints (supports HTTP & HTTPS environments)
     var proxyUrls = [
-      'https://corsproxy.io/?url=' + encUrl,
+      'https://r.jina.ai/' + url,
       'https://api.allorigins.win/raw?url=' + encUrl,
       'https://api.allorigins.win/get?url=' + encUrl,
-      'https://r.jina.ai/' + url,
       'https://api.codetabs.com/v1/proxy?quest=' + encUrl
     ];
 
     // Parallel race: launch first batch immediately
     var promises = proxyUrls.map(function (pUrl) {
       return fetchWithTimeout(pUrl, timeoutMs).then(function (text) {
+        if (!text || text.length < 30) throw new Error('too short');
         if (pUrl.indexOf('allorigins.win/get') !== -1) {
           try {
             var j = JSON.parse(text);
