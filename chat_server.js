@@ -68,14 +68,11 @@ function saveDatabase() {
 function createDefaultDb() {
   return {
     version: '1.0',
-    title: 'Чат@Mail.Ru',
+    title: 'ЧАТ@SOAP',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     rooms: [
-      { id: 'general', name: 'Беседка', desc: 'Основная комната для свободного общения' },
-      { id: 'flirt', name: 'Знакомства и флирт', desc: 'Поиск друзей, знакомства и романтика' },
-      { id: 'music', name: 'Музыка и Кино', desc: 'Обсуждение новинок, ретро-музыки и фильмов' },
-      { id: 'tech', name: 'Hi-Tech и Игры', desc: 'Компьютеры, старые телефоны и ретро-софт' }
+      { id: 'general', name: 'ЧАТ@SOAP', desc: 'Единый чат портала soap' }
     ],
     messages: [
       {
@@ -83,7 +80,7 @@ function createDefaultDb() {
         room: 'general',
         author: 'Система',
         to: '',
-        text: 'Добро пожаловать в исторический Чат@Mail.Ru образца 2010 года! Соблюдайте правила приличия.',
+        text: 'Добро пожаловать в единый ЧАТ@SOAP! Соблюдайте правила приличия.',
         color: '#00468c',
         time: '12:00:00',
         is_system: true,
@@ -95,7 +92,7 @@ function createDefaultDb() {
         room: 'general',
         author: 'ynd',
         to: '',
-        text: 'Всем привет! Чат полностью восстановлен по канонам 2010 года. Приятного общения :)',
+        text: 'Всем привет! ЧАТ@SOAP работает, база зашифрована. Приятного общения :)',
         color: '#d90000',
         time: '12:01:23',
         is_system: false,
@@ -526,10 +523,25 @@ function handleRequest(req, res) {
 // Initialize DB and launch server
 loadDatabase();
 const server = http.createServer(handleRequest);
-server.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`[Чат@Mail.Ru Server] Запущен на порту ${PORT}`);
-  console.log(`Адрес: http://localhost:${PORT}/chat.html`);
-  console.log(`Файл зашифрованной базы: ${DB_FILE}`);
-  console.log(`====================================================`);
+
+function startServer(port) {
+  server.listen(port, () => {
+    console.log(`====================================================`);
+    console.log(`[ЧАТ@SOAP Server] Запущен на порту ${port}`);
+    console.log(`Адрес: http://localhost:${port}/chat.html`);
+    console.log(`Файл зашифрованной базы: ${DB_FILE}`);
+    console.log(`====================================================`);
+  });
+}
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    const nextPort = 8081;
+    console.warn(`[ЧАТ@SOAP Server] Порт ${PORT} занят, пробуем резервный порт ${nextPort}...`);
+    startServer(nextPort);
+  } else {
+    console.error('[ЧАТ@SOAP Server] Ошибка сервера:', err);
+  }
 });
+
+startServer(PORT);
