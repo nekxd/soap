@@ -59,6 +59,8 @@ const outApk = path.resolve('android/bin/MailRu2010.apk');
 if (fs.existsSync(outApk)) fs.unlinkSync(outApk);
 execSync(`"${javaExe}" -jar android/apktool.jar b android/apk_build -o "${outApk}"`, { stdio: 'inherit' });
 
+const { zipalign } = require('./zipalign');
+
 console.log('5. Signing APK for Android 1.6 to 16 compatibility...');
 const keystorePath = path.resolve('android/debug.keystore');
 if (!fs.existsSync(keystorePath)) {
@@ -67,15 +69,29 @@ if (!fs.existsSync(keystorePath)) {
 
 execSync(`"${jarsignerExe}" -sigalg SHA1withRSA -digestalg SHA1 -keystore "${keystorePath}" -storepass android -keypass android "${outApk}" androiddebugkey`, { stdio: 'inherit' });
 
+console.log('6. Running 4-byte zipalign for Android 9+ memory-mapping stability...');
+const alignedApk = path.resolve('android/bin/soap.apk');
+if (fs.existsSync(alignedApk)) fs.unlinkSync(alignedApk);
+zipalign(outApk, alignedApk, 4);
+
+// Replace unaligned MailRu2010.apk with aligned version
+fs.copyFileSync(alignedApk, outApk);
+
 // Clean staging folder
 if (fs.existsSync(bDir)) fs.rmSync(bDir, { recursive: true, force: true });
 
-console.log('SUCCESS! Signed APK created at:', outApk, 'Size:', fs.statSync(outApk).size, 'bytes');
+console.log('SUCCESS! Signed & aligned APK created at:', alignedApk, 'Size:', fs.statSync(alignedApk).size, 'bytes');
 
-// Copy signed APK to root or downloadable location
-fs.copyFileSync(outApk, 'MailRu2010.apk');
-console.log('Copied to root: MailRu2010.apk');
+// Copy signed & aligned APK to root and distribution locations
+fs.copyFileSync(alignedApk, 'soap.apk');
+fs.copyFileSync(alignedApk, 'MailRu2010.apk');
+console.log('Copied to root: soap.apk and MailRu2010.apk');
 
 // Also copy to eclipse-workspace
-fs.copyFileSync(outApk, 'C:/Users/yandhiev/eclipse-workspace/MailRu2010/MailRu2010.apk');
-console.log('Copied to C:/Users/yandhiev/eclipse-workspace/MailRu2010/MailRu2010.apk');
+const wsDir = 'C:/Users/yandhiev/eclipse-workspace/MailRu2010';
+if (fs.existsSync(wsDir)) {
+  fs.copyFileSync(alignedApk, path.join(wsDir, 'soap.apk'));
+  fs.copyFileSync(alignedApk, path.join(wsDir, 'MailRu2010.apk'));
+  console.log('Copied to eclipse workspace:', path.join(wsDir, 'soap.apk'));
+}
+

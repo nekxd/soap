@@ -58,10 +58,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mBtnMode.setOnClickListener(this);
         mBtnRetry.setOnClickListener(this);
 
-        // CookieSyncManager initialization for legacy Android
-        try {
-            CookieSyncManager.createInstance(this);
-        } catch (Throwable ignored) {}
+        // CookieSyncManager initialization for legacy Android (< 21)
+        if (android.os.Build.VERSION.SDK_INT < 21) {
+            try {
+                CookieSyncManager.createInstance(this);
+            } catch (Throwable ignored) {}
+        }
 
         // Configure WebView
         WebHelper.configureSettings(this, mWebView);
@@ -138,9 +140,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 updateModeButton(url);
                 updateNavButtons();
 
-                try {
-                    CookieSyncManager.getInstance().sync();
-                } catch (Throwable ignored) {}
+                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                    try {
+                        java.lang.reflect.Method flushMethod = android.webkit.CookieManager.getInstance().getClass().getMethod("flush");
+                        flushMethod.invoke(android.webkit.CookieManager.getInstance());
+                    } catch (Throwable ignored) {}
+                } else {
+                    try {
+                        CookieSyncManager.getInstance().sync();
+                    } catch (Throwable ignored) {}
+                }
             }
 
             @Override
@@ -300,17 +309,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            CookieSyncManager.getInstance().startSync();
-        } catch (Throwable ignored) {}
+        if (android.os.Build.VERSION.SDK_INT < 21) {
+            try {
+                CookieSyncManager.getInstance().startSync();
+            } catch (Throwable ignored) {}
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        try {
-            CookieSyncManager.getInstance().stopSync();
-        } catch (Throwable ignored) {}
+        if (android.os.Build.VERSION.SDK_INT < 21) {
+            try {
+                CookieSyncManager.getInstance().stopSync();
+            } catch (Throwable ignored) {}
+        }
     }
 
     @Override

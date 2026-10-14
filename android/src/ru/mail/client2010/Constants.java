@@ -16,7 +16,7 @@ public final class Constants {
             + "<style>body{font-family:sans-serif;margin:0;padding:20px;background:#f4f4f4;color:#333;text-align:center;}"
             + ".box{background:#fff;border:1px solid #ccc;padding:20px;border-radius:4px;margin-top:20px;}"
             + "h2{color:#00468c;margin-top:0;}button{background:#00468c;color:#fff;border:none;padding:10px 20px;font-size:14px;border-radius:3px;cursor:pointer;}"
-            + "</style></head><body><div class=\"box\"><h2>Mail.ru 2010</h2>"
+            + "</style></head><body><div class=\"box\"><h2>soap</h2>"
             + "<p>Нет подключения к сети. Проверьте интернет или повторите попытку позже.</p>"
             + "<p><button onclick=\"location.reload()\">Обновить страницу</button></p></div></body></html>";
 }

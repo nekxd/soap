@@ -7,4 +7,12 @@
             <certificates src="user" />
         </trust-anchors>
     </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">soap.nekxd.fun</domain>
+        <domain includeSubdomains="true">nekxd.fun</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </domain-config>
 </network-security-config>
