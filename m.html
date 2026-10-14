@@ -14,14 +14,14 @@
     <a href="m.html"><img src="assets/img/mobile/mailru_logo.png" alt="@mail.ru" height="19" border="0" /></a>
   </div>
 
-  <!-- Sub Header Bar: Mail / Moy Mir / Registration -->
+  <!-- Sub Header Bar: Proton Mail / OpenVK / Registration -->
   <div class="m-subbar">
     <div class="m-subbar-left">
-      <a href="https://e.mail.ru/" class="m-subbar-link">
+      <a href="https://mail.proton.me" class="m-subbar-link" target="_blank">
         <img src="assets/img/icons/mail_top.png" width="16" height="16" alt="" />Почта
       </a>
-      <a href="https://openvk.org/" class="m-subbar-link">
-        <img src="assets/img/icons/my_top.png" width="16" height="16" alt="" />Мой Мир
+      <a href="https://openvk.org/" class="m-subbar-link" target="_blank">
+        <img src="assets/img/openvk_icon.png" width="16" height="16" alt="" />OpenVK
       </a>
     </div>
     <div>
@@ -38,19 +38,11 @@
     </form>
   </div>
 
-  <!-- City / Location bar -->
-  <div class="m-city-bar">
-    <b id="m_city">Москва</b> <a href="http://weather.mail.ru/" class="m-city-change">изменить</a>
-  </div>
-
-  <!-- Section: Главные новости -->
+  <!-- Section: Главные новости (без фоток) -->
   <div class="m-sec-title">Главные новости</div>
   <div class="m-sec-content">
-    <div class="m-top-news">
-      <img src="assets/img/mobile/news_kamaz.png" class="m-news-thumb" alt="" />
-      <div class="m-top-news-text">
-        <a href="https://habr.com/ru/news/" id="m_top_news_link">Первые КамАЗы с гумпомощью из РФ прибыли к КПП на границе с Украиной</a>
-      </div>
+    <div style="margin-bottom:6px; font-weight:bold;">
+      <a href="https://habr.com/ru/news/" id="m_top_news_link" style="font-size:12px; line-height:1.3; color:#1b5ea8;">Первые КамАЗы с гумпомощью из РФ прибыли к КПП на границе с Украиной</a>
     </div>
     <div id="m_news_bullets">
       <div class="m-news-item"><a href="https://habr.com/ru/news/">Луганские ополченцы сбили два самолета силовиков</a></div>
@@ -64,7 +56,7 @@
   </div>
 
   <!-- Section: Погода -->
-  <div class="m-sec-title">Погода. <span id="m_w_city">Москва</span> <a href="http://weather.mail.ru/" class="m-sec-sublink">на 14 дней</a></div>
+  <div class="m-sec-title">Погода <a href="http://weather.mail.ru/" class="m-sec-sublink">на 14 дней</a></div>
   <div class="m-sec-content">
     <div class="m-weather-box">
       <div class="m-weather-current">
@@ -94,72 +86,59 @@
     </div>
   </div>
 
-  <!-- Section: Спорт -->
-  <div class="m-sec-title">Спорт</div>
+  <!-- Section: Игры (OpenVK игры с главной страницы) -->
+  <div class="m-sec-title"><a href="https://openvk.org/apps" style="color:#000; text-decoration:none;">Игры OpenVK</a></div>
   <div class="m-sec-content">
-    <div class="m-sport-top">
-      <img src="assets/img/mobile/sport_spartak.png" class="m-sport-thumb" alt="" />
-      <div class="m-top-news-text">
-        <a href="http://sport.mail.ru/">«Спартак» оказался сильнее ЦСКА в столичном дерби в ЧР</a>
-      </div>
-    </div>
-    <div class="m-news-item"><a href="http://sport.mail.ru/">Вальбуэна двумя голевыми передачами вновь принес победу «Динамо»</a></div>
-    <div class="m-news-item"><a href="http://sport.mail.ru/">Что происходило в Химках после главного дерби страны?</a></div>
-    <div class="m-news-item"><a href="http://sport.mail.ru/">«Ливерпуль» выиграл у «Саутгемптона»</a></div>
-    <div class="m-news-item"><a href="http://sport.mail.ru/">«Рубин» сыграл вничью с «Локомотивом» в матче чемпионата России</a></div>
+    <table width="100%" cellspacing="0" cellpadding="0" style="text-align:center;">
+      <tr>
+        <td style="width:25%; padding:2px;" valign="top">
+          <a href="https://openvk.org/app531" style="text-decoration:none;">
+            <img src="assets/img/custom/game_ctr.png" width="48" height="48" style="border:1px solid #ccc; border-radius:4px; display:block; margin:0 auto;" alt="Cut the Rope" />
+            <div style="font-size:10px; line-height:12px; margin-top:3px; color:#1b5ea8;">Cut the Rope</div>
+          </a>
+        </td>
+        <td style="width:25%; padding:2px;" valign="top">
+          <a href="https://openvk.org/app607" style="text-decoration:none;">
+            <img src="assets/img/custom/game_doom.jpg" width="48" height="48" style="border:1px solid #ccc; border-radius:4px; display:block; margin:0 auto;" alt="Doom" />
+            <div style="font-size:10px; line-height:12px; margin-top:3px; color:#1b5ea8;">Doom</div>
+          </a>
+        </td>
+        <td style="width:25%; padding:2px;" valign="top">
+          <a href="https://openvk.org/app578" style="text-decoration:none;">
+            <img src="assets/img/custom/game_djump.png" width="48" height="48" style="border:1px solid #ccc; border-radius:4px; display:block; margin:0 auto;" alt="Doodle Jump" />
+            <div style="font-size:10px; line-height:12px; margin-top:3px; color:#1b5ea8;">Doodle Jump</div>
+          </a>
+        </td>
+        <td style="width:25%; padding:2px;" valign="top">
+          <a href="https://openvk.org/app560" style="text-decoration:none;">
+            <img src="assets/img/custom/game_sosed.jpg" width="48" height="48" style="border:1px solid #ccc; border-radius:4px; display:block; margin:0 auto;" alt="Как достать соседа" />
+            <div style="font-size:10px; line-height:12px; margin-top:3px; color:#1b5ea8;">Как достать соседа</div>
+          </a>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <!-- Section: Афиша -->
-  <div class="m-sec-title">Афиша</div>
-  <div class="m-sec-content">
-    <div class="m-news-item"><a href="http://afisha.mail.ru/">Неудержимые 3</a></div>
-    <div class="m-news-item"><a href="http://afisha.mail.ru/">Черепашки-ниндзя</a></div>
-    <div class="m-news-item"><a href="http://afisha.mail.ru/">Навстречу шторму</a></div>
-    <div class="m-afisha-tags">
-      <a href="http://afisha.mail.ru/cinema/">Кино</a>
-      <a href="http://afisha.mail.ru/restaurants/">Рестораны</a>
-      <a href="http://afisha.mail.ru/concerts/">Концерты</a>
-      <a href="http://afisha.mail.ru/theatre/">Театры</a>
-    </div>
-  </div>
-
-  <!-- Section: Игры -->
-  <div class="m-sec-title">Игры</div>
-  <div class="m-sec-content">
-    <div class="m-game-row">
-      <img src="assets/img/mobile/game_race.png" class="m-game-icon" alt="" />
-      <div class="m-game-text">
-        <b><a href="https://openvk.org/apps">Большие гонки</a></b> // Гонки на крутых авто, власть, слава и красотки!
-      </div>
-    </div>
-    <div class="m-game-row">
-      <img src="assets/img/mobile/game_pet.png" class="m-game-icon" alt="" />
-      <div class="m-game-text">
-        <b><a href="https://openvk.org/apps">Удивительные питомцы</a></b> // Очаровательные питомцы в вашем телефоне!
-      </div>
-    </div>
-  </div>
-
-  <!-- Section: Программы для телефона -->
+  <!-- Section: Программы для телефона (без ICQ, Proton Mail, ПК ярлыки) -->
   <div class="m-sec-title">Программы для телефона</div>
   <div class="m-sec-content">
     <div class="m-phone-apps">
       <div class="m-app-row">
-        <a href="https://e.mail.ru/"><img src="assets/img/icons/mail.png" alt="" /><span>Почта</span></a>
+        <a href="https://mail.proton.me" target="_blank"><img src="assets/img/icons/mail.png" alt="" /><span>Proton Mail</span></a>
       </div>
       <div class="m-app-row">
-        <a href="https://mrim.su/"><img src="assets/img/icons/agent.png" alt="" /><span>Агент</span></a>
+        <a href="https://mrim.su/" target="_blank"><img src="assets/img/icons/agent.png" alt="" /><span>Агент</span></a>
       </div>
       <div class="m-app-row">
-        <a href="https://openvk.org/apps"><img src="assets/img/icons/games.png" alt="" /><span>Игры</span></a>
+        <a href="https://openvk.org/apps" target="_blank"><img src="assets/img/icons/games.png" alt="" /><span>Игры (OpenVK)</span></a>
       </div>
       <div class="m-app-row">
-        <a href="https://habr.com/ru/news/"><img src="assets/img/icons/news.png" alt="" /><span>Новости</span></a>
+        <a href="https://habr.com/ru/news/" target="_blank"><img src="assets/img/icons/news.png" alt="" /><span>Новости</span></a>
       </div>
     </div>
   </div>
 
-  <!-- Section: Все проекты (PC version icons) -->
+  <!-- Section: Все проекты (ПК ярлыки) -->
   <div class="m-sec-title">Все проекты</div>
   <div class="m-sec-content">
     <table class="m-projects-grid">
@@ -197,8 +176,8 @@
 
   <!-- Footer Navigation Links -->
   <div class="m-footer">
-    <div><a href="https://e.mail.ru/login">Войти</a></div>
-    <div><b>Главная</b> | <a href="https://e.mail.ru/">Почта</a> | <a href="https://openvk.org/">Мой Мир</a></div>
+    <div><a href="https://account.mail.ru/login">Войти</a></div>
+    <div><b>Главная</b> | <a href="https://mail.proton.me" target="_blank">Почта</a> | <a href="https://openvk.org/" target="_blank">OpenVK</a></div>
     <div><a href="index.html?full=1" onclick="try{sessionStorage.setItem('prefer_full','1');}catch(e){}">Полная версия</a> | <span style="color:#666;">Для смартфонов</span></div>
     <div><a href="http://help.mail.ru/">Помощь</a></div>
     <div style="color:#777; font-size:10px; margin-top:4px;">&copy; Mail.Ru, 1999–2014</div>
@@ -216,8 +195,6 @@
     if (window.loadWeather) {
       window.loadWeather(function(w){
         if (!w) return;
-        var cityEl = document.getElementById('m_city');
-        var wCityEl = document.getElementById('m_w_city');
         var tempEl = document.getElementById('m_w_temp');
         var iconEl = document.getElementById('m_w_icon');
         var lblEl = document.getElementById('m_w_label');
@@ -226,8 +203,6 @@
         var tomEl = document.getElementById('m_w_tom');
 
         var sign = w.temp > 0 ? '+' : '';
-        if (cityEl) cityEl.textContent = w.city || 'Москва';
-        if (wCityEl) wCityEl.textContent = w.city || 'Москва';
         if (tempEl) tempEl.textContent = sign + w.temp + '°';
         if (iconEl && w.icon) iconEl.src = 'assets/img/im/r/weather_new/pict_weather_big_' + w.icon + '.gif';
         if (lblEl && w.label) lblEl.textContent = w.label;
@@ -268,7 +243,7 @@
       });
     }
 
-    // News live update from Habr if available
+    // News live update from Habr (текст без картинок)
     if (window.loadHabrFeed) {
       window.loadHabrFeed('news').then(function(items){
         if (items && items.length > 0) {
