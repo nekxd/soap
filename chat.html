@@ -1,0 +1,1582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ЧАТ@MAIL.RU — Беседка (2010)</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
+  <style type="text/css">
+    body {
+      background-color: #f2f5f9;
+      font-family: Arial, Tahoma, Verdana, sans-serif;
+      font-size: 12px;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    a { color: #1b5ea8; text-decoration: underline; }
+    a:hover { color: #f26522; }
+
+    /* Top Blue Header */
+    .chat-header {
+      background-color: #00468c;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #002f60;
+    }
+    .chat-header a { color: #fff; text-decoration: none; margin-right: 12px; }
+    .chat-header a:hover { text-decoration: underline; }
+    .chat-logo-area { display: flex; align-items: center; }
+    .chat-logo-area img { vertical-align: middle; margin-right: 6px; }
+    .chat-title-badge {
+      background: #f26522;
+      color: #fff;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Room Bar */
+    .room-bar {
+      background: linear-gradient(to bottom, #e9eff7, #d4e2f2);
+      border-bottom: 1px solid #b8cde5;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .room-tab {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #fff;
+      border: 1px solid #99bada;
+      border-radius: 3px;
+      color: #00468c;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 11px;
+      user-select: none;
+    }
+    .room-tab:hover { background: #fbfbfb; border-color: #f26522; color: #f26522; }
+    .room-tab.active {
+      background: #00468c;
+      color: #fff;
+      border-color: #003366;
+    }
+    .room-info-label {
+      margin-left: auto;
+      font-size: 11px;
+      color: #555;
+    }
+    .room-info-label b { color: #00468c; }
+
+    /* Main Chat Layout */
+    .chat-main-container {
+      max-width: 1100px;
+      margin: 8px auto;
+      padding: 0 8px;
+    }
+    .chat-window-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid #9cb8d9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .chat-window-table td { vertical-align: top; }
+
+    /* Left: Userlist */
+    .userlist-cell {
+      width: 180px;
+      background: #f7f9fc;
+      border-right: 1px solid #b8cde5;
+      padding: 0;
+    }
+    .userlist-header {
+      background: #dbe7f5;
+      border-bottom: 1px solid #b8cde5;
+      padding: 6px 8px;
+      font-weight: bold;
+      color: #00468c;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .userlist-content {
+      height: 380px;
+      overflow-y: auto;
+      padding: 4px 6px;
+    }
+    .user-item {
+      padding: 3px 4px;
+      cursor: pointer;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      font-size: 11px;
+      user-select: none;
+    }
+    .user-item:hover { background: #e3edf8; }
+    .user-gender {
+      font-size: 10px;
+      font-weight: bold;
+      margin-right: 4px;
+      padding: 0 3px;
+      border-radius: 2px;
+    }
+    .gender-m { color: #1b5ea8; }
+    .gender-f { color: #cc0066; }
+    .user-admin-badge {
+      background: #cc0000;
+      color: #fff;
+      font-size: 9px;
+      padding: 1px 3px;
+      border-radius: 2px;
+      margin-left: 4px;
+      font-weight: bold;
+    }
+
+    /* Right: Messages Stream */
+    .messages-cell {
+      padding: 0;
+      background: #ffffff;
+    }
+    .messages-stream {
+      height: 380px;
+      overflow-y: auto;
+      padding: 8px 10px;
+      box-sizing: border-box;
+      line-height: 1.45;
+    }
+    .chat-msg {
+      margin-bottom: 5px;
+      word-wrap: break-word;
+      font-size: 12px;
+      animation: fadeIn 0.15s ease-in;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .msg-time {
+      color: #888;
+      font-size: 10px;
+      font-family: monospace;
+      margin-right: 5px;
+    }
+    .msg-author {
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+    .msg-author:hover { text-decoration: underline; }
+    .msg-whisper {
+      color: #660099;
+      font-style: italic;
+      font-weight: bold;
+    }
+    .msg-text {
+      color: #222;
+    }
+    .msg-system {
+      background: #fff8e8;
+      border-left: 3px solid #f26522;
+      padding: 3px 6px;
+      margin: 4px 0;
+      color: #7a3e00;
+      font-style: italic;
+    }
+    .msg-admin-badge {
+      background: #cc0000;
+      color: #fff;
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 2px;
+      margin-right: 4px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+    .msg-delete-btn {
+      color: #cc0000;
+      cursor: pointer;
+      font-size: 10px;
+      margin-left: 6px;
+      font-weight: bold;
+      padding: 0 2px;
+    }
+    .msg-delete-btn:hover { background: #ffe6e6; }
+
+    /* Bottom Input Area */
+    .chat-input-panel {
+      background: linear-gradient(to bottom, #edf3fa, #dce7f4);
+      border-top: 1px solid #b8cde5;
+      padding: 8px 10px;
+    }
+    .input-row-1 {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 11px;
+    }
+    .input-row-1 label {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .input-row-2 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chat-field {
+      border: 1px solid #7f9db9;
+      padding: 4px 6px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      border-radius: 2px;
+      box-sizing: border-box;
+    }
+    .chat-field:focus {
+      border-color: #00468c;
+      outline: none;
+      box-shadow: 0 0 3px rgba(0,70,140,0.3);
+    }
+    #msgInput {
+      flex: 1;
+      height: 28px;
+    }
+    .btn-chat {
+      background: linear-gradient(to bottom, #1b5ea8, #00468c);
+      color: #fff;
+      border: 1px solid #002d5c;
+      padding: 5px 14px;
+      font-weight: bold;
+      font-size: 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn-chat:hover {
+      background: linear-gradient(to bottom, #2374ce, #0056ac);
+    }
+    .btn-chat:active {
+      background: #003366;
+    }
+    .btn-chat:disabled {
+      background: #b0c2d4;
+      border-color: #8fa6bd;
+      cursor: not-allowed;
+    }
+    .btn-smiles {
+      background: #fff;
+      border: 1px solid #9cb8d9;
+      color: #00468c;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-smiles:hover { background: #f2f5f9; border-color: #f26522; }
+
+    /* Anti-spam status row */
+    .spam-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+      font-size: 11px;
+      color: #555;
+    }
+    .spam-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: bold;
+    }
+    .spam-ready { color: #008800; }
+    .spam-wait { color: #cc6600; }
+    .spam-muted { color: #cc0000; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0.5; } }
+
+    /* Smilies Popover */
+    .smilies-popover {
+      position: absolute;
+      bottom: 70px;
+      right: 120px;
+      background: #fff;
+      border: 2px solid #00468c;
+      border-radius: 4px;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 1000;
+      width: 230px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+    .smilies-popover.open { display: grid; }
+    .smile-btn {
+      background: #f9fbfd;
+      border: 1px solid #d4e2f2;
+      border-radius: 3px;
+      padding: 4px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+      user-select: none;
+    }
+    .smile-btn:hover { background: #ffeac7; border-color: #f26522; transform: scale(1.15); }
+
+    /* Secret Admin Window (Hidden until activated by command/console) */
+    .admin-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .admin-modal-overlay.open { display: flex; }
+    .admin-window {
+      width: 600px;
+      max-width: 95vw;
+      background: #f4f7fb;
+      border: 2px solid #00468c;
+      border-radius: 5px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      overflow: hidden;
+      font-size: 12px;
+    }
+    .admin-header {
+      background: linear-gradient(to bottom, #00468c, #002d5c);
+      color: #fff;
+      padding: 6px 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+    }
+    .admin-close-btn {
+      color: #fff;
+      background: #cc0000;
+      border: 1px solid #990000;
+      font-size: 11px;
+      font-weight: bold;
+      width: 18px;
+      height: 18px;
+      line-height: 16px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .admin-tabs {
+      background: #dce7f4;
+      border-bottom: 1px solid #b8cde5;
+      padding: 4px 8px;
+      display: flex;
+      gap: 4px;
+    }
+    .admin-tab-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+      background: #fff;
+      border: 1px solid #9cb8d9;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .admin-tab-btn.active {
+      background: #00468c;
+      color: #fff;
+      border-color: #002d5c;
+      font-weight: bold;
+    }
+    .admin-body {
+      padding: 12px;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+    .admin-btn {
+      background: #1b5ea8;
+      color: #fff;
+      border: 1px solid #002d5c;
+      padding: 5px 10px;
+      font-size: 11px;
+      border-radius: 2px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .admin-btn:hover { background: #2374ce; }
+    .admin-btn-danger { background: #cc0000; border-color: #990000; }
+    .admin-btn-danger:hover { background: #ee0000; }
+    .admin-raw-text {
+      width: 100%;
+      height: 180px;
+      font-family: monospace;
+      font-size: 11px;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      padding: 6px;
+      white-space: pre;
+    }
+
+    /* Footer */
+    .chat-footer {
+      max-width: 1100px;
+      margin: 12px auto;
+      text-align: center;
+      color: #777;
+      font-size: 11px;
+      padding: 8px;
+    }
+    .chat-footer a { color: #555; text-decoration: none; margin: 0 4px; }
+    .chat-footer a:hover { text-decoration: underline; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .chat-window-table, .chat-window-table tr, .chat-window-table td {
+        display: block !important;
+        width: 100% !important;
+      }
+      .userlist-cell {
+        border-right: none;
+        border-bottom: 1px solid #b8cde5;
+      }
+      .userlist-content { height: 70px; }
+      .messages-stream { height: 320px; }
+      .input-row-1 { flex-direction: column; align-items: flex-start; }
+      .smilies-popover { right: 10px; bottom: 85px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Blue Header -->
+  <div class="chat-header">
+    <div class="chat-logo-area">
+      <a href="index.html"><img src="assets/img/icons/mail_top.png" width="16" height="16" alt="" /><b>Mail.Ru</b></a>
+      <span style="color:#8bb7e8;">|</span>
+      <span class="chat-title-badge">Чат@Mail.Ru</span>
+    </div>
+    <div>
+      <a href="index.html">Портал</a>
+      <a href="m.html">Мобильная</a>
+      <a href="search.html">Поиск</a>
+      <a href="https://openvk.org/" target="_blank">OpenVK</a>
+      <a href="help.html">Помощь</a>
+    </div>
+  </div>
+
+  <!-- Room Navigation Bar -->
+  <div class="room-bar">
+    <span style="font-weight:bold; color:#00468c; font-size:11px; margin-right:4px;">Комнаты:</span>
+    <span class="room-tab active" data-room="general" onclick="switchRoom('general')">Беседка</span>
+    <span class="room-tab" data-room="flirt" onclick="switchRoom('flirt')">Знакомства и флирт</span>
+    <span class="room-tab" data-room="music" onclick="switchRoom('music')">Музыка и Кино</span>
+    <span class="room-tab" data-room="tech" onclick="switchRoom('tech')">Hi-Tech и Игры</span>
+    <div class="room-info-label">
+      В комнате: <b id="roomOnlineCount">7</b> чел. | База: <span id="storageModeBadge" style="color:#008800; font-weight:bold;">Зашифрована (AES-256)</span>
+    </div>
+  </div>
+
+  <!-- Main Chat Container -->
+  <div class="chat-main-container">
+    <table class="chat-window-table" cellpadding="0" cellspacing="0">
+      <tr>
+        <!-- Left: Users list -->
+        <td class="userlist-cell">
+          <div class="userlist-header">
+            <span>Собеседники</span>
+            <span id="userCountBadge">7</span>
+          </div>
+          <div class="userlist-content" id="userList">
+            <!-- Populated dynamically -->
+          </div>
+        </td>
+
+        <!-- Right: Messages Stream -->
+        <td class="messages-cell">
+          <div class="messages-stream" id="messagesStream">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Bottom: Input controls -->
+          <div class="chat-input-panel">
+            <div class="input-row-1">
+              <span><b>Ник:</b> <input type="text" id="nickInput" class="chat-field" value="Гость" maxlength="20" style="width:105px;" /></span>
+              <span><b>Кому:</b> <input type="text" id="toInput" class="chat-field" placeholder="Всем" maxlength="20" style="width:105px;" /></span>
+              <label><input type="checkbox" id="privateCheck" /> <b>Приватно</b></label>
+              <span>
+                <b>Цвет:</b>
+                <select id="colorSelect" class="chat-field" style="padding:2px 4px;">
+                  <option value="#000000">Чёрный</option>
+                  <option value="#00468c" selected="selected">Синий Mail.ru</option>
+                  <option value="#d90000">Красный</option>
+                  <option value="#008000">Зелёный</option>
+                  <option value="#7a3e00">Коричневый</option>
+                  <option value="#660099">Фиолетовый</option>
+                </select>
+              </span>
+              <label><input type="checkbox" id="autoscrollCheck" checked="checked" /> Автопрокрутка</label>
+              <label><input type="checkbox" id="soundCheck" checked="checked" /> Звук</label>
+            </div>
+
+            <div class="input-row-2">
+              <input type="text" id="msgInput" class="chat-field" placeholder="Введите сообщение..." maxlength="350" autocomplete="off" />
+              <button type="button" class="btn-smiles" id="smilesBtn" onclick="toggleSmilies()">Смайлы :)</button>
+              <button type="button" class="btn-chat" id="sendBtn" onclick="sendMessage()">Отправить</button>
+            </div>
+
+            <div class="spam-status-row">
+              <div class="spam-indicator" id="spamStatus">
+                <span class="spam-ready">● Готов к отправке</span>
+              </div>
+              <div style="font-size:10px; color:#888;">
+                Защита от спама: кулдаун 2.5 сек | дубликаты и капс блокируются
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Smilies Popover -->
+  <div class="smilies-popover" id="smiliesPopover">
+    <div class="smile-btn" onclick="insertSmile(':)')">😊 :)</div>
+    <div class="smile-btn" onclick="insertSmile(':D')">😃 :D</div>
+    <div class="smile-btn" onclick="insertSmile(';)')">😉 ;)</div>
+    <div class="smile-btn" onclick="insertSmile(':P')">😛 :P</div>
+    <div class="smile-btn" onclick="insertSmile(':(')">😞 :(</div>
+    <div class="smile-btn" onclick="insertSmile(':O')">😮 :O</div>
+    <div class="smile-btn" onclick="insertSmile('8)')">😎 8)</div>
+    <div class="smile-btn" onclick="insertSmile(':@')">😡 :@</div>
+    <div class="smile-btn" onclick="insertSmile(';(')">😢 ;(</div>
+    <div class="smile-btn" onclick="insertSmile(':*')">😘 :*</div>
+    <div class="smile-btn" onclick="insertSmile('(y)')">👍 (y)</div>
+    <div class="smile-btn" onclick="insertSmile('(n)')">👎 (n)</div>
+    <div class="smile-btn" onclick="insertSmile('(heart)')">❤️ (h)</div>
+    <div class="smile-btn" onclick="insertSmile('@}->--')">🌹 @}</div>
+    <div class="smile-btn" onclick="insertSmile('(clap)')">👏 (c)</div>
+  </div>
+
+  <!-- Secret Admin Modal Overlay (NO UI BUTTON, opens via console/admin command) -->
+  <div class="admin-modal-overlay" id="adminModalOverlay">
+    <div class="admin-window">
+      <div class="admin-header">
+        <span>⚙️ Панель управления Чат@Mail.Ru (ynd)</span>
+        <span class="admin-close-btn" onclick="closeAdmin()">✕</span>
+      </div>
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" onclick="switchAdminTab('actions')">Действия</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('moderation')">Модерация</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('database')">Зашифрованная база</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('spam')">Антиспам</button>
+      </div>
+
+      <div class="admin-body">
+        <!-- Tab: Actions -->
+        <div class="admin-section active" id="sec_actions">
+          <p><b>Быстрые действия:</b></p>
+          <div style="margin-bottom:12px;">
+            <button class="admin-btn admin-btn-danger" onclick="adminClearCurrentRoom()">Очистить текущую комнату</button>
+          </div>
+          <hr style="border:none; border-top:1px solid #ccc; margin:10px 0;" />
+          <p><b>Официальное системное оповещение:</b></p>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="adminAnnounceText" class="chat-field" placeholder="Текст объявления..." style="flex:1;" />
+            <button class="admin-btn" onclick="adminSendAnnouncement()">Оповестить всех</button>
+          </div>
+        </div>
+
+        <!-- Tab: Moderation -->
+        <div class="admin-section" id="sec_moderation">
+          <p><b>Заблокировать / Разблокировать пользователя:</b></p>
+          <div style="display:flex; gap:6px; margin-bottom:8px;">
+            <input type="text" id="adminBanNick" class="chat-field" placeholder="Никнейм пользователя..." style="flex:1;" />
+            <button class="admin-btn admin-btn-danger" onclick="adminBanUser()">Забанить</button>
+            <button class="admin-btn" onclick="adminUnbanUser()">Разбанить</button>
+          </div>
+          <div style="display:flex; gap:6px; margin-bottom:12px;">
+            <button class="admin-btn" onclick="adminMuteUser(1)">Мут 1 мин</button>
+            <button class="admin-btn" onclick="adminMuteUser(5)">Мут 5 мин</button>
+            <button class="admin-btn" onclick="adminMuteUser(15)">Мут 15 мин</button>
+          </div>
+          <p><b>Список заблокированных пользователей:</b></p>
+          <div id="adminBannedList" style="background:#fff; border:1px solid #ccc; padding:6px; min-height:60px; font-size:11px;">
+            (Список пуст)
+          </div>
+        </div>
+
+        <!-- Tab: Encrypted Database -->
+        <div class="admin-section" id="sec_database">
+          <p><b>Все данные хранятся в зашифрованном файле <code>chat_data.txt</code> (AES-256):</b></p>
+          <textarea class="admin-raw-text" id="adminDbViewer" readonly="readonly"></textarea>
+          <div style="margin-top:8px; display:flex; gap:8px;">
+            <button class="admin-btn" onclick="adminDownloadEncryptedFile()">💾 Скачать chat_data.txt</button>
+            <button class="admin-btn" onclick="adminToggleDbView()">Переключить: Зашифрованный / Расшифрованный</button>
+          </div>
+        </div>
+
+        <!-- Tab: Anti-spam -->
+        <div class="admin-section" id="sec_spam">
+          <p><b>Параметры защиты от спама:</b></p>
+          <table cellpadding="4" cellspacing="0" style="font-size:11px;">
+            <tr>
+              <td>Задержка между сообщениями (сек):</td>
+              <td><input type="number" id="settingCooldown" class="chat-field" style="width:60px;" value="2.5" step="0.5" /></td>
+            </tr>
+            <tr>
+              <td>Макс. сообщений за 10 секунд:</td>
+              <td><input type="number" id="settingMax10s" class="chat-field" style="width:60px;" value="4" /></td>
+            </tr>
+            <tr>
+              <td>Длительность автомута (сек):</td>
+              <td><input type="number" id="settingMuteDuration" class="chat-field" style="width:60px;" value="60" /></td>
+            </tr>
+          </table>
+          <div style="margin-top:10px;">
+            <button class="admin-btn" onclick="adminSaveSpamSettings()">Сохранить настройки</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="chat-footer">
+    <a href="index.html">Главная</a> | <a href="m.html">Мобильная версия</a> | <a href="about.html">О проекте</a> | <a href="adv.html">Реклама</a> | <a href="help.html">Помощь</a>
+    <div style="margin-top:4px;">&copy; Никита Яндиев (Nekich/ynd), 2025–2026. Историческая реконструкция Чат@Mail.Ru 2010.</div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="text/javascript" src="assets/js/chat_crypto.js"></script>
+  <script type="text/javascript">
+  (function() {
+    'use strict';
+
+    // --- State variables ---
+    var currentRoom = 'general';
+    var myNick = 'Гость_' + Math.floor(1000 + Math.random() * 9000);
+    var isAdmin = false;
+    var adminToken = '';
+    var serverOnline = false;
+    var lastReceivedId = 0;
+    var rawDbDecrypted = null;
+    var rawDbEncrypted = '';
+    var dbShowingPlain = false;
+
+    // Anti-spam state
+    var lastSendTime = 0;
+    var sendHistory = [];
+    var lastSentMessage = '';
+    var spamStrikes = 0;
+    var mutedUntil = 0;
+    var cooldownSeconds = 2.5;
+
+    // Simulated online room users
+    var roomUsersMap = {
+      general: [
+        { nick: 'ynd', gender: 'm', isAdmin: true, status: 'Администратор' },
+        { nick: 'Alena_92', gender: 'f', isAdmin: false, status: 'Слушаю музыку' },
+        { nick: 'Dimon_CS', gender: 'm', isAdmin: false, status: 'Кто в клуб?' },
+        { nick: 'SweetGirl', gender: 'f', isAdmin: false, status: 'В сети' },
+        { nick: 'Nokia_User', gender: 'm', isAdmin: false, status: 'C 5800 XM' },
+        { nick: 'Katyusha', gender: 'f', isAdmin: false, status: 'Пишите в ЛС' },
+        { nick: 'RetroGamer', gender: 'm', isAdmin: false, status: '2010 рулит' }
+      ],
+      flirt: [
+        { nick: 'ynd', gender: 'm', isAdmin: true, status: 'Администратор' },
+        { nick: 'Krasotka_MSK', gender: 'f', isAdmin: false, status: 'Ищу парня' },
+        { nick: 'Romantic_Boy', gender: 'm', isAdmin: false, status: 'Привет девчонки' },
+        { nick: 'Julia_Kiss', gender: 'f', isAdmin: false, status: 'Любовь...' }
+      ],
+      music: [
+        { nick: 'ynd', gender: 'm', isAdmin: true, status: 'Администратор' },
+        { nick: 'DJ_Pulsar', gender: 'm', isAdmin: false, status: 'Electro House' },
+        { nick: 'RockStar2010', gender: 'm', isAdmin: false, status: 'Linkin Park' },
+        { nick: 'Meloman_KA', gender: 'f', isAdmin: false, status: 'Танцуем!' }
+      ],
+      tech: [
+        { nick: 'ynd', gender: 'm', isAdmin: true, status: 'Администратор' },
+        { nick: 'Android_Donut', gender: 'm', isAdmin: false, status: 'Android 1.6' },
+        { nick: 'SysAdmin_XP', gender: 'm', isAdmin: false, status: 'Windows XP SP3' },
+        { nick: 'JavaCoder', gender: 'm', isAdmin: false, status: 'J2ME dev' }
+      ]
+    };
+
+    // --- Audio beep using Web Audio API (No external sound files required) ---
+    function playBeep(freq, duration) {
+      if (!document.getElementById('soundCheck').checked) return;
+      try {
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        var ctx = new AudioCtx();
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq || 650;
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (duration || 0.12));
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + (duration || 0.12));
+      } catch (e) {}
+    }
+
+    // --- Format and Smilies parser ---
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.innerText = str;
+      return div.innerHTML;
+    }
+
+    var SMILES_DICT = {
+      ':)': '😊', ':-)': '😊',
+      ':D': '😃', ':-D': '😃',
+      ';)': '😉', ';-)': '😉',
+      ':P': '😛', ':-P': '😛',
+      ':(': '😞', ':-(': '😞',
+      ':O': '😮', ':-O': '😮',
+      '8)': '😎', '8-)': '😎',
+      ':@': '😡', ';(': '😢',
+      ':*': '😘', '(y)': '👍',
+      '(n)': '👎', '(heart)': '❤️',
+      '(h)': '❤️', '@}->--': '🌹',
+      '(clap)': '👏'
+    };
+
+    function parseSmilies(text) {
+      var escaped = escapeHtml(text);
+      for (var s in SMILES_DICT) {
+        var reg = new RegExp(s.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1'), 'g');
+        escaped = escaped.replace(reg, '<span style="font-size:15px; vertical-align:middle;" title="' + s + '">' + SMILES_DICT[s] + '</span>');
+      }
+      return escaped;
+    }
+
+    // --- DOM Elements ---
+    var messagesStream = document.getElementById('messagesStream');
+    var userList = document.getElementById('userList');
+    var nickInput = document.getElementById('nickInput');
+    var toInput = document.getElementById('toInput');
+    var msgInput = document.getElementById('msgInput');
+    var privateCheck = document.getElementById('privateCheck');
+    var colorSelect = document.getElementById('colorSelect');
+    var autoscrollCheck = document.getElementById('autoscrollCheck');
+    var sendBtn = document.getElementById('sendBtn');
+    var spamStatus = document.getElementById('spamStatus');
+    var smiliesPopover = document.getElementById('smiliesPopover');
+    var roomOnlineCount = document.getElementById('roomOnlineCount');
+    var userCountBadge = document.getElementById('userCountBadge');
+
+    nickInput.value = myNick;
+
+    // --- Anti-Spam Check Function ---
+    function validateSpam(text) {
+      if (isAdmin) return { ok: true };
+
+      var now = Date.now();
+
+      // 1. Mute check
+      if (mutedUntil > now) {
+        var leftSec = Math.ceil((mutedUntil - now) / 1000);
+        return { ok: false, error: 'Вы временно заблокированы за спам. Осталось: ' + leftSec + ' сек.' };
+      }
+
+      // 2. Cooldown check
+      var cooldownMs = cooldownSeconds * 1000;
+      if (now - lastSendTime < cooldownMs) {
+        var wait = ((cooldownMs - (now - lastSendTime)) / 1000).toFixed(1);
+        spamStrikes++;
+        if (spamStrikes >= 3) {
+          applyMute(60);
+          return { ok: false, error: 'Слишком частые сообщения! Вы получили мут на 60 сек.' };
+        }
+        return { ok: false, error: 'Пожалуйста, подождите ' + wait + ' сек. (защита от флуда)!' };
+      }
+
+      // 3. Duplicate check
+      if (lastSentMessage && lastSentMessage.trim().toLowerCase() === text.trim().toLowerCase()) {
+        spamStrikes++;
+        if (spamStrikes >= 3) {
+          applyMute(60);
+          return { ok: false, error: 'Повтор сообщений запрещён! Вы получили мут на 60 сек.' };
+        }
+        return { ok: false, error: 'Повторяющиеся сообщения запрещены (защита от спама)!' };
+      }
+
+      // 4. Rate velocity (max 4 per 10s)
+      sendHistory = sendHistory.filter(function(t) { return now - t < 10000; });
+      if (sendHistory.length >= 4) {
+        spamStrikes++;
+        if (spamStrikes >= 3) {
+          applyMute(60);
+          return { ok: false, error: 'Флуд запрещён! Вы получили мут на 60 сек.' };
+        }
+        return { ok: false, error: 'Слишком много сообщений подряд! Сделайте паузу.' };
+      }
+
+      // 5. Caps lock filter (>70% uppercase)
+      var letters = text.replace(/[^а-яА-Яa-zA-Z]/g, '');
+      if (letters.length > 6) {
+        var capsCount = 0;
+        for (var i = 0; i < letters.length; i++) {
+          if (letters[i] === letters[i].toUpperCase() && letters[i] !== letters[i].toLowerCase()) {
+            capsCount++;
+          }
+        }
+        if (capsCount / letters.length > 0.75) {
+          return { ok: false, error: 'Отключите Caps Lock! Кричать в чате запрещено.' };
+        }
+      }
+
+      return { ok: true };
+    }
+
+    function applyMute(seconds) {
+      mutedUntil = Date.now() + (seconds * 1000);
+      updateSpamUi();
+      addMessageToUi({
+        id: Date.now(),
+        room: currentRoom,
+        author: 'Система',
+        to: '',
+        text: 'Вы временно лишены слова за нарушение правил (спам) на ' + seconds + ' сек.',
+        color: '#cc0000',
+        time: getCurrentTimeString(),
+        is_system: true,
+        is_admin: false,
+        is_private: false
+      });
+      playBeep(300, 0.3);
+    }
+
+    function updateSpamUi() {
+      var now = Date.now();
+      if (mutedUntil > now) {
+        var left = Math.ceil((mutedUntil - now) / 1000);
+        spamStatus.innerHTML = '<span class="spam-muted">⛔ Заблокирован за спам (' + left + 'с)</span>';
+        sendBtn.disabled = true;
+        return;
+      }
+
+      var cooldownMs = cooldownSeconds * 1000;
+      if (now - lastSendTime < cooldownMs && !isAdmin) {
+        var wait = ((cooldownMs - (now - lastSendTime)) / 1000).toFixed(1);
+        spamStatus.innerHTML = '<span class="spam-wait">⏳ Подождите ' + wait + 'с...</span>';
+        sendBtn.disabled = true;
+      } else {
+        spamStatus.innerHTML = '<span class="spam-ready">● Готов к отправке</span>';
+        sendBtn.disabled = false;
+      }
+    }
+
+    setInterval(updateSpamUi, 250);
+
+    // --- Message Rendering ---
+    function addMessageToUi(msg) {
+      if (msg.room && msg.room !== currentRoom && msg.room !== 'all') return;
+
+      var div = document.createElement('div');
+      div.className = 'chat-msg' + (msg.is_system ? ' msg-system' : '');
+      div.id = 'msg_' + msg.id;
+
+      var timeSpan = '<span class="msg-time">[' + escapeHtml(msg.time || '') + ']</span>';
+      var deleteBtn = isAdmin ? '<span class="msg-delete-btn" title="Удалить сообщение" onclick="deleteMessage(' + msg.id + ')">[x]</span>' : '';
+
+      if (msg.is_system) {
+        div.innerHTML = timeSpan + ' <b>[СИСТЕМА]</b> ' + parseSmilies(msg.text) + deleteBtn;
+      } else {
+        var adminBadge = msg.is_admin ? '<span class="msg-admin-badge">Админ</span>' : '';
+        var authorSpan = '<span class="msg-author" style="color:' + escapeHtml(msg.color || '#00468c') + ';" onclick="setToUser(\'' + escapeHtml(msg.author).replace(/'/g, "\\'") + '\')">' + adminBadge + escapeHtml(msg.author) + ':</span>';
+        var whisperSpan = '';
+        if (msg.is_private) {
+          whisperSpan = '<span class="msg-whisper">(приватно для ' + escapeHtml(msg.to) + ')</span> ';
+        }
+        var textSpan = '<span class="msg-text" style="color:' + escapeHtml(msg.color || '#222') + ';">' + parseSmilies(msg.text) + '</span>';
+        div.innerHTML = timeSpan + ' ' + authorSpan + ' ' + whisperSpan + textSpan + deleteBtn;
+      }
+
+      messagesStream.appendChild(div);
+
+      if (autoscrollCheck.checked) {
+        messagesStream.scrollTop = messagesStream.scrollHeight;
+      }
+    }
+
+    function renderUserList() {
+      userList.innerHTML = '';
+      var list = roomUsersMap[currentRoom] || [];
+
+      // Make sure current user is in list
+      var foundMe = false;
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].nick.toLowerCase() === myNick.toLowerCase()) {
+          foundMe = true;
+          break;
+        }
+      }
+      if (!foundMe) {
+        list = [{ nick: myNick, gender: 'm', isAdmin: isAdmin, status: 'Я' }].concat(list);
+      }
+
+      roomOnlineCount.innerText = list.length;
+      userCountBadge.innerText = list.length;
+
+      list.forEach(function(u) {
+        var item = document.createElement('div');
+        item.className = 'user-item';
+        item.onclick = function() { setToUser(u.nick); };
+
+        var genderClass = u.gender === 'f' ? 'gender-f' : 'gender-m';
+        var genderSym = u.gender === 'f' ? '♀' : '♂';
+        var adminBadge = u.isAdmin ? '<span class="user-admin-badge">А</span>' : '';
+
+        item.innerHTML = '<span class="user-gender ' + genderClass + '">' + genderSym + '</span>' +
+                         '<span style="font-weight:' + (u.isAdmin ? 'bold' : 'normal') + '; color:' + (u.isAdmin ? '#cc0000' : '#00468c') + ';">' + escapeHtml(u.nick) + '</span>' +
+                         adminBadge;
+        item.title = u.status || u.nick;
+        userList.appendChild(item);
+      });
+    }
+
+    window.setToUser = function(nick) {
+      if (!nick || nick === myNick) {
+        toInput.value = '';
+        privateCheck.checked = false;
+        return;
+      }
+      toInput.value = nick;
+      msgInput.focus();
+    };
+
+    window.switchRoom = function(roomId) {
+      currentRoom = roomId;
+      var tabs = document.querySelectorAll('.room-tab');
+      tabs.forEach(function(t) {
+        if (t.getAttribute('data-room') === roomId) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+
+      // Clear stream and re-render messages
+      messagesStream.innerHTML = '';
+      if (rawDbDecrypted && rawDbDecrypted.messages) {
+        rawDbDecrypted.messages.forEach(function(m) {
+          if (m.room === roomId || m.room === 'all') {
+            addMessageToUi(m);
+          }
+        });
+      }
+      renderUserList();
+      playBeep(520, 0.08);
+    };
+
+    function getCurrentTimeString() {
+      var d = new Date();
+      var pad = function(n) { return (n < 10 ? '0' : '') + n; };
+      return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    }
+
+    // --- Sending Messages & Admin Command Interception ---
+    window.sendMessage = function() {
+      var text = msgInput.value.trim();
+      if (!text) return;
+
+      // 🔑 SECRET ADMIN AUTHENTICATION INTERCEPTION
+      // Format: admin ynd yndchatadmin2010!! or /admin ynd yndchatadmin2010!!
+      var adminMatch = text.match(/^\/?admin\s+([^\s]+)\s+([^\s]+)/i);
+      if (adminMatch) {
+        msgInput.value = '';
+        var user = adminMatch[1];
+        var pass = adminMatch[2];
+        if (user === 'ynd' && pass === 'yndchatadmin2010!!') {
+          activateAdminMode(pass);
+          return;
+        } else {
+          alert('Ошибка авторизации администратора.');
+          return;
+        }
+      }
+
+      // Update myNick from field
+      myNick = nickInput.value.trim() || myNick;
+
+      // Prevent impersonating ynd if not admin
+      if (myNick.toLowerCase() === 'ynd' && !isAdmin) {
+        alert('Имя "ynd" зарезервировано за Администратором чата.');
+        return;
+      }
+
+      // Anti-spam validation
+      var spamRes = validateSpam(text);
+      if (!spamRes.ok) {
+        alert(spamRes.error);
+        return;
+      }
+
+      var toUser = toInput.value.trim();
+      var isPriv = privateCheck.checked && !!toUser;
+      var chosenColor = colorSelect.value;
+
+      var newMsg = {
+        id: Date.now(),
+        room: currentRoom,
+        author: myNick,
+        to: toUser,
+        text: text,
+        color: chosenColor,
+        time: getCurrentTimeString(),
+        is_system: false,
+        is_admin: isAdmin,
+        is_private: isPriv
+      };
+
+      // Record spam timestamps
+      var now = Date.now();
+      lastSendTime = now;
+      lastSentMessage = text;
+      sendHistory.push(now);
+
+      msgInput.value = '';
+      playBeep(800, 0.1);
+
+      // If backend server is active, send via HTTP API
+      if (serverOnline) {
+        fetch('/api/chat/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            room: currentRoom,
+            author: myNick,
+            to: toUser,
+            text: text,
+            color: chosenColor,
+            is_private: isPriv,
+            admin_token: isAdmin ? adminToken : ''
+          })
+        }).then(function(r) { return r.json(); })
+          .then(function(res) {
+            if (res.success) {
+              // Add to local state if not duplicate
+              if (rawDbDecrypted && rawDbDecrypted.messages) {
+                rawDbDecrypted.messages.push(res.message);
+              }
+              addMessageToUi(res.message);
+            } else {
+              alert(res.error || 'Ошибка отправки');
+            }
+          }).catch(function(e) {
+            console.warn('Backend send failed, using client storage fallback');
+            handleClientStorageSend(newMsg);
+          });
+      } else {
+        // Client-side encrypted storage fallback (GitHub Pages / offline)
+        handleClientStorageSend(newMsg);
+      }
+    };
+
+    function handleClientStorageSend(newMsg) {
+      if (!rawDbDecrypted) rawDbDecrypted = { messages: [], banned_users: [], muted_users: {} };
+      if (!rawDbDecrypted.messages) rawDbDecrypted.messages = [];
+      rawDbDecrypted.messages.push(newMsg);
+
+      // Encrypt and persist into localStorage
+      try {
+        var enc = window.ChatCrypto.encrypt(rawDbDecrypted, 'yndchatadmin2010!!');
+        localStorage.setItem('soap_chat_data_encrypted', enc);
+        rawDbEncrypted = enc;
+
+        // Broadcast to other tabs
+        if (typeof BroadcastChannel !== 'undefined') {
+          var bc = new BroadcastChannel('soap_chat_channel');
+          bc.postMessage({ type: 'new_message', message: newMsg });
+        }
+      } catch (e) {
+        console.error('Local encryption error:', e);
+      }
+
+      addMessageToUi(newMsg);
+    }
+
+    // --- Smilies Popover Handling ---
+    window.toggleSmilies = function() {
+      smiliesPopover.classList.toggle('open');
+    };
+
+    window.insertSmile = function(code) {
+      msgInput.value += ' ' + code + ' ';
+      smiliesPopover.classList.remove('open');
+      msgInput.focus();
+    };
+
+    // Close smilies if clicked outside
+    document.addEventListener('click', function(e) {
+      if (!smiliesPopover.contains(e.target) && e.target !== document.getElementById('smilesBtn')) {
+        smiliesPopover.classList.remove('open');
+      }
+    });
+
+    // Enter key submits message
+    msgInput.addEventListener('keydown', function(e) {
+      if (e.keyCode === 13) {
+        sendMessage();
+      }
+    });
+
+    // --- Secret Admin Activation ---
+    function activateAdminMode(token) {
+      isAdmin = true;
+      adminToken = token;
+      myNick = 'ynd';
+      nickInput.value = 'ynd';
+      nickInput.readOnly = true;
+      colorSelect.value = '#d90000';
+
+      playBeep(950, 0.2);
+      addMessageToUi({
+        id: Date.now(),
+        room: currentRoom,
+        author: 'Система',
+        to: '',
+        text: 'Вы успешно вошли как Администратор чата (ynd). Панель управления активирована.',
+        color: '#d90000',
+        time: getCurrentTimeString(),
+        is_system: true,
+        is_admin: true,
+        is_private: false
+      });
+
+      renderUserList();
+      openAdminModal();
+    }
+
+    // Expose console command for DevTools: admin("ynd", "yndchatadmin2010!!") or admin ynd yndchatadmin2010!!
+    window.admin = function(u, p) {
+      if (u === 'ynd' && p === 'yndchatadmin2010!!') {
+        activateAdminMode(p);
+        console.log('%c[ЧАТ@MAIL.RU] Доступ администратора предоставлен (ynd).', 'color: #00aa00; font-weight: bold; font-size: 14px;');
+        return 'Админ-панель открыта.';
+      } else {
+        console.warn('[ЧАТ@MAIL.RU] Неверный логин или пароль администратора.');
+        return 'Ошибка доступа.';
+      }
+    };
+
+    // Instruction if someone just types 'admin' in DevTools console
+    try {
+      Object.defineProperty(window.admin, 'toString', {
+        value: function() {
+          return '💡 Чтобы войти в админку, вызовите функцию:\nadmin("ynd", "yndchatadmin2010!!")\nили введите прямо в поле чата:\nadmin ynd yndchatadmin2010!!';
+        }
+      });
+    } catch(e) {}
+
+    // Support tagged template literal: admin`ynd yndchatadmin2010!!`
+    var origAdmin = window.admin;
+    window.admin = function(a, b) {
+      if (Array.isArray(a)) {
+        var str = a.join(' ').trim();
+        var parts = str.split(/\s+/);
+        return origAdmin(parts[0], parts[1]);
+      }
+      return origAdmin(a, b);
+    };
+
+    // --- Admin Modal Logic ---
+    function openAdminModal() {
+      document.getElementById('adminModalOverlay').classList.add('open');
+      loadAdminDbView();
+      renderAdminBannedList();
+    }
+
+    window.closeAdmin = function() {
+      document.getElementById('adminModalOverlay').classList.remove('open');
+    };
+
+    window.switchAdminTab = function(tabName) {
+      var tabs = document.querySelectorAll('.admin-tab-btn');
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+
+      var secs = document.querySelectorAll('.admin-section');
+      secs.forEach(function(s) { s.classList.remove('active'); });
+
+      if (event && event.target) event.target.classList.add('active');
+      var sec = document.getElementById('sec_' + tabName);
+      if (sec) sec.classList.add('active');
+    };
+
+    window.deleteMessage = function(id) {
+      if (!isAdmin) return;
+      if (!confirm('Удалить сообщение #' + id + '?')) return;
+
+      var el = document.getElementById('msg_' + id);
+      if (el) el.remove();
+
+      if (serverOnline) {
+        fetch('/api/chat/admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: 'ynd',
+            password: adminToken,
+            action: 'delete_message',
+            payload: { id: id }
+          })
+        });
+      }
+
+      if (rawDbDecrypted && rawDbDecrypted.messages) {
+        rawDbDecrypted.messages = rawDbDecrypted.messages.filter(function(m) { return m.id !== id; });
+        saveLocalEncryptedDb();
+      }
+    };
+
+    window.adminClearCurrentRoom = function() {
+      if (!isAdmin) return;
+      if (!confirm('Очистить сообщения в комнате "' + currentRoom + '"?')) return;
+
+      messagesStream.innerHTML = '';
+      if (serverOnline) {
+        fetch('/api/chat/admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: 'ynd',
+            password: adminToken,
+            action: 'clear_room',
+            payload: { room: currentRoom }
+          })
+        });
+      }
+
+      if (rawDbDecrypted && rawDbDecrypted.messages) {
+        rawDbDecrypted.messages = rawDbDecrypted.messages.filter(function(m) { return m.room !== currentRoom; });
+        saveLocalEncryptedDb();
+      }
+
+      addMessageToUi({
+        id: Date.now(),
+        room: currentRoom,
+        author: 'Система',
+        to: '',
+        text: 'Чат комнаты очищен администратором ynd.',
+        color: '#cc0000',
+        time: getCurrentTimeString(),
+        is_system: true,
+        is_admin: true,
+        is_private: false
+      });
+    };
+
+    window.adminSendAnnouncement = function() {
+      var text = document.getElementById('adminAnnounceText').value.trim();
+      if (!text) return;
+      document.getElementById('adminAnnounceText').value = '';
+
+      if (serverOnline) {
+        fetch('/api/chat/admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: 'ynd',
+            password: adminToken,
+            action: 'announce',
+            payload: { room: currentRoom, text: text }
+          })
+        });
+      }
+
+      addMessageToUi({
+        id: Date.now(),
+        room: currentRoom,
+        author: 'СИСТЕМА (Оповещение)',
+        to: '',
+        text: '📢 ' + text,
+        color: '#d90000',
+        time: getCurrentTimeString(),
+        is_system: true,
+        is_admin: true,
+        is_private: false
+      });
+      playBeep(900, 0.25);
+    };
+
+    window.adminBanUser = function() {
+      var user = document.getElementById('adminBanNick').value.trim();
+      if (!user) return;
+      if (user.toLowerCase() === 'ynd') { alert('Нельзя забанить администратора!'); return; }
+
+      if (!rawDbDecrypted.banned_users) rawDbDecrypted.banned_users = [];
+      if (rawDbDecrypted.banned_users.indexOf(user.toLowerCase()) === -1) {
+        rawDbDecrypted.banned_users.push(user.toLowerCase());
+      }
+      saveLocalEncryptedDb();
+      renderAdminBannedList();
+
+      if (serverOnline) {
+        fetch('/api/chat/admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: 'ynd',
+            password: adminToken,
+            action: 'ban_user',
+            payload: { user: user }
+          })
+        });
+      }
+      alert('Пользователь ' + user + ' заблокирован!');
+    };
+
+    window.adminUnbanUser = function() {
+      var user = document.getElementById('adminBanNick').value.trim();
+      if (!user) return;
+      if (rawDbDecrypted.banned_users) {
+        rawDbDecrypted.banned_users = rawDbDecrypted.banned_users.filter(function(u) { return u !== user.toLowerCase(); });
+      }
+      saveLocalEncryptedDb();
+      renderAdminBannedList();
+
+      if (serverOnline) {
+        fetch('/api/chat/admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: 'ynd',
+            password: adminToken,
+            action: 'unban_user',
+            payload: { user: user }
+          })
+        });
+      }
+      alert('Пользователь ' + user + ' разблокирован.');
+    };
+
+    window.adminMuteUser = function(mins) {
+      var user = document.getElementById('adminBanNick').value.trim();
+      if (!user) { alert('Укажите ник пользователя для мута.'); return; }
+      if (!rawDbDecrypted.muted_users) rawDbDecrypted.muted_users = {};
+      rawDbDecrypted.muted_users[user.toLowerCase()] = Date.now() + (mins * 60 * 1000);
+      saveLocalEncryptedDb();
+
+      addMessageToUi({
+        id: Date.now(),
+        room: currentRoom,
+        author: 'Система',
+        to: '',
+        text: 'Пользователь [' + user + '] лишён слова администратором на ' + mins + ' мин.',
+        color: '#cc0000',
+        time: getCurrentTimeString(),
+        is_system: true,
+        is_admin: true,
+        is_private: false
+      });
+      alert('Выдан мут пользователю ' + user + ' на ' + mins + ' мин.');
+    };
+
+    function renderAdminBannedList() {
+      var box = document.getElementById('adminBannedList');
+      var list = (rawDbDecrypted && rawDbDecrypted.banned_users) || [];
+      if (list.length === 0) {
+        box.innerHTML = '<span style="color:#888;">(Список забаненных пуст)</span>';
+      } else {
+        box.innerHTML = list.map(function(u) {
+          return '<span style="background:#fee; border:1px solid #ecc; padding:2px 5px; margin-right:4px; display:inline-block; border-radius:2px;">' + escapeHtml(u) + '</span>';
+        }).join('');
+      }
+    }
+
+    function loadAdminDbView() {
+      var viewer = document.getElementById('adminDbViewer');
+      if (dbShowingPlain) {
+        viewer.value = JSON.stringify(rawDbDecrypted, null, 2);
+      } else {
+        viewer.value = rawDbEncrypted || 'Загрузка зашифрованных данных...';
+      }
+    }
+
+    window.adminToggleDbView = function() {
+      dbShowingPlain = !dbShowingPlain;
+      loadAdminDbView();
+    };
+
+    window.adminDownloadEncryptedFile = function() {
+      var text = rawDbEncrypted || '';
+      var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'chat_data.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+
+    window.adminSaveSpamSettings = function() {
+      var cd = parseFloat(document.getElementById('settingCooldown').value) || 2.5;
+      var max10 = parseInt(document.getElementById('settingMax10s').value, 10) || 4;
+      var muteSec = parseInt(document.getElementById('settingMuteDuration').value, 10) || 60;
+
+      cooldownSeconds = cd;
+      if (!rawDbDecrypted.settings) rawDbDecrypted.settings = {};
+      rawDbDecrypted.settings.cooldown_seconds = cd;
+      rawDbDecrypted.settings.max_msg_per_10s = max10;
+      rawDbDecrypted.settings.auto_mute_seconds = muteSec;
+
+      saveLocalEncryptedDb();
+      alert('Настройки антиспама сохранены в зашифрованную базу!');
+    };
+
+    function saveLocalEncryptedDb() {
+      try {
+        var enc = window.ChatCrypto.encrypt(rawDbDecrypted, 'yndchatadmin2010!!');
+        localStorage.setItem('soap_chat_data_encrypted', enc);
+        rawDbEncrypted = enc;
+        loadAdminDbView();
+      } catch (e) {
+        console.error('Error saving local encrypted db:', e);
+      }
+    }
+
+    // --- Cross-tab Synchronization (BroadcastChannel) ---
+    if (typeof BroadcastChannel !== 'undefined') {
+      var bc = new BroadcastChannel('soap_chat_channel');
+      bc.onmessage = function(ev) {
+        if (ev.data && ev.data.type === 'new_message' && ev.data.message) {
+          var m = ev.data.message;
+          if (m.author !== myNick) {
+            addMessageToUi(m);
+            playBeep(650, 0.08);
+          }
+        }
+      };
+    }
+
+    // --- Polling & Initialization ---
+    function initDatabase() {
+      // First, attempt to load backend API
+      fetch('/api/chat/state?room=' + currentRoom)
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (res.success) {
+            serverOnline = true;
+            document.getElementById('storageModeBadge').innerHTML = 'Сервер + Зашифрованный txt';
+            messagesStream.innerHTML = '';
+            res.messages.forEach(function(m) {
+              addMessageToUi(m);
+              if (m.id > lastReceivedId) lastReceivedId = m.id;
+            });
+            renderUserList();
+
+            // Fetch raw encrypted chat_data.txt for admin inspection
+            fetch('/chat_data.txt').then(function(cr) { return cr.text(); }).then(function(txt) {
+              rawDbEncrypted = txt;
+              try {
+                rawDbDecrypted = JSON.parse(window.ChatCrypto.decrypt(txt, 'yndchatadmin2010!!'));
+              } catch (e) {}
+            });
+
+            // Start polling server
+            setInterval(pollServer, 2000);
+          }
+        })
+        .catch(function() {
+          // Backend not reachable -> Static mode (GitHub Pages / local static)
+          serverOnline = false;
+          initStaticEncryptedStorage();
+        });
+    }
+
+    function pollServer() {
+      if (!serverOnline) return;
+      fetch('/api/chat/state?room=' + currentRoom + '&since_id=' + lastReceivedId + '&viewer=' + encodeURIComponent(myNick))
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (res.success && res.messages && res.messages.length > 0) {
+            res.messages.forEach(function(m) {
+              if (m.id > lastReceivedId) {
+                lastReceivedId = m.id;
+                addMessageToUi(m);
+                if (m.author !== myNick) {
+                  playBeep(650, 0.08);
+                }
+              }
+            });
+          }
+        }).catch(function() {});
+    }
+
+    function initStaticEncryptedStorage() {
+      document.getElementById('storageModeBadge').innerHTML = 'Зашифровано AES-256 (chat_data.txt)';
+      var saved = localStorage.getItem('soap_chat_data_encrypted');
+
+      if (saved) {
+        try {
+          rawDbEncrypted = saved;
+          rawDbDecrypted = JSON.parse(window.ChatCrypto.decrypt(saved, 'yndchatadmin2010!!'));
+          renderInitialMessages();
+          return;
+        } catch (e) {
+          console.warn('Saved local storage decode failed, loading from chat_data.txt');
+        }
+      }
+
+      // Fetch static chat_data.txt
+      fetch('chat_data.txt')
+        .then(function(r) { return r.text(); })
+        .then(function(txt) {
+          rawDbEncrypted = txt;
+          rawDbDecrypted = JSON.parse(window.ChatCrypto.decrypt(txt, 'yndchatadmin2010!!'));
+          saveLocalEncryptedDb();
+          renderInitialMessages();
+        })
+        .catch(function(e) {
+          console.error('Failed to load chat_data.txt, initializing memory default', e);
+          rawDbDecrypted = {
+            messages: [
+              { id: 1, room: 'general', author: 'Система', text: 'Добро пожаловать в Чат@Mail.Ru 2010!', color: '#00468c', time: getCurrentTimeString(), is_system: true }
+            ],
+            banned_users: [],
+            muted_users: {}
+          };
+          saveLocalEncryptedDb();
+          renderInitialMessages();
+        });
+    }
+
+    function renderInitialMessages() {
+      messagesStream.innerHTML = '';
+      if (rawDbDecrypted && rawDbDecrypted.messages) {
+        rawDbDecrypted.messages.forEach(function(m) {
+          if (m.room === currentRoom || m.room === 'all') {
+            addMessageToUi(m);
+          }
+        });
+      }
+      renderUserList();
+    }
+
+    // Start everything
+    initDatabase();
+
+  })();
+  </script>
+</body>
+</html>

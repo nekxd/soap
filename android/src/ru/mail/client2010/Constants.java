@@ -10,6 +10,7 @@ public final class Constants {
     public static final String URL_SEARCH = "http://soap.nekxd.fun/search.html";
     public static final String URL_NEWS = "https://habr.com/ru/news/";
     public static final String URL_GAMES = "https://openvk.org/apps";
+    public static final String URL_CHAT = "http://soap.nekxd.fun/chat.html";
 
     // Fallback offline HTML template
     public static final String OFFLINE_HTML = "<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
