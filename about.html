@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>О компании / О проекте — soap.nekxd.fun</title>
+  <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #333333;
+      font-family: Arial, Tahoma, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    a {
+      color: #1b5ea8;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #f26d00;
+    }
+
+    /* Top blue header */
+    .top-header {
+      background: #00468c;
+      border-bottom: 2px solid #003366;
+      padding: 8px 16px;
+    }
+    .top-header-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .top-header a.logo-link {
+      display: inline-block;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .top-header img.logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+    }
+    .top-nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .top-nav a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+    .top-nav a.active {
+      color: #ffcc00;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs-wrap {
+      background: #f0f4f9;
+      border-bottom: 1px solid #d8e2ec;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: #666666;
+    }
+    .breadcrumbs-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Main content container */
+    .content-wrap {
+      max-width: 980px;
+      margin: 20px auto 40px auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+    h1.page-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00468c;
+      margin: 0 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2edf7;
+    }
+
+    .about-box {
+      background: #fafcfe;
+      border: 1px solid #c9dcf0;
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 70, 140, 0.05);
+    }
+
+    .about-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #222222;
+      margin-bottom: 16px;
+    }
+
+    .info-card {
+      background: #ffffff;
+      border: 1px solid #d5e3f2;
+      border-left: 4px solid #00468c;
+      padding: 12px 16px;
+      margin: 12px 0;
+      border-radius: 0 3px 3px 0;
+    }
+
+    .info-card b {
+      color: #00468c;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    /* Features list */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .feature-item {
+      background: #ffffff;
+      border: 1px solid #e1eaf3;
+      border-radius: 3px;
+      padding: 14px 16px;
+    }
+    .feature-item h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: #00468c;
+    }
+    .feature-item p {
+      margin: 0;
+      font-size: 12px;
+      color: #555555;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #d0dfea;
+      background: #f7fafe;
+      padding: 20px 16px;
+      text-align: center;
+      font-size: 11px;
+      color: #666666;
+    }
+    .footer a {
+      color: #1b5ea8;
+    }
+    .footer-badges {
+      padding-bottom: 12px;
+    }
+    .footer-badges img {
+      margin: 2px 4px;
+      vertical-align: middle;
+    }
+    .footer-nav {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .top-header-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .top-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      .about-box {
+        padding: 14px 16px;
+      }
+      h1.page-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Blue Header -->
+  <div class="top-header">
+    <div class="top-header-inner">
+      <a href="index.html" class="logo-link" title="На главную soap.nekxd.fun">
+        <img src="assets/img/ii/r/23logo236px.gif" alt="@ SOAP.NEKXD.FUN" class="logo" />
+      </a>
+      <div class="top-nav">
+        <a href="index.html">Главная</a>
+        <a href="search.html">Поиск</a>
+        <a href="m.html">Мобильная версия</a>
+        <a href="about.html" class="active">О компании</a>
+        <a href="https://github.com/nekxd/soap" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs-wrap">
+    <div class="breadcrumbs-inner">
+      <a href="index.html">Главная</a> &raquo; <span>О компании</span>
+    </div>
+  </div>
+
+  <!-- Content Container -->
+  <div class="content-wrap">
+    <h1 class="page-title">О компании / О проекте soap</h1>
+
+    <div class="about-box">
+      <div class="about-text">
+        <p style="font-size: 15px; font-weight: bold; color: #00468c; margin-top: 0;">
+          soap — реборн старого Mail.RU 2010-ых годов
+        </p>
+        <p>
+          Проект был сделан летом в бессонную ночь мной, от нефиг делать. Сначала это была нерабочая фигня, но сейчас что-то взялся за проект, и начал его переделывать.
+        </p>
+        <p>
+          Да, знаю, навайбкодено, но не так ужасно.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <b>📩 Обратная связь и сотрудничество:</b><br />
+        По багам, сотрудничествам, пишите — <a href="mailto:nekxd@bk.ru"><b>nekxd@bk.ru</b></a>
+      </div>
+
+      <div class="info-card" style="border-left-color: #2da44e;">
+        <b>💻 Исходный код:</b><br />
+        Source проекта — <a href="https://github.com/nekxd/soap" target="_blank"><b>https://github.com/nekxd/soap</b></a>, делайте что хотите.
+      </div>
+    </div>
+
+    <h2 style="font-size: 16px; color: #00468c; margin-bottom: 12px;">Что работает в проекте:</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <h3>🔍 Поиск по всему интернету</h3>
+        <p>Работает через DuckDuckGo Instant API и CORS-прокси без бэкенда. Выводит живые сниппеты, ссылки и фавиконки.</p>
+      </div>
+      <div class="feature-item">
+        <h3>⛅ Живая погода и курсы валют</h3>
+        <p>Погода определяется по вашему IP через Open-Meteo API, а курсы валют доллара и евро обновляются ежедневно из ЦБ РФ.</p>
+      </div>
+      <div class="feature-item">
+        <h3>📱 Мобильная версия</h3>
+        <p>Точная реплика мобильного портала m.mail.ru 2010–2014 годов с автоматическим редиректом для смартфонов.</p>
+      </div>
+      <div class="feature-item">
+        <h3>🎮 Игры и OpenVK</h3>
+        <p>Интеграция с играми OpenVK (Cut the Rope, Doom, Doodle Jump, Как достать соседа) и ретро-клиентом MRIM.su.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-badges">
+      <a href="http://madebydimas.top" target="_blank"><img src="assets/img/badges/button_dimas.gif" width="88" height="31" alt="madebydimas" onerror="if(this.src!='http://madebydimas.top/button.gif'){this.src='http://madebydimas.top/button.gif';}"></a>
+      <a href="http://old.myslivets.com" target="_blank"><img src="assets/img/badges/button_myslivets.png" width="88" height="31" alt="myslivets" onerror="if(this.src!='http://myslivets.com/img/button.png'){this.src='http://myslivets.com/img/button.png';}"></a>
+      <a href="http://veselcraft.cc/" target="_blank"><img src="assets/img/badges/vc.gif" width="88" height="31" alt="veselcraft" loading="lazy" onerror="if(this.src!='http://veselcraft.cc/images/vc.gif'){this.src='http://veselcraft.cc/images/vc.gif';}"></a>
+      <a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="assets/img/badges/windows-media-player.gif" width="88" height="31" alt="WMP" onerror="if(this.src!='http://nekxd.ru/windows-media-player.gif'){this.src='http://nekxd.ru/windows-media-player.gif';}"></a>
+      <img src="assets/img/badges/w7-boot.gif" height="31" alt="" onerror="if(this.src!='http://88x31.kate.pet/w7-boot.gif'){this.src='http://88x31.kate.pet/w7-boot.gif';}">
+      <a href="http://nekxd.ru/" target="_blank"><img src="assets/img/badges/old.png" width="88" height="31" alt="NekxdOld" onerror="if(this.src!='http://nekxd.ru/old.png'){this.src='http://nekxd.ru/old.png';}"></a>
+    </div>
+
+    <div class="footer-nav">
+      <a href="index.html">Главная</a> &middot;
+      <a href="search.html">Поиск</a> &middot;
+      <a href="m.html">Мобильная версия</a> &middot;
+      <a href="about.html">О компании</a> &middot;
+      <a href="https://github.com/nekxd/soap" target="_blank">GitHub</a>
+    </div>
+
+    <div>&copy; Никита Яндиев (Nekich/ynd), 2025–2026</div>
+  </div>
+
+</body>
+</html>
