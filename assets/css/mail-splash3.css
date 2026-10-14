@@ -124,12 +124,13 @@ h4 {font-size: 75%;}
 
 
 .left_block .top_menu2 {list-style-type: none; position: relative; z-index: 1; margin: 10px 0 0 0; padding: 0; font-size: 75%;}
-.left_block .top_menu2 li {float: left; width: 23%; margin-bottom: 10px; text-align: center;}
-.left_block .top_menu2 li.last {width: 31%; margin-right: -3px;}
+.left_block .top_menu2 li {float: left; width: 25%; margin-bottom: 10px; text-align: center;}
+.left_block .top_menu2 li.last {width: 25%; margin-right: 0;}
 .left_block .top_menu2 img {margin-bottom: 2px; padding: 0;}
 .left_block .top_menu2 a {display: block; height: 17px; padding-top: 29px; font-weight: bold;}
 .left_block .top_menu2 .l_big_my a {background: url('../img/ii/mail/ru/images/top_menu_ico_all.gif') 50% 0 no-repeat;}
 .left_block .top_menu2 .l_big_agent a {background: url('../img/ii/mail/ru/images/top_menu_ico_all.gif') 50% -50px no-repeat;}
+.left_block .top_menu2 .l_big_chat a {background: url('../img/custom/top_ico_chat.png') 50% 2px no-repeat;}
 .left_block .top_menu2 .l_big_foto a {background: url('../img/ii/mail/ru/images/top_menu_ico_all.gif') 50% -100px no-repeat;}
 .left_block .top_menu2 .l_big_love a {background: url('../img/ii/mail/ru/images/top_menu_ico_all.gif') 50% -150px no-repeat;}
 .left_block .top_menu2 .l_big_games a {background: url('../img/ii/mail/ru/images/top_menu_ico_all_2.gif') 50% -200px no-repeat;}
