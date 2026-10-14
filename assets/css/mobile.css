@@ -1,0 +1,421 @@
+/* Authentic Mail.ru 2010-2014 Mobile Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #000000;
+  font-family: Arial, Tahoma, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1.3;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: #1b5ea8;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #f25100;
+}
+
+/* Header bar */
+.m-header {
+  background: #2b5b9f;
+  background: linear-gradient(to bottom, #4d7eb2 0%, #22619f 100%);
+  border-bottom: 1px solid #15487d;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.m-header a {
+  display: inline-block;
+  line-height: 0;
+}
+
+.m-header img {
+  display: block;
+  max-height: 20px;
+  width: auto;
+}
+
+/* Sub-header bar */
+.m-subbar {
+  background: #f1faff;
+  background: linear-gradient(to bottom, #f1faff 0%, #bed7f0 100%);
+  border-bottom: 1px solid #b2cbe4;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.m-subbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.m-subbar-link {
+  display: inline-flex;
+  align-items: center;
+  color: #1b5ea8;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.m-subbar-link img {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.m-subbar-link:hover {
+  text-decoration: underline;
+}
+
+.m-reg-btn {
+  display: inline-block;
+  background: linear-gradient(to bottom, #4a92d9 0%, #1e5fa0 100%);
+  border: 1px solid #134d85;
+  border-radius: 9px;
+  color: #ffffff !important;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 8px;
+  text-decoration: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Search bar */
+.m-search-wrap {
+  padding: 6px 8px 5px;
+  border-bottom: 1px solid #ececec;
+}
+
+.m-search-topic {
+  font-size: 11px;
+  color: #1b5ea8;
+  text-decoration: underline;
+  margin-bottom: 3px;
+  display: inline-block;
+}
+
+.m-search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.m-search-input {
+  flex: 1;
+  height: 24px;
+  border: 1px solid #7f9db9;
+  background: #ffffff;
+  padding: 2px 6px;
+  font-size: 13px;
+  box-sizing: border-box;
+  border-radius: 0;
+  outline: none;
+}
+
+.m-search-btn {
+  height: 24px;
+  margin-left: 4px;
+  padding: 0 10px;
+  background: #ece9d8;
+  background: linear-gradient(to bottom, #ffffff 0%, #ece9d8 100%);
+  border: 1px solid #7f9db9;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* City location */
+.m-city-bar {
+  padding: 5px 8px;
+  font-size: 11px;
+  border-bottom: 1px solid #ececec;
+}
+
+.m-city-bar b {
+  color: #000;
+  font-size: 11px;
+}
+
+.m-city-change {
+  color: #888888;
+  font-size: 10px;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.m-city-change:hover {
+  text-decoration: underline;
+}
+
+/* Section titles */
+.m-sec-title {
+  background: #e4eff9;
+  border-top: 1px solid #c2daf2;
+  border-bottom: 1px solid #c2daf2;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+  margin-top: 2px;
+}
+
+.m-sec-title a.m-sec-sublink {
+  font-size: 10px;
+  font-weight: normal;
+  color: #1b5ea8;
+  margin-left: 6px;
+  text-decoration: underline;
+}
+
+/* Section content blocks */
+.m-sec-content {
+  padding: 6px 8px;
+  background: #ffffff;
+}
+
+/* News */
+.m-top-news {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.m-news-thumb {
+  width: 34px;
+  height: 31px;
+  border: 1px solid #c0c0c0;
+  margin-right: 6px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.m-top-news-text {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.m-news-item {
+  margin-bottom: 5px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.m-news-cat {
+  margin-top: 4px;
+  margin-bottom: 3px;
+  font-size: 11px;
+}
+
+.m-news-cat b {
+  margin-right: 4px;
+}
+
+.m-news-cat b a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.m-news-cat b a:hover {
+  text-decoration: underline;
+}
+
+/* Weather */
+.m-weather-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.m-weather-current {
+  display: flex;
+  flex-direction: column;
+}
+
+.m-weather-val {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  line-height: 1;
+}
+
+.m-weather-label {
+  font-size: 11px;
+  color: #555555;
+  margin-top: 2px;
+}
+
+.m-weather-details {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+/* Currency */
+.m-currency-date {
+  color: #555555;
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+.m-currency-row {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.m-currency-delta-neg {
+  color: #cc0000;
+  font-size: 10px;
+  margin-left: 3px;
+}
+
+.m-currency-delta-pos {
+  color: #008800;
+  font-size: 10px;
+  margin-left: 3px;
+}
+
+/* Sport */
+.m-sport-top {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.m-sport-thumb {
+  width: 34px;
+  height: 32px;
+  border: 1px solid #c0c0c0;
+  margin-right: 6px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Afisha */
+.m-afisha-tags {
+  margin-top: 6px;
+  font-size: 11px;
+}
+
+.m-afisha-tags a {
+  color: #777777;
+  text-decoration: underline;
+  margin-right: 8px;
+}
+
+/* Games */
+.m-game-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.m-game-icon {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.m-game-text {
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.m-game-text b a {
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* Phone apps */
+.m-phone-apps {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.m-app-row {
+  display: flex;
+  align-items: center;
+}
+
+.m-app-row a {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  color: #1b5ea8;
+  text-decoration: underline;
+}
+
+.m-app-row img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* All projects */
+.m-projects-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.m-projects-grid td {
+  width: 50%;
+  padding: 3px 0;
+  vertical-align: middle;
+}
+
+.m-projects-grid a {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  color: #1b5ea8;
+  text-decoration: underline;
+}
+
+.m-projects-grid img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Footer */
+.m-footer {
+  border-top: 1px solid #c2daf2;
+  margin-top: 10px;
+  padding: 8px 8px 16px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+  background: #ffffff;
+}
+
+.m-footer a {
+  color: #1b5ea8;
+  text-decoration: underline;
+}
+
+.m-footer-badges {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.m-footer-badges img {
+  margin: 2px 3px;
+  vertical-align: middle;
+}

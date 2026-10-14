@@ -4,6 +4,21 @@
 <title>@ SOAP.NEKXD.FUN: почта, поиск, новости, знакомства, видеочат. Почта @ SOAP.NEKXD.FUN - бесплатная почта #1</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script type="text/javascript">
+(function(){
+  try {
+    if (window.location.search.indexOf('full=1') !== -1) {
+      sessionStorage.setItem('prefer_full', '1');
+      return;
+    }
+    if (sessionStorage.getItem('prefer_full') === '1') return;
+  } catch(e){}
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+  if (isMobile) {
+    location.replace('m.html' + window.location.search);
+  }
+})();
+</script>
 <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
 <link href="assets/css/mail-splash3.css" rel="stylesheet" type="text/css" />
 <link href="assets/css/search_top.css" rel="stylesheet" type="text/css" />
@@ -135,7 +150,7 @@
 	<tr>
 		<td class="logo">
 		  <div class="d1"><div class="d2"><div class="d3"><div class="d4" style="text-align: center;"><a href="index.html" style="float: none; width: auto;"><img src="assets/img/ii/r/23logo236px.gif" width="236" height="55" alt="@ SOAP.NEKXD.FUN" title="@ SOAP.NEKXD.FUN" style="margin: 0;" /></a></div></div></div></div>
-<a href="#" onclick="return false;">Сделать&nbsp;стартовой</a> <a href="https://mail.proton.me" class="ico" style="color: #F25100;"><img src="assets/img/ii/mail/ru/images/telephonem.gif" width="7" height="13" alt="" title="Мобильная почта" />Мобильная&nbsp;почта</a>
+<a href="#" onclick="return false;">Сделать&nbsp;стартовой</a> <a href="https://mail.proton.me" class="ico" style="color: #F25100;"><img src="assets/img/ii/mail/ru/images/telephonem.gif" width="7" height="13" alt="" title="Мобильная почта" />Мобильная&nbsp;почта</a> <a href="m.html" class="ico" style="color: #1b5ea8; margin-left: 6px;" onclick="try{sessionStorage.removeItem('prefer_full');}catch(e){}"><img src="assets/img/icons/mail_top.png" width="12" height="12" alt="" style="vertical-align:middle; margin-right:2px;" />Мобильная&nbsp;версия</a>
       <div class="mw">&nbsp;</div>
 		</td>
 		<td class="left_divider" style="width:4%;"><div class="mw">&nbsp;</div></td>
@@ -575,6 +590,10 @@
 <a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="assets/img/badges/windows-media-player.gif" width="88" height="31" alt="WMP" onerror="if(this.src!='http://nekxd.ru/windows-media-player.gif'){this.src='http://nekxd.ru/windows-media-player.gif';}"></a>
 <img src="assets/img/badges/w7-boot.gif" height="31" alt="" onerror="if(this.src!='http://88x31.kate.pet/w7-boot.gif'){this.src='http://88x31.kate.pet/w7-boot.gif';}">
 <a href="http://nekxd.ru/" target="_blank"><img src="assets/img/badges/old.png" width="88" height="31" alt="NekxdOld" onerror="if(this.src!='http://nekxd.ru/old.png'){this.src='http://nekxd.ru/old.png';}"></a>
+</div>
+
+<div style="text-align:center; padding:0 0 10px; font-size:11px;">
+<a href="m.html" onclick="try{sessionStorage.removeItem('prefer_full');}catch(e){}" style="color:#1b5ea8; text-decoration:underline;">Мобильная версия Mail.Ru</a>
 </div>
 
 <div style="text-align:center; padding:0 0 15px; font-size:11px; color:#666;">

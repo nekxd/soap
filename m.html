@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0" />
+  <title>Мобильный Mail.Ru</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="assets/css/mobile.css" />
+</head>
+<body>
+
+  <!-- Top Blue Bar -->
+  <div class="m-header">
+    <a href="m.html"><img src="assets/img/mobile/mailru_logo.png" alt="@mail.ru" height="19" border="0" /></a>
+  </div>
+
+  <!-- Sub Header Bar: Mail / Moy Mir / Registration -->
+  <div class="m-subbar">
+    <div class="m-subbar-left">
+      <a href="https://e.mail.ru/" class="m-subbar-link">
+        <img src="assets/img/icons/mail_top.png" width="16" height="16" alt="" />Почта
+      </a>
+      <a href="https://openvk.org/" class="m-subbar-link">
+        <img src="assets/img/icons/my_top.png" width="16" height="16" alt="" />Мой Мир
+      </a>
+    </div>
+    <div>
+      <a href="https://account.mail.ru/signup" class="m-reg-btn">Регистрация</a>
+    </div>
+  </div>
+
+  <!-- Search Form -->
+  <div class="m-search-wrap">
+    <div><a href="search.html" class="m-search-topic">Поиск в интернете</a></div>
+    <form action="search.html" method="get" class="m-search-form">
+      <input type="text" name="q" id="mq" class="m-search-input" value="" autocomplete="off" />
+      <input type="submit" value="Найти" class="m-search-btn" />
+    </form>
+  </div>
+
+  <!-- City / Location bar -->
+  <div class="m-city-bar">
+    <b id="m_city">Москва</b> <a href="http://weather.mail.ru/" class="m-city-change">изменить</a>
+  </div>
+
+  <!-- Section: Главные новости -->
+  <div class="m-sec-title">Главные новости</div>
+  <div class="m-sec-content">
+    <div class="m-top-news">
+      <img src="assets/img/mobile/news_kamaz.png" class="m-news-thumb" alt="" />
+      <div class="m-top-news-text">
+        <a href="https://habr.com/ru/news/" id="m_top_news_link">Первые КамАЗы с гумпомощью из РФ прибыли к КПП на границе с Украиной</a>
+      </div>
+    </div>
+    <div id="m_news_bullets">
+      <div class="m-news-item"><a href="https://habr.com/ru/news/">Луганские ополченцы сбили два самолета силовиков</a></div>
+      <div class="m-news-item"><a href="https://habr.com/ru/news/">Туроператор «Авиачартер-ДВ» вернет деньги туристам</a></div>
+      <div class="m-news-item"><a href="https://habr.com/ru/news/">ФРГ, Украина, РФ и Франция обсудят в Берлине прекращение огня</a></div>
+      <div class="m-news-item"><a href="https://habr.com/ru/news/">Меркель требует от России объяснений</a></div>
+    </div>
+    <div class="m-news-cat"><b><a href="https://auto.ru/">Авто</a></b> <a href="https://habr.com/ru/hubs/transport/" id="m_news_auto">Ситуация в Крыму: Керчь парализована</a></div>
+    <div class="m-news-cat"><b><a href="https://habr.com/ru/hubs/electronics/">Hi-tech</a></b> <a href="https://habr.com/ru/hubs/electronics/" id="m_news_hitech">Windows 9 появится уже в следующем месяце</a></div>
+    <div class="m-news-cat"><b><a href="http://lady.mail.ru/">Леди</a></b> <a href="https://habr.com/ru/search/?q=мода" id="m_news_lady">Дочь Абрамовича впервые вышла в свет в Лондоне</a></div>
+  </div>
+
+  <!-- Section: Погода -->
+  <div class="m-sec-title">Погода. <span id="m_w_city">Москва</span> <a href="http://weather.mail.ru/" class="m-sec-sublink">на 14 дней</a></div>
+  <div class="m-sec-content">
+    <div class="m-weather-box">
+      <div class="m-weather-current">
+        <div>
+          <span class="m-weather-val" id="m_w_temp">+13°</span>
+          <img id="m_w_icon" src="assets/img/im/r/weather_new/pict_weather_big_7.gif" width="24" height="30" style="vertical-align:middle;" alt="" />
+        </div>
+        <div class="m-weather-label" id="m_w_label">ясно</div>
+      </div>
+      <div class="m-weather-details">
+        <div>Утром <span id="m_w_morn">+15°... +21°</span></div>
+        <div>Днем <span id="m_w_day">+17°... +23°</span></div>
+        <div><a href="http://weather.mail.ru/" id="m_w_tom">Завтра +18°... +26°</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Курсы валют -->
+  <div class="m-sec-title">Курсы валют</div>
+  <div class="m-sec-content">
+    <div class="m-currency-date" id="m_cbr_date">Сегодня, 17 авг</div>
+    <div class="m-currency-row">
+      <b>$</b> <span id="m_usd_val">36.0014</span> <span id="m_usd_delta" class="m-currency-delta-neg">-0.0381</span>
+    </div>
+    <div class="m-currency-row">
+      <b>€</b> <span id="m_eur_val">48.1231</span> <span id="m_eur_delta" class="m-currency-delta-neg">-0.0165</span>
+    </div>
+  </div>
+
+  <!-- Section: Спорт -->
+  <div class="m-sec-title">Спорт</div>
+  <div class="m-sec-content">
+    <div class="m-sport-top">
+      <img src="assets/img/mobile/sport_spartak.png" class="m-sport-thumb" alt="" />
+      <div class="m-top-news-text">
+        <a href="http://sport.mail.ru/">«Спартак» оказался сильнее ЦСКА в столичном дерби в ЧР</a>
+      </div>
+    </div>
+    <div class="m-news-item"><a href="http://sport.mail.ru/">Вальбуэна двумя голевыми передачами вновь принес победу «Динамо»</a></div>
+    <div class="m-news-item"><a href="http://sport.mail.ru/">Что происходило в Химках после главного дерби страны?</a></div>
+    <div class="m-news-item"><a href="http://sport.mail.ru/">«Ливерпуль» выиграл у «Саутгемптона»</a></div>
+    <div class="m-news-item"><a href="http://sport.mail.ru/">«Рубин» сыграл вничью с «Локомотивом» в матче чемпионата России</a></div>
+  </div>
+
+  <!-- Section: Афиша -->
+  <div class="m-sec-title">Афиша</div>
+  <div class="m-sec-content">
+    <div class="m-news-item"><a href="http://afisha.mail.ru/">Неудержимые 3</a></div>
+    <div class="m-news-item"><a href="http://afisha.mail.ru/">Черепашки-ниндзя</a></div>
+    <div class="m-news-item"><a href="http://afisha.mail.ru/">Навстречу шторму</a></div>
+    <div class="m-afisha-tags">
+      <a href="http://afisha.mail.ru/cinema/">Кино</a>
+      <a href="http://afisha.mail.ru/restaurants/">Рестораны</a>
+      <a href="http://afisha.mail.ru/concerts/">Концерты</a>
+      <a href="http://afisha.mail.ru/theatre/">Театры</a>
+    </div>
+  </div>
+
+  <!-- Section: Игры -->
+  <div class="m-sec-title">Игры</div>
+  <div class="m-sec-content">
+    <div class="m-game-row">
+      <img src="assets/img/mobile/game_race.png" class="m-game-icon" alt="" />
+      <div class="m-game-text">
+        <b><a href="http://games.mail.ru/">Большие гонки</a></b> // Гонки на крутых авто, власть, слава и красотки!
+      </div>
+    </div>
+    <div class="m-game-row">
+      <img src="assets/img/mobile/game_pet.png" class="m-game-icon" alt="" />
+      <div class="m-game-text">
+        <b><a href="http://games.mail.ru/">Удивительные питомцы</a></b> // Очаровательные питомцы в вашем телефоне!
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Программы для телефона -->
+  <div class="m-sec-title">Программы для телефона</div>
+  <div class="m-sec-content">
+    <div class="m-phone-apps">
+      <div class="m-app-row">
+        <a href="https://e.mail.ru/"><img src="assets/img/icons/mail.png" alt="" /><span>Почта</span></a>
+      </div>
+      <div class="m-app-row">
+        <a href="https://mrim.su/"><img src="assets/img/icons/agent.png" alt="" /><span>Агент</span></a>
+      </div>
+      <div class="m-app-row">
+        <a href="http://games.mail.ru/"><img src="assets/img/icons/games.png" alt="" /><span>Игры</span></a>
+      </div>
+      <div class="m-app-row">
+        <a href="https://habr.com/ru/news/"><img src="assets/img/icons/news.png" alt="" /><span>Новости</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Все проекты (PC version icons) -->
+  <div class="m-sec-title">Все проекты</div>
+  <div class="m-sec-content">
+    <table class="m-projects-grid">
+      <tr>
+        <td><a href="http://love.mail.ru/"><img src="assets/img/icons/love.png" alt="" /><span>Знакомства</span></a></td>
+        <td><a href="https://yoomoney.ru/"><img src="assets/img/icons/money.png" alt="" /><span>Деньги</span></a></td>
+      </tr>
+      <tr>
+        <td><a href="https://www.avito.ru/"><img src="assets/img/icons/torg.png" alt="" /><span>Товары</span></a></td>
+        <td><a href="https://www.google.com/maps"><img src="assets/img/icons/maps.png" alt="" /><span>Карты</span></a></td>
+      </tr>
+      <tr>
+        <td><a href="http://horo.mail.ru/"><img src="assets/img/icons/horo.png" alt="" /><span>Гороскопы</span></a></td>
+        <td><a href="https://www.youtube.com/"><img src="assets/img/icons/tv.png" alt="" /><span>ТВ программа</span></a></td>
+      </tr>
+      <tr>
+        <td><a href="https://auto.ru/"><img src="assets/img/icons/auto.png" alt="" /><span>Авто</span></a></td>
+        <td><a href="http://health.mail.ru/"><img src="assets/img/icons/health.png" alt="" /><span>Здоровье</span></a></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Promotional Banner Rotator -->
+  <div id="mobileBanner" style="text-align:center; padding:8px 0; margin:6px 0; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0;"></div>
+
+  <!-- Footer 88x31 badges -->
+  <div class="m-footer-badges">
+    <a href="http://madebydimas.top" target="_blank"><img src="assets/img/badges/button_dimas.gif" width="88" height="31" alt="madebydimas" onerror="if(this.src!='http://madebydimas.top/button.gif'){this.src='http://madebydimas.top/button.gif';}"></a>
+    <a href="http://old.myslivets.com" target="_blank"><img src="assets/img/badges/button_myslivets.png" width="88" height="31" alt="myslivets" onerror="if(this.src!='http://myslivets.com/img/button.png'){this.src='http://myslivets.com/img/button.png';}"></a>
+    <a href="http://veselcraft.cc/" target="_blank"><img src="assets/img/badges/vc.gif" width="88" height="31" alt="veselcraft" loading="lazy" onerror="if(this.src!='http://veselcraft.cc/images/vc.gif'){this.src='http://veselcraft.cc/images/vc.gif';}"></a>
+    <a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="assets/img/badges/windows-media-player.gif" width="88" height="31" alt="WMP" onerror="if(this.src!='http://nekxd.ru/windows-media-player.gif'){this.src='http://nekxd.ru/windows-media-player.gif';}"></a>
+    <img src="assets/img/badges/w7-boot.gif" height="31" alt="" onerror="if(this.src!='http://88x31.kate.pet/w7-boot.gif'){this.src='http://88x31.kate.pet/w7-boot.gif';}">
+    <a href="http://nekxd.ru/" target="_blank"><img src="assets/img/badges/old.png" width="88" height="31" alt="NekxdOld" onerror="if(this.src!='http://nekxd.ru/old.png'){this.src='http://nekxd.ru/old.png';}"></a>
+  </div>
+
+  <!-- Footer Navigation Links -->
+  <div class="m-footer">
+    <div><a href="https://e.mail.ru/login">Войти</a></div>
+    <div><b>Главная</b> | <a href="https://e.mail.ru/">Почта</a> | <a href="https://openvk.org/">Мой Мир</a></div>
+    <div><a href="index.html?full=1" onclick="try{sessionStorage.setItem('prefer_full','1');}catch(e){}">Полная версия</a> | <span style="color:#666;">Для смартфонов</span></div>
+    <div><a href="http://help.mail.ru/">Помощь</a></div>
+    <div style="color:#777; font-size:10px; margin-top:4px;">&copy; Mail.Ru, 1999–2014</div>
+  </div>
+
+  <script type="text/javascript" src="assets/js/common.js"></script>
+  <script type="text/javascript">
+  (function(){
+    // Banner rotator
+    if (window.initBannerRotator) {
+      window.initBannerRotator('mobileBanner', 6000);
+    }
+
+    // Weather loader
+    if (window.loadWeather) {
+      window.loadWeather(function(w){
+        if (!w) return;
+        var cityEl = document.getElementById('m_city');
+        var wCityEl = document.getElementById('m_w_city');
+        var tempEl = document.getElementById('m_w_temp');
+        var iconEl = document.getElementById('m_w_icon');
+        var lblEl = document.getElementById('m_w_label');
+        var mornEl = document.getElementById('m_w_morn');
+        var dayEl = document.getElementById('m_w_day');
+        var tomEl = document.getElementById('m_w_tom');
+
+        var sign = w.temp > 0 ? '+' : '';
+        if (cityEl) cityEl.textContent = w.city || 'Москва';
+        if (wCityEl) wCityEl.textContent = w.city || 'Москва';
+        if (tempEl) tempEl.textContent = sign + w.temp + '°';
+        if (iconEl && w.icon) iconEl.src = 'assets/img/im/r/weather_new/pict_weather_big_' + w.icon + '.gif';
+        if (lblEl && w.label) lblEl.textContent = w.label;
+
+        var mTemp = (w.temp > 0 ? '+' : '') + (w.temp - 2) + '°... +' + (w.temp + 3) + '°';
+        var dTemp = (w.temp > 0 ? '+' : '') + w.temp + '°... +' + (w.temp + 5) + '°';
+        if (mornEl) mornEl.textContent = mTemp;
+        if (dayEl) dayEl.textContent = dTemp;
+        if (tomEl && w.tomorrow !== null) {
+          tomEl.textContent = 'Завтра ' + (w.tomorrow > 0 ? '+' : '') + w.tomorrow + '°';
+        }
+      });
+    }
+
+    // CBR currency rates loader
+    if (window.loadCbr) {
+      window.loadCbr(function(c){
+        if (!c) return;
+        var uVal = document.getElementById('m_usd_val');
+        var uDel = document.getElementById('m_usd_delta');
+        var eVal = document.getElementById('m_eur_val');
+        var eDel = document.getElementById('m_eur_delta');
+        var dEl = document.getElementById('m_cbr_date');
+
+        if (uVal && c.usd) uVal.textContent = c.usd;
+        if (eVal && c.eur) eVal.textContent = c.eur;
+        if (uDel && c.usdDelta) {
+          uDel.textContent = (parseFloat(c.usdDelta) > 0 ? '+' : '') + c.usdDelta;
+          uDel.className = parseFloat(c.usdDelta) >= 0 ? 'm-currency-delta-pos' : 'm-currency-delta-neg';
+        }
+        if (eDel && c.eurDelta) {
+          eDel.textContent = (parseFloat(c.eurDelta) > 0 ? '+' : '') + c.eurDelta;
+          eDel.className = parseFloat(c.eurDelta) >= 0 ? 'm-currency-delta-pos' : 'm-currency-delta-neg';
+        }
+        if (dEl && c.date) {
+          dEl.textContent = 'Курс ЦБ на ' + c.date;
+        }
+      });
+    }
+
+    // News live update from Habr if available
+    if (window.loadHabrFeed) {
+      window.loadHabrFeed('news').then(function(items){
+        if (items && items.length > 0) {
+          var topLink = document.getElementById('m_top_news_link');
+          if (topLink) {
+            topLink.textContent = items[0].title;
+            topLink.href = items[0].link;
+          }
+          var bulletsEl = document.getElementById('m_news_bullets');
+          if (bulletsEl && items.length > 1) {
+            var html = '';
+            for (var i = 1; i < Math.min(5, items.length); i++) {
+              html += '<div class="m-news-item"><a href="' + items[i].link + '" target="_blank">' + window.esc(items[i].title) + '</a></div>';
+            }
+            bulletsEl.innerHTML = html;
+          }
+        }
+      }).catch(function(){});
+
+      window.loadHabrFeed('auto').then(function(items){
+        if (items && items.length > 0) {
+          var aEl = document.getElementById('m_news_auto');
+          if (aEl) { aEl.textContent = items[0].title; aEl.href = items[0].link; }
+        }
+      }).catch(function(){});
+
+      window.loadHabrFeed('hitech').then(function(items){
+        if (items && items.length > 0) {
+          var hEl = document.getElementById('m_news_hitech');
+          if (hEl) { hEl.textContent = items[0].title; hEl.href = items[0].link; }
+        }
+      }).catch(function(){});
+    }
+  })();
+  </script>
+</body>
+</html>
