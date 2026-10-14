@@ -94,8 +94,11 @@ python -m http.server 8000
 ## 👥 Ссылки и благодарности
 
 - Репозиторий проекта: [github.com/nekxd/soap](https://github.com/nekxd/soap)
+- Группа в ОВК: [openvk.org/soap](https://openvk.org/soap)
+- Telegram-канал: [soap_fun.t.me](https://t.me/soap_fun)
 - Социальная сеть: [OpenVK](https://openvk.org/)
 - Приложения и игры: [OpenVK Apps](https://openvk.org/apps)
 - ICQ/MRIM: [Renaissance MRIM.su](http://mrim.su/)
 - Погодный сервис: [Open-Meteo](https://open-meteo.com/)
 - Данные курсов валют: [ЦБ РФ (CBR XML Daily)](https://www.cbr-xml-daily.ru/)
+
