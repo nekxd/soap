@@ -178,14 +178,47 @@ body {background: #fff; min-width: 0;}
   #menuWrap {
     padding: 8px 10px !important;
   }
-  #tableitself,
-  #tableitself tbody,
-  #tableitself tr,
-  #tableitself td {
+  #tableitself {
+    display: block !important;
+    width: 100% !important;
+  }
+  #tableitself > tbody,
+  #tableitself > tbody > tr,
+  #tableitself > tr {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  #tableitself > tbody > tr > td,
+  #tableitself > tr > td {
     display: block !important;
     width: 100% !important;
     padding: 0 !important;
     box-sizing: border-box !important;
+  }
+  .brand_back table {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+  .brand_back table tr {
+    display: table-row !important;
+  }
+  .brand_back table td {
+    display: table-cell !important;
+    vertical-align: middle !important;
+  }
+  .brand_back table td.inhold {
+    width: 100% !important;
+  }
+  .brand_back table td.ct,
+  .brand_back table td.cb {
+    width: 18px !important;
+    padding: 0 !important;
+  }
+  .brand_back table td.btnplace {
+    width: auto !important;
+    padding: 0 4px !important;
   }
   #menuLogo {
     width: 100% !important;
