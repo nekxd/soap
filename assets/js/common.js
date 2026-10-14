@@ -619,51 +619,104 @@
     395: [28, 'метель']
   };
 
-  window.loadWeather = function (onData) {
+  function getSeasonalWeather() {
+    var m = new Date().getMonth();
+    var seasons = {
+      0:  { temp: -8, night: -11, morn: -10, day: -7, evening: -9, tomorrow: -7, tomorrowMin: -11, label: 'небольшой снег', icon: 21 },
+      1:  { temp: -7, night: -10, morn: -9, day: -6, evening: -8, tomorrow: -6, tomorrowMin: -10, label: 'пасмурно', icon: 16 },
+      2:  { temp: 0, night: -4, morn: -2, day: 2, evening: -1, tomorrow: 1, tomorrowMin: -3, label: 'облачно', icon: 16 },
+      3:  { temp: 9, night: 4, morn: 6, day: 11, evening: 8, tomorrow: 10, tomorrowMin: 5, label: 'переменная облачность', icon: 9 },
+      4:  { temp: 17, night: 10, morn: 13, day: 19, evening: 15, tomorrow: 18, tomorrowMin: 11, label: 'ясно', icon: 7 },
+      5:  { temp: 21, night: 14, morn: 17, day: 23, evening: 19, tomorrow: 22, tomorrowMin: 15, label: 'малооблачно', icon: 6 },
+      6:  { temp: 24, night: 16, morn: 19, day: 25, evening: 21, tomorrow: 24, tomorrowMin: 16, label: 'ясно', icon: 7 },
+      7:  { temp: 22, night: 15, morn: 18, day: 23, evening: 19, tomorrow: 22, tomorrowMin: 15, label: 'переменная облачность', icon: 9 },
+      8:  { temp: 15, night: 9, morn: 11, day: 16, evening: 13, tomorrow: 15, tomorrowMin: 9, label: 'облачно', icon: 16 },
+      9:  { temp: 8, night: 4, morn: 5, day: 9, evening: 6, tomorrow: 8, tomorrowMin: 4, label: 'небольшой дождь', icon: 11 },
+      10: { temp: 1, night: -2, morn: -1, day: 2, evening: 0, tomorrow: 1, tomorrowMin: -2, label: 'пасмурно', icon: 16 },
+      11: { temp: -5, night: -8, morn: -7, day: -4, evening: -6, tomorrow: -5, tomorrowMin: -8, label: 'небольшой снег', icon: 21 }
+    };
+    var s = seasons[m] || seasons[9];
+    return {
+      temp: s.temp,
+      night: s.night,
+      morn: s.morn,
+      day: s.day,
+      evening: s.evening,
+      todayMin: s.night,
+      todayMax: s.day,
+      tomorrow: s.tomorrow,
+      tomorrowMin: s.tomorrowMin,
+      icon: s.icon,
+      label: s.label,
+      wind: 3,
+      city: 'Москва',
+      isMoscow: true
+    };
+  }
+
+  window.loadWeather = function (onData, cityQuery) {
     var moscow = { lat: 55.7558, lon: 37.6173, name: 'Москва' };
     var cached = window.cacheGet('weather_data', 30 * 60 * 1000);
     if (cached) onData(cached);
 
+    var targetCity = cityQuery || 'Moscow';
     var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
-    var wttrUrl = proto + '//wttr.in/?format=j1';
+    var wttrUrl = proto + '//wttr.in/' + encodeURIComponent(targetCity) + '?format=j1&lang=ru';
 
-    fetchWithTimeout(wttrUrl, 3000).then(function (wttrResp) {
+    fetchWithTimeout(wttrUrl, 4000).then(function (wttrResp) {
       var wData = JSON.parse(wttrResp);
       if (wData && wData.current_condition && wData.current_condition.length > 0) {
         var cur = wData.current_condition[0];
-        var area = (wData.nearest_area && wData.nearest_area[0]) || {};
-        var cityName = (area.areaName && area.areaName[0] && area.areaName[0].value) || 'Москва';
         var code = parseInt(cur.weatherCode, 10);
         var w = window.WTTR_MAP[code] || [16, 'облачно'];
+        var label = (cur.lang_ru && cur.lang_ru[0] && cur.lang_ru[0].value) ? cur.lang_ru[0].value.toLowerCase() : w[1];
 
-        var evening = null;
-        if (wData.weather && wData.weather[0] && wData.weather[0].hourly) {
-          var hourly = wData.weather[0].hourly;
-          for (var i = 0; i < hourly.length; i++) {
-            if (hourly[i].time === '2100') {
-              evening = parseInt(hourly[i].tempC, 10);
-              break;
+        var night = null, morn = null, day = null, evening = null;
+        var todayMin = null, todayMax = null;
+        if (wData.weather && wData.weather[0]) {
+          var w0 = wData.weather[0];
+          if (w0.mintempC != null) todayMin = parseInt(w0.mintempC, 10);
+          if (w0.maxtempC != null) todayMax = parseInt(w0.maxtempC, 10);
+          if (w0.hourly) {
+            var hourly = w0.hourly;
+            for (var i = 0; i < hourly.length; i++) {
+              var t = parseInt(hourly[i].tempC, 10);
+              var hTime = hourly[i].time;
+              if (hTime === '0' || hTime === '300') {
+                if (night === null) night = t;
+              } else if (hTime === '600' || hTime === '900') {
+                if (morn === null) morn = t;
+              } else if (hTime === '1200' || hTime === '1500') {
+                if (day === null) day = t;
+              } else if (hTime === '1800' || hTime === '2100') {
+                if (evening === null) evening = t;
+              }
             }
-          }
-          if (evening === null && hourly.length > 6) {
-            evening = parseInt(hourly[6].tempC, 10);
           }
         }
 
-        var tomorrowMax = null;
-        if (wData.weather && wData.weather.length > 1 && wData.weather[1].maxtempC != null) {
-          tomorrowMax = parseInt(wData.weather[1].maxtempC, 10);
+        var tomorrowMax = null, tomorrowMin = null;
+        if (wData.weather && wData.weather.length > 1) {
+          var w1 = wData.weather[1];
+          if (w1.maxtempC != null) tomorrowMax = parseInt(w1.maxtempC, 10);
+          if (w1.mintempC != null) tomorrowMin = parseInt(w1.mintempC, 10);
         }
 
         var result = {
           temp: parseInt(cur.temp_C, 10),
+          night: night,
+          morn: morn,
+          day: day,
           evening: evening,
+          todayMin: todayMin,
+          todayMax: todayMax,
           tomorrow: tomorrowMax,
+          tomorrowMin: tomorrowMin,
           icon: w[0],
-          label: w[1],
+          label: label,
           wind: Math.round(parseFloat(cur.windspeedKmph || 0) / 3.6),
-          city: cityName,
-          isMoscow: cityName.toLowerCase().indexOf('moscow') !== -1 || cityName.indexOf('Москва') !== -1
+          city: 'Москва',
+          isMoscow: true
         };
 
         window.cacheSet('weather_data', result);
@@ -672,28 +725,43 @@
       }
       throw new Error('empty wttr');
     })['catch'](function () {
-      var omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + moscow.lat +
+      var omUrl = proto + '//api.open-meteo.com/v1/forecast?latitude=' + moscow.lat +
         '&longitude=' + moscow.lon +
         '&current=temperature_2m,weather_code,wind_speed_10m' +
         '&hourly=temperature_2m' +
         '&daily=temperature_2m_max,temperature_2m_min,weather_code' +
         '&timezone=auto&forecast_days=2';
 
-      return fetchWithTimeout(omUrl, 3000).then(function (omResp) {
+      return fetchWithTimeout(omUrl, 4000).then(function (omResp) {
         var omData = JSON.parse(omResp);
         var omCur = omData.current;
         var omCode = omCur.weather_code;
         var omW = window.WMO[omCode] || [16, 'облачно'];
-        var omEvening = null;
-        if (omData.hourly && omData.hourly.temperature_2m && omData.hourly.temperature_2m.length > 21) {
-          omEvening = omData.hourly.temperature_2m[21];
+
+        var omNight = null, omMorn = null, omDay = null, omEvening = null;
+        if (omData.hourly && omData.hourly.temperature_2m) {
+          var hTemps = omData.hourly.temperature_2m;
+          if (hTemps.length > 3) omNight = Math.round(hTemps[3]);
+          if (hTemps.length > 9) omMorn = Math.round(hTemps[9]);
+          if (hTemps.length > 14) omDay = Math.round(hTemps[14]);
+          if (hTemps.length > 21) omEvening = Math.round(hTemps[21]);
         }
-        var omTomorrow = (omData.daily && omData.daily.temperature_2m_max) ? omData.daily.temperature_2m_max[1] : null;
+
+        var omTomorrowMax = (omData.daily && omData.daily.temperature_2m_max) ? Math.round(omData.daily.temperature_2m_max[1]) : null;
+        var omTomorrowMin = (omData.daily && omData.daily.temperature_2m_min) ? Math.round(omData.daily.temperature_2m_min[1]) : null;
+        var omTodayMax = (omData.daily && omData.daily.temperature_2m_max) ? Math.round(omData.daily.temperature_2m_max[0]) : null;
+        var omTodayMin = (omData.daily && omData.daily.temperature_2m_min) ? Math.round(omData.daily.temperature_2m_min[0]) : null;
 
         var omResult = {
           temp: Math.round(omCur.temperature_2m),
-          evening: omEvening === null ? null : Math.round(omEvening),
-          tomorrow: omTomorrow === null ? null : Math.round(omTomorrow),
+          night: omNight,
+          morn: omMorn,
+          day: omDay,
+          evening: omEvening,
+          todayMin: omTodayMin,
+          todayMax: omTodayMax,
+          tomorrow: omTomorrowMax,
+          tomorrowMin: omTomorrowMin,
           icon: omW[0],
           label: omW[1],
           wind: Math.round(omCur.wind_speed_10m),
@@ -706,16 +774,8 @@
       });
     })['catch'](function () {
       if (!cached) {
-        onData({
-          temp: 18,
-          evening: 15,
-          tomorrow: 20,
-          icon: 16,
-          label: 'облачно',
-          wind: 3,
-          city: 'Москва',
-          isMoscow: true
-        });
+        var fallback = getSeasonalWeather();
+        onData(fallback);
       }
     });
   };

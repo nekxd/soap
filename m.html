@@ -68,15 +68,15 @@
     <div class="m-weather-box">
       <div class="m-weather-current">
         <div>
-          <span class="m-weather-val" id="m_w_temp">+13°</span>
-          <img id="m_w_icon" src="assets/img/im/r/weather_new/pict_weather_big_7.gif" width="24" height="30" style="vertical-align:middle;" alt="" />
+          <span class="m-weather-val" id="m_w_temp">+8°</span>
+          <img id="m_w_icon" src="assets/img/im/r/weather_new/pict_weather_big_11.gif" width="24" height="30" style="vertical-align:middle;" alt="" />
         </div>
-        <div class="m-weather-label" id="m_w_label">ясно</div>
+        <div class="m-weather-label" id="m_w_label">небольшой дождь</div>
       </div>
       <div class="m-weather-details">
-        <div>Утром <span id="m_w_morn">+15°... +21°</span></div>
-        <div>Днем <span id="m_w_day">+17°... +23°</span></div>
-        <div><a href="http://weather.mail.ru/" id="m_w_tom">Завтра +18°... +26°</a></div>
+        <div>Утром <span id="m_w_morn">+6°... +8°</span></div>
+        <div>Днем <span id="m_w_day">+8°... +10°</span></div>
+        <div><a href="http://weather.mail.ru/" id="m_w_tom">Завтра +7°... +9°</a></div>
       </div>
     </div>
   </div>
@@ -234,17 +234,35 @@
         var dayEl = document.getElementById('m_w_day');
         var tomEl = document.getElementById('m_w_tom');
 
-        var sign = w.temp > 0 ? '+' : '';
-        if (tempEl) setText(tempEl, sign + w.temp + '°');
+        function fmt(n) {
+          if (n === null || n === undefined || isNaN(n)) return '';
+          var v = Math.round(n);
+          return (v > 0 ? '+' : '') + v + '°';
+        }
+        function fmtR(min, max) {
+          if (min === null && max === null) return '';
+          if (min === null) return fmt(max);
+          if (max === null) return fmt(min);
+          var mn = Math.round(min), mx = Math.round(max);
+          if (mn === mx) return fmt(mn);
+          return (mn > 0 ? '+' : '') + mn + '°... ' + (mx > 0 ? '+' : '') + mx + '°';
+        }
+
+        if (tempEl) setText(tempEl, fmt(w.temp));
         if (iconEl && w.icon) iconEl.src = 'assets/img/im/r/weather_new/pict_weather_big_' + w.icon + '.gif';
         if (lblEl && w.label) setText(lblEl, w.label);
 
-        var mTemp = (w.temp > 0 ? '+' : '') + (w.temp - 2) + '°... +' + (w.temp + 3) + '°';
-        var dTemp = (w.temp > 0 ? '+' : '') + w.temp + '°... +' + (w.temp + 5) + '°';
-        if (mornEl) setText(mornEl, mTemp);
-        if (dayEl) setText(dayEl, dTemp);
-        if (tomEl && w.tomorrow !== null) {
-          setText(tomEl, 'Завтра ' + (w.tomorrow > 0 ? '+' : '') + w.tomorrow + '°');
+        var mornMin = (w.morn != null) ? (w.morn - 1) : ((w.todayMin != null) ? w.todayMin : ((w.temp != null) ? w.temp - 2 : null));
+        var mornMax = (w.morn != null) ? (w.morn + 1) : ((w.temp != null) ? w.temp + 1 : null);
+        var dayMin = (w.day != null) ? (w.day - 1) : ((w.temp != null) ? w.temp : null);
+        var dayMax = (w.day != null) ? (w.day + 1) : ((w.todayMax != null) ? w.todayMax : ((w.temp != null) ? w.temp + 2 : null));
+        var tomMin = (w.tomorrowMin != null) ? w.tomorrowMin : ((w.tomorrow != null) ? w.tomorrow - 2 : null);
+        var tomMax = (w.tomorrow != null) ? w.tomorrow : null;
+
+        if (mornEl) setText(mornEl, fmtR(mornMin, mornMax));
+        if (dayEl) setText(dayEl, fmtR(dayMin, dayMax));
+        if (tomEl && tomMax !== null) {
+          setText(tomEl, 'Завтра ' + fmtR(tomMin, tomMax));
         }
       });
     }

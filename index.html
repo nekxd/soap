@@ -373,7 +373,7 @@
             <div class="line mb10"> </div>
 
 <!-- Weather + Currency + TV -->
-            <h2 class="mb10"><a href="https://www.google.com/maps" target="_blank" id="cityHeader">Москва</a><span id="jsdate"></span></h2>
+            <h2 class="mb10"><a href="http://pogoda.mail.ru/" target="_blank" id="cityHeader">Москва</a><span id="jsdate"></span></h2>
 <table class="info_today2">
 <tr>
 <td class="weather_review" id="weather">
@@ -525,16 +525,60 @@ function renderNews(key){
     list.innerHTML = '<li><a href="https://habr.com/ru/news/" target="_blank">Открыть свежие новости на Хабре &rarr;</a></li>';
   });
 }
+function formatTemp(t) {
+  if (t === null || t === undefined || isNaN(t)) return '';
+  var n = Math.round(t);
+  return (n > 0 ? '+' : '') + n + '°';
+}
 function initWeather(){
   loadWeather(function(w){
     if(!w) return;
-    document.getElementById('weatherTemp').innerHTML = (w.temp>0?'+':'')+w.temp+'&deg;';
-    document.getElementById('weatherIcon').src = 'assets/img/im/r/weather_new/pict_weather_big_'+w.icon+'.gif';
-    document.getElementById('weatherIcon').alt = w.label;
-    setText(document.getElementById('weatherLabel'), w.label);
-    if(w.evening!==null) setText(document.getElementById('weatherEvening'), 'вечером: '+(w.evening>0?'+':'')+w.evening+'°');
-    if(w.tomorrow!==null) setText(document.getElementById('weatherTomorrow'), 'завтра: '+(w.tomorrow>0?'+':'')+w.tomorrow+'°');
-    if(w.city) setText(document.getElementById('cityHeader'), w.city);
+    var tStr = (w.temp > 0 ? '+' : '') + w.temp + '&deg;';
+    var tempEl = document.getElementById('weatherTemp');
+    if (tempEl) tempEl.innerHTML = tStr;
+
+    var iconEl = document.getElementById('weatherIcon');
+    if (iconEl) {
+      iconEl.src = 'assets/img/im/r/weather_new/pict_weather_big_' + w.icon + '.gif';
+      iconEl.alt = w.label;
+      iconEl.title = w.label;
+    }
+
+    var labelEl = document.getElementById('weatherLabel');
+    if (labelEl) setText(labelEl, w.label);
+
+    var eveEl = document.getElementById('weatherEvening');
+    var tomEl = document.getElementById('weatherTomorrow');
+
+    // Contextual time-of-day forecasts
+    var hour = new Date().getHours();
+    var p1Label = 'вечером: ', p1Val = (w.evening != null) ? w.evening : w.temp;
+    var p2Label = 'завтра: ', p2Val = (w.tomorrow != null) ? w.tomorrow : w.temp;
+
+    if (hour >= 22 || hour < 6) {
+      p1Label = 'ночью: ';
+      p1Val = (w.night != null) ? w.night : w.temp;
+      p2Label = 'днём: ';
+      p2Val = (w.day != null) ? w.day : (w.tomorrow != null ? w.tomorrow : w.temp);
+    } else if (hour >= 6 && hour < 12) {
+      p1Label = 'днём: ';
+      p1Val = (w.day != null) ? w.day : w.temp;
+      p2Label = 'вечером: ';
+      p2Val = (w.evening != null) ? w.evening : w.tomorrow;
+    } else if (hour >= 12 && hour < 18) {
+      p1Label = 'вечером: ';
+      p1Val = (w.evening != null) ? w.evening : w.temp;
+      p2Label = 'ночью: ';
+      p2Val = (w.night != null) ? w.night : (w.tomorrowMin != null ? w.tomorrowMin : w.tomorrow);
+    }
+
+    if (eveEl && p1Val !== null && p1Val !== undefined) {
+      setText(eveEl, p1Label + formatTemp(p1Val));
+    }
+    if (tomEl && p2Val !== null && p2Val !== undefined) {
+      setText(tomEl, p2Label + formatTemp(p2Val));
+    }
+    if (w.city) setText(document.getElementById('cityHeader'), w.city);
   });
 }
 function initCbr(){
@@ -567,7 +611,18 @@ function loadTv(){
     document.getElementById('tvChanTableId').innerHTML = html;
   });
 }
-document.addEventListener('DOMContentLoaded', function(){
+function onReady(fn) {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    fn();
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', fn, false);
+  } else if (window.attachEvent) {
+    window.attachEvent('onload', fn);
+  } else {
+    window.onload = fn;
+  }
+}
+onReady(function(){
   initBannerRotator('mainBanner', 6000);
   renderNews('news');
   initWeather();
