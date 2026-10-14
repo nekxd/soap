@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Помощь и поддержка — soap.nekxd.fun</title>
+  <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #333333;
+      font-family: Arial, Tahoma, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    a {
+      color: #1b5ea8;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #f26d00;
+    }
+
+    /* Top blue header */
+    .top-header {
+      background: #00468c;
+      border-bottom: 2px solid #003366;
+      padding: 8px 16px;
+    }
+    .top-header-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .top-header a.logo-link {
+      display: inline-block;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .top-header img.logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+    }
+    .top-nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .top-nav a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+    .top-nav a.active {
+      color: #ffcc00;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs-wrap {
+      background: #f0f4f9;
+      border-bottom: 1px solid #d8e2ec;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: #666666;
+    }
+    .breadcrumbs-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Main content container */
+    .content-wrap {
+      max-width: 980px;
+      margin: 20px auto 40px auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+    h1.page-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00468c;
+      margin: 0 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2edf7;
+    }
+
+    .help-box {
+      background: #fafcfe;
+      border: 1px solid #c9dcf0;
+      border-radius: 4px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 70, 140, 0.05);
+    }
+
+    .help-intro-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #222222;
+      margin-bottom: 18px;
+    }
+
+    /* Contact channels grid */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .contact-card {
+      background: #ffffff;
+      border: 1px solid #d4e2f0;
+      border-left: 4px solid #00468c;
+      border-radius: 0 4px 4px 0;
+      padding: 14px 16px;
+      transition: border-color 0.15s ease;
+    }
+
+    .contact-card:hover {
+      border-left-color: #f26d00;
+    }
+
+    .contact-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: #00468c;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .contact-card p {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      color: #555555;
+      line-height: 1.4;
+    }
+
+    .contact-card a.btn-link {
+      display: inline-block;
+      background: #f0f4f9;
+      border: 1px solid #a4bed4;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: #00468c;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 3px;
+    }
+
+    .contact-card a.btn-link:hover {
+      background: #00468c;
+      color: #ffffff;
+      border-color: #00468c;
+    }
+
+    /* FAQ accordion / sections */
+    .faq-section {
+      margin-top: 30px;
+    }
+
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e1eaf3;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      padding: 14px 18px;
+    }
+
+    .faq-question {
+      font-size: 14px;
+      font-weight: bold;
+      color: #00468c;
+      margin-bottom: 6px;
+    }
+
+    .faq-answer {
+      font-size: 13px;
+      color: #444444;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #d8e2ec;
+      padding: 20px 16px 30px;
+      text-align: center;
+      background: #f7f9fc;
+      font-size: 11px;
+      color: #666666;
+    }
+    .footer-badges {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .footer-badges img {
+      display: block;
+      image-rendering: pixelated;
+    }
+    .footer-nav {
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    .footer-nav a {
+      color: #1b5ea8;
+      text-decoration: none;
+      margin: 0 4px;
+    }
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Blue Header -->
+  <div class="top-header">
+    <div class="top-header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/img/ii/r/23logo236px.gif" alt="@ SOAP.NEKXD.FUN" class="logo" />
+      </a>
+      <div class="top-nav">
+        <a href="index.html">Главная</a>
+        <a href="https://mail.proton.me" target="_blank">Почта</a>
+        <a href="https://openvk.org/" target="_blank">OpenVK</a>
+        <a href="https://mrim.su/" target="_blank">Renaissance</a>
+        <a href="search.html">Поиск</a>
+        <a href="m.html">Мобильная</a>
+        <a href="about.html">О компании</a>
+        <a href="adv.html">Реклама</a>
+        <a href="help.html" class="active">Помощь</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs-wrap">
+    <div class="breadcrumbs-inner">
+      <a href="index.html">Главная</a> &raquo; <span>Помощь</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-wrap">
+    <h1 class="page-title">Служба поддержки и помощь</h1>
+
+    <div class="help-box">
+      <div class="help-intro-text">
+        Возникли вопросы по сайту? Пишите на GitHub или мне на почту:
+      </div>
+
+      <div class="contacts-grid">
+        <div class="contact-card" style="border-left-color: #2da44e;">
+          <h3>🐙 GitHub Issues</h3>
+          <p>Нашли баг, не работает сервис или есть предложение по улучшению? Создайте тикет в репозитории проекта.</p>
+          <a href="https://github.com/nekxd/soap/issues" target="_blank" class="btn-link">Открыть GitHub Issues &rarr;</a>
+        </div>
+
+        <div class="contact-card">
+          <h3>✉️ Электронная почта</h3>
+          <p>По всем личным вопросам, предложениям сотрудничества, багам и партнерству пишите на прямую почту.</p>
+          <a href="mailto:nekxd@bk.ru" class="btn-link">Написать на nekxd@bk.ru</a>
+        </div>
+
+        <div class="contact-card" style="border-left-color: #0077ff;">
+          <h3>🌐 Сообщество OpenVK</h3>
+          <p>Официальная группа портала в OpenVK. Новости проекта, общение пользователей и обратная связь.</p>
+          <a href="https://openvk.org/soap" target="_blank" class="btn-link">openvk.org/soap &rarr;</a>
+        </div>
+
+        <div class="contact-card" style="border-left-color: #2aabee;">
+          <h3>📢 Telegram-канал</h3>
+          <p>Оперативные анонсы обновлений, закулисье разработки и чат сообщества в Telegram.</p>
+          <a href="https://t.me/soap_fun" target="_blank" class="btn-link">soap_fun.t.me &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h2 style="font-size: 16px; color: #00468c; margin-bottom: 14px;">Часто задаваемые вопросы (FAQ):</h2>
+
+      <div class="faq-item">
+        <div class="faq-question">❓ Что представляет собой soap.nekxd.fun?</div>
+        <div class="faq-answer">
+          Это ретро-портал — живая реконструкция классического <b>Mail.Ru</b> образца 2010 года. Проект работает полностью на стороне клиента (статичный HTML/CSS/JS), без серверного бэкенда, подтягивая реальные данные через открытые API.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">🔍 Как работает поиск по интернету?</div>
+        <div class="faq-answer">
+          Поиск на странице <a href="search.html">search.html</a> интегрирован с DuckDuckGo Instant Web API и несколькими параллельными CORS-прокси. Он выдает реальные результаты поиска, сниппеты, прямые ссылки сайтов и фавиконки.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">⛅ Откуда берутся погода, новости и курсы валют?</div>
+        <div class="faq-answer">
+          Погода определяется автоматически по вашему IP через Open-Meteo API. Курсы доллара и евро обновляются ежедневно по официальным данным Центробанка РФ. Новости транслируются в реальном времени из RSS-лент Хабра.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">💬 Что такое Renaissance?</div>
+        <div class="faq-answer">
+          Renaissance (<a href="https://mrim.su/" target="_blank">MRIM.su</a>) — это современный проект возрождения легендарного протокола и мессенджера Mail.Ru Агент, где можно зарегистрироваться и общаться с единомышленниками.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">📱 Есть ли версия для мобильных телефонов?</div>
+        <div class="faq-answer">
+          Да! Доступна точная реплика мобильного портала <a href="m.html">m.mail.ru</a> тех лет. При входе со смартфона редирект происходит автоматически, либо вы можете открыть <a href="m.html">m.html</a> вручную.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">📢 Как обменяться кнопками 88&times;31 или баннерами?</div>
+        <div class="faq-answer">
+          Все коды для размещения наших кнопок и условия размещения ваших баннеров находятся на странице <a href="adv.html">Реклама на soap.nekxd.fun</a>.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-badges">
+      <a href="http://madebydimas.top" target="_blank"><img src="assets/img/badges/button_dimas.gif" width="88" height="31" alt="madebydimas" onerror="if(this.src!='http://madebydimas.top/button.gif'){this.src='http://madebydimas.top/button.gif';}"></a>
+      <a href="http://old.myslivets.com" target="_blank"><img src="assets/img/badges/button_myslivets.png" width="88" height="31" alt="myslivets" onerror="if(this.src!='http://myslivets.com/img/button.png'){this.src='http://myslivets.com/img/button.png';}"></a>
+      <a href="http://veselcraft.cc/" target="_blank" class="m3-ripple"><img src="assets/img/badges/vc.gif" width="88" height="31" alt="veselcraft" loading="lazy" onerror="if(this.src!='http://veselcraft.cc/images/vc.gif'){this.src='http://veselcraft.cc/images/vc.gif';}"></a>
+      <a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="assets/img/badges/windows-media-player.gif" width="88" height="31" alt="WMP" onerror="if(this.src!='http://nekxd.ru/windows-media-player.gif'){this.src='http://nekxd.ru/windows-media-player.gif';}"></a>
+      <img src="assets/img/badges/w7-boot.gif" height="31" alt="" onerror="if(this.src!='http://88x31.kate.pet/w7-boot.gif'){this.src='http://88x31.kate.pet/w7-boot.gif';}">
+      <a href="http://nekxd.ru/" target="_blank"><img src="assets/img/badges/old.png" width="88" height="31" alt="NekxdOld" onerror="if(this.src!='http://nekxd.ru/old.png'){this.src='http://nekxd.ru/old.png';}"></a>
+      <a href="http://faero.top/" target="_blank"><img src="assets/img/badges/button_faero.gif" alt="faero.top" border="0" width="88" height="31" onerror="if(this.src!='http://faero.top/promo/button.gif'){this.src='http://faero.top/promo/button.gif';}"></a>
+    </div>
+
+    <div class="footer-nav">
+      <a href="index.html">Главная</a> &middot;
+      <a href="search.html">Поиск</a> &middot;
+      <a href="m.html">Мобильная версия</a> &middot;
+      <a href="about.html">О компании</a> &middot;
+      <a href="adv.html">Реклама</a> &middot;
+      <a href="help.html">Помощь</a> &middot;
+      <a href="https://openvk.org/soap" target="_blank">Группа в ОВК</a> &middot;
+      <a href="https://t.me/soap_fun" target="_blank">ТГ канал</a> &middot;
+      <a href="https://github.com/nekxd/soap" target="_blank">GitHub</a>
+    </div>
+
+    <div>&copy; Никита Яндиев (Nekich/ynd), 2025–2026</div>
+  </div>
+
+</body>
+</html>

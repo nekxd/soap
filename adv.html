@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Реклама на soap.nekxd.fun — Баннеры, кнопки и сотрудничество</title>
+  <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #333333;
+      font-family: Arial, Tahoma, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    a {
+      color: #1b5ea8;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #f26d00;
+    }
+
+    /* Top blue header */
+    .top-header {
+      background: #00468c;
+      border-bottom: 2px solid #003366;
+      padding: 8px 16px;
+    }
+    .top-header-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .top-header a.logo-link {
+      display: inline-block;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .top-header img.logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+    }
+    .top-nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .top-nav a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+    .top-nav a.active {
+      color: #ffcc00;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs-wrap {
+      background: #f0f4f9;
+      border-bottom: 1px solid #d8e2ec;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: #666666;
+    }
+    .breadcrumbs-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Main content container */
+    .content-wrap {
+      max-width: 980px;
+      margin: 20px auto 40px auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+    h1.page-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00468c;
+      margin: 0 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2edf7;
+    }
+
+    .adv-intro-box {
+      background: #fafcfe;
+      border: 1px solid #c9dcf0;
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 70, 140, 0.05);
+    }
+
+    .adv-intro-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #222222;
+      margin-bottom: 14px;
+    }
+
+    .adv-contact-highlight {
+      background: #f0f7ff;
+      border-left: 4px solid #00468c;
+      padding: 12px 16px;
+      font-size: 14px;
+      border-radius: 0 4px 4px 0;
+      margin-top: 10px;
+    }
+
+    /* Promo blocks */
+    .promo-card {
+      background: #ffffff;
+      border: 1px solid #c9dcf0;
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .promo-card h2 {
+      font-size: 16px;
+      color: #00468c;
+      margin: 0 0 12px 0;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #e5edf5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-box {
+      background: #f8fafc;
+      border: 1px dashed #b5cee6;
+      padding: 16px;
+      text-align: center;
+      border-radius: 3px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60px;
+    }
+
+    .code-label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #444444;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .code-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 52px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      background: #fbfbfb;
+      border: 1px solid #7f9db9;
+      padding: 6px 8px;
+      color: #222222;
+      resize: vertical;
+      margin-bottom: 12px;
+      border-radius: 2px;
+    }
+
+    .code-textarea:focus {
+      background: #ffffff;
+      border-color: #00468c;
+      outline: none;
+    }
+
+    .copy-btn {
+      background: #f0f4f9;
+      border: 1px solid #a4bed4;
+      padding: 2px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      border-radius: 3px;
+      color: #00468c;
+      font-weight: bold;
+    }
+    .copy-btn:hover {
+      background: #e2ecf7;
+      border-color: #00468c;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #d8e2ec;
+      padding: 20px 16px 30px;
+      text-align: center;
+      background: #f7f9fc;
+      font-size: 11px;
+      color: #666666;
+    }
+    .footer-badges {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .footer-badges img {
+      display: block;
+      image-rendering: pixelated;
+    }
+    .footer-nav {
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    .footer-nav a {
+      color: #1b5ea8;
+      text-decoration: none;
+      margin: 0 4px;
+    }
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Blue Header -->
+  <div class="top-header">
+    <div class="top-header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/img/ii/r/23logo236px.gif" alt="@ SOAP.NEKXD.FUN" class="logo" />
+      </a>
+      <div class="top-nav">
+        <a href="index.html">Главная</a>
+        <a href="https://mail.proton.me" target="_blank">Почта</a>
+        <a href="https://openvk.org/" target="_blank">OpenVK</a>
+        <a href="https://mrim.su/" target="_blank">Renaissance</a>
+        <a href="search.html">Поиск</a>
+        <a href="m.html">Мобильная</a>
+        <a href="about.html">О компании</a>
+        <a href="adv.html" class="active">Реклама</a>
+        <a href="help.html">Помощь</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs-wrap">
+    <div class="breadcrumbs-inner">
+      <a href="index.html">Главная</a> &raquo; <span>Реклама на soap.nekxd.fun</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-wrap">
+    <h1 class="page-title">Реклама на soap.nekxd.fun</h1>
+
+    <div class="adv-intro-box">
+      <div class="adv-intro-text">
+        У вас есть свой сайт, и хотите добавить нашу кнопку или баннер? Или вы хотите чтобы ваш баннер попал на сайт?<br />
+        Тогда обращайтесь на почту:
+      </div>
+      <div class="adv-contact-highlight">
+        ✉️ <b><a href="mailto:nekxd@bk.ru" style="font-size:16px;">nekxd@bk.ru</a></b> &mdash; пишите по вопросам размещения рекламы, баннеров и взаимного обмена кнопками!
+      </div>
+    </div>
+
+    <!-- 1. Наша кнопка 88x31 -->
+    <div class="promo-card">
+      <h2>🔘 Наша кнопка 88&times;31 px (ynd.su/soap.png)</h2>
+      <p style="margin-top:0; color:#555;">Классическая ретро-кнопка для размещения в подвале вашего сайта, блога или личной странички:</p>
+
+      <div class="preview-box">
+        <div style="font-size:11px; color:#888; margin-bottom:6px;">Превью кнопки:</div>
+        <a href="https://soap.nekxd.fun/" target="_blank">
+          <img src="https://ynd.su/soap.png" alt="soap.nekxd.fun" width="88" height="31" border="0" onerror="this.onerror=null;this.src='assets/img/badges/button_soap.png';" />
+        </a>
+      </div>
+
+      <div class="code-label">
+        <span>HTML-код для вставки на сайт:</span>
+        <button type="button" class="copy-btn" onclick="copyCode('codeBtnHtml', this)">Копировать HTML</button>
+      </div>
+      <textarea id="codeBtnHtml" class="code-textarea" readonly onclick="this.select()">&lt;a href="https://soap.nekxd.fun/" target="_blank"&gt;&lt;img src="https://ynd.su/soap.png" alt="soap.nekxd.fun" width="88" height="31" border="0"&gt;&lt;/a&gt;</textarea>
+
+      <div class="code-label">
+        <span>BB-код для форумов и гостевых книг:</span>
+        <button type="button" class="copy-btn" onclick="copyCode('codeBtnBb', this)">Копировать BB-код</button>
+      </div>
+      <textarea id="codeBtnBb" class="code-textarea" readonly onclick="this.select()" style="height:40px;">[url=https://soap.nekxd.fun/][img]https://ynd.su/soap.png[/img][/url]</textarea>
+    </div>
+
+    <!-- 2. Наш баннер ynd.su/nsearch.png -->
+    <div class="promo-card">
+      <h2>🖼️ Наш баннер (ynd.su/nsearch.png)</h2>
+      <p style="margin-top:0; color:#555;">Баннер проекта для размещения в шапке, боковых колонках или разделах ссылок:</p>
+
+      <div class="preview-box">
+        <div style="font-size:11px; color:#888; margin-bottom:6px;">Превью баннера:</div>
+        <a href="https://soap.nekxd.fun/" target="_blank">
+          <img src="https://ynd.su/nsearch.png" alt="soap.nekxd.fun - Поиск" style="max-width:100%; height:auto;" border="0" onerror="this.onerror=null;this.src='assets/img/banners/inori.png';" />
+        </a>
+      </div>
+
+      <div class="code-label">
+        <span>HTML-код для вставки на сайт:</span>
+        <button type="button" class="copy-btn" onclick="copyCode('codeBnrHtml', this)">Копировать HTML</button>
+      </div>
+      <textarea id="codeBnrHtml" class="code-textarea" readonly onclick="this.select()">&lt;a href="https://soap.nekxd.fun/" target="_blank"&gt;&lt;img src="https://ynd.su/nsearch.png" alt="soap.nekxd.fun" border="0"&gt;&lt;/a&gt;</textarea>
+
+      <div class="code-label">
+        <span>BB-код для форумов:</span>
+        <button type="button" class="copy-btn" onclick="copyCode('codeBnrBb', this)">Копировать BB-код</button>
+      </div>
+      <textarea id="codeBnrBb" class="code-textarea" readonly onclick="this.select()" style="height:40px;">[url=https://soap.nekxd.fun/][img]https://ynd.su/nsearch.png[/img][/url]</textarea>
+    </div>
+
+    <!-- 3. Информация о сотрудничестве -->
+    <div class="promo-card" style="background:#fcfdff; border-left:4px solid #00468c;">
+      <h2 style="border-bottom:none; margin-bottom:6px;">🤝 Размещение вашего баннера или кнопки на soap.nekxd.fun</h2>
+      <p style="margin-top:0; font-size:14px; line-height:1.6; color:#333;">
+        Хотите, чтобы ваш баннер или кнопка 88&times;31 появилась в ротаторе или подвале портала <b>soap.nekxd.fun</b>?<br />
+        Мы с радостью поддерживаем ламповые ретро-проекты, инди-разработчиков, тематические сообщества и авторские сайты.
+      </p>
+      <ul style="padding-left:20px; font-size:13px; color:#444; line-height:1.7;">
+        <li>Формат кнопок: <b>88&times;31 px</b> (GIF, PNG).</li>
+        <li>Формат баннеров: статические и анимированные баннеры для ротатора.</li>
+        <li>Взаимный обмен ссылками и кнопками приветствуется.</li>
+      </ul>
+      <p style="margin-bottom:0;">
+        Для размещения присылайте ссылку на ваш сайт и баннер/кнопку на почту: <b><a href="mailto:nekxd@bk.ru">nekxd@bk.ru</a></b><br />
+        Также можно написать нам в OpenVK: <b><a href="https://openvk.org/soap" target="_blank">openvk.org/soap</a></b> или в Telegram: <b><a href="https://t.me/soap_fun" target="_blank">soap_fun.t.me</a></b>.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-badges">
+      <a href="http://madebydimas.top" target="_blank"><img src="assets/img/badges/button_dimas.gif" width="88" height="31" alt="madebydimas" onerror="if(this.src!='http://madebydimas.top/button.gif'){this.src='http://madebydimas.top/button.gif';}"></a>
+      <a href="http://old.myslivets.com" target="_blank"><img src="assets/img/badges/button_myslivets.png" width="88" height="31" alt="myslivets" onerror="if(this.src!='http://myslivets.com/img/button.png'){this.src='http://myslivets.com/img/button.png';}"></a>
+      <a href="http://veselcraft.cc/" target="_blank" class="m3-ripple"><img src="assets/img/badges/vc.gif" width="88" height="31" alt="veselcraft" loading="lazy" onerror="if(this.src!='http://veselcraft.cc/images/vc.gif'){this.src='http://veselcraft.cc/images/vc.gif';}"></a>
+      <a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="assets/img/badges/windows-media-player.gif" width="88" height="31" alt="WMP" onerror="if(this.src!='http://nekxd.ru/windows-media-player.gif'){this.src='http://nekxd.ru/windows-media-player.gif';}"></a>
+      <img src="assets/img/badges/w7-boot.gif" height="31" alt="" onerror="if(this.src!='http://88x31.kate.pet/w7-boot.gif'){this.src='http://88x31.kate.pet/w7-boot.gif';}">
+      <a href="http://nekxd.ru/" target="_blank"><img src="assets/img/badges/old.png" width="88" height="31" alt="NekxdOld" onerror="if(this.src!='http://nekxd.ru/old.png'){this.src='http://nekxd.ru/old.png';}"></a>
+      <a href="http://faero.top/" target="_blank"><img src="assets/img/badges/button_faero.gif" alt="faero.top" border="0" width="88" height="31" onerror="if(this.src!='http://faero.top/promo/button.gif'){this.src='http://faero.top/promo/button.gif';}"></a>
+    </div>
+
+    <div class="footer-nav">
+      <a href="index.html">Главная</a> &middot;
+      <a href="search.html">Поиск</a> &middot;
+      <a href="m.html">Мобильная версия</a> &middot;
+      <a href="about.html">О компании</a> &middot;
+      <a href="adv.html">Реклама</a> &middot;
+      <a href="help.html">Помощь</a> &middot;
+      <a href="https://openvk.org/soap" target="_blank">Группа в ОВК</a> &middot;
+      <a href="https://t.me/soap_fun" target="_blank">ТГ канал</a> &middot;
+      <a href="https://github.com/nekxd/soap" target="_blank">GitHub</a>
+    </div>
+
+    <div>&copy; Никита Яндиев (Nekich/ynd), 2025–2026</div>
+  </div>
+
+  <script>
+    function copyCode(id, btn){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.select();
+      el.setSelectionRange(0, 99999);
+      try {
+        navigator.clipboard.writeText(el.value).then(function(){
+          var orig = btn.textContent;
+          btn.textContent = 'Скопировано!';
+          btn.style.color = '#2da44e';
+          setTimeout(function(){
+            btn.textContent = orig;
+            btn.style.color = '';
+          }, 1500);
+        });
+      } catch(e){
+        document.execCommand('copy');
+        var orig = btn.textContent;
+        btn.textContent = 'Скопировано!';
+        btn.style.color = '#2da44e';
+        setTimeout(function(){
+          btn.textContent = orig;
+          btn.style.color = '';
+        }, 1500);
+      }
+    }
+  </script>
+</body>
+</html>
