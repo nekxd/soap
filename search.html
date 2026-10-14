@@ -379,7 +379,6 @@ body {background: #fff; min-width: 0;}
 					<b>Другие поисковики:</b><br />
 					&bull; <a href="http://faero.top/search?q=" id="linkFaero" target="_blank" style="color:#0857A6; font-weight:bold;">Faero.Top (для старых ПК)</a><br />
 					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a><br />
-					&bull; <a href="https://ya.ru/search/?text=" id="linkYa" target="_blank" style="color:#0857A6;">Яндекс</a><br />
 					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a>
 				</div>
 			</div>
@@ -1042,8 +1041,7 @@ function renderResults(items, isFallback) {
       '<b>Внимание:</b> На вашей системе ограничен современный TLS/CORS для сквозного веб-поиска. Ниже показаны результаты из открытой энциклопедии.<br />' +
       'Чтобы открыть поиск по всему интернету без ограничений: ' +
       '<b><a href="http://faero.top/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6; text-decoration:underline;">Искать по всему интернету через Faero.Top &rarr;</a></b> (быстрый веб-поиск для старых ПК) ' +
-      'или в <a href="https://ya.ru/search/?text=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6;">Яндекс</a> &middot; ' +
-      '<a href="https://duckduckgo.com/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6;">DuckDuckGo</a>.' +
+      'или в <a href="https://duckduckgo.com/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6;">DuckDuckGo</a>.' +
       '</div>';
   }
   for (var i = 0; i < items.length; i++) {
@@ -1084,7 +1082,6 @@ function showFallbackSearch(q) {
   eb.innerHTML = '<div style="margin-bottom:6px; font-weight:bold; color:#00468c;">Внешний поиск ограничен на вашей системе или в сети. Вы можете продолжить поиск напрямую:</div>' +
     '<div style="padding:6px 0; line-height:2em;">' +
     '&bull; <a href="http://faero.top/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#0857a6;">Искать по всему интернету через Faero.Top &rarr; (работает на старых ПК)</a><br />' +
-    '&bull; <a href="https://ya.ru/search/?text=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#c00;">Искать в Яндекс &rarr;</a><br />' +
     '&bull; <a href="https://duckduckgo.com/?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#de5833;">Искать в DuckDuckGo &rarr;</a><br />' +
     '&bull; <a href="https://www.google.com/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#4285f4;">Искать в Google &rarr;</a><br />' +
     '&bull; <a href="https://ru.wikipedia.org/w/index.php?search=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#0857a6;">Искать в Википедии &rarr;</a>' +
@@ -1103,11 +1100,9 @@ function runSearch() {
 
   var linkFaero = document.getElementById('linkFaero');
   var linkDdg = document.getElementById('linkDdg');
-  var linkYa = document.getElementById('linkYa');
   var linkGg = document.getElementById('linkGg');
   if (linkFaero) linkFaero.href = 'http://faero.top/search?q=' + encodeURIComponent(curQuery);
   if (linkDdg) linkDdg.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(curQuery);
-  if (linkYa) linkYa.href = 'https://ya.ru/search/?text=' + encodeURIComponent(curQuery);
   if (linkGg) linkGg.href = 'https://www.google.com/search?q=' + encodeURIComponent(curQuery);
 
   var resultsBox = document.getElementById('results');
