@@ -3,3 +3,11 @@ shots/
 *.pyc
 __pycache__/
 Thumbs.db
+android/apktool.jar
+android/dx.jar
+android/debug.keystore
+android/libs/
+android/apk_build/
+android/bin/classes/
+android/bin/classes.dex
+android/bin/MailRu2010-unsigned.apk
