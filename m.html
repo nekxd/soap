@@ -62,9 +62,7 @@
       <div class="m-news-item"><a href="https://habr.com/ru/news/">ФРГ, Украина, РФ и Франция обсудят в Берлине прекращение огня</a></div>
       <div class="m-news-item"><a href="https://habr.com/ru/news/">Меркель требует от России объяснений</a></div>
     </div>
-    <div class="m-news-cat"><b><a href="https://auto.ru/">Авто</a></b> <a href="https://habr.com/ru/hubs/transport/" id="m_news_auto">Ситуация в Крыму: Керчь парализована</a></div>
     <div class="m-news-cat"><b><a href="https://habr.com/ru/hubs/electronics/">Hi-tech</a></b> <a href="https://habr.com/ru/hubs/electronics/" id="m_news_hitech">Windows 9 появится уже в следующем месяце</a></div>
-    <div class="m-news-cat"><b><a href="http://lady.mail.ru/">Леди</a></b> <a href="https://habr.com/ru/search/?q=мода" id="m_news_lady">Дочь Абрамовича впервые вышла в свет в Лондоне</a></div>
   </div>
 
   <!-- Section: Погода -->
@@ -166,12 +164,7 @@
         <td><a href="https://www.google.com/maps"><img src="assets/img/icons/maps.png" alt="" /><span>Google Maps</span></a></td>
       </tr>
       <tr>
-        <td><a href="http://horo.mail.ru/"><img src="assets/img/icons/horo.png" alt="" /><span>Гороскопы</span></a></td>
-        <td><a href="https://www.youtube.com/"><img src="assets/img/icons/tv.png" alt="" /><span>ТВ программа</span></a></td>
-      </tr>
-      <tr>
-        <td><a href="https://auto.ru/"><img src="assets/img/icons/auto.png" alt="" /><span>Авто</span></a></td>
-        <td><a href="http://health.mail.ru/"><img src="assets/img/icons/health.png" alt="" /><span>Здоровье</span></a></td>
+        <td colspan="2"><a href="https://www.youtube.com/"><img src="assets/img/icons/tv.png" alt="" /><span>ТВ программа</span></a></td>
       </tr>
       <tr>
         <td colspan="2"><a href="http://myintcountry.ru/" target="_blank"><img src="assets/img/icons/myintcountry.png" alt="" onerror="if(this.src!='http://myintcountry.ru/favicon.ico'){this.src='http://myintcountry.ru/favicon.ico';}" /><span>Моя Интернет Страна</span></a></td>
@@ -286,12 +279,6 @@
         }
       }).catch(function(){});
 
-      window.loadHabrFeed('auto').then(function(items){
-        if (items && items.length > 0) {
-          var aEl = document.getElementById('m_news_auto');
-          if (aEl) { aEl.textContent = items[0].title; aEl.href = items[0].link; }
-        }
-      }).catch(function(){});
 
       window.loadHabrFeed('hitech').then(function(items){
         if (items && items.length > 0) {
