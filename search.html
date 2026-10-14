@@ -377,6 +377,7 @@ body {background: #fff; min-width: 0;}
 				</div>
 				<div class="mb15" style="font-size:12px; color:#666; line-height: 1.6em; border-top: 1px solid #e0e0e0; padding-top: 10px; text-align: left;">
 					<b>Другие поисковики:</b><br />
+					&bull; <a href="http://faero.top/search?q=" id="linkFaero" target="_blank" style="color:#0857A6; font-weight:bold;">Faero.Top (для старых ПК)</a><br />
 					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a><br />
 					&bull; <a href="https://ya.ru/search/?text=" id="linkYa" target="_blank" style="color:#0857A6;">Яндекс</a><br />
 					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a>
@@ -912,6 +913,49 @@ function fetchWikiSearch(q, callback) {
   }, 3500);
 }
 
+/* ===================== FAERO.TOP RETRO WEB SEARCH PARSER ===================== */
+function parseFaeroHtml(text) {
+  var out = [];
+  if (!text) return out;
+  var items = text.split(/class=['"]result-item['"]/i);
+  for (var i = 1; i < items.length; i++) {
+    var block = items[i];
+    var titleMatch = block.match(/<h3[^>]*class=['"]result-title['"][^>]*>[\s\S]*?<a[^>]+href=['"]([^'"]+)['"][^>]*>([\s\S]*?)<\/a>/i);
+    if (!titleMatch) continue;
+    var url = titleMatch[1];
+    var title = stripHtml(titleMatch[2]).trim();
+    var snipMatch = block.match(/<div[^>]*class=['"]result-snippet['"][^>]*>([\s\S]*?)<\/div>/i);
+    var snippet = snipMatch ? stripHtml(snipMatch[1]).trim() : '';
+    var urlMatch = block.match(/<div[^>]*class=['"]result-url['"][^>]*>([\s\S]*?)<\/div>/i);
+    var dispUrl = urlMatch ? stripHtml(urlMatch[1]).trim() : url;
+    var host = extractHostname(url);
+    var fav = host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '';
+    out.push({
+      title: title,
+      url: url,
+      snippet: snippet,
+      displayUrl: dispUrl,
+      favicon: fav
+    });
+  }
+  return out;
+}
+
+function fetchFaeroSearch(q, page, callback) {
+  var start = (page - 1) * 10;
+  var faeroUrl = 'http://faero.top/search?q=' + encodeURIComponent(q) + (start ? '&start=' + start : '');
+  makeRequest(faeroUrl, function (err, text) {
+    if (!err && text && text.indexOf('result-item') !== -1) {
+      var items = parseFaeroHtml(text);
+      if (items && items.length > 0) {
+        callback(items);
+        return;
+      }
+    }
+    callback(null);
+  }, 4500);
+}
+
 /* ===================== MULTI-STAGE SEARCH CONTROLLER ===================== */
 function fetchWebSearch(q, page, callback) {
   var s = (page - 1) * 30;
@@ -919,63 +963,71 @@ function fetchWebSearch(q, page, callback) {
     (s ? '&s=' + s + '&dc=' + (s + 1) : '') + '&kl=ru-ru';
   var jinaUrl = 'https://r.jina.ai/' + ddgUrl;
 
-  // 1. Primary: Direct fetch of DuckDuckGo via fast CORS-enabled Jina reader
+  // 1. Primary: Direct fetch of DuckDuckGo via fast CORS-enabled Jina reader (7s timeout for older connections)
   makeRequest(jinaUrl, function (err, text) {
     if (!err && text && text.length > 200) {
       var items = parseJinaMarkdown(text);
       if (items && items.length > 0) {
-        callback(items);
+        callback(items, false);
         return;
       }
     }
 
-    // 2. Secondary: Parallel proxy race (via common.js fetchViaProxy)
-    if (window.fetchViaProxy) {
-      window.fetchViaProxy(ddgUrl, 5000).then(function (raw) {
-        if (raw) {
-          if (raw.jina && raw.text) {
-            var items2 = parseJinaMarkdown(raw.text);
-            if (items2 && items2.length > 0) { callback(items2); return; }
-          } else if (typeof raw === 'string') {
-            var items3 = parseDdgHtml(raw);
-            if (items3 && items3.length > 0) { callback(items3); return; }
-          }
-        }
-        step3();
-      })['catch'](function () {
-        step3();
-      });
-    } else {
-      step3();
-    }
-  }, 4000);
+    // 2. Secondary: Retro HTTP full-web search via Faero.Top (designed for legacy browsers)
+    fetchFaeroSearch(q, page, function (faeroItems) {
+      if (faeroItems && faeroItems.length > 0) {
+        callback(faeroItems, false);
+        return;
+      }
 
-  function step3() {
-    // 3. DuckDuckGo Instant Answer API
+      // 3. Parallel proxy race (via common.js fetchViaProxy)
+      if (window.fetchViaProxy) {
+        window.fetchViaProxy(ddgUrl, 5000).then(function (raw) {
+          if (raw) {
+            if (raw.jina && raw.text) {
+              var items2 = parseJinaMarkdown(raw.text);
+              if (items2 && items2.length > 0) { callback(items2, false); return; }
+            } else if (typeof raw === 'string') {
+              var items3 = parseDdgHtml(raw);
+              if (items3 && items3.length > 0) { callback(items3, false); return; }
+            }
+          }
+          step4();
+        })['catch'](function () {
+          step4();
+        });
+      } else {
+        step4();
+      }
+    });
+  }, 7000);
+
+  function step4() {
+    // 4. DuckDuckGo Instant Answer API (encyclopedic fallback)
     fetchDdgApi(q, function (apiItems) {
       if (apiItems && apiItems.length > 0) {
-        callback(apiItems);
+        callback(apiItems, true);
         return;
       }
-      step4();
+      step5();
     });
   }
 
-  function step4() {
-    // 4. Wikipedia OpenSearch API
+  function step5() {
+    // 5. Wikipedia OpenSearch API (encyclopedic fallback)
     fetchWikiSearch(q, function (wikiItems) {
       if (wikiItems && wikiItems.length > 0) {
-        callback(wikiItems);
+        callback(wikiItems, true);
         return;
       }
       // No external results
-      callback([]);
+      callback([], false);
     });
   }
 }
 
 /* ===================== UI RENDERING ===================== */
-function renderResults(items) {
+function renderResults(items, isFallback) {
   var box = document.getElementById('results');
   if (!box) return;
   if (!items || !items.length) {
@@ -983,6 +1035,15 @@ function renderResults(items) {
     return;
   }
   var html = '';
+  if (isFallback) {
+    html += '<div style="background:#fffbe8; border:1px solid #e2cb82; padding:8px 12px; margin-bottom:15px; font-size:12px; color:#555; line-height:1.6;">' +
+      '<b>Внимание:</b> На вашей системе ограничен современный TLS/CORS для сквозного веб-поиска. Ниже показаны результаты из открытой энциклопедии.<br />' +
+      'Чтобы открыть поиск по всему интернету без ограничений: ' +
+      '<b><a href="http://faero.top/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6; text-decoration:underline;">Искать по всему интернету через Faero.Top &rarr;</a></b> (быстрый веб-поиск для старых ПК) ' +
+      'или в <a href="https://ya.ru/search/?text=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6;">Яндекс</a> &middot; ' +
+      '<a href="https://duckduckgo.com/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6;">DuckDuckGo</a>.' +
+      '</div>';
+  }
   for (var i = 0; i < items.length; i++) {
     var r = items[i];
     var fav = r.favicon ? '<span class="res-favicon"><img src="' + esc(r.favicon) + '" alt="" width="16" height="16" onerror="this.onerror=null; this.style.display=\'none\';" /></span>' : '';
@@ -1020,6 +1081,7 @@ function showFallbackSearch(q) {
   eb.style.display = 'block';
   eb.innerHTML = '<div style="margin-bottom:6px; font-weight:bold; color:#00468c;">Внешний поиск ограничен на вашей системе или в сети. Вы можете продолжить поиск напрямую:</div>' +
     '<div style="padding:6px 0; line-height:2em;">' +
+    '&bull; <a href="http://faero.top/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#0857a6;">Искать по всему интернету через Faero.Top &rarr; (работает на старых ПК)</a><br />' +
     '&bull; <a href="https://ya.ru/search/?text=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#c00;">Искать в Яндекс &rarr;</a><br />' +
     '&bull; <a href="https://duckduckgo.com/?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#de5833;">Искать в DuckDuckGo &rarr;</a><br />' +
     '&bull; <a href="https://www.google.com/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#4285f4;">Искать в Google &rarr;</a><br />' +
@@ -1037,9 +1099,11 @@ function runSearch() {
   var qEl = document.getElementById('q');
   if (qEl) qEl.value = curQuery;
 
+  var linkFaero = document.getElementById('linkFaero');
   var linkDdg = document.getElementById('linkDdg');
   var linkYa = document.getElementById('linkYa');
   var linkGg = document.getElementById('linkGg');
+  if (linkFaero) linkFaero.href = 'http://faero.top/search?q=' + encodeURIComponent(curQuery);
   if (linkDdg) linkDdg.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(curQuery);
   if (linkYa) linkYa.href = 'https://ya.ru/search/?text=' + encodeURIComponent(curQuery);
   if (linkGg) linkGg.href = 'https://www.google.com/search?q=' + encodeURIComponent(curQuery);
@@ -1066,7 +1130,7 @@ function runSearch() {
   } catch (e) {}
 
   if (cached && cached.length) {
-    renderResults(cached);
+    renderResults(cached, false);
     renderPager(cached.length);
     return;
   }
@@ -1076,15 +1140,15 @@ function runSearch() {
   if (resultsBox) resultsBox.innerHTML = '';
   if (pagerBox) pagerBox.innerHTML = '';
 
-  fetchWebSearch(curQuery, curPage, function (items) {
+  fetchWebSearch(curQuery, curPage, function (items, isFallback) {
     if (loadingBox) loadingBox.style.display = 'none';
     if (items && items.length > 0) {
       try {
-        if (typeof sessionStorage !== 'undefined') {
+        if (typeof sessionStorage !== 'undefined' && !isFallback) {
           sessionStorage.setItem(cacheKey, JSON.stringify(items));
         }
       } catch (e) {}
-      renderResults(items);
+      renderResults(items, isFallback);
       renderPager(items.length);
     } else {
       showFallbackSearch(curQuery);
