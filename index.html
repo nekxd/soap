@@ -53,16 +53,12 @@
     overflow-x: hidden;
   }
   .main_table,
-  .authorization_position,
-  .authorization_position tbody,
-  .authorization_position tr,
   .main_table tbody,
   .main_table tr {
     display: block !important;
     width: 100% !important;
   }
-  .main_table td,
-  .authorization_position td {
+  .main_table td {
     display: block !important;
     width: 100% !important;
     box-sizing: border-box !important;
@@ -108,19 +104,6 @@
     padding: 8px 10px !important;
     float: none !important;
   }
-  .authorization_block {
-    display: none !important;
-  }
-  .authorization_position .left_block {
-    padding: 10px !important;
-  }
-  #authorization_table {
-    width: 100% !important;
-  }
-  #authorization_table input.long,
-  #authorization_table select.long {
-    width: 95% !important;
-  }
   .top_menu2 {
     width: 100% !important;
     display: flex !important;
@@ -162,7 +145,7 @@
 	<tr>
 		<td class="logo">
 		  <div class="d1"><div class="d2"><div class="d3"><div class="d4" style="text-align: center;"><a href="index.html" style="float: none; width: auto;"><img src="assets/img/ii/r/23logo236px.gif" width="236" height="55" alt="@ SOAP.NEKXD.FUN" title="@ SOAP.NEKXD.FUN" style="margin: 0;" /></a></div></div></div></div>
-<a href="#" onclick="return false;">Сделать&nbsp;стартовой</a> <a href="https://mail.proton.me" class="ico" style="color: #F25100;"><img src="assets/img/ii/mail/ru/images/telephonem.gif" width="7" height="13" alt="" title="Мобильная почта" />Мобильная&nbsp;почта</a> <a href="m.html" class="ico" style="color: #1b5ea8; margin-left: 6px;" onclick="try{sessionStorage.removeItem('prefer_full');}catch(e){}"><img src="assets/img/icons/mail_top.png" width="12" height="12" alt="" style="vertical-align:middle; margin-right:2px;" />Мобильная&nbsp;версия</a>
+<a href="#" onclick="return false;">Сделать&nbsp;стартовой</a> <a href="m.html" class="ico" style="color: #1b5ea8; margin-left: 6px;" onclick="try{sessionStorage.removeItem('prefer_full');}catch(e){}"><img src="assets/img/icons/mail_top.png" width="12" height="12" alt="" style="vertical-align:middle; margin-right:2px;" />Мобильная&nbsp;версия</a>
       <div class="mw">&nbsp;</div>
 		</td>
 		<td class="left_divider" style="width:4%;"><div class="mw">&nbsp;</div></td>
@@ -178,11 +161,9 @@
 								<ul class="bookmarksList">
 									<li class="current"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=images&amp;q=">Картинки</a></div></div></div></li>
-									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://www.youtube.com/results?search_query=">YouTube</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Авито</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://openvk.org/search">Люди</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://www.google.com/maps/search/">Google Maps</a></div></div></div></li>
-									<li class="common"><div class="tlc"><div><div class="ahold"><a href="http://otvet.mail.ru/">Ответы</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=dict&amp;q=">Словари</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://habr.com/ru/search/?q=">Hi-tech</a></div></div></div></li>
 								</ul>
@@ -231,140 +212,76 @@
 	</tr>
 </table>
 
-<!-- ===================== AUTH BLOCK ===================== -->
-<table class="authorization_position">
-    <tr>
-        <td class="left_block">
-<div class="relative z100 m">
-<form name="Auth" method="post" action="https://account.proton.me/login" style="overflow: hidden;">
-<img src="assets/img/ii/mail/ru/images/log_bms.gif" width="226" height="18" usemap="#logbms" alt="" /><br />
-<map name="logbms" id="logbmsid"><area shape="rect" coords="109,1,220,18" href="https://mrim.su" alt="Renaissance"></area><area shape="default" nohref="nohref" alt=""></area></map>
-
-<table id="authorization_table" class="authorization">
-    <tr>
-        <td colspan="2" class="registration">
-            <a href="https://account.proton.me/signup" class="left" tabindex="9">Регистрация&nbsp;в&nbsp;почте</a>
-            <a href="#" tabindex="10"><img src="assets/img/ii/mail/ru/images/helpm.gif" width="14" height="14" alt="" class="right" /></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="title1">Имя</td>
-        <td class="mail">
-            <table>
-                <tr>
-                    <td class="login"><input type="text" class="long" size="10" name="Login" tabindex="3" value="" /><div>&nbsp;</div></td>
-                    <td class="domain"><select size="1" name="Domain" class="long" tabindex="4">
-<option value="soap.nekxd.fun">@soap.nekxd.fun</option>
-</select><div>&nbsp;</div></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td class="title2">Пароль</td>
-        <td class="pswd">
-            <table>
-                <tr>
-                    <td><input type="password" class="long" size="15" name="Password" tabindex="5" value="" /></td>
-                    <td class="forget"><div><a href="https://account.proton.me/reset-password" tabindex="8">Забыли?</a></div></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td class="title3"> </td>
-        <td class="button"><table><tr><td class="check"><input type="checkbox" id="alien" tabindex="7" name="level" value="1" class="check" /></td><td class="bad" style="white-space: nowrap;"><label for="alien">Чужой компьютер</label></td><td class="submit"><input type="submit" value="Войти" tabindex="6" class="submit" style="width: 50px; text-align: center; padding: 0;" /></td></tr></table></td>
-    </tr>
-</table>
-</form>
-</div>
-        		  <div class="mw">&nbsp;</div>
-        		</td>
-        		<td class="left_divider"><div class="mw">&nbsp;</div></td>
-        		<td class="search_block"><div class="mw">&nbsp;</div></td>
-        	</tr>
-        </table>
-
 <!-- ===================== MAIN 3-COLUMN ===================== -->
       <table class="main_table">
       	<tr>
       		<td class="left_block pb_0i">
-            <div class="authorization_block">&nbsp;</div>
             <ul class="top_menu2" style="border:1px solid #fff">
-<li class="l_big_my"><a href="https://openvk.org/" tabindex="11">OpenVK</a></li>
-<li class="l_big_agent"><a href="https://mrim.su/" tabindex="12">Renaissance</a></li>
-<li class="l_big_games last"><a href="https://openvk.org/apps" tabindex="13">Игры</a></li>
+<li class="l_big_my"><a href="https://openvk.org/" tabindex="3">OpenVK</a></li>
+<li class="l_big_agent"><a href="https://mrim.su/" tabindex="4">Renaissance</a></li>
+<li class="l_big_games last"><a href="https://openvk.org/apps" tabindex="5">Игры</a></li>
 </ul>
 <div class="clear"> </div>
 <table class="projects_menu2" style="margin-bottom: 15px;">
 <tr>
 <th> </th>
-<td class="l_news"><a href="https://habr.com/ru/news/" tabindex="14">Хабр</a></td>
+<td class="l_news"><a href="https://habr.com/ru/news/" tabindex="6">Хабр</a></td>
 <th class="center"> </th>
-<td class="l_weather"><a href="#weather" tabindex="15">Погода</a></td>
+<td class="l_weather"><a href="#weather" tabindex="7">Погода</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_video"><a href="https://www.youtube.com/" tabindex="16">YouTube</a></td>
+<td class="l_maps"><a href="https://www.google.com/maps" tabindex="8">Google Maps</a></td>
 <th class="center"> </th>
-<td class="l_foto"><a href="https://www.instagram.com/" tabindex="17">Instagram*</a></td>
+<td class="l_mobile"><a href="https://habr.com/ru/hubs/electronics/" title="Hi-tech" tabindex="9">Hi-tech</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_maps"><a href="https://www.google.com/maps" tabindex="18">Google Maps</a></td>
-<th class="center"> </th>
-<td class="l_mobile"><a href="https://habr.com/ru/hubs/electronics/" title="Hi-tech" tabindex="19">Hi-tech</a></td>
+<td class="l_soft" colspan="3"><a href="https://lunastore.app/" tabindex="10">LunaStore</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_soft"><a href="https://lunastore.app/" tabindex="20">LunaStore</a></td>
+<td class="l_money"><a href="https://yoomoney.ru/" tabindex="11">ЮMoney</a></td>
 <th class="center"> </th>
-<td class="l_otvety"><a href="http://otvet.mail.ru/" tabindex="21">Ответы</a></td>
+<td class="l_torg"><a href="https://www.avito.ru/" tabindex="12">Авито</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_money"><a href="https://yoomoney.ru/" tabindex="22">ЮMoney</a></td>
+<td class="l_myintcountry"><a href="http://myintcountry.ru/" target="_blank" title="Моя Интернет Страна" tabindex="13">Моя Интернет Страна</a></td>
 <th class="center"> </th>
-<td class="l_torg"><a href="https://www.avito.ru/" tabindex="23">Авито</a></td>
+<td class="l_oddmarket"><a href="http://oddmarket.ct.ws/" target="_blank" tabindex="14">OddMarket</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_myintcountry"><a href="http://myintcountry.ru/" target="_blank" title="Моя Интернет Страна" tabindex="24">Моя Интернет Страна</a></td>
+<td class="l_faero"><a href="http://faero.top/" target="_blank" tabindex="15">Faero.Top</a></td>
 <th class="center"> </th>
-<td class="l_oddmarket"><a href="http://oddmarket.ct.ws/" target="_blank" tabindex="25">OddMarket</a></td>
+<td class="l_faerofm"><a href="http://fm.faero.top/" target="_blank" tabindex="16">FaeroFM</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_faero"><a href="http://faero.top/" target="_blank" tabindex="26">Faero.Top</a></td>
+<td class="l_winarchive"><a href="https://winarchive.org/" target="_blank" tabindex="17">WinArchive</a></td>
 <th class="center"> </th>
-<td class="l_faerofm"><a href="http://fm.faero.top/" target="_blank" tabindex="27">FaeroFM</a></td>
+<td class="l_dimas"><a href="http://madebydimas.top" target="_blank" title="Дмитрий Стеклопакеты" tabindex="18">Дмитрий Стеклопакеты</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_winarchive"><a href="https://winarchive.org/" target="_blank" tabindex="28">WinArchive</a></td>
+<td class="l_nekxd"><a href="http://nekxd.ru/" target="_blank" tabindex="19">Био Яндиева</a></td>
 <th class="center"> </th>
-<td class="l_dimas"><a href="http://madebydimas.top" target="_blank" title="Дмитрий Стеклопакеты" tabindex="29">Дмитрий Стеклопакеты</a></td>
+<td class="l_ilyamarket"><a href="https://ilyamarket.site" target="_blank" tabindex="20">IlyaMarket</a></td>
 <th> </th>
 </tr>
 <tr>
 <th> </th>
-<td class="l_nekxd"><a href="http://nekxd.ru/" target="_blank" tabindex="30">Био Яндиева</a></td>
+<td class="l_lyano"><a href="https://market.lyano.ovh" target="_blank" tabindex="21">Lyano Market</a></td>
 <th class="center"> </th>
-<td class="l_ilyamarket"><a href="https://ilyamarket.site" target="_blank" tabindex="31">IlyaMarket</a></td>
-<th> </th>
-</tr>
-<tr>
-<th> </th>
-<td class="l_lyano"><a href="https://market.lyano.ovh" target="_blank" tabindex="32">Lyano Market</a></td>
-<th class="center"> </th>
-<td class="l_olddos"><a href="http://old-dos.ru/" target="_blank" tabindex="33">Old-DOS</a></td>
+<td class="l_olddos"><a href="http://old-dos.ru/" target="_blank" tabindex="22">Old-DOS</a></td>
 <th> </th>
 </tr>
 </table>
@@ -549,9 +466,6 @@
 <a href="m.html" onclick="try{sessionStorage.removeItem('prefer_full');}catch(e){}" style="color:#1b5ea8; text-decoration:underline;">Мобильная версия soap.nekxd.fun</a>
 </div>
 
-<div style="text-align:center; padding:0 0 15px; font-size:11px; color:#666;">
-Meta&nbsp;&mdash; является экстремистской организацией!
-</div>
 
 <script src="assets/js/common.js"></script>
 <script>
