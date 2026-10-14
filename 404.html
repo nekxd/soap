@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Страница не найдена — soap.nekxd.fun</title>
+  <link rel="shortcut icon" href="assets/img/ii/r/favicon.ico" type="image/x-icon" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #333333;
+      font-family: Arial, Tahoma, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    a {
+      color: #1b5ea8;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #f26d00;
+    }
+
+    /* Top blue header */
+    .top-header {
+      background: #00468c;
+      border-bottom: 2px solid #003366;
+      padding: 8px 16px;
+    }
+    .top-header-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .top-header a.logo-link {
+      display: inline-block;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .top-header img.logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+    }
+    .top-nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .top-nav a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs-wrap {
+      background: #f0f4f9;
+      border-bottom: 1px solid #d8e2ec;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: #666666;
+    }
+    .breadcrumbs-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Main content container */
+    .content-wrap {
+      max-width: 980px;
+      margin: 30px auto 50px auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+    .error-box {
+      background: #fafcfe;
+      border: 1px solid #c9dcf0;
+      border-radius: 4px;
+      padding: 30px 32px;
+      box-shadow: 0 1px 4px rgba(0, 70, 140, 0.06);
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .error-code-badge {
+      background: #00468c;
+      color: #ffffff;
+      font-size: 42px;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 4px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      letter-spacing: 2px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .error-details {
+      flex: 1;
+    }
+
+    .error-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00468c;
+      margin: 0 0 12px 0;
+    }
+
+    .error-desc {
+      font-size: 14px;
+      color: #444444;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Search bar inside 404 */
+    .error-search-wrap {
+      background: #ffffff;
+      border: 1px solid #c9dcf0;
+      border-radius: 3px;
+      padding: 14px 18px;
+      margin: 20px 0 24px 0;
+    }
+    .error-search-title {
+      font-size: 12px;
+      color: #555555;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .error-search-form {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .error-search-input {
+      flex: 1;
+      height: 28px;
+      padding: 2px 8px;
+      border: 1px solid #7f9db9;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      outline: none;
+    }
+    .error-search-input:focus {
+      border-color: #00468c;
+    }
+    .error-search-btn {
+      height: 32px;
+      padding: 0 16px;
+      background: linear-gradient(to bottom, #2b70ba, #084c96);
+      color: #ffffff;
+      border: 1px solid #003366;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .error-search-btn:hover {
+      background: linear-gradient(to bottom, #3982d4, #125bb0);
+    }
+
+    /* Helpful links */
+    .helpful-links {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e2edf7;
+    }
+    .helpful-links-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #00468c;
+      margin-bottom: 8px;
+    }
+    .helpful-links ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .helpful-links li {
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #d8e2ec;
+      padding: 20px 16px 30px;
+      text-align: center;
+      background: #f7f9fc;
+      font-size: 11px;
+      color: #666666;
+    }
+    .footer-badges {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .footer-badges img {
+      display: block;
+      image-rendering: pixelated;
+    }
+    .footer-nav {
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    .footer-nav a {
+      color: #1b5ea8;
+      text-decoration: none;
+      margin: 0 4px;
+    }
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .error-box {
+        flex-direction: column;
+        padding: 20px 16px;
+        gap: 16px;
+      }
+      .error-code-badge {
+        align-self: flex-start;
+      }
+      .error-search-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .error-search-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Blue Header -->
+  <div class="top-header">
+    <div class="top-header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/img/ii/r/23logo236px.gif" alt="@ SOAP.NEKXD.FUN" class="logo" />
+      </a>
+      <div class="top-nav">
+        <a href="index.html">Главная</a>
+        <a href="https://mail.proton.me" target="_blank">Почта</a>
+        <a href="https://openvk.org/" target="_blank">OpenVK</a>
+        <a href="https://mrim.su/" target="_blank">Renaissance</a>
+        <a href="search.html">Поиск</a>
+        <a href="m.html">Мобильная</a>
+        <a href="about.html">О компании</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs-wrap">
+    <div class="breadcrumbs-inner">
+      <a href="index.html">Главная</a> &raquo; <span>Ошибка 404</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-wrap">
+    <div class="error-box">
+      <div class="error-code-badge">404</div>
+      <div class="error-details">
+        <h1 class="error-title">Страница не найдена</h1>
+        <div class="error-desc">
+          К сожалению, запрашиваемая страница не существует, была удалена или перемещена по другому адресу.<br />
+          Возможно, вы перешли по устаревшей ссылке или ошиблись при вводе URL.
+        </div>
+
+        <div class="error-search-wrap">
+          <div class="error-search-title">🔍 Попробуйте найти нужную страницу через поиск soap.nekxd.fun:</div>
+          <form class="error-search-form" action="search.html" method="get">
+            <input type="text" name="q" class="error-search-input" placeholder="Введите поисковый запрос..." autofocus />
+            <input type="submit" value="Найти" class="error-search-btn" />
+          </form>
+        </div>
+
+        <div class="helpful-links">
+          <div class="helpful-links-title">Полезные ссылки:</div>
+          <ul>
+            <li><a href="index.html">Перейти на главную страницу портала</a></li>
+            <li><a href="search.html">Перейти к веб-поиску</a></li>
+            <li><a href="m.html">Мобильная версия soap.nekxd.fun</a></li>
+            <li><a href="about.html">О компании и проекте</a></li>
+            <li><a href="https://openvk.org/soap" target="_blank">Группа проекта в OpenVK</a></li>
+            <li><a href="https://t.me/soap_fun" target="_blank">Telegram-канал soap_fun.t.me</a></li>
+            <li><a href="mailto:nekxd@bk.ru">Сообщить администратору об ошибке (nekxd@bk.ru)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-badges">
+      <a href="http://madebydimas.top" target="_blank"><img src="assets/img/badges/button_dimas.gif" width="88" height="31" alt="madebydimas" onerror="if(this.src!='http://madebydimas.top/button.gif'){this.src='http://madebydimas.top/button.gif';}"></a>
+      <a href="http://old.myslivets.com" target="_blank"><img src="assets/img/badges/button_myslivets.png" width="88" height="31" alt="myslivets" onerror="if(this.src!='http://myslivets.com/img/button.png'){this.src='http://myslivets.com/img/button.png';}"></a>
+      <a href="http://veselcraft.cc/" target="_blank" class="m3-ripple"><img src="assets/img/badges/vc.gif" width="88" height="31" alt="veselcraft" loading="lazy" onerror="if(this.src!='http://veselcraft.cc/images/vc.gif'){this.src='http://veselcraft.cc/images/vc.gif';}"></a>
+      <a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="assets/img/badges/windows-media-player.gif" width="88" height="31" alt="WMP" onerror="if(this.src!='http://nekxd.ru/windows-media-player.gif'){this.src='http://nekxd.ru/windows-media-player.gif';}"></a>
+      <img src="assets/img/badges/w7-boot.gif" height="31" alt="" onerror="if(this.src!='http://88x31.kate.pet/w7-boot.gif'){this.src='http://88x31.kate.pet/w7-boot.gif';}">
+      <a href="http://nekxd.ru/" target="_blank"><img src="assets/img/badges/old.png" width="88" height="31" alt="NekxdOld" onerror="if(this.src!='http://nekxd.ru/old.png'){this.src='http://nekxd.ru/old.png';}"></a>
+      <a href="http://faero.top/" target="_blank"><img src="assets/img/badges/button_faero.gif" alt="faero.top" border="0" width="88" height="31" onerror="if(this.src!='http://faero.top/promo/button.gif'){this.src='http://faero.top/promo/button.gif';}"></a>
+    </div>
+
+    <div class="footer-nav">
+      <a href="index.html">Главная</a> &middot;
+      <a href="search.html">Поиск</a> &middot;
+      <a href="m.html">Мобильная версия</a> &middot;
+      <a href="about.html">О компании</a> &middot;
+      <a href="https://openvk.org/soap" target="_blank">Группа в ОВК</a> &middot;
+      <a href="https://t.me/soap_fun" target="_blank">ТГ канал</a> &middot;
+      <a href="https://github.com/nekxd/soap" target="_blank">GitHub</a>
+    </div>
+
+    <div>&copy; Никита Яндиев (Nekich/ynd), 2025–2026</div>
+  </div>
+
+</body>
+</html>
