@@ -69,7 +69,7 @@
     function render(idx) {
       var b = banners[idx];
       var html = '<a href="' + b.url + '" target="_blank" title="' + esc(b.title) + '">' +
-        '<img src="' + b.img + '" width="260" height="224" border="0" alt="' + esc(b.title) + '" style="max-width:100%; height:auto; border-radius:3px; display:block; margin:0 auto;" ' +
+        '<img src="' + b.img + '" width="300" height="259" border="0" alt="' + esc(b.title) + '" style="width:100%; max-width:300px; height:auto; border-radius:4px; display:block; margin:0 auto;" ' +
         'onerror="if(this.src!=\'' + b.remoteImg + '\'){this.src=\'' + b.remoteImg + '\';}" /></a>';
       el.innerHTML = html;
     }
