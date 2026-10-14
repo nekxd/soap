@@ -811,7 +811,7 @@
     </div>
     <div style="display:flex; align-items:center; gap:12px; color:#ffffff; font-size:11px;">
       <span style="color:#cbdcf2;">chat-kontakt@soap.fun</span>
-      <span>Вы: <b id="headerNickGreeting" style="color:#ffcc66;">Гость</b></span>
+      <span>Вы: <b id="headerNickGreeting" style="color:#ffcc66;">Гость</b> <span id="headerCookieBadge" style="background:#006600; color:#fff; font-size:9px; padding:1px 4px; border-radius:2px; margin-left:3px;" title="Аккаунт сохраняется в cookie">cookie</span></span>
       <button type="button" class="btn-header-action" id="headerNavBtn" onclick="toggleLobbyChat()">Войти в чат</button>
     </div>
   </div>
@@ -819,11 +819,10 @@
   <!-- Authentic 2010 Sub-Toolbar below Header (matching screenshot!) -->
   <div class="lobby-sub-toolbar">
     <div class="lobby-tools-left">
-      <span class="lobby-tool-link" onclick="quickCreateRoom()">🍓 <u>Создать комнату</u></span>
-      <span class="lobby-tool-link" onclick="quickRandomRoom()">🔀 <u>Случайная комната</u></span>
-      <span class="lobby-tool-link" onclick="quickSearchRoom()">📁 <u>Поиск комнаты</u></span>
+      <span class="lobby-tool-link" onclick="submitLobbyEntry()">💬 <u>Единый ЧАТ@SOAP</u></span>
       <span class="lobby-tool-link" onclick="quickSearchUser()">🔍 <u>Поиск посетителя</u></span>
       <span class="lobby-tool-link" onclick="quickWhoInChat()">🧑‍🤝‍🧑 <u>Кто в чате?</u> <b style="color:#d90000; font-size:10px;">new</b></span>
+      <span class="lobby-tool-link" onclick="alert('Все данные аккаунта (ник и цвет) автоматически сохраняются в cookies вашего браузера на 365 дней!')">🍪 <u>Аккаунт в cookie</u></span>
     </div>
     <div>
       <a href="help.html" class="lobby-tool-link">Помощь</a>
@@ -849,18 +848,17 @@
           </ul>
         </div>
 
-        <!-- Мои комнаты Box -->
+        <!-- Комната чата Box -->
         <div class="lobby-card">
           <div class="lobby-card-header">
-            <span>Мои комнаты</span>
-            <span style="cursor:pointer;" onclick="quickCreateRoom()" title="Создать комнату">➕</span>
+            <span>Комната</span>
           </div>
           <div class="lobby-card-body" style="padding: 6px;">
-            <div style="cursor:pointer; color:#1b5ea8; font-weight:bold; padding:2px 0;" onclick="selectLobbyRoom('Все_на_свете (ЧАТ@SOAP)')">
-              • Все_на_свете (SOAP)
+            <div style="cursor:pointer; color:#1b5ea8; font-weight:bold; padding:2px 0;" onclick="submitLobbyEntry()">
+              ★ ЧАТ@SOAP (Единый для всех)
             </div>
-            <div style="cursor:pointer; color:#1b5ea8; padding:2px 0;" onclick="selectLobbyRoom('&quot;ТРАМВАЙ&quot;')">
-              • "ТРАМВАЙ"
+            <div style="font-size:10px; color:#666; margin-top:2px;">
+              Все посетители общаются в одном общем потоке.
             </div>
           </div>
         </div>
@@ -888,7 +886,7 @@
 
       <!-- CENTER COLUMN: Вход в чат -->
       <div class="lobby-col-center">
-        <div class="lobby-form-title">Вход в чат</div>
+        <div class="lobby-form-title">Вход в Единый ЧАТ@SOAP</div>
 
         <div class="lobby-name-row">
           <label for="lobbyNickInput"><b>Имя в чате:</b></label>
@@ -907,47 +905,39 @@
         </div>
 
         <div class="lobby-sort-row">
-          <span>Сортировка по:</span>
-          <span class="pill-sort-active" id="sortActiveBtn" onclick="sortLobbyRooms('activity')">Активности</span>
-          <span class="pill-sort-idle" id="sortVisitorsBtn" onclick="sortLobbyRooms('visitors')">Числу посетителей</span>
-          <span class="pill-sort-idle" id="sortAlphaBtn" onclick="sortLobbyRooms('alpha')">По алфавиту</span>
+          <span>Формат общения:</span>
+          <span class="pill-sort-active">Один общий чат для всех</span>
         </div>
 
-        <div class="lobby-section-label">Початимся про...</div>
+        <div class="lobby-section-label">Единая комната:</div>
 
         <!-- Big Retro Lime Green Room List Box (matching screenshot!) -->
-        <div class="retro-room-box" id="lobbyRoomsContainer">
+        <div class="retro-room-box" id="lobbyRoomsContainer" style="height:auto; min-height:130px;">
           <!-- Populated dynamically via JS -->
         </div>
 
         <!-- Legend Badges below room box -->
         <div class="lobby-legend-note">
-          Комнаты отсортированы по активности <span title="Показывает популярные комнаты по текущей активности" style="cursor:help; color:#1b5ea8;">❓</span>
+          Единая комната портала soap — все сообщения в одном общем потоке <span title="Все посетители общаются в одном общем потоке" style="cursor:help; color:#1b5ea8;">❓</span>
         </div>
         <div class="lobby-legend-pills">
-          <span class="legend-pill pill-permanent" title="Постоянная комната чата">постоянные ❓</span>
-          <span class="legend-pill pill-temporary" title="Временная комната">непостоянные ❓</span>
-          <span class="legend-pill pill-private" title="Приватная комната">приватные ❓</span>
-          <span class="legend-pill pill-stream-yes" title="В комнате доступна трансляция">есть трансляция ❓</span>
-          <span class="legend-pill pill-stream-no" title="Обычный текстовый чат">нет трансляции ❓</span>
+          <span class="legend-pill pill-permanent" title="Постоянный единый чат">постоянный ❓</span>
+          <span class="legend-pill pill-stream-no" title="Обычный текстовый чат">текстовый ❓</span>
+          <span class="legend-pill" style="background:#e8f4d8; border-color:#b5d496;" title="Аккаунт сохраняется в cookie браузера на 365 дней">аккаунт в cookie 🍪</span>
         </div>
 
         <div class="lobby-checks-row">
-          <label><input type="checkbox" id="lobbyOnlyVisitors" /> Только сообщения посетителей</label>
+          <label><input type="checkbox" id="lobbyRememberCookie" checked="checked" /> <b>Сохранять аккаунт в cookie (входить сразу без вопросов)</b></label>
           <label><input type="checkbox" id="lobbyNoIgnore" checked="checked" /> Без сообщений игнорирования</label>
         </div>
 
-        <div style="margin: 4px 0 8px 0;">
-          <a href="javascript:void(0)" onclick="sortLobbyRooms('all')" style="color:#1b5ea8; font-size:11px;"><u>Весь список комнат</u></a>
-        </div>
-
-        <!-- Authentic 3D Button [ Войти ] -->
-        <div>
-          <button type="button" class="btn-lobby-enter" onclick="submitLobbyEntry()">Войти</button>
+        <!-- Authentic 3D Button [ Войти в чат ] -->
+        <div style="margin-top:6px;">
+          <button type="button" class="btn-lobby-enter" onclick="submitLobbyEntry()">Войти в чат</button>
         </div>
 
         <div class="lobby-disclaimer">
-          Нажимая кнопку "Войти", Вы принимаете условия <a href="help.html" target="_blank">пользовательского соглашения</a>
+          Нажимая кнопку "Войти в чат", аккаунт сохраняется в cookie. Условия <a href="help.html" target="_blank">соглашения</a>.
         </div>
       </div>
 
@@ -961,11 +951,11 @@
           </div>
           <div class="leaders-item">
             <div style="font-weight:bold; color:#d90000;">@ Gredo</div>
-            <div style="font-size:10px; color:#555;">в комнате: <b style="color:#00468c;">МАЛЬЧИКИ-ИЩУТ-ДЕВУШЕК</b></div>
+            <div style="font-size:10px; color:#555;">в комнате: <b style="color:#00468c;">ЧАТ@SOAP (Единый)</b></div>
           </div>
           <div class="leaders-item">
             <div style="font-weight:bold; color:#008800;">@ soap_user</div>
-            <div style="font-size:10px; color:#555;">в комнате: <b style="color:#00468c;">Все_на_свете (SOAP)</b></div>
+            <div style="font-size:10px; color:#555;">в комнате: <b style="color:#00468c;">ЧАТ@SOAP (Единый)</b></div>
           </div>
         </div>
 
@@ -976,11 +966,11 @@
           </div>
           <div class="lobby-card-body">
             <ul class="news-bullet-list">
-              <li><a href="javascript:void(0)" onclick="alert('Дважды кликните по любой комнате в зеленом списке для быстрого входа!')">Двойной клик - вход в комнату</a></li>
-              <li><a href="javascript:void(0)" onclick="quickCreateRoom()">Создание видео-комнат</a></li>
+              <li><a href="javascript:void(0)" onclick="alert('Все сообщения попадают в единый поток!')">1 чат для всех пользователей</a></li>
+              <li><a href="javascript:void(0)" onclick="alert('Ваш аккаунт автоматически сохраняется в cookie на 365 дней.')">Авторизация по cookie</a></li>
               <li><a href="javascript:void(0)" onclick="alert('Бан-лист модерируется администратором ynd.')">Бан-лист</a></li>
-              <li><a href="javascript:void(0)" onclick="alert('В окне чата действует автоматическая защита от спама и флуда.')">Бан по IP-адресу в окне "биты"</a></li>
-              <li><a href="help.html">Как и кому жаловаться на комнату</a></li>
+              <li><a href="javascript:void(0)" onclick="alert('В окне чата действует автоматическая защита от спама и флуда.')">Защита от спама и флуда</a></li>
+              <li><a href="help.html">Правила поведения в чате</a></li>
             </ul>
           </div>
         </div>
@@ -1004,11 +994,13 @@
   <div id="viewChat" class="chat-box-container" style="display:none;">
     <div style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
       <div>
-        <button type="button" class="btn-lobby-enter" style="padding:3px 12px; font-size:11px;" onclick="goToLobby()">🚪 Список комнат (Лобби)</button>
-        <span style="margin-left:8px; font-size:12px;">Комната: <b id="activeChatRoomName" style="color:#00468c;">Все_на_свете (ЧАТ@SOAP)</b></span>
+        <button type="button" class="btn-lobby-enter" style="padding:3px 12px; font-size:11px;" onclick="goToLobby()">🚪 Сменить имя</button>
+        <button type="button" class="btn-lobby-enter" style="padding:3px 10px; font-size:11px; margin-left:4px; color:#cc0000;" onclick="resetAccount()">❌ Выйти</button>
+        <span style="margin-left:8px; font-size:12px;">Чат: <b id="activeChatRoomName" style="color:#00468c;">ЧАТ@SOAP (Единый чат для всех)</b></span>
       </div>
       <div style="font-size:11px; color:#555;">
         База сообщений: <span id="storageLabel" style="color:#008800; font-weight:bold;">Зашифрована (AES-256)</span>
+        <span style="margin-left:8px; color:#006600; font-weight:bold;" title="Аккаунт сохранён в cookie">🍪 Cookie активен</span>
       </div>
     </div>
 
@@ -1173,15 +1165,86 @@
   (function() {
     'use strict';
 
-    var myNick = 'Гость_' + Math.floor(1000 + Math.random() * 9000);
-    try {
-      var savedNick = localStorage.getItem('soap_chat_nick');
-      if (savedNick && savedNick.trim()) {
-        myNick = savedNick.trim();
+    // --- Cookie Helpers (акк в куки сохраняется) ---
+    function setCookie(name, value, days) {
+      var expires = '';
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = '; expires=' + date.toUTCString();
       }
-    } catch (e) {}
+      document.cookie = name + '=' + encodeURIComponent(value || '') + expires + '; path=/; SameSite=Lax';
+    }
+
+    function getCookie(name) {
+      var nameEQ = name + '=';
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) {
+          try {
+            return decodeURIComponent(c.substring(nameEQ.length, c.length));
+          } catch(e) {
+            return c.substring(nameEQ.length, c.length);
+          }
+        }
+      }
+      return null;
+    }
+
+    function deleteCookie(name) {
+      document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax';
+    }
+
+    function saveAccountToCookie(nick, color) {
+      if (nick) setCookie('soap_nick', nick, 365);
+      if (color) setCookie('soap_color', color, 365);
+      try {
+        if (nick) localStorage.setItem('soap_chat_nick', nick);
+        if (color) localStorage.setItem('soap_chat_color', color);
+      } catch(e) {}
+    }
+
+    var cookieNick = getCookie('soap_nick');
+    var cookieColor = getCookie('soap_color');
+    var cookieAdminToken = getCookie('soap_admin_token');
+
+    var hasAccountInCookie = false;
+    var myNick = 'Гость_' + Math.floor(1000 + Math.random() * 9000);
+
+    if (cookieNick && cookieNick.trim()) {
+      myNick = cookieNick.trim();
+      hasAccountInCookie = true;
+    } else {
+      try {
+        var savedNick = localStorage.getItem('soap_chat_nick');
+        if (savedNick && savedNick.trim()) {
+          myNick = savedNick.trim();
+          hasAccountInCookie = true;
+          setCookie('soap_nick', myNick, 365);
+        }
+      } catch (e) {}
+    }
+
+    var chosenColor = cookieColor || '#00468c';
+    if (!cookieColor) {
+      try {
+        var localColor = localStorage.getItem('soap_chat_color');
+        if (localColor) {
+          chosenColor = localColor;
+          setCookie('soap_color', chosenColor, 365);
+        }
+      } catch(e) {}
+    }
+
     var isAdmin = false;
     var adminToken = '';
+    if (cookieAdminToken === 'yndchatadmin2010!!' && myNick.toLowerCase() === 'ynd') {
+      isAdmin = true;
+      adminToken = cookieAdminToken;
+    }
+
     var serverOnline = false;
     var lastReceivedId = 0;
     var rawDbDecrypted = null;
@@ -1283,84 +1346,34 @@
       }
     } catch(e) {}
 
-    // --- 2010 Retro Lobby Engine (Вход в чат) ---
+    // --- 2010 Retro Single Chat Engine (1 чат для всех + акк в куки) ---
     var ROOMS_DATA = [
-      { id: 'devushki', name: 'ДЕВУШКИ-ИЩУТ-МАЛЬЧИШЕК', count: 58, type: 'perm' },
-      { id: 'tramway', name: '"ТРАМВАЙ"', count: 10, type: 'perm' },
-      { id: 'palata6', name: 'ПСИХБОЛЬНИЦА, ПАЛАТА № 6', count: 7, type: 'perm' },
-      { id: 'alone', name: 'Я ОДИН МНЕ СКУЧНА__', count: 24, type: 'perm' },
-      { id: 'nomask', name: 'Мир без масок', count: 10, type: 'perm' },
-      { id: 'over30', name: 'ВАМ ЗА 30? ДОБРО ПОЖАЛОВАТЬ!', count: 8, type: 'perm' },
-      { id: 'tbilisi', name: 'TBILISI-BATUMI', count: 7, type: 'perm' },
-      { id: 'germany', name: 'ГЕРМАНИЯ', count: 6, type: 'perm' },
-      { id: 'kissyou', name: 'ЦЕЛУЮ ТЕБЯ', count: 4, type: 'perm' },
-      { id: 'turkey', name: 'TURKEY STAMBUL LALELI', count: 8, type: 'perm' },
-      { id: 'spb', name: 'Питер(812)', count: 3, type: 'perm' },
-      { id: 'life', name: 'ЛИЧНАЯ ЖИЗНЬ', count: 5, type: 'perm' },
-      { id: 'webcam', name: 'Ищу девушку с веб-камерой', count: 1, type: 'temp' },
-      { id: 'california', name: 'Russian California', count: 1, type: 'temp' },
-      { id: 'flirt_real', name: 'ЗНАКОМСТВА-ВИРТ-РЕАЛ', count: 1, type: 'perm' },
-      { id: 'general', name: 'Все_на_свете (ЧАТ@SOAP)', count: 14, type: 'perm' },
-      { id: 'love', name: 'Любовь', count: 6, type: 'perm' },
-      { id: 'besedka', name: 'БЕСЕДКА', count: 15, type: 'perm' },
-      { id: 'auto', name: 'АВТО И МОТО', count: 8, type: 'perm' },
-      { id: 'music', name: 'МУЗЫКА И КИНО', count: 11, type: 'perm' },
-      { id: 'students', name: 'СТУДЕНТЫ', count: 14, type: 'perm' }
+      { id: 'general', name: 'ЧАТ@SOAP — Единый чат для всех', count: 1, type: 'perm' }
     ];
-    var currentSelectedRoom = 'Все_на_свете (ЧАТ@SOAP)';
-    var roomSortMode = 'activity';
+    var currentSelectedRoom = 'ЧАТ@SOAP (Единый чат для всех)';
     var inChatView = false;
 
     function renderLobbyRooms() {
       var box = document.getElementById('lobbyRoomsContainer');
       if (!box) return;
 
-      var sorted = ROOMS_DATA.slice();
-      if (roomSortMode === 'activity') {
-        sorted.sort(function(a, b) { return b.count - a.count; });
-      } else if (roomSortMode === 'visitors') {
-        sorted.sort(function(a, b) { return b.count - a.count; });
-      } else if (roomSortMode === 'alpha') {
-        sorted.sort(function(a, b) { return a.name.localeCompare(b.name); });
-      }
+      var html = '<div class="retro-room-item selected" style="padding: 10px 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="submitLobbyEntry()" ondblclick="submitLobbyEntry()">' +
+        '<div>' +
+        '<div style="font-size: 13px; font-weight: bold; color: #ffffff;">★ ЧАТ@SOAP — Единый чат для всех</div>' +
+        '<div style="font-size: 11px; font-weight: normal; margin-top: 4px; color: #d6e8ff;">' +
+        'Все посетители портала soap общаются в одном общем потоке. Нажмите «Войти в чат», чтобы начать.' +
+        '</div>' +
+        '</div>' +
+        '<div style="margin-left: 10px;">' +
+        '<span style="font-size: 11px; background: #28a745; color: #fff; padding: 3px 8px; border-radius: 3px; font-weight: bold; white-space: nowrap;">● Онлайн</span>' +
+        '</div>' +
+        '</div>' +
+        '<div style="padding: 8px 12px; font-size: 11px; color: #003300; background: rgba(255,255,255,0.45); border-radius: 2px; margin-top: 6px; line-height: 1.5;">' +
+        '🔒 База данных зашифрована (AES-256) &bull; 🛡️ Защита от спама &bull; 🍪 Аккаунт сохраняется в cookie' +
+        '</div>';
 
-      var html = '';
-      for (var i = 0; i < sorted.length; i++) {
-        var r = sorted[i];
-        var isSel = (r.name === currentSelectedRoom);
-        var safeName = r.name.replace(/'/g, "\\'");
-        html += '<div class="retro-room-item' + (isSel ? ' selected' : '') + '" ' +
-          'onclick="selectLobbyRoom(\'' + safeName + '\')" ' +
-          'ondblclick="doubleClickEnterRoom(\'' + safeName + '\')">' +
-          '<span>' + escapeHtml(r.name) + ' (' + r.count + ')</span>' +
-          '<span style="font-size:10px; opacity:0.8;">' + (r.type === 'perm' ? '●' : '○') + '</span>' +
-          '</div>';
-      }
       box.innerHTML = html;
     }
-
-    window.selectLobbyRoom = function(name) {
-      currentSelectedRoom = name;
-      renderLobbyRooms();
-      var activeRoomNameEl = document.getElementById('activeChatRoomName');
-      if (activeRoomNameEl) activeRoomNameEl.textContent = name;
-    };
-
-    window.doubleClickEnterRoom = function(name) {
-      selectLobbyRoom(name);
-      submitLobbyEntry();
-    };
-
-    window.sortLobbyRooms = function(mode) {
-      roomSortMode = mode;
-      var bAct = document.getElementById('sortActiveBtn');
-      var bVis = document.getElementById('sortVisitorsBtn');
-      var bAlp = document.getElementById('sortAlphaBtn');
-      if (bAct) bAct.className = (mode === 'activity' ? 'pill-sort-active' : 'pill-sort-idle');
-      if (bVis) bVis.className = (mode === 'visitors' ? 'pill-sort-active' : 'pill-sort-idle');
-      if (bAlp) bAlp.className = (mode === 'alpha' ? 'pill-sort-active' : 'pill-sort-idle');
-      renderLobbyRooms();
-    };
 
     window.submitLobbyEntry = function() {
       var lobbyNickEl = document.getElementById('lobbyNickInput');
@@ -1400,10 +1413,8 @@
         colorSelect.value = lobbyColorEl.value;
       }
 
-      try {
-        localStorage.setItem('soap_chat_nick', myNick);
-        localStorage.setItem('soap_chat_color', colorSelect.value);
-      } catch (e) {}
+      // Сохраняем аккаунт в cookie (на 365 дней)
+      saveAccountToCookie(myNick, colorSelect.value);
 
       updateNickDisplays();
 
@@ -1413,10 +1424,10 @@
       document.getElementById('viewChat').style.display = 'block';
 
       var headerBtn = document.getElementById('headerNavBtn');
-      if (headerBtn) headerBtn.textContent = '🚪 В лобби';
+      if (headerBtn) headerBtn.textContent = '🚪 Сменить имя';
 
       var activeRoomEl = document.getElementById('activeChatRoomName');
-      if (activeRoomEl) activeRoomEl.textContent = currentSelectedRoom;
+      if (activeRoomEl) activeRoomEl.textContent = 'ЧАТ@SOAP (Единый чат для всех)';
 
       playBeep(850, 0.15);
 
@@ -1424,8 +1435,8 @@
         id: Date.now(),
         room: 'general',
         author: 'Система',
-        text: 'Вы вошли в чат как «' + myNick + '» (комната: ' + currentSelectedRoom + ').',
-        color: '#00468c',
+        text: 'Вы вошли в Единый ЧАТ@SOAP как «' + myNick + '». Ваш аккаунт сохранён в cookie.',
+        color: '#008800',
         time: getCurrentTimeString(),
         is_system: true,
         is_admin: false
@@ -1444,6 +1455,11 @@
 
       updateNickDisplays();
       renderLobbyRooms();
+      var lobbyNickEl = document.getElementById('lobbyNickInput');
+      if (lobbyNickEl) {
+        lobbyNickEl.value = myNick;
+        lobbyNickEl.focus();
+      }
     };
 
     window.toggleLobbyChat = function() {
@@ -1454,6 +1470,23 @@
       }
     };
 
+    window.resetAccount = function() {
+      if (!confirm('Выйти из текущего аккаунта и удалить данные из cookie?')) return;
+      deleteCookie('soap_nick');
+      deleteCookie('soap_color');
+      deleteCookie('soap_admin_token');
+      try {
+        localStorage.removeItem('soap_chat_nick');
+        localStorage.removeItem('soap_chat_color');
+      } catch(e) {}
+      isAdmin = false;
+      adminToken = '';
+      myNick = 'Гость_' + Math.floor(1000 + Math.random() * 9000);
+      nickInput.readOnly = false;
+      updateNickDisplays();
+      goToLobby();
+    };
+
     function updateNickDisplays() {
       var d1 = document.getElementById('headerNickGreeting');
       if (d1) d1.textContent = myNick;
@@ -1461,6 +1494,10 @@
       if (d2) d2.textContent = myNick;
       var lInput = document.getElementById('lobbyNickInput');
       if (lInput && lInput.value !== myNick) lInput.value = myNick;
+      var nInput = document.getElementById('nickInput');
+      if (nInput && nInput.value !== myNick) nInput.value = myNick;
+      var actEl = document.getElementById('activeChatRoomName');
+      if (actEl) actEl.textContent = 'ЧАТ@SOAP (Единый чат для всех)';
     }
 
     var lobbyNickInputEl = document.getElementById('lobbyNickInput');
@@ -1483,57 +1520,49 @@
     if (lobbyColorSelectEl) {
       lobbyColorSelectEl.addEventListener('change', function() {
         if (colorSelect) colorSelect.value = lobbyColorSelectEl.value;
-        try { localStorage.setItem('soap_chat_color', lobbyColorSelectEl.value); } catch(e) {}
+        saveAccountToCookie(myNick, lobbyColorSelectEl.value);
       });
     }
 
     colorSelect.addEventListener('change', function() {
       if (lobbyColorSelectEl) lobbyColorSelectEl.value = colorSelect.value;
-      try { localStorage.setItem('soap_chat_color', colorSelect.value); } catch(e) {}
+      saveAccountToCookie(myNick, colorSelect.value);
     });
 
     nickInput.addEventListener('change', function() {
-      myNick = nickInput.value.trim() || myNick;
-      updateNickDisplays();
-      try { localStorage.setItem('soap_chat_nick', myNick); } catch(e) {}
-    });
-
-    window.quickCreateRoom = function() {
-      var rName = prompt('Введите название новой комнаты:');
-      if (!rName || !rName.trim()) return;
-      rName = rName.trim();
-      ROOMS_DATA.unshift({ id: 'custom_' + Date.now(), name: rName, count: 1, type: 'temp' });
-      selectLobbyRoom(rName);
-      alert('Комната "' + rName + '" создана!');
-    };
-
-    window.quickRandomRoom = function() {
-      var idx = Math.floor(Math.random() * ROOMS_DATA.length);
-      selectLobbyRoom(ROOMS_DATA[idx].name);
-      alert('Выбрана случайная комната: ' + ROOMS_DATA[idx].name);
-    };
-
-    window.quickSearchRoom = function() {
-      var q = prompt('Поиск комнаты по названию:');
-      if (!q) return;
-      var found = ROOMS_DATA.find(function(r) { return r.name.toLowerCase().indexOf(q.toLowerCase()) !== -1; });
-      if (found) {
-        selectLobbyRoom(found.name);
-        alert('Найдена комната: ' + found.name);
-      } else {
-        alert('Комната со словом "' + q + '" не найдена.');
+      var newName = nickInput.value.trim();
+      if (!newName) {
+        nickInput.value = myNick;
+        return;
       }
-    };
+      if (newName.toLowerCase() === 'ynd' && !isAdmin) {
+        alert('Имя "ynd" зарезервировано за Администратором чата.');
+        nickInput.value = myNick;
+        return;
+      }
+      myNick = newName;
+      saveAccountToCookie(myNick, colorSelect.value);
+      updateNickDisplays();
+      addMessageToUi({
+        id: Date.now(),
+        room: 'general',
+        author: 'Система',
+        text: 'Вы сменили имя на «' + myNick + '». Данные аккаунта обновлены в cookie.',
+        color: '#008800',
+        time: getCurrentTimeString(),
+        is_system: true,
+        is_admin: false
+      });
+    });
 
     window.quickSearchUser = function() {
       var u = prompt('Поиск посетителя:');
       if (!u) return;
-      alert('Пользователь ' + u + ' в данный момент оффлайн или в другой комнате.');
+      alert('Пользователь ' + u + ' в общем чате.');
     };
 
     window.quickWhoInChat = function() {
-      var total = ROOMS_DATA.reduce(function(sum, r) { return sum + r.count; }, 0);
-      alert('Сейчас в комнатах ЧАТ@SOAP общаются ' + total + ' человек.\nСамая активная комната: ' + ROOMS_DATA[0].name + ' (' + ROOMS_DATA[0].count + ')');
+      alert('Сейчас в Едином ЧАТ@SOAP общаются посетители портала.\nВсе сообщения транслируются в единый чат для всех!');
     };
 
     // --- Anti-Spam Check ---
@@ -1873,6 +1902,10 @@
       nickInput.value = 'ynd';
       nickInput.readOnly = true;
       colorSelect.value = '#d90000';
+      setCookie('soap_nick', 'ynd', 365);
+      setCookie('soap_color', '#d90000', 365);
+      setCookie('soap_admin_token', token, 365);
+      updateNickDisplays();
 
       playBeep(950, 0.2);
       addMessageToUi({
@@ -2280,6 +2313,22 @@
 
     renderLobbyRooms();
     updateNickDisplays();
+
+    // Автоматический вход в 1 единый чат, если аккаунт уже сохранён в cookie
+    if (hasAccountInCookie) {
+      inChatView = true;
+      document.getElementById('viewLobby').style.display = 'none';
+      document.getElementById('viewChat').style.display = 'block';
+      var headerBtn = document.getElementById('headerNavBtn');
+      if (headerBtn) headerBtn.textContent = '🚪 Сменить имя';
+    } else {
+      inChatView = false;
+      document.getElementById('viewLobby').style.display = 'block';
+      document.getElementById('viewChat').style.display = 'none';
+      var headerBtn = document.getElementById('headerNavBtn');
+      if (headerBtn) headerBtn.textContent = 'Войти в чат';
+    }
+
     initDatabase();
 
   })();
