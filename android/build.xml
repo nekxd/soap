@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MailRu2010" default="help">
+
+    <!-- The local.properties file is created and updated by the 'android' tool.
+         It contains the path to the SDK. It should *NOT* be checked into
+         Version Control Systems. -->
+    <property file="local.properties" />
+
+    <!-- The ant.properties file can be created by you. It is only edited by the
+         'android' tool to add properties to it.
+         This is the place to change some Ant specific build properties.
+         Here are some properties you may want to change/override:
+         application.package
+         out.format
+         target.version
+         target.platform
+         version.code
+         version.name
+         key.store
+         key.alias
+         key.store.password
+         key.alias.password
+         etc. -->
+    <property file="ant.properties" />
+
+    <!-- The project.properties file is created and updated by the 'android'
+         tool, as well as ADT.
+         This file must be checked into Version Control Systems. -->
+    <property file="project.properties" />
+
+    <!-- quick check on sdk.dir -->
+    <fail
+            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
+            unless="sdk.dir"
+    />
+
+    <!-- Import the actual build file.
+
+         To customize existing targets, there are two options:
+         - Customize only one target that is echoed by the target of the same name:
+             1. define the target in this project file
+             2. add an 'extension-point' attribute to it
+             3. add an -empty- target with the same name and an 'extensionOf' attribute
+         - Override completely a target:
+             1. define the target in this project file
+             2. make sure that it does NOT have an 'extensionOf' attribute.
+    -->
+    <import file="${sdk.dir}/tools/ant/build.xml" optional="true" />
+
+</project>

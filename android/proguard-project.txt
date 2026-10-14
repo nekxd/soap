@@ -1,0 +1,8 @@
+# ProGuard configuration file for MailRu2010.
+-dontoptimize
+-dontobfuscate
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}

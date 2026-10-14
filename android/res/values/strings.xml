@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mail.ru 2010</string>
+    <string name="title_home">Главная</string>
+    <string name="title_mobile">Мобильная версия</string>
+    <string name="title_desktop">Полная версия</string>
+    <string name="title_mail">Почта</string>
+    <string name="title_search">Поиск</string>
+    <string name="title_news">Новости</string>
+    <string name="title_games">Игры</string>
+    <string name="title_refresh">Обновить</string>
+    <string name="title_back">Назад</string>
+    <string name="title_forward">Вперёд</string>
+    <string name="title_about">О программе</string>
+    <string name="title_exit">Выход</string>
+    <string name="loading">Загрузка…</string>
+    <string name="error_offline">Не удалось подключиться к странице. Проверьте интернет-соединение.</string>
+    <string name="btn_retry">Повторить попытку</string>
+    <string name="about_text">Клиент Mail.ru 2010 (soap.nekxd.fun)\n\nРазработка: Никита Яндиев (Nekich/ynd), 2025–2026.\nПоддержка систем: Android 1.6 (Donut) — Android 16.\n\nПроект воссоздания исторического портала Mail.ru 2010 года.</string>
+    <string name="dialog_ok">ОК</string>
+</resources>
