@@ -221,7 +221,7 @@
       url: 'http://fm.faero.top'
     },
     {
-      title: 'faero.top',
+      title: 'Faero.Top',
       img: 'assets/img/banners/faero.png',
       remoteImg: 'http://faero.top/ad/faero.png',
       url: 'http://faero.top'
