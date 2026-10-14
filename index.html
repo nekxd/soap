@@ -26,8 +26,38 @@
 <link href="assets/css/go_search.css" rel="stylesheet" type="text/css" />
 <style>
 /* small local fixes */
-.left_block .top_menu2 li {width: 33% !important;}
-.left_block .top_menu2 li.last {width: 34% !important; margin-right: 0 !important;}
+.left_block .top_menu2 {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 10px 0 0 0 !important;
+  padding: 0 !important;
+}
+.left_block .top_menu2 li {
+  width: 25% !important;
+  flex: 0 0 25% !important;
+  max-width: 25% !important;
+  float: left !important;
+  margin-right: 0 !important;
+  margin-bottom: 10px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+.left_block .top_menu2 li.last {
+  width: 25% !important;
+  flex: 0 0 25% !important;
+  max-width: 25% !important;
+  margin-right: 0 !important;
+}
+.left_block .top_menu2 a {
+  display: block !important;
+  font-size: 11px !important;
+  white-space: nowrap !important;
+}
 .left_block .projects_menu2 .l_myworld a {background: url(assets/img/openvk_icon_24.png) 0 0 no-repeat; background-size: 16px 16px;}
 /* Мой мир -> OpenVK favicon */
 .left_block .top_menu2 .l_big_my a {background: url(assets/img/openvk_icon.png) 50% 0 no-repeat; background-size: 24px 24px; padding-top: 28px;}
