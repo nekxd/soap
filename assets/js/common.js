@@ -89,6 +89,28 @@
 
   /* ===================== FAST PROXY FETCHING (RACE) ===================== */
   function fetchWithTimeout(url, timeoutMs) {
+    if (typeof fetch === 'undefined') {
+      return new Promise(function (resolve, reject) {
+        try {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.timeout = timeoutMs;
+          xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              resolve(xhr.responseText);
+            } else {
+              reject(new Error('HTTP ' + xhr.status));
+            }
+          };
+          xhr.onerror = function () { reject(new Error('network error')); };
+          xhr.ontimeout = function () { reject(new Error('timeout')); };
+          xhr.send();
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+
     return new Promise(function (resolve, reject) {
       var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
       var timer = setTimeout(function () {
@@ -123,55 +145,49 @@
     timeoutMs = timeoutMs || 4500;
     var encUrl = encodeURIComponent(url);
 
-    // List of fast proxy endpoints (supports HTTP & HTTPS environments)
     var proxyUrls = [
-      'https://r.jina.ai/' + url,
       'https://api.allorigins.win/raw?url=' + encUrl,
-      'https://api.allorigins.win/get?url=' + encUrl,
-      'https://api.codetabs.com/v1/proxy?quest=' + encUrl
+      'https://api.allorigins.win/get?url=' + encUrl
     ];
-
-    // Parallel race: launch first batch immediately
-    var promises = proxyUrls.map(function (pUrl) {
-      return fetchWithTimeout(pUrl, timeoutMs).then(function (text) {
-        if (!text || text.length < 30) throw new Error('too short');
-        if (pUrl.indexOf('allorigins.win/get') !== -1) {
-          try {
-            var j = JSON.parse(text);
-            if (j && j.contents) return j.contents;
-            throw new Error('no contents');
-          } catch (e) {
-            throw e;
-          }
-        }
-        if (pUrl.indexOf('r.jina.ai') !== -1) {
-          return { jina: true, text: text };
-        }
-        if (/^\s*<!doctype html/i.test(text) && pUrl.indexOf('allorigins') !== -1 && url.indexOf('duckduckgo') === -1) {
-          throw new Error('allorigins error page');
-        }
-        return text;
-      });
-    });
 
     if (Promise.any) {
       try {
+        var promises = proxyUrls.map(function (pUrl) {
+          return fetchWithTimeout(pUrl, timeoutMs).then(function (text) {
+            if (!text || text.length < 30) throw new Error('too short');
+            if (pUrl.indexOf('allorigins.win/get') !== -1) {
+              var j = JSON.parse(text);
+              if (j && j.contents) return j.contents;
+              throw new Error('no contents');
+            }
+            return text;
+          });
+        });
         return await Promise.any(promises);
       } catch (err) {
-        return await fetchWithTimeout(url, 3000);
+        return await fetchWithTimeout(url, timeoutMs);
       }
     } else {
       for (var i = 0; i < proxyUrls.length; i++) {
         try {
-          var res = await fetchWithTimeout(proxyUrls[i], 3000);
+          var res = await fetchWithTimeout(proxyUrls[i], timeoutMs);
           if (res) return res;
         } catch (e) {}
       }
-      return await fetchWithTimeout(url, 3000);
+      return await fetchWithTimeout(url, timeoutMs);
     }
   };
 
-  /* ===================== HABR RSS NEWS ===================== */
+  /* ===================== HABR NEWS (API + RSS FALLBACK) ===================== */
+  window.HABR_QUERIES = {
+    news:   null,
+    auto:   'транспорт',
+    afisha: 'кино',
+    hitech: 'электроника',
+    lady:   'мода',
+    games:  'игры'
+  };
+
   window.HABR_FEEDS = {
     news:   'https://habr.com/ru/rss/news/?fl=ru',
     auto:   'https://habr.com/ru/rss/hubs/transport/articles/?fl=ru',
@@ -246,24 +262,61 @@
   };
 
   window.loadHabrFeed = async function (key) {
-    var cached = window.cacheGet('habr_' + key, 15 * 60 * 1000);
+    var cached = window.cacheGet('habr_' + key, 10 * 60 * 1000);
     if (cached && cached.length) return cached;
 
-    var url = window.HABR_FEEDS[key] || key;
+    // 1. Primary: Official Habr API (CORS enabled, fast, live updates)
     try {
-      var text = await window.fetchViaProxy(url, 4000);
-      if (text && text.jina) throw new Error('jina markdown');
-      var items = window.parseRss(text);
-      if (items && items.length > 0) {
+      var q = window.HABR_QUERIES[key];
+      var habrApiUrl = (q === undefined || q === null)
+        ? 'https://habr.com/kek/v2/articles/?news=true'
+        : 'https://habr.com/kek/v2/articles/?query=' + encodeURIComponent(q);
+
+      var habrResp = await fetchWithTimeout(habrApiUrl, 3500);
+      var habrData = JSON.parse(habrResp);
+      var ids = habrData.publicationIds || habrData.articleIds || [];
+      var refs = habrData.publicationRefs || habrData.articleRefs || {};
+      var items = [];
+      for (var i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        var ref = refs[String(id)];
+        if (ref && ref.titleHtml) {
+          items.push({
+            title: stripHtml(ref.titleHtml),
+            link: 'https://habr.com/ru/articles/' + id + '/',
+            date: ref.timePublished || ''
+          });
+        }
+      }
+      if (items.length > 0) {
         window.cacheSet('habr_' + key, items);
         return items;
+      }
+    } catch (e) {}
+
+    // 2. Secondary fallback: RSS2JSON service
+    try {
+      var feedUrl = window.HABR_FEEDS[key] || window.HABR_FEEDS.news;
+      var r2jUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl);
+      var r2jResp = await fetchWithTimeout(r2jUrl, 3500);
+      var r2jData = JSON.parse(r2jResp);
+      if (r2jData && r2jData.status === 'ok' && r2jData.items && r2jData.items.length > 0) {
+        var r2jItems = r2jData.items.map(function (it) {
+          return {
+            title: stripHtml(it.title),
+            link: it.link || '#',
+            date: it.pubDate || ''
+          };
+        });
+        window.cacheSet('habr_' + key, r2jItems);
+        return r2jItems;
       }
     } catch (e) {}
 
     return FALLBACK_NEWS[key] || FALLBACK_NEWS.news;
   };
 
-  /* ===================== WEATHER: OPEN-METEO (HTTP & HTTPS) ===================== */
+  /* ===================== WEATHER: WTTR.IN + OPEN-METEO (HTTP & HTTPS) ===================== */
   window.WMO = {
     0: [7, 'ясно'], 1: [6, 'малооблачно'], 2: [9, 'переменная облачность'],
     3: [16, 'облачно'], 45: [26, 'туман'], 48: [26, 'туман'],
@@ -278,6 +331,57 @@
     95: [17, 'гроза'], 96: [17, 'гроза с градом'], 99: [17, 'гроза с градом']
   };
 
+  window.WTTR_MAP = {
+    113: [7, 'ясно'],
+    116: [9, 'переменная облачность'],
+    119: [16, 'облачно'],
+    122: [16, 'пасмурно'],
+    143: [26, 'туман'],
+    176: [11, 'небольшой дождь'],
+    179: [21, 'небольшой снег'],
+    182: [13, 'мокрый снег'],
+    185: [5, 'ледяная морось'],
+    200: [17, 'гроза'],
+    227: [27, 'снег'],
+    230: [28, 'метель'],
+    248: [26, 'туман'],
+    260: [26, 'туман'],
+    263: [5, 'морось'],
+    266: [5, 'морось'],
+    281: [5, 'ледяная морось'],
+    284: [5, 'ледяная морось'],
+    293: [11, 'небольшой дождь'],
+    296: [11, 'небольшой дождь'],
+    299: [13, 'дождь'],
+    302: [13, 'дождь'],
+    305: [17, 'сильный дождь'],
+    308: [17, 'сильный дождь'],
+    311: [13, 'ледяной дождь'],
+    314: [17, 'сильный ледяной дождь'],
+    317: [13, 'мокрый снег'],
+    320: [13, 'мокрый снег'],
+    323: [21, 'небольшой снег'],
+    326: [21, 'небольшой снег'],
+    329: [27, 'снег'],
+    332: [27, 'снег'],
+    335: [28, 'сильный снег'],
+    338: [28, 'снегопад'],
+    350: [17, 'град'],
+    353: [11, 'небольшой дождь'],
+    356: [13, 'ливень'],
+    359: [17, 'сильный ливень'],
+    362: [13, 'мокрый снег'],
+    365: [13, 'мокрый снег'],
+    368: [21, 'небольшой снег'],
+    371: [28, 'снегопад'],
+    374: [17, 'град'],
+    377: [17, 'град'],
+    386: [17, 'гроза'],
+    389: [17, 'гроза с дождём'],
+    392: [17, 'гроза со снегом'],
+    395: [28, 'метель']
+  };
+
   window.loadWeather = async function (onData) {
     var moscow = { lat: 55.7558, lon: 37.6173, name: 'Москва' };
 
@@ -287,75 +391,120 @@
       onData(cached);
     }
 
-    // 2. Resolve coordinates via fast IP lookup (works on HTTP and HTTPS)
-    var use = null;
+    // 2. Primary provider: wttr.in (CORS *, works seamlessly on HTTP & HTTPS, automatic IP geolocation)
     try {
       var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
-      var ipApiUrl = proto + '//ip-api.com/json/?fields=lat,lon,city,country';
-      var gr = await fetchWithTimeout(ipApiUrl, 2500);
-      var gd = JSON.parse(gr);
-      if (gd && gd.lat != null) {
-        use = { lat: gd.lat, lon: gd.lon, name: gd.city || '' };
+      var wttrUrl = proto + '//wttr.in/?format=j1';
+      var wttrResp = await fetchWithTimeout(wttrUrl, 3000);
+      var wData = JSON.parse(wttrResp);
+      if (wData && wData.current_condition && wData.current_condition.length > 0) {
+        var cur = wData.current_condition[0];
+        var area = (wData.nearest_area && wData.nearest_area[0]) || {};
+        var cityName = (area.areaName && area.areaName[0] && area.areaName[0].value) || 'Москва';
+        var code = parseInt(cur.weatherCode, 10);
+        var w = window.WTTR_MAP[code] || [16, 'облачно'];
+
+        var evening = null;
+        if (wData.weather && wData.weather[0] && wData.weather[0].hourly) {
+          var hourly = wData.weather[0].hourly;
+          for (var i = 0; i < hourly.length; i++) {
+            if (hourly[i].time === '2100') {
+              evening = parseInt(hourly[i].tempC, 10);
+              break;
+            }
+          }
+          if (evening === null && hourly.length > 6) {
+            evening = parseInt(hourly[6].tempC, 10);
+          }
+        }
+
+        var tomorrowMax = null;
+        if (wData.weather && wData.weather.length > 1 && wData.weather[1].maxtempC != null) {
+          tomorrowMax = parseInt(wData.weather[1].maxtempC, 10);
+        }
+
+        var result = {
+          temp: parseInt(cur.temp_C, 10),
+          evening: evening,
+          tomorrow: tomorrowMax,
+          icon: w[0],
+          label: w[1],
+          wind: Math.round(parseFloat(cur.windspeedKmph || 0) / 3.6),
+          city: cityName,
+          isMoscow: cityName.toLowerCase().indexOf('moscow') !== -1 || cityName.indexOf('Москва') !== -1
+        };
+
+        window.cacheSet('weather_data', result);
+        onData(result);
+        return;
       }
     } catch (e) {}
 
-    if (!use) use = moscow;
-
-    // 3. Fetch Open-Meteo weather (protocol-relative or HTTP/HTTPS)
+    // 3. Fallback provider: Open-Meteo (force https: so CORS headers are present)
     try {
-      var weatherProto = (location.protocol === 'https:') ? 'https:' : 'http:';
-      var url = weatherProto + '//api.open-meteo.com/v1/forecast?latitude=' + use.lat +
+      var use = moscow;
+      try {
+        var ipResp = await fetchWithTimeout('https://ipwho.is/', 2000);
+        var ipData = JSON.parse(ipResp);
+        if (ipData && ipData.latitude != null) {
+          use = { lat: ipData.latitude, lon: ipData.longitude, name: ipData.city || 'Москва' };
+        }
+      } catch (e) {}
+
+      var omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + use.lat +
         '&longitude=' + use.lon +
         '&current=temperature_2m,weather_code,wind_speed_10m' +
         '&hourly=temperature_2m' +
         '&daily=temperature_2m_max,temperature_2m_min,weather_code' +
         '&timezone=auto&forecast_days=2';
 
-      var respText = await fetchWithTimeout(url, 3500);
-      var data = JSON.parse(respText);
-      var cur = data.current;
-      var code = cur.weather_code;
-      var w = window.WMO[code] || [16, 'облачно'];
+      var omResp = await fetchWithTimeout(omUrl, 3000);
+      var omData = JSON.parse(omResp);
+      var omCur = omData.current;
+      var omCode = omCur.weather_code;
+      var omW = window.WMO[omCode] || [16, 'облачно'];
 
-      var evening = null;
-      if (data.hourly && data.hourly.time) {
+      var omEvening = null;
+      if (omData.hourly && omData.hourly.time) {
         var now = new Date();
         var target = new Date(now); target.setHours(21, 0, 0, 0);
         if (target < now) target = new Date(now.getTime() + 3 * 3600e3);
         var iso = target.toISOString().slice(0, 13);
-        for (var i = 0; i < data.hourly.time.length; i++) {
-          if (data.hourly.time[i].slice(0, 13) === iso) { evening = data.hourly.temperature_2m[i]; break; }
+        for (var j = 0; j < omData.hourly.time.length; j++) {
+          if (omData.hourly.time[j].slice(0, 13) === iso) { omEvening = omData.hourly.temperature_2m[j]; break; }
         }
       }
-      var tomorrowMax = data.daily && data.daily.temperature_2m_max ? data.daily.temperature_2m_max[1] : null;
+      var omTomorrow = omData.daily && omData.daily.temperature_2m_max ? omData.daily.temperature_2m_max[1] : null;
 
-      var result = {
-        temp: Math.round(cur.temperature_2m),
-        evening: evening === null ? null : Math.round(evening),
-        tomorrow: tomorrowMax === null ? null : Math.round(tomorrowMax),
-        icon: w[0],
-        label: w[1],
-        wind: Math.round(cur.wind_speed_10m),
+      var omResult = {
+        temp: Math.round(omCur.temperature_2m),
+        evening: omEvening === null ? null : Math.round(omEvening),
+        tomorrow: omTomorrow === null ? null : Math.round(omTomorrow),
+        icon: omW[0],
+        label: omW[1],
+        wind: Math.round(omCur.wind_speed_10m),
         city: use.name || moscow.name,
-        isMoscow: !use.name
+        isMoscow: !use.name || use.name === 'Москва'
       };
 
-      window.cacheSet('weather_data', result);
-      onData(result);
-    } catch (e) {
-      if (!cached) {
-        var fallbackWeather = {
-          temp: 18,
-          evening: 15,
-          tomorrow: 20,
-          icon: 16,
-          label: 'облачно',
-          wind: 3,
-          city: 'Москва',
-          isMoscow: true
-        };
-        onData(fallbackWeather);
-      }
+      window.cacheSet('weather_data', omResult);
+      onData(omResult);
+      return;
+    } catch (e) {}
+
+    // 4. Final fallback mock data
+    if (!cached) {
+      var fallbackWeather = {
+        temp: 18,
+        evening: 15,
+        tomorrow: 20,
+        icon: 16,
+        label: 'облачно',
+        wind: 3,
+        city: 'Москва',
+        isMoscow: true
+      };
+      onData(fallbackWeather);
     }
   };
 
