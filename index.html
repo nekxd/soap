@@ -547,12 +547,20 @@ function checkMainSearch(f){
   if(!f.q.value){ f.q.focus(); return false; }
   return true;
 }
+function setText(el, val) {
+  if (!el) return;
+  if ('innerText' in el) el.innerText = val;
+  else el.textContent = val;
+}
 function switchTab(key){
   var tabs = ['news','hitech','games'];
   tabs.forEach(function(t, idx){
     var el = document.getElementById('bs_'+t);
     if(el){
-      var td = el.closest('td');
+      var td = el;
+      while (td && td.tagName && td.tagName.toLowerCase() !== 'td') {
+        td = td.parentNode;
+      }
       if(td) {
         if (t === key) {
           td.className = 'act';
@@ -593,21 +601,21 @@ function initWeather(){
     document.getElementById('weatherTemp').innerHTML = (w.temp>0?'+':'')+w.temp+'&deg;';
     document.getElementById('weatherIcon').src = 'assets/img/im/r/weather_new/pict_weather_big_'+w.icon+'.gif';
     document.getElementById('weatherIcon').alt = w.label;
-    document.getElementById('weatherLabel').textContent = w.label;
-    if(w.evening!==null) document.getElementById('weatherEvening').textContent = 'вечером: '+(w.evening>0?'+':'')+w.evening+'°';
-    if(w.tomorrow!==null) document.getElementById('weatherTomorrow').textContent = 'завтра: '+(w.tomorrow>0?'+':'')+w.tomorrow+'°';
-    if(w.city) document.getElementById('cityHeader').textContent = w.city;
+    setText(document.getElementById('weatherLabel'), w.label);
+    if(w.evening!==null) setText(document.getElementById('weatherEvening'), 'вечером: '+(w.evening>0?'+':'')+w.evening+'°');
+    if(w.tomorrow!==null) setText(document.getElementById('weatherTomorrow'), 'завтра: '+(w.tomorrow>0?'+':'')+w.tomorrow+'°');
+    if(w.city) setText(document.getElementById('cityHeader'), w.city);
   });
 }
 function initCbr(){
   loadCbr(function(c){
     if(!c) return;
-    document.getElementById('usdCourse').textContent = c.usd;
-    document.getElementById('eurCourse').textContent = c.eur;
+    setText(document.getElementById('usdCourse'), c.usd);
+    setText(document.getElementById('eurCourse'), c.eur);
     var du = fmtDelta(c.usdDelta), de = fmtDelta(c.eurDelta);
     var ud = document.getElementById('usdDelta'), ed = document.getElementById('eurDelta');
-    ud.textContent = du.text; ud.className = 'pb2 q_delta '+du.cls;
-    ed.textContent = de.text; ed.className = 'pb2 q_delta '+de.cls;
+    setText(ud, du.text); ud.className = 'pb2 q_delta '+du.cls;
+    setText(ed, de.text); ed.className = 'pb2 q_delta '+de.cls;
   });
 }
 function initClock(){

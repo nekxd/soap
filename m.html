@@ -202,6 +202,12 @@
   <script type="text/javascript" src="assets/js/common.js"></script>
   <script type="text/javascript">
   (function(){
+    function setText(el, val) {
+      if (!el) return;
+      if ('innerText' in el) el.innerText = val;
+      else el.textContent = val;
+    }
+
     // Banner rotator
     if (window.initBannerRotator) {
       window.initBannerRotator('mobileBanner', 6000);
@@ -219,16 +225,16 @@
         var tomEl = document.getElementById('m_w_tom');
 
         var sign = w.temp > 0 ? '+' : '';
-        if (tempEl) tempEl.textContent = sign + w.temp + '°';
+        if (tempEl) setText(tempEl, sign + w.temp + '°');
         if (iconEl && w.icon) iconEl.src = 'assets/img/im/r/weather_new/pict_weather_big_' + w.icon + '.gif';
-        if (lblEl && w.label) lblEl.textContent = w.label;
+        if (lblEl && w.label) setText(lblEl, w.label);
 
         var mTemp = (w.temp > 0 ? '+' : '') + (w.temp - 2) + '°... +' + (w.temp + 3) + '°';
         var dTemp = (w.temp > 0 ? '+' : '') + w.temp + '°... +' + (w.temp + 5) + '°';
-        if (mornEl) mornEl.textContent = mTemp;
-        if (dayEl) dayEl.textContent = dTemp;
+        if (mornEl) setText(mornEl, mTemp);
+        if (dayEl) setText(dayEl, dTemp);
         if (tomEl && w.tomorrow !== null) {
-          tomEl.textContent = 'Завтра ' + (w.tomorrow > 0 ? '+' : '') + w.tomorrow + '°';
+          setText(tomEl, 'Завтра ' + (w.tomorrow > 0 ? '+' : '') + w.tomorrow + '°');
         }
       });
     }
@@ -243,18 +249,18 @@
         var eDel = document.getElementById('m_eur_delta');
         var dEl = document.getElementById('m_cbr_date');
 
-        if (uVal && c.usd) uVal.textContent = c.usd;
-        if (eVal && c.eur) eVal.textContent = c.eur;
+        if (uVal && c.usd) setText(uVal, c.usd);
+        if (eVal && c.eur) setText(eVal, c.eur);
         if (uDel && c.usdDelta) {
-          uDel.textContent = (parseFloat(c.usdDelta) > 0 ? '+' : '') + c.usdDelta;
+          setText(uDel, (parseFloat(c.usdDelta) > 0 ? '+' : '') + c.usdDelta);
           uDel.className = parseFloat(c.usdDelta) >= 0 ? 'm-currency-delta-pos' : 'm-currency-delta-neg';
         }
         if (eDel && c.eurDelta) {
-          eDel.textContent = (parseFloat(c.eurDelta) > 0 ? '+' : '') + c.eurDelta;
+          setText(eDel, (parseFloat(c.eurDelta) > 0 ? '+' : '') + c.eurDelta);
           eDel.className = parseFloat(c.eurDelta) >= 0 ? 'm-currency-delta-pos' : 'm-currency-delta-neg';
         }
         if (dEl && c.date) {
-          dEl.textContent = 'Курс ЦБ на ' + c.date;
+          setText(dEl, 'Курс ЦБ на ' + c.date);
         }
       });
     }
@@ -265,7 +271,7 @@
         if (items && items.length > 0) {
           var topLink = document.getElementById('m_top_news_link');
           if (topLink) {
-            topLink.textContent = items[0].title;
+            setText(topLink, items[0].title);
             topLink.href = items[0].link;
           }
           var bulletsEl = document.getElementById('m_news_bullets');
@@ -283,7 +289,7 @@
       window.loadHabrFeed('hitech').then(function(items){
         if (items && items.length > 0) {
           var hEl = document.getElementById('m_news_hitech');
-          if (hEl) { hEl.textContent = items[0].title; hEl.href = items[0].link; }
+          if (hEl) { setText(hEl, items[0].title); hEl.href = items[0].link; }
         }
       }).catch(function(){});
     }

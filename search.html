@@ -425,150 +425,379 @@ body {background: #fff; min-width: 0;}
 </div>
 
 <script src="assets/js/common.js"></script>
-<script>
+<script type="text/javascript">
+/* ===================== RETRO SYSTEM POLYFILLS ===================== */
+if (!Date.now) {
+  Date.now = function () { return new Date().getTime(); };
+}
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  };
+}
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function (s, pos) {
+    return this.indexOf(s, pos || 0) === (pos || 0);
+  };
+}
+if (!Array.prototype.forEach) {
+  Array.prototype.forEach = function (fn, scope) {
+    for (var i = 0, len = this.length; i < len; ++i) {
+      if (i in this) fn.call(scope, this[i], i, this);
+    }
+  };
+}
+if (!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function (search, fromIndex) {
+    var len = this.length;
+    var i = fromIndex || 0;
+    if (i < 0) i = Math.max(0, len + i);
+    for (; i < len; i++) {
+      if (i in this && this[i] === search) return i;
+    }
+    return -1;
+  };
+}
+if (!window.JSON) {
+  window.JSON = {
+    parse: function (s) { return eval('(' + s + ')'); },
+    stringify: function (o) {
+      if (o === null) return 'null';
+      var t = typeof o;
+      if (t === 'number' || t === 'boolean') return String(o);
+      if (t === 'string') return '"' + o.replace(/"/g, '\\"') + '"';
+      if (o instanceof Array) {
+        var a = [];
+        for (var i = 0; i < o.length; i++) a.push(window.JSON.stringify(o[i]));
+        return '[' + a.join(',') + ']';
+      }
+      var p = [];
+      for (var k in o) {
+        if (o.hasOwnProperty && o.hasOwnProperty(k)) {
+          p.push('"' + k + '":' + window.JSON.stringify(o[k]));
+        }
+      }
+      return '{' + p.join(',') + '}';
+    }
+  };
+}
+
 var curQuery = '', curPage = 1;
 
-function getParam(name){
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function stripHtml(s) {
+  return String(s || '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
+}
+
+function getParam(name) {
   var m = location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
   return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
 }
 
-function doSearch(f){
-  var q = f.q.value.trim();
-  if(!q){ f.q.focus(); return false; }
+function doSearch(f) {
+  var q = (f.q && f.q.value) ? f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
+  if (!q) {
+    if (f.q) f.q.focus();
+    return false;
+  }
   location.href = 'search.html?q=' + encodeURIComponent(q);
   return false;
 }
 
-function resolveDdgHref(href){
-  try {
-    if(href.indexOf('uddg=') !== -1){
-      var m = href.match(/uddg=([^&]+)/);
-      if(m) return decodeURIComponent(m[1]);
+/* ===================== CROSS-BROWSER TRANSPORT (FETCH/XHR/XDR/JSONP) ===================== */
+function getXHR() {
+  if (typeof XMLHttpRequest !== 'undefined') {
+    try { return new XMLHttpRequest(); } catch (e) {}
+  }
+  if (typeof ActiveXObject !== 'undefined') {
+    try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch (e) {}
+    try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch (e) {}
+    try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch (e) {}
+    try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch (e) {}
+  }
+  return null;
+}
+
+function makeRequest(url, callback, timeoutMs) {
+  timeoutMs = timeoutMs || 4500;
+  var settled = false;
+
+  function onDone(err, text) {
+    if (settled) return;
+    settled = true;
+    clearTimeout(timer);
+    callback(err, text);
+  }
+
+  var timer = setTimeout(function () {
+    if (settled) return;
+    settled = true;
+    try { if (xhr && xhr.abort) xhr.abort(); } catch (e) {}
+    callback(new Error('timeout'), null);
+  }, timeoutMs);
+
+  // 1. Try modern fetch if available
+  if (typeof fetch !== 'undefined') {
+    try {
+      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      fetch(url, { mode: 'cors', signal: ctrl ? ctrl.signal : undefined })
+        .then(function (resp) {
+          if (!resp.ok) {
+            onDone(new Error('HTTP ' + resp.status), null);
+          } else {
+            return resp.text();
+          }
+        })
+        .then(function (text) {
+          if (typeof text === 'string') onDone(null, text);
+        })
+        ['catch'](function (err) {
+          onDone(err, null);
+        });
+      return;
+    } catch (e) {}
+  }
+
+  // 2. Try standard / ActiveX XMLHttpRequest
+  var xhr = getXHR();
+  if (xhr) {
+    try {
+      xhr.open('GET', url, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            onDone(null, xhr.responseText);
+          } else if (xhr.status === 0 && typeof XDomainRequest !== 'undefined') {
+            tryXDR();
+          } else {
+            onDone(new Error('HTTP ' + xhr.status), null);
+          }
+        }
+      };
+      xhr.send(null);
+      return;
+    } catch (e) {
+      if (typeof XDomainRequest !== 'undefined') {
+        tryXDR();
+        return;
+      }
+      onDone(e, null);
+      return;
     }
-  } catch(e){}
-  if(href.indexOf('//') === 0) return 'https:' + href;
+  }
+
+  // 3. Try XDomainRequest (IE8/IE9 cross-origin)
+  function tryXDR() {
+    try {
+      var xdr = new XDomainRequest();
+      xdr.onload = function () { onDone(null, xdr.responseText); };
+      xdr.onerror = function () { onDone(new Error('XDR error'), null); };
+      xdr.ontimeout = function () { onDone(new Error('timeout'), null); };
+      xdr.open('GET', url);
+      xdr.send();
+    } catch (e) {
+      onDone(e, null);
+    }
+  }
+
+  if (typeof XDomainRequest !== 'undefined') {
+    tryXDR();
+    return;
+  }
+
+  onDone(new Error('no transport'), null);
+}
+
+var jsonpSeq = 0;
+function jsonp(url, callbackParam, callback, timeoutMs) {
+  timeoutMs = timeoutMs || 5000;
+  var callbackName = '_ddg_jsonp_' + (++jsonpSeq) + '_' + Math.floor(Math.random() * 100000);
+  var script = document.createElement('script');
+  var timer = null;
+  var done = false;
+
+  function cleanup() {
+    if (timer) clearTimeout(timer);
+    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+    if (script && script.parentNode) {
+      try { script.parentNode.removeChild(script); } catch (e) {}
+    }
+  }
+
+  window[callbackName] = function (data) {
+    if (done) return;
+    done = true;
+    cleanup();
+    callback(null, data);
+  };
+
+  timer = setTimeout(function () {
+    if (done) return;
+    done = true;
+    cleanup();
+    callback(new Error('timeout'), null);
+  }, timeoutMs);
+
+  script.type = 'text/javascript';
+  script.src = url + (url.indexOf('?') === -1 ? '?' : '&') + callbackParam + '=' + callbackName;
+  script.onerror = function () {
+    if (done) return;
+    done = true;
+    cleanup();
+    callback(new Error('script error'), null);
+  };
+
+  var head = document.getElementsByTagName('head')[0] || document.documentElement;
+  head.appendChild(script);
+}
+
+/* ===================== URL & TEXT PARSERS (NO NEW URL, IE COMPLIANT) ===================== */
+function resolveDdgHref(href) {
+  try {
+    if (href.indexOf('uddg=') !== -1) {
+      var m = href.match(/uddg=([^&]+)/);
+      if (m) return decodeURIComponent(m[1]);
+    }
+  } catch (e) {}
+  if (href.indexOf('//') === 0) return 'https:' + href;
   return href;
 }
 
-function extractHostname(url){
+function extractHostname(url) {
+  if (!url) return '';
   try {
-    var u = new URL(url);
-    return u.hostname || '';
-  } catch(e){
-    return '';
+    var a = document.createElement('a');
+    a.href = url;
+    return a.hostname || '';
+  } catch (e) {
+    var m = String(url).match(/^https?:\/\/([^/?#]+)/i);
+    return m ? m[1] : '';
   }
 }
 
-function formatDisplayUrl(url, rawDisplayUrl){
-  if(rawDisplayUrl && rawDisplayUrl.indexOf('http') !== 0 && rawDisplayUrl.indexOf('duckduckgo.com') === -1){
-    return rawDisplayUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+function formatDisplayUrl(url, rawDisplayUrl) {
+  if (rawDisplayUrl && rawDisplayUrl.indexOf('http') !== 0 && rawDisplayUrl.indexOf('duckduckgo.com') === -1) {
+    return rawDisplayUrl.replace(/^https?:\/\//i, '').replace(/\/$/, '');
   }
   try {
-    var u = new URL(url);
-    var disp = u.hostname + (u.pathname !== '/' ? u.pathname : '') + (u.search || '');
-    if(disp.length > 85) disp = disp.slice(0, 82) + '...';
-    return disp;
-  } catch(e){
+    var a = document.createElement('a');
+    a.href = url;
+    var host = a.hostname || '';
+    var path = (a.pathname && a.pathname !== '/') ? a.pathname : '';
+    if (path && path.indexOf('/') !== 0) path = '/' + path;
+    var disp = host + path + (a.search || '');
+    if (disp.length > 85) disp = disp.slice(0, 82) + '...';
+    return disp || url;
+  } catch (e) {
     return url;
   }
 }
 
-function cleanSnippet(text){
-  if(!text) return '';
+function cleanSnippet(text) {
+  if (!text) return '';
   var s = String(text);
-  // Remove markdown image badges [![Image N](...)](...) or ![Image N](...)
   s = s.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
-  // Bold highlights — function replacer preserves unicode words
-  s = s.replace(/\*\*([^*]+)\*\*/g, function(m, g1){ return '<b>' + g1 + '</b>'; });
-  // Strip stray markdown links [link text](url) -> link text
-  s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, function(m, g1){ return g1; });
-  // Clean whitespace
-  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  s = s.replace(/\s+/g, ' ').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
   return s;
 }
 
-function parseDdgHtml(text){
-  try {
-    var doc = new DOMParser().parseFromString(text, 'text/html');
-    var out = [];
-    doc.querySelectorAll('.result').forEach(function(r){
-      var a = r.querySelector('.result__a');
-      if(!a) return;
-      var url = resolveDdgHref(a.getAttribute('href') || '');
-      var sn = r.querySelector('.result__snippet');
-      var ur = r.querySelector('.result__url');
-      var icon = r.querySelector('.result__icon img');
-      var disp = ur ? ur.textContent.trim() : '';
-      var fav = icon ? icon.getAttribute('src') : '';
-      var host = extractHostname(url);
-      if(!fav && host) fav = 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico';
-
-      out.push({
-        title: a.textContent.trim(),
-        url: url,
-        snippet: sn ? sn.innerHTML : '',
-        displayUrl: formatDisplayUrl(url, disp),
-        favicon: fav
-      });
-    });
-    return out;
-  } catch(e) {
-    return [];
+function parseDdgHtml(text) {
+  var out = [];
+  if (!text) return out;
+  var resBlocks = text.split(/class="[^"]*result\s+results_links[^"]*"/i);
+  if (resBlocks.length <= 1) {
+    resBlocks = text.split(/class="[^"]*result__body[^"]*"/i);
   }
+  for (var i = 1; i < resBlocks.length; i++) {
+    var block = resBlocks[i];
+    var aMatch = block.match(/<a[^>]+class="[^"]*result__a[^"]*"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i);
+    if (!aMatch) continue;
+    var rawUrl = aMatch[1];
+    var rawTitle = aMatch[2];
+    var url = resolveDdgHref(rawUrl);
+    var title = stripHtml(rawTitle).trim();
+
+    var snipMatch = block.match(/class="[^"]*result__snippet[^"]*"[^>]*>([\s\S]*?)<\/(?:a|div|span)>/i);
+    var snippet = snipMatch ? stripHtml(snipMatch[1]).trim() : '';
+
+    var dispMatch = block.match(/class="[^"]*result__url[^"]*"[^>]*>([\s\S]*?)<\/(?:a|div|span)>/i);
+    var rawDisplay = dispMatch ? stripHtml(dispMatch[1]).trim() : '';
+    var displayUrl = formatDisplayUrl(url, rawDisplay);
+    var host = extractHostname(url);
+    var fav = host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '';
+
+    out.push({
+      title: title,
+      url: url,
+      snippet: snippet,
+      displayUrl: displayUrl,
+      favicon: fav
+    });
+  }
+  return out;
 }
 
-function parseJinaMarkdown(text){
+function parseJinaMarkdown(text) {
   var out = [];
+  if (!text) return out;
   var sections = text.split(/(?:\r?\n)+(?=##\s+\[)/);
-  
-  for(var i = 0; i < sections.length; i++){
+
+  for (var i = 0; i < sections.length; i++) {
     var sec = sections[i];
     var hMatch = sec.match(/^##\s+\[([^\]]+)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/m);
-    if(!hMatch) continue;
-    
-    var title = hMatch[1].trim();
+    if (!hMatch) continue;
+
+    var title = (hMatch[1] || '').trim();
     var rawUrl = hMatch[2];
     var url = resolveDdgHref(rawUrl);
     var rest = sec.slice(hMatch.index + hMatch[0].length);
     var host = extractHostname(url);
-    
+
     // Favicon
-    var favMatch = rest.match(/\[?!\[(?:Image \d+)?\]\((https?:\/\/[^\s)]+\.(?:ico|png|jpg|gif)[^)]*)\)\]?/);
+    var favMatch = rest.match(/\[?!\[(?:Image \d+)?\]\((https?:\/\/[^\s)]+\.(?:ico|png|jpg|gif)[^)]*)\)\]?/i);
     var favicon = favMatch ? favMatch[1] : (host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '');
-    
+
     // Display URL
-    var dispMatch = rest.match(/\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]\(https:\/\/duckduckgo/);
-    if(!dispMatch){
-      dispMatch = rest.match(/\]\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]/);
+    var dispMatch = rest.match(/\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]\(https:\/\/duckduckgo/i);
+    if (!dispMatch) {
+      dispMatch = rest.match(/\]\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]/i);
     }
     var rawDisplay = dispMatch ? dispMatch[1].trim() : '';
     var displayUrl = formatDisplayUrl(url, rawDisplay);
-    
-    // Snippet extraction
+
+    // Snippet
     var cleanedRest = rest.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
     var snipMatches = cleanedRest.match(/\[([^\]]+)\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)/g) || [];
     var snipParts = [];
-    for(var j = 0; j < snipMatches.length; j++){
+    for (var j = 0; j < snipMatches.length; j++) {
       var sm = snipMatches[j].replace(/^\[|\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)$/g, '').trim();
-      if(sm === rawDisplay || sm.indexOf('Image ') === 0 || sm.length < 2) continue;
+      if (sm === rawDisplay || sm.indexOf('Image ') === 0 || sm.length < 2) continue;
       snipParts.push(sm);
     }
-    
+
     var snippet = snipParts.join(' ');
-    if(!snippet){
+    if (!snippet) {
       var lines = cleanedRest.split('\n');
-      for(var k = 0; k < lines.length; k++){
+      for (var k = 0; k < lines.length; k++) {
         var line = lines[k].trim();
-        if(line && !line.startsWith('##') && !line.startsWith('[') && line.length > 5){
+        if (line && line.indexOf('##') !== 0 && line.indexOf('[') !== 0 && line.length > 5) {
           snippet = line;
           break;
         }
       }
     }
-    
+
     snippet = cleanSnippet(snippet);
-    
+
     out.push({
       title: title,
       url: url,
@@ -577,10 +806,10 @@ function parseJinaMarkdown(text){
       snippet: snippet
     });
   }
-  
+
   var seen = {}, res = [];
-  for(var n = 0; n < out.length; n++){
-    if(!seen[out[n].url]){
+  for (var n = 0; n < out.length; n++) {
+    if (!seen[out[n].url]) {
       seen[out[n].url] = 1;
       res.push(out[n]);
     }
@@ -588,176 +817,293 @@ function parseJinaMarkdown(text){
   return res;
 }
 
-function renderResults(items){
+function parseDdgApiResponse(d, q) {
+  var res = [];
+  if (!d) return res;
+  if (d.AbstractText && d.AbstractURL) {
+    res.push({
+      title: d.Heading || q,
+      snippet: d.AbstractText,
+      url: d.AbstractURL,
+      displayUrl: formatDisplayUrl(d.AbstractURL, d.AbstractSource || d.AbstractURL),
+      favicon: d.Image || ''
+    });
+  }
+  if (d.RelatedTopics && d.RelatedTopics.length) {
+    for (var i = 0; i < d.RelatedTopics.length; i++) {
+      var t = d.RelatedTopics[i];
+      if (t.Text && t.FirstURL) {
+        res.push({
+          title: t.Text.slice(0, 70) + (t.Text.length > 70 ? '...' : ''),
+          snippet: t.Text,
+          url: t.FirstURL,
+          displayUrl: formatDisplayUrl(t.FirstURL, ''),
+          favicon: (t.Icon && t.Icon.URL) ? t.Icon.URL : ''
+        });
+      }
+    }
+  }
+  return res;
+}
+
+function fetchDdgApi(q, callback) {
+  var url = 'https://api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1';
+  makeRequest(url, function (err, text) {
+    if (!err && text) {
+      try {
+        var d = JSON.parse(text);
+        var r = parseDdgApiResponse(d, q);
+        if (r && r.length > 0) { callback(r); return; }
+      } catch (e) {}
+    }
+    // Fallback to JSONP
+    jsonp(url, 'callback', function (jErr, jData) {
+      if (!jErr && jData) {
+        callback(parseDdgApiResponse(jData, q));
+      } else {
+        callback([]);
+      }
+    }, 3500);
+  }, 3500);
+}
+
+function parseWikiResponse(d) {
+  var res = [];
+  if (!d || !d[1] || !d[1].length) return res;
+  var titles = d[1];
+  var snippets = d[2] || [];
+  var urls = d[3] || [];
+  for (var i = 0; i < titles.length; i++) {
+    var title = titles[i];
+    var url = urls[i] || ('https://ru.wikipedia.org/wiki/' + encodeURIComponent(title));
+    var snip = snippets[i] || ('Статья о «' + title + '» в свободной энциклопедии Википедия.');
+    res.push({
+      title: title,
+      url: url,
+      snippet: snip,
+      displayUrl: 'ru.wikipedia.org/wiki/' + encodeURIComponent(title),
+      favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
+    });
+  }
+  return res;
+}
+
+function fetchWikiSearch(q, callback) {
+  var url = 'https://ru.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(q) + '&format=json';
+  makeRequest(url, function (err, text) {
+    if (!err && text) {
+      try {
+        var d = JSON.parse(text);
+        var r = parseWikiResponse(d);
+        if (r && r.length > 0) { callback(r); return; }
+      } catch (e) {}
+    }
+    // Fallback to JSONP
+    jsonp(url, 'callback', function (jErr, jData) {
+      if (!jErr && jData) {
+        callback(parseWikiResponse(jData));
+      } else {
+        callback([]);
+      }
+    }, 3500);
+  }, 3500);
+}
+
+/* ===================== MULTI-STAGE SEARCH CONTROLLER ===================== */
+function fetchWebSearch(q, page, callback) {
+  var s = (page - 1) * 30;
+  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q) +
+    (s ? '&s=' + s + '&dc=' + (s + 1) : '') + '&kl=ru-ru';
+  var jinaUrl = 'https://r.jina.ai/' + ddgUrl;
+
+  // 1. Primary: Direct fetch of DuckDuckGo via fast CORS-enabled Jina reader
+  makeRequest(jinaUrl, function (err, text) {
+    if (!err && text && text.length > 200) {
+      var items = parseJinaMarkdown(text);
+      if (items && items.length > 0) {
+        callback(items);
+        return;
+      }
+    }
+
+    // 2. Secondary: Parallel proxy race (via common.js fetchViaProxy)
+    if (window.fetchViaProxy) {
+      window.fetchViaProxy(ddgUrl, 5000).then(function (raw) {
+        if (raw) {
+          if (raw.jina && raw.text) {
+            var items2 = parseJinaMarkdown(raw.text);
+            if (items2 && items2.length > 0) { callback(items2); return; }
+          } else if (typeof raw === 'string') {
+            var items3 = parseDdgHtml(raw);
+            if (items3 && items3.length > 0) { callback(items3); return; }
+          }
+        }
+        step3();
+      })['catch'](function () {
+        step3();
+      });
+    } else {
+      step3();
+    }
+  }, 4000);
+
+  function step3() {
+    // 3. DuckDuckGo Instant Answer API
+    fetchDdgApi(q, function (apiItems) {
+      if (apiItems && apiItems.length > 0) {
+        callback(apiItems);
+        return;
+      }
+      step4();
+    });
+  }
+
+  function step4() {
+    // 4. Wikipedia OpenSearch API
+    fetchWikiSearch(q, function (wikiItems) {
+      if (wikiItems && wikiItems.length > 0) {
+        callback(wikiItems);
+        return;
+      }
+      // No external results
+      callback([]);
+    });
+  }
+}
+
+/* ===================== UI RENDERING ===================== */
+function renderResults(items) {
   var box = document.getElementById('results');
-  if(!items || !items.length){
+  if (!box) return;
+  if (!items || !items.length) {
     box.innerHTML = '<div class="notFound"><p>Ничего не найдено. Попробуйте изменить запрос.</p></div>';
     return;
   }
   var html = '';
-  items.forEach(function(r){
-    var fav = r.favicon ? '<span class="res-favicon"><img src="'+esc(r.favicon)+'" alt="" width="16" height="16" onerror="this.onerror=null; this.style.display=\'none\';" /></span>' : '';
-    html += '<div class="res">'+fav+
-      '<div class="res-head"><a href="'+esc(r.url)+'" target="_blank">'+esc(r.title)+'</a></div>'+
-      (r.snippet ? '<div class="res-desc">'+r.snippet+'</div>' : '')+
-      (r.displayUrl ? '<div class="res-url"><a href="'+esc(r.url)+'" target="_blank">'+esc(r.displayUrl)+'</a></div>' : '')+
+  for (var i = 0; i < items.length; i++) {
+    var r = items[i];
+    var fav = r.favicon ? '<span class="res-favicon"><img src="' + esc(r.favicon) + '" alt="" width="16" height="16" onerror="this.onerror=null; this.style.display=\'none\';" /></span>' : '';
+    html += '<div class="res">' + fav +
+      '<div class="res-head"><a href="' + esc(r.url) + '" target="_blank">' + esc(r.title) + '</a></div>' +
+      (r.snippet ? '<div class="res-desc">' + r.snippet + '</div>' : '') +
+      (r.displayUrl ? '<div class="res-url"><a href="' + esc(r.url) + '" target="_blank">' + esc(r.displayUrl) + '</a></div>' : '') +
       '</div>';
-  });
+  }
   box.innerHTML = html;
-  document.getElementById('cntSites').textContent = items.length;
-  document.getElementById('cntDocs').textContent = items.length;
-  document.getElementById('sres').style.visibility = 'visible';
+  var cs = document.getElementById('cntSites');
+  var cd = document.getElementById('cntDocs');
+  var sr = document.getElementById('sres');
+  if (cs) cs.innerHTML = items.length;
+  if (cd) cd.innerHTML = items.length;
+  if (sr) sr.style.visibility = 'visible';
 }
 
-function renderPager(total){
+function renderPager(total) {
   var p = document.getElementById('pager');
-  if(total < 3){ p.innerHTML = ''; return; }
+  if (!p) return;
+  if (total < 3) { p.innerHTML = ''; return; }
   var html = '';
-  if(curPage > 1) html += '<a href="search.html?q='+encodeURIComponent(curQuery)+'&page='+(curPage-1)+'">&larr; назад</a>';
-  html += '<b>стр. '+curPage+'</b>';
-  html += '<a href="search.html?q='+encodeURIComponent(curQuery)+'&page='+(curPage+1)+'">дальше &rarr;</a>';
+  if (curPage > 1) {
+    html += '<a href="search.html?q=' + encodeURIComponent(curQuery) + '&page=' + (curPage - 1) + '">&larr; назад</a>';
+  }
+  html += '<b>стр. ' + curPage + '</b>';
+  html += '<a href="search.html?q=' + encodeURIComponent(curQuery) + '&page=' + (curPage + 1) + '">дальше &rarr;</a>';
   p.innerHTML = html;
 }
 
-async function fetchDdgApi(q){
-  try {
-    var url = 'https://api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1';
-    var resp = await fetch(url);
-    var d = await resp.json();
-    var res = [];
-    if(d.AbstractText && d.AbstractURL){
-      res.push({
-        title: d.Heading || q,
-        snippet: d.AbstractText,
-        url: d.AbstractURL,
-        displayUrl: formatDisplayUrl(d.AbstractURL, d.AbstractSource || d.AbstractURL),
-        favicon: d.Image || ''
-      });
-    }
-    if(d.RelatedTopics && d.RelatedTopics.length){
-      d.RelatedTopics.forEach(function(t){
-        if(t.Text && t.FirstURL){
-          res.push({
-            title: t.Text.slice(0, 70) + (t.Text.length > 70 ? '...' : ''),
-            snippet: t.Text,
-            url: t.FirstURL,
-            displayUrl: formatDisplayUrl(t.FirstURL, ''),
-            favicon: (t.Icon && t.Icon.URL) ? t.Icon.URL : ''
-          });
-        }
-      });
-    }
-    return res;
-  } catch(e){}
-  return [];
+function showFallbackSearch(q) {
+  var eb = document.getElementById('errbox');
+  if (!eb) return;
+  eb.style.display = 'block';
+  eb.innerHTML = '<div style="margin-bottom:6px; font-weight:bold; color:#00468c;">Внешний поиск ограничен на вашей системе или в сети. Вы можете продолжить поиск напрямую:</div>' +
+    '<div style="padding:6px 0; line-height:2em;">' +
+    '&bull; <a href="https://ya.ru/search/?text=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#c00;">Искать в Яндекс &rarr;</a><br />' +
+    '&bull; <a href="https://duckduckgo.com/?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#de5833;">Искать в DuckDuckGo &rarr;</a><br />' +
+    '&bull; <a href="https://www.google.com/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#4285f4;">Искать в Google &rarr;</a><br />' +
+    '&bull; <a href="https://ru.wikipedia.org/w/index.php?search=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#0857a6;">Искать в Википедии &rarr;</a>' +
+    '</div>';
 }
 
-async function fetchWebSearch(q, page){
-  var s = (page - 1) * 30;
-  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q) +
-    (s ? '&s=' + s + '&dc=' + (s + 1) : '') + '&kl=ru-ru';
-
-  // 1. Primary: Direct fetch of DuckDuckGo via fast CORS-enabled Jina reader
-  try {
-    var jinaUrl = 'https://r.jina.ai/' + ddgUrl;
-    var resp = await fetch(jinaUrl, { mode: 'cors' });
-    if(resp.ok){
-      var text = await resp.text();
-      if(text && text.length > 200){
-        var items = parseJinaMarkdown(text);
-        if(items && items.length > 0){
-          return items;
-        }
-      }
-    }
-  } catch(e){}
-
-  // 2. Secondary: Parallel proxy race (via common.js fetchViaProxy)
-  try {
-    var raw = await window.fetchViaProxy(ddgUrl, 5000);
-    if(raw){
-      if(raw.jina && raw.text){
-        var items2 = parseJinaMarkdown(raw.text);
-        if(items2 && items2.length > 0) return items2;
-      } else if(typeof raw === 'string'){
-        var items3 = parseDdgHtml(raw);
-        if(items3 && items3.length > 0) return items3;
-      }
-    }
-  } catch(e){}
-
-  // 3. Third: DuckDuckGo Web Instant API (searches across entire web, CORS enabled)
-  try {
-    var apiItems = await fetchDdgApi(q);
-    if(apiItems && apiItems.length > 0){
-      return apiItems;
-    }
-  } catch(e){}
-
-  return [];
-}
-
-async function runSearch(){
-  initBannerRotator('searchBanner', 6000);
+function runSearch() {
+  if (window.initBannerRotator) {
+    try { initBannerRotator('searchBanner', 6000); } catch (e) {}
+  }
   curQuery = getParam('q');
   curPage = parseInt(getParam('page') || '1', 10) || 1;
-  document.getElementById('q').value = curQuery;
+
+  var qEl = document.getElementById('q');
+  if (qEl) qEl.value = curQuery;
 
   var linkDdg = document.getElementById('linkDdg');
   var linkYa = document.getElementById('linkYa');
   var linkGg = document.getElementById('linkGg');
-  if(linkDdg) linkDdg.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(curQuery);
-  if(linkYa) linkYa.href = 'https://ya.ru/search/?text=' + encodeURIComponent(curQuery);
-  if(linkGg) linkGg.href = 'https://www.google.com/search?q=' + encodeURIComponent(curQuery);
+  if (linkDdg) linkDdg.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(curQuery);
+  if (linkYa) linkYa.href = 'https://ya.ru/search/?text=' + encodeURIComponent(curQuery);
+  if (linkGg) linkGg.href = 'https://www.google.com/search?q=' + encodeURIComponent(curQuery);
 
-  if(!curQuery){
-    document.getElementById('results').innerHTML = '<div class="notFound"><p>Введите запрос в строку поиска.</p></div>';
+  var resultsBox = document.getElementById('results');
+  var loadingBox = document.getElementById('loading');
+  var errBox = document.getElementById('errbox');
+  var pagerBox = document.getElementById('pager');
+
+  if (!curQuery) {
+    if (resultsBox) resultsBox.innerHTML = '<div class="notFound"><p>Введите запрос в строку поиска.</p></div>';
     return;
   }
   document.title = curQuery + ' — Поиск@soap.nekxd.fun';
 
-  // Check sessionStorage cache
+  // Check cache
   var cacheKey = 'search_' + curQuery + '_' + curPage;
   var cached = null;
   try {
-    var raw = sessionStorage.getItem(cacheKey);
-    if(raw) cached = JSON.parse(raw);
-  } catch(e){}
+    if (typeof sessionStorage !== 'undefined') {
+      var raw = sessionStorage.getItem(cacheKey);
+      if (raw) cached = JSON.parse(raw);
+    }
+  } catch (e) {}
 
-  if(cached && cached.length){
+  if (cached && cached.length) {
     renderResults(cached);
     renderPager(cached.length);
     return;
   }
 
-  document.getElementById('loading').style.display = 'block';
-  document.getElementById('errbox').style.display = 'none';
-  document.getElementById('results').innerHTML = '';
-  document.getElementById('pager').innerHTML = '';
+  if (loadingBox) loadingBox.style.display = 'block';
+  if (errBox) errBox.style.display = 'none';
+  if (resultsBox) resultsBox.innerHTML = '';
+  if (pagerBox) pagerBox.innerHTML = '';
 
-  var items = await fetchWebSearch(curQuery, curPage);
-
-  document.getElementById('loading').style.display = 'none';
-
-  if(!items.length){
-    var eb = document.getElementById('errbox');
-    eb.style.display = 'block';
-    eb.innerHTML = 'Не удалось загрузить внешние результаты. Вы можете открыть поиск напрямую:<br />' +
-      '&bull; <a href="https://ya.ru/search/?text='+encodeURIComponent(curQuery)+'" target="_blank">Искать в Яндекс &rarr;</a><br />' +
-      '&bull; <a href="https://duckduckgo.com/?q='+encodeURIComponent(curQuery)+'" target="_blank">Искать в DuckDuckGo &rarr;</a><br />' +
-      '&bull; <a href="https://www.google.com/search?q='+encodeURIComponent(curQuery)+'" target="_blank">Искать в Google &rarr;</a>';
-    return;
-  }
-
-  try {
-    sessionStorage.setItem(cacheKey, JSON.stringify(items));
-  } catch(e){}
-
-  renderResults(items);
-  renderPager(items.length);
+  fetchWebSearch(curQuery, curPage, function (items) {
+    if (loadingBox) loadingBox.style.display = 'none';
+    if (items && items.length > 0) {
+      try {
+        if (typeof sessionStorage !== 'undefined') {
+          sessionStorage.setItem(cacheKey, JSON.stringify(items));
+        }
+      } catch (e) {}
+      renderResults(items);
+      renderPager(items.length);
+    } else {
+      showFallbackSearch(curQuery);
+    }
+  });
 }
 
-document.addEventListener('DOMContentLoaded', runSearch);
+/* Cross-browser DOM ready */
+function onReady(fn) {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    fn();
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', fn, false);
+  } else if (window.attachEvent) {
+    window.attachEvent('onload', fn);
+  } else {
+    var old = window.onload;
+    window.onload = function () { if (old) old(); fn(); };
+  }
+}
+
+onReady(runSearch);
 </script>
 </body>
 </html>

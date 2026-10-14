@@ -1,6 +1,176 @@
 /* mail.ru 2010 revival — shared helpers & fast data engine */
 (function () {
-  'use strict';
+  /* ===================== RETRO SYSTEM POLYFILLS ===================== */
+  if (!Date.now) {
+    Date.now = function () { return new Date().getTime(); };
+  }
+  if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+      return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+  }
+  if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function (s, pos) {
+      return this.indexOf(s, pos || 0) === (pos || 0);
+    };
+  }
+  if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function (fn, scope) {
+      for (var i = 0, len = this.length; i < len; ++i) {
+        if (i in this) fn.call(scope, this[i], i, this);
+      }
+    };
+  }
+  if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (search, fromIndex) {
+      var len = this.length;
+      var i = fromIndex || 0;
+      if (i < 0) i = Math.max(0, len + i);
+      for (; i < len; i++) {
+        if (i in this && this[i] === search) return i;
+      }
+      return -1;
+    };
+  }
+  if (!Array.prototype.map) {
+    Array.prototype.map = function (fn, scope) {
+      var res = [];
+      for (var i = 0, len = this.length; i < len; ++i) {
+        if (i in this) res.push(fn.call(scope, this[i], i, this));
+      }
+      return res;
+    };
+  }
+  if (!window.JSON) {
+    window.JSON = {
+      parse: function (s) { return eval('(' + s + ')'); },
+      stringify: function (o) {
+        if (o === null) return 'null';
+        var t = typeof o;
+        if (t === 'number' || t === 'boolean') return String(o);
+        if (t === 'string') return '"' + o.replace(/"/g, '\\"') + '"';
+        if (o instanceof Array) {
+          var a = [];
+          for (var i = 0; i < o.length; i++) a.push(window.JSON.stringify(o[i]));
+          return '[' + a.join(',') + ']';
+        }
+        var p = [];
+        for (var k in o) {
+          if (o.hasOwnProperty && o.hasOwnProperty(k)) {
+            p.push('"' + k + '":' + window.JSON.stringify(o[k]));
+          }
+        }
+        return '{' + p.join(',') + '}';
+      }
+    };
+  }
+  if (typeof Promise === 'undefined') {
+    window.Promise = function (executor) {
+      var self = this;
+      self.state = 'pending';
+      self.value = undefined;
+      self.callbacks = [];
+
+      function resolve(val) {
+        if (self.state !== 'pending') return;
+        self.state = 'fulfilled';
+        self.value = val;
+        for (var i = 0; i < self.callbacks.length; i++) {
+          if (self.callbacks[i].onFulfilled) {
+            try { self.callbacks[i].onFulfilled(val); } catch (e) {}
+          }
+        }
+      }
+
+      function reject(reason) {
+        if (self.state !== 'pending') return;
+        self.state = 'rejected';
+        self.value = reason;
+        for (var i = 0; i < self.callbacks.length; i++) {
+          if (self.callbacks[i].onRejected) {
+            try { self.callbacks[i].onRejected(reason); } catch (e) {}
+          }
+        }
+      }
+
+      try {
+        executor(resolve, reject);
+      } catch (err) {
+        reject(err);
+      }
+    };
+
+    window.Promise.prototype.then = function (onFulfilled, onRejected) {
+      var self = this;
+      return new window.Promise(function (resolve, reject) {
+        function handle() {
+          if (self.state === 'fulfilled') {
+            if (typeof onFulfilled === 'function') {
+              try {
+                var res = onFulfilled(self.value);
+                if (res && typeof res.then === 'function') res.then(resolve, reject);
+                else resolve(res);
+              } catch (err) { reject(err); }
+            } else {
+              resolve(self.value);
+            }
+          } else if (self.state === 'rejected') {
+            if (typeof onRejected === 'function') {
+              try {
+                var res = onRejected(self.value);
+                if (res && typeof res.then === 'function') res.then(resolve, reject);
+                else resolve(res);
+              } catch (err) { reject(err); }
+            } else {
+              reject(self.value);
+            }
+          } else {
+            self.callbacks.push({
+              onFulfilled: function (v) {
+                if (typeof onFulfilled === 'function') {
+                  try {
+                    var r = onFulfilled(v);
+                    if (r && typeof r.then === 'function') r.then(resolve, reject);
+                    else resolve(r);
+                  } catch (e) { reject(e); }
+                } else { resolve(v); }
+              },
+              onRejected: function (rj) {
+                if (typeof onRejected === 'function') {
+                  try {
+                    var r = onRejected(rj);
+                    if (r && typeof r.then === 'function') r.then(resolve, reject);
+                    else resolve(r);
+                  } catch (e) { reject(e); }
+                } else { reject(rj); }
+              }
+            });
+          }
+        }
+        setTimeout(handle, 0);
+      });
+    };
+
+    window.Promise.prototype['catch'] = function (onRejected) {
+      return this.then(null, onRejected);
+    };
+
+    window.Promise.resolve = function (v) {
+      return new window.Promise(function (res) { res(v); });
+    };
+
+    window.Promise.reject = function (err) {
+      return new window.Promise(function (res, rej) { rej(err); });
+    };
+  }
+
+  var esc = window.esc = function (s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  };
 
   /* ===================== LOCAL STORAGE CACHE ===================== */
   window.cacheGet = function (key, maxAgeMs) {
@@ -80,102 +250,144 @@
       render(curIdx);
     }
 
-    el.addEventListener('mouseenter', function () { isHovered = true; });
-    el.addEventListener('mouseleave', function () { isHovered = false; });
+    if (el.addEventListener) {
+      el.addEventListener('mouseenter', function () { isHovered = true; }, false);
+      el.addEventListener('mouseleave', function () { isHovered = false; }, false);
+    } else if (el.attachEvent) {
+      el.attachEvent('onmouseenter', function () { isHovered = true; });
+      el.attachEvent('onmouseleave', function () { isHovered = false; });
+    } else {
+      el.onmouseenter = function () { isHovered = true; };
+      el.onmouseleave = function () { isHovered = false; };
+    }
 
     render(curIdx);
     timer = setInterval(next, intervalMs || 6000);
   };
 
-  /* ===================== FAST PROXY FETCHING (RACE) ===================== */
-  function fetchWithTimeout(url, timeoutMs) {
-    if (typeof fetch === 'undefined') {
-      return new Promise(function (resolve, reject) {
-        try {
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', url, true);
-          xhr.timeout = timeoutMs;
-          xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-              resolve(xhr.responseText);
-            } else {
-              reject(new Error('HTTP ' + xhr.status));
-            }
-          };
-          xhr.onerror = function () { reject(new Error('network error')); };
-          xhr.ontimeout = function () { reject(new Error('timeout')); };
-          xhr.send();
-        } catch (e) {
-          reject(e);
-        }
-      });
+  /* ===================== FAST PROXY FETCHING (CROSS-BROWSER) ===================== */
+  function getXHR() {
+    if (typeof XMLHttpRequest !== 'undefined') {
+      try { return new XMLHttpRequest(); } catch (e) {}
     }
+    if (typeof ActiveXObject !== 'undefined') {
+      try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch (e) {}
+      try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch (e) {}
+      try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch (e) {}
+      try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch (e) {}
+    }
+    return null;
+  }
 
+  function fetchWithTimeout(url, timeoutMs) {
+    timeoutMs = timeoutMs || 4000;
     return new Promise(function (resolve, reject) {
-      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var settled = false;
       var timer = setTimeout(function () {
-        if (ctrl) ctrl.abort();
+        if (settled) return;
+        settled = true;
+        try { if (xhr && xhr.abort) xhr.abort(); } catch (e) {}
         reject(new Error('timeout'));
       }, timeoutMs);
 
-      var opts = { mode: 'cors' };
-      if (ctrl) opts.signal = ctrl.signal;
+      function onDone(err, text) {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        if (err) reject(err);
+        else resolve(text);
+      }
 
-      fetch(url, opts).then(function (resp) {
-        clearTimeout(timer);
-        if (!resp.ok) {
-          reject(new Error('HTTP ' + resp.status));
-        } else {
-          return resp.text();
+      // Try modern fetch if available
+      if (typeof fetch !== 'undefined') {
+        try {
+          var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+          fetch(url, { mode: 'cors', signal: ctrl ? ctrl.signal : undefined })
+            .then(function (resp) {
+              if (!resp.ok) {
+                onDone(new Error('HTTP ' + resp.status));
+              } else {
+                return resp.text();
+              }
+            })
+            .then(function (text) {
+              if (typeof text === 'string') onDone(null, text);
+            })
+            ['catch'](function (err) {
+              onDone(err);
+            });
+          return;
+        } catch (e) {}
+      }
+
+      // Try XHR
+      var xhr = getXHR();
+      if (xhr) {
+        try {
+          xhr.open('GET', url, true);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              if (xhr.status >= 200 && xhr.status < 300) {
+                onDone(null, xhr.responseText);
+              } else if (xhr.status === 0 && typeof XDomainRequest !== 'undefined') {
+                tryXDR();
+              } else {
+                onDone(new Error('HTTP ' + xhr.status));
+              }
+            }
+          };
+          xhr.send(null);
+          return;
+        } catch (e) {
+          if (typeof XDomainRequest !== 'undefined') {
+            tryXDR();
+            return;
+          }
+          onDone(e);
+          return;
         }
-      }).then(function (text) {
-        if (!text || text.length < 20) {
-          reject(new Error('empty'));
-        } else {
-          resolve(text);
+      }
+
+      function tryXDR() {
+        try {
+          var xdr = new XDomainRequest();
+          xdr.onload = function () { onDone(null, xdr.responseText); };
+          xdr.onerror = function () { onDone(new Error('XDR error')); };
+          xdr.ontimeout = function () { onDone(new Error('timeout')); };
+          xdr.open('GET', url);
+          xdr.send();
+        } catch (e) {
+          onDone(e);
         }
-      }).catch(function (err) {
-        clearTimeout(timer);
-        reject(err);
-      });
+      }
+
+      if (typeof XDomainRequest !== 'undefined') {
+        tryXDR();
+        return;
+      }
+
+      onDone(new Error('no transport'));
     });
   }
 
-  window.fetchViaProxy = async function (url, timeoutMs) {
+  window.fetchViaProxy = function (url, timeoutMs) {
     timeoutMs = timeoutMs || 4500;
     var encUrl = encodeURIComponent(url);
+    var pUrl1 = 'https://api.allorigins.win/raw?url=' + encUrl;
+    var pUrl2 = 'https://api.allorigins.win/get?url=' + encUrl;
 
-    var proxyUrls = [
-      'https://api.allorigins.win/raw?url=' + encUrl,
-      'https://api.allorigins.win/get?url=' + encUrl
-    ];
-
-    if (Promise.any) {
-      try {
-        var promises = proxyUrls.map(function (pUrl) {
-          return fetchWithTimeout(pUrl, timeoutMs).then(function (text) {
-            if (!text || text.length < 30) throw new Error('too short');
-            if (pUrl.indexOf('allorigins.win/get') !== -1) {
-              var j = JSON.parse(text);
-              if (j && j.contents) return j.contents;
-              throw new Error('no contents');
-            }
-            return text;
-          });
-        });
-        return await Promise.any(promises);
-      } catch (err) {
-        return await fetchWithTimeout(url, timeoutMs);
-      }
-    } else {
-      for (var i = 0; i < proxyUrls.length; i++) {
-        try {
-          var res = await fetchWithTimeout(proxyUrls[i], timeoutMs);
-          if (res) return res;
-        } catch (e) {}
-      }
-      return await fetchWithTimeout(url, timeoutMs);
-    }
+    return fetchWithTimeout(pUrl1, timeoutMs).then(function (text) {
+      if (!text || text.length < 30) throw new Error('too short');
+      return text;
+    })['catch'](function () {
+      return fetchWithTimeout(pUrl2, timeoutMs).then(function (text) {
+        var j = JSON.parse(text);
+        if (j && j.contents) return j.contents;
+        throw new Error('no contents');
+      });
+    })['catch'](function () {
+      return fetchWithTimeout(url, timeoutMs);
+    });
   };
 
   /* ===================== HABR NEWS (API + RSS FALLBACK) ===================== */
@@ -233,46 +445,69 @@
   };
 
   function stripHtml(s) {
+    if (!s) return '';
     var d = document.createElement('div');
     d.innerHTML = s;
-    return d.textContent || '';
+    return d.textContent || d.innerText || '';
   }
 
   window.parseRss = function (xmlText) {
     try {
-      var doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-      var items = doc.querySelectorAll('item');
-      var out = [];
-      items.forEach(function (it) {
-        var t = it.querySelector('title');
-        var l = it.querySelector('link');
-        var d = it.querySelector('description');
-        var date = it.querySelector('pubDate');
-        out.push({
-          title: t ? stripHtml(t.textContent) : '',
-          link: l ? l.textContent.trim() : '#',
-          desc: d ? stripHtml(d.textContent) : '',
-          date: date ? date.textContent : ''
+      if (window.DOMParser) {
+        var doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+        var items = doc.querySelectorAll ? doc.querySelectorAll('item') : doc.getElementsByTagName('item');
+        var out = [];
+        for (var i = 0; i < items.length; i++) {
+          var it = items[i];
+          var t = it.querySelector ? it.querySelector('title') : it.getElementsByTagName('title')[0];
+          var l = it.querySelector ? it.querySelector('link') : it.getElementsByTagName('link')[0];
+          var d = it.querySelector ? it.querySelector('description') : it.getElementsByTagName('description')[0];
+          var date = it.querySelector ? it.querySelector('pubDate') : it.getElementsByTagName('pubDate')[0];
+          var titleText = t ? (t.textContent || t.text || t.innerText || '') : '';
+          var linkText = l ? (l.textContent || l.text || l.innerText || '') : '#';
+          var descText = d ? (d.textContent || d.text || d.innerText || '') : '';
+          var dateText = date ? (date.textContent || date.text || date.innerText || '') : '';
+          out.push({
+            title: stripHtml(titleText),
+            link: linkText.replace(/^\s+|\s+$/g, ''),
+            desc: stripHtml(descText),
+            date: dateText
+          });
+        }
+        if (out.length) return out;
+      }
+      // Legacy regex fallback if DOMParser missing or returned 0 items
+      var itemMatches = xmlText.match(/<item[\s\S]*?<\/item>/gi) || [];
+      var regexOut = [];
+      for (var j = 0; j < itemMatches.length; j++) {
+        var raw = itemMatches[j];
+        var titleM = raw.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+        var linkM = raw.match(/<link[^>]*>([\s\S]*?)<\/link>/i);
+        var descM = raw.match(/<description[^>]*>([\s\S]*?)<\/description>/i);
+        var dateM = raw.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
+        regexOut.push({
+          title: titleM ? stripHtml(titleM[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')) : '',
+          link: linkM ? linkM[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').replace(/^\s+|\s+$/g, '') : '#',
+          desc: descM ? stripHtml(descM[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')) : '',
+          date: dateM ? dateM[1] : ''
         });
-      });
-      return out;
+      }
+      return regexOut;
     } catch (e) {
       return [];
     }
   };
 
-  window.loadHabrFeed = async function (key) {
+  window.loadHabrFeed = function (key) {
     var cached = window.cacheGet('habr_' + key, 10 * 60 * 1000);
-    if (cached && cached.length) return cached;
+    if (cached && cached.length) return Promise.resolve(cached);
 
-    // 1. Primary: Official Habr API (CORS enabled, fast, live updates)
-    try {
-      var q = window.HABR_QUERIES[key];
-      var habrApiUrl = (q === undefined || q === null)
-        ? 'https://habr.com/kek/v2/articles/?news=true'
-        : 'https://habr.com/kek/v2/articles/?query=' + encodeURIComponent(q);
+    var q = window.HABR_QUERIES[key];
+    var habrApiUrl = (q === undefined || q === null)
+      ? 'https://habr.com/kek/v2/articles/?news=true'
+      : 'https://habr.com/kek/v2/articles/?query=' + encodeURIComponent(q);
 
-      var habrResp = await fetchWithTimeout(habrApiUrl, 3500);
+    return fetchWithTimeout(habrApiUrl, 3500).then(function (habrResp) {
       var habrData = JSON.parse(habrResp);
       var ids = habrData.publicationIds || habrData.articleIds || [];
       var refs = habrData.publicationRefs || habrData.articleRefs || {};
@@ -292,28 +527,30 @@
         window.cacheSet('habr_' + key, items);
         return items;
       }
-    } catch (e) {}
-
-    // 2. Secondary fallback: RSS2JSON service
-    try {
+      throw new Error('empty');
+    })['catch'](function () {
       var feedUrl = window.HABR_FEEDS[key] || window.HABR_FEEDS.news;
       var r2jUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl);
-      var r2jResp = await fetchWithTimeout(r2jUrl, 3500);
-      var r2jData = JSON.parse(r2jResp);
-      if (r2jData && r2jData.status === 'ok' && r2jData.items && r2jData.items.length > 0) {
-        var r2jItems = r2jData.items.map(function (it) {
-          return {
-            title: stripHtml(it.title),
-            link: it.link || '#',
-            date: it.pubDate || ''
-          };
-        });
-        window.cacheSet('habr_' + key, r2jItems);
-        return r2jItems;
-      }
-    } catch (e) {}
-
-    return FALLBACK_NEWS[key] || FALLBACK_NEWS.news;
+      return fetchWithTimeout(r2jUrl, 3500).then(function (r2jResp) {
+        var r2jData = JSON.parse(r2jResp);
+        if (r2jData && r2jData.status === 'ok' && r2jData.items && r2jData.items.length > 0) {
+          var r2jItems = [];
+          for (var j = 0; j < r2jData.items.length; j++) {
+            var it = r2jData.items[j];
+            r2jItems.push({
+              title: stripHtml(it.title),
+              link: it.link || '#',
+              date: it.pubDate || ''
+            });
+          }
+          window.cacheSet('habr_' + key, r2jItems);
+          return r2jItems;
+        }
+        throw new Error('empty');
+      });
+    })['catch'](function () {
+      return FALLBACK_NEWS[key] || FALLBACK_NEWS.news;
+    });
   };
 
   /* ===================== WEATHER: WTTR.IN + OPEN-METEO (HTTP & HTTPS) ===================== */
@@ -382,20 +619,15 @@
     395: [28, 'метель']
   };
 
-  window.loadWeather = async function (onData) {
+  window.loadWeather = function (onData) {
     var moscow = { lat: 55.7558, lon: 37.6173, name: 'Москва' };
-
-    // 1. Instant cache (TTL: 30 minutes)
     var cached = window.cacheGet('weather_data', 30 * 60 * 1000);
-    if (cached) {
-      onData(cached);
-    }
+    if (cached) onData(cached);
 
-    // 2. Primary provider: wttr.in (CORS *, works seamlessly on HTTP & HTTPS, automatic IP geolocation)
-    try {
-      var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
-      var wttrUrl = proto + '//wttr.in/?format=j1';
-      var wttrResp = await fetchWithTimeout(wttrUrl, 3000);
+    var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
+    var wttrUrl = proto + '//wttr.in/?format=j1';
+
+    fetchWithTimeout(wttrUrl, 3000).then(function (wttrResp) {
       var wData = JSON.parse(wttrResp);
       if (wData && wData.current_condition && wData.current_condition.length > 0) {
         var cur = wData.current_condition[0];
@@ -436,88 +668,67 @@
 
         window.cacheSet('weather_data', result);
         onData(result);
-        return;
+        return true;
       }
-    } catch (e) {}
-
-    // 3. Fallback provider: Open-Meteo (force https: so CORS headers are present)
-    try {
-      var use = moscow;
-      try {
-        var ipResp = await fetchWithTimeout('https://ipwho.is/', 2000);
-        var ipData = JSON.parse(ipResp);
-        if (ipData && ipData.latitude != null) {
-          use = { lat: ipData.latitude, lon: ipData.longitude, name: ipData.city || 'Москва' };
-        }
-      } catch (e) {}
-
-      var omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + use.lat +
-        '&longitude=' + use.lon +
+      throw new Error('empty wttr');
+    })['catch'](function () {
+      var omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + moscow.lat +
+        '&longitude=' + moscow.lon +
         '&current=temperature_2m,weather_code,wind_speed_10m' +
         '&hourly=temperature_2m' +
         '&daily=temperature_2m_max,temperature_2m_min,weather_code' +
         '&timezone=auto&forecast_days=2';
 
-      var omResp = await fetchWithTimeout(omUrl, 3000);
-      var omData = JSON.parse(omResp);
-      var omCur = omData.current;
-      var omCode = omCur.weather_code;
-      var omW = window.WMO[omCode] || [16, 'облачно'];
-
-      var omEvening = null;
-      if (omData.hourly && omData.hourly.time) {
-        var now = new Date();
-        var target = new Date(now); target.setHours(21, 0, 0, 0);
-        if (target < now) target = new Date(now.getTime() + 3 * 3600e3);
-        var iso = target.toISOString().slice(0, 13);
-        for (var j = 0; j < omData.hourly.time.length; j++) {
-          if (omData.hourly.time[j].slice(0, 13) === iso) { omEvening = omData.hourly.temperature_2m[j]; break; }
+      return fetchWithTimeout(omUrl, 3000).then(function (omResp) {
+        var omData = JSON.parse(omResp);
+        var omCur = omData.current;
+        var omCode = omCur.weather_code;
+        var omW = window.WMO[omCode] || [16, 'облачно'];
+        var omEvening = null;
+        if (omData.hourly && omData.hourly.temperature_2m && omData.hourly.temperature_2m.length > 21) {
+          omEvening = omData.hourly.temperature_2m[21];
         }
+        var omTomorrow = (omData.daily && omData.daily.temperature_2m_max) ? omData.daily.temperature_2m_max[1] : null;
+
+        var omResult = {
+          temp: Math.round(omCur.temperature_2m),
+          evening: omEvening === null ? null : Math.round(omEvening),
+          tomorrow: omTomorrow === null ? null : Math.round(omTomorrow),
+          icon: omW[0],
+          label: omW[1],
+          wind: Math.round(omCur.wind_speed_10m),
+          city: moscow.name,
+          isMoscow: true
+        };
+
+        window.cacheSet('weather_data', omResult);
+        onData(omResult);
+      });
+    })['catch'](function () {
+      if (!cached) {
+        onData({
+          temp: 18,
+          evening: 15,
+          tomorrow: 20,
+          icon: 16,
+          label: 'облачно',
+          wind: 3,
+          city: 'Москва',
+          isMoscow: true
+        });
       }
-      var omTomorrow = omData.daily && omData.daily.temperature_2m_max ? omData.daily.temperature_2m_max[1] : null;
-
-      var omResult = {
-        temp: Math.round(omCur.temperature_2m),
-        evening: omEvening === null ? null : Math.round(omEvening),
-        tomorrow: omTomorrow === null ? null : Math.round(omTomorrow),
-        icon: omW[0],
-        label: omW[1],
-        wind: Math.round(omCur.wind_speed_10m),
-        city: use.name || moscow.name,
-        isMoscow: !use.name || use.name === 'Москва'
-      };
-
-      window.cacheSet('weather_data', omResult);
-      onData(omResult);
-      return;
-    } catch (e) {}
-
-    // 4. Final fallback mock data
-    if (!cached) {
-      var fallbackWeather = {
-        temp: 18,
-        evening: 15,
-        tomorrow: 20,
-        icon: 16,
-        label: 'облачно',
-        wind: 3,
-        city: 'Москва',
-        isMoscow: true
-      };
-      onData(fallbackWeather);
-    }
+    });
   };
 
   /* ===================== CBR CURRENCY (HTTP & HTTPS) ===================== */
-  window.loadCbr = async function (onData) {
+  window.loadCbr = function (onData) {
     var cached = window.cacheGet('cbr_rates', 60 * 60 * 1000);
     if (cached) onData(cached);
 
     var proto = (location.protocol === 'https:') ? 'https:' : 'http:';
     var url = proto + '//www.cbr-xml-daily.ru/daily_json.js';
 
-    try {
-      var text = await fetchWithTimeout(url, 3000);
+    fetchWithTimeout(url, 3000).then(function (text) {
       var d = JSON.parse(text);
       var usd = d.Valute.USD, eur = d.Valute.EUR;
       var res = {
@@ -529,15 +740,15 @@
       };
       window.cacheSet('cbr_rates', res);
       onData(res);
-    } catch (e) {
+    })['catch'](function () {
       if (!cached) {
         onData({
           usd: '92.4500', usdDelta: '+0.1200',
-          eur: '100.8200', eurDelta: '-0.0800',
-          date: ''
+          eur: '100.1500', eurDelta: '+0.0800',
+          date: '14.10'
         });
       }
-    }
+    });
   };
 
   /* ===================== TV SCHEDULE (DYNAMIC + ONLINE) ===================== */
