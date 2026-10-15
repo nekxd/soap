@@ -759,10 +759,6 @@
         </span>
       </div>
       <div style="font-size:11px; color:#555; display:flex; align-items:center; gap:12px;">
-        <span style="display:inline-flex; align-items:center; gap:3px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#008800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          База сообщений: <span id="storageLabel" style="color:#008800; font-weight:bold;">Зашифрована (AES-256)</span>
-        </span>
         <span style="color:#006600; font-weight:bold; display:inline-flex; align-items:center; gap:3px;" title="Аккаунт сохранён в cookie">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#006600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 13v.01"/></svg>
           Cookie активен
@@ -1142,6 +1138,8 @@
     ];
     var currentSelectedRoom = 'ЧАТ@SOAP (Единый чат для всех)';
     var inChatView = false;
+    var myClientId = 'cli_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
+    var displayedMsgIds = {};
 
     function setHeaderNavBtn(isChangeNick) {
       var headerBtn = document.getElementById('headerNavBtn');
@@ -1174,7 +1172,6 @@
         '</div>' +
         '</div>' +
         '<div style="padding: 8px 12px; font-size: 11px; color: #003300; background: rgba(255,255,255,0.65); border-radius: 2px; margin-top: 6px; line-height: 1.5; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">' +
-        '<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> База зашифрована (AES-256)</span>' +
         '<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Защита от спама</span>' +
         '<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 13v.01"/></svg> Аккаунт в cookie</span>' +
         '</div>';
@@ -1470,14 +1467,21 @@
 
     setInterval(updateSpamUi, 250);
 
-    // --- Message Rendering ---
+    // --- Message Rendering & Real-time Distribution ---
     function addMessageToUi(msg) {
+      if (!msg || !msg.id) return;
+      var msgKey = String(msg.id);
+      if (displayedMsgIds[msgKey] || document.getElementById('msg_' + msgKey)) {
+        return;
+      }
+      displayedMsgIds[msgKey] = true;
+
       var div = document.createElement('div');
       div.className = 'chat-msg' + (msg.is_system ? ' msg-system' : '');
-      div.id = 'msg_' + msg.id;
+      div.id = 'msg_' + msgKey;
 
       var timeSpan = '<span class="msg-time">[' + escapeHtml(msg.time || '') + ']</span>';
-      var deleteBtn = isAdmin ? '<span class="msg-delete-btn" title="Удалить сообщение" onclick="deleteMessage(' + msg.id + ')" style="display:inline-flex; align-items:center; vertical-align:-1px; margin-left:6px; cursor:pointer; color:#d90000;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' : '';
+      var deleteBtn = isAdmin ? '<span class="msg-delete-btn" title="Удалить сообщение" onclick="deleteMessage(\'' + escapeHtml(msgKey) + '\')" style="display:inline-flex; align-items:center; vertical-align:-1px; margin-left:6px; cursor:pointer; color:#d90000;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' : '';
 
       if (msg.is_system) {
         div.innerHTML = timeSpan + ' <b style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>[СИСТЕМА]</b> ' + parseSmilies(msg.text) + deleteBtn;
@@ -1541,7 +1545,8 @@
       var chosenColor = colorSelect.value;
 
       var newMsg = {
-        id: Date.now(),
+        id: Date.now() + '_' + Math.floor(Math.random() * 100000),
+        client_id: myClientId,
         room: 'general',
         author: myNick,
         text: text,
@@ -1560,55 +1565,96 @@
       msgInput.value = '';
       playBeep(800, 0.1);
 
-      // If backend server is active, send via HTTP API
+      broadcastOutgoingMessage(newMsg);
+    };
+
+    function broadcastOutgoingMessage(newMsg) {
+      addMessageToUi(newMsg);
+
+      if (!rawDbDecrypted) rawDbDecrypted = { messages: [], banned_users: [], muted_users: {} };
+      if (!rawDbDecrypted.messages) rawDbDecrypted.messages = [];
+      rawDbDecrypted.messages.push(newMsg);
+      saveLocalEncryptedDb();
+
+      // 1. Cross-tab BroadcastChannel
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          var bc = new BroadcastChannel('soap_chat_channel');
+          bc.postMessage({ type: 'new_message', message: newMsg });
+        }
+      } catch(e) {}
+
+      // 2. Cross-tab localStorage sync
+      try {
+        localStorage.setItem('soap_latest_msg_sync', JSON.stringify({ t: Date.now(), msg: newMsg }));
+      } catch(e) {}
+
+      // 3. Encrypted public relay (ntfy.sh) - reaches all devices/browsers across the internet!
+      try {
+        var enc = window.ChatCrypto.encrypt(newMsg, 'yndchatadmin2010!!');
+        fetch('https://ntfy.sh/soap_chat_ynd_2010_general', {
+          method: 'POST',
+          headers: { 'Title': 'soap_msg' },
+          body: enc
+        }).catch(function(){});
+      } catch(e) {}
+
+      // 4. Local node server if active
       if (serverOnline) {
         fetch('/api/chat/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             room: 'general',
-            author: myNick,
-            text: text,
-            color: chosenColor,
+            author: newMsg.author,
+            text: newMsg.text,
+            color: newMsg.color,
             admin_token: isAdmin ? adminToken : ''
           })
-        }).then(function(r) { return r.json(); })
-          .then(function(res) {
-            if (res.success) {
-              if (rawDbDecrypted && rawDbDecrypted.messages) {
-                rawDbDecrypted.messages.push(res.message);
-              }
-              addMessageToUi(res.message);
-            } else {
-              alert(res.error || 'Ошибка отправки');
-            }
-          }).catch(function() {
-            handleClientStorageSend(newMsg);
-          });
-      } else {
-        handleClientStorageSend(newMsg);
+        }).catch(function(){});
       }
-    };
+    }
 
-    function handleClientStorageSend(newMsg) {
+    function handleIncomingMessage(msg) {
+      if (!msg || !msg.id) return;
+      var msgKey = String(msg.id);
+      if (displayedMsgIds[msgKey] || document.getElementById('msg_' + msgKey)) {
+        return;
+      }
+
+      addMessageToUi(msg);
+
+      if (!isInitialSyncing && msg.client_id !== myClientId) {
+        playBeep(650, 0.08);
+      }
+
       if (!rawDbDecrypted) rawDbDecrypted = { messages: [], banned_users: [], muted_users: {} };
       if (!rawDbDecrypted.messages) rawDbDecrypted.messages = [];
-      rawDbDecrypted.messages.push(newMsg);
-
-      try {
-        var enc = window.ChatCrypto.encrypt(rawDbDecrypted, 'yndchatadmin2010!!');
-        localStorage.setItem('soap_chat_data_encrypted', enc);
-        rawDbEncrypted = enc;
-
-        if (typeof BroadcastChannel !== 'undefined') {
-          var bc = new BroadcastChannel('soap_chat_channel');
-          bc.postMessage({ type: 'new_message', message: newMsg });
-        }
-      } catch (e) {
-        console.error('Local encryption error:', e);
+      if (!rawDbDecrypted.messages.some(function(m) { return String(m.id) === msgKey; })) {
+        rawDbDecrypted.messages.push(msg);
+        saveLocalEncryptedDb();
       }
+    }
 
-      addMessageToUi(newMsg);
+    function handleIncomingEncryptedString(encStr) {
+      if (!encStr || typeof encStr !== 'string') return;
+      try {
+        var dec = window.ChatCrypto.decrypt(encStr, 'yndchatadmin2010!!');
+        var obj = JSON.parse(dec);
+        if (obj && obj.action === 'delete_message' && obj.payload && obj.payload.id) {
+          var delEl = document.getElementById('msg_' + obj.payload.id);
+          if (delEl) delEl.remove();
+          return;
+        }
+        if (obj && obj.action === 'clear_chat') {
+          messagesStream.innerHTML = '';
+          displayedMsgIds = {};
+          return;
+        }
+        if (obj && obj.text && obj.author) {
+          handleIncomingMessage(obj);
+        }
+      } catch(e) {}
     }
 
     // --- Smilies Popover Handling (Full 281 Animated Kolobok Smilies) ---
@@ -1789,6 +1835,22 @@
       var el = document.getElementById('msg_' + id);
       if (el) el.remove();
 
+      var delPayload = { action: 'delete_message', payload: { id: id } };
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          var bc = new BroadcastChannel('soap_chat_channel');
+          bc.postMessage(delPayload);
+        }
+      } catch(e) {}
+      try {
+        var enc = window.ChatCrypto.encrypt(delPayload, 'yndchatadmin2010!!');
+        fetch('https://ntfy.sh/soap_chat_ynd_2010_general', {
+          method: 'POST',
+          headers: { 'Title': 'soap_del' },
+          body: enc
+        }).catch(function(){});
+      } catch(e) {}
+
       if (serverOnline) {
         fetch('/api/chat/admin', {
           method: 'POST',
@@ -1803,7 +1865,7 @@
       }
 
       if (rawDbDecrypted && rawDbDecrypted.messages) {
-        rawDbDecrypted.messages = rawDbDecrypted.messages.filter(function(m) { return m.id !== id; });
+        rawDbDecrypted.messages = rawDbDecrypted.messages.filter(function(m) { return String(m.id) !== String(id); });
         saveLocalEncryptedDb();
       }
     };
@@ -1813,6 +1875,24 @@
       if (!confirm('Очистить все сообщения в чате?')) return;
 
       messagesStream.innerHTML = '';
+      displayedMsgIds = {};
+
+      var clearPayload = { action: 'clear_chat' };
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          var bc = new BroadcastChannel('soap_chat_channel');
+          bc.postMessage(clearPayload);
+        }
+      } catch(e) {}
+      try {
+        var enc = window.ChatCrypto.encrypt(clearPayload, 'yndchatadmin2010!!');
+        fetch('https://ntfy.sh/soap_chat_ynd_2010_general', {
+          method: 'POST',
+          headers: { 'Title': 'soap_clear' },
+          body: enc
+        }).catch(function(){});
+      } catch(e) {}
+
       if (serverOnline) {
         fetch('/api/chat/admin', {
           method: 'POST',
@@ -1831,8 +1911,9 @@
         saveLocalEncryptedDb();
       }
 
-      addMessageToUi({
-        id: Date.now(),
+      var clearMsg = {
+        id: 'sys_' + Date.now(),
+        client_id: myClientId,
         room: 'general',
         author: 'Система',
         text: 'Чат очищен администратором ynd.',
@@ -1840,7 +1921,8 @@
         time: getCurrentTimeString(),
         is_system: true,
         is_admin: true
-      });
+      };
+      broadcastOutgoingMessage(clearMsg);
     };
 
     window.adminSendAnnouncement = function() {
@@ -1861,8 +1943,9 @@
         });
       }
 
-      addMessageToUi({
-        id: Date.now(),
+      var announceMsg = {
+        id: 'ann_' + Date.now() + '_' + Math.floor(Math.random() * 10000),
+        client_id: myClientId,
         room: 'general',
         author: 'СИСТЕМА (Оповещение)',
         text: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' + text,
@@ -1870,7 +1953,8 @@
         time: getCurrentTimeString(),
         is_system: true,
         is_admin: true
-      });
+      };
+      broadcastOutgoingMessage(announceMsg);
       playBeep(900, 0.25);
     };
 
@@ -1932,8 +2016,9 @@
       rawDbDecrypted.muted_users[user.toLowerCase()] = Date.now() + (mins * 60 * 1000);
       saveLocalEncryptedDb();
 
-      addMessageToUi({
-        id: Date.now(),
+      var muteMsg = {
+        id: 'mute_' + Date.now(),
+        client_id: myClientId,
         room: 'general',
         author: 'Система',
         text: 'Пользователь [' + user + '] лишён слова администратором на ' + mins + ' мин.',
@@ -1941,7 +2026,8 @@
         time: getCurrentTimeString(),
         is_system: true,
         is_admin: true
-      });
+      };
+      broadcastOutgoingMessage(muteMsg);
       alert('Выдан мут пользователю ' + user + ' на ' + mins + ' мин.');
     };
 
@@ -2008,28 +2094,131 @@
       }
     }
 
-    // --- Cross-tab Synchronization (BroadcastChannel) ---
-    if (typeof BroadcastChannel !== 'undefined') {
-      var bc = new BroadcastChannel('soap_chat_channel');
-      bc.onmessage = function(ev) {
-        if (ev.data && ev.data.type === 'new_message' && ev.data.message) {
-          var m = ev.data.message;
-          if (m.author !== myNick) {
-            addMessageToUi(m);
-            playBeep(650, 0.08);
-          }
+    // --- Global Real-Time Multi-Client Synchronization Engine ---
+    var isInitialSyncing = true;
+    var lastNtfyPollTime = 0;
+    var ntfyEventSource = null;
+
+    function initRealtimeSync() {
+      // 1. Cross-tab BroadcastChannel listener
+      if (typeof BroadcastChannel !== 'undefined') {
+        try {
+          var bc = new BroadcastChannel('soap_chat_channel');
+          bc.onmessage = function(ev) {
+            if (!ev.data) return;
+            if (ev.data.action === 'delete_message' && ev.data.payload && ev.data.payload.id) {
+              var delEl = document.getElementById('msg_' + ev.data.payload.id);
+              if (delEl) delEl.remove();
+              return;
+            }
+            if (ev.data.action === 'clear_chat') {
+              messagesStream.innerHTML = '';
+              displayedMsgIds = {};
+              return;
+            }
+            if (ev.data.type === 'new_message' && ev.data.message) {
+              handleIncomingMessage(ev.data.message);
+            }
+          };
+        } catch(e) {}
+      }
+
+      // 2. Cross-tab localStorage sync fallback
+      window.addEventListener('storage', function(ev) {
+        if (ev.key === 'soap_latest_msg_sync' && ev.newValue) {
+          try {
+            var data = JSON.parse(ev.newValue);
+            if (data && data.msg) {
+              handleIncomingMessage(data.msg);
+            }
+          } catch(e) {}
         }
-      };
+      });
+
+      // 3. Connect to live encrypted pubsub SSE stream (global cross-device sync)
+      startNtfyEventSource();
+
+      // 4. Background poller every 2.5s for infallible fallback
+      setInterval(pollOnlineMessages, 2500);
+
+      // Disable initial silent sync after 3 seconds
+      setTimeout(function() {
+        isInitialSyncing = false;
+      }, 3000);
     }
 
-    // --- Polling & Initialization ---
+    function startNtfyEventSource() {
+      if (typeof EventSource === 'undefined') return;
+      try {
+        if (ntfyEventSource) {
+          ntfyEventSource.close();
+        }
+        ntfyEventSource = new EventSource('https://ntfy.sh/soap_chat_ynd_2010_general/sse?since=24h');
+        ntfyEventSource.onmessage = function(ev) {
+          if (!ev.data) return;
+          try {
+            var eventObj = JSON.parse(ev.data);
+            if (eventObj.time) {
+              lastNtfyPollTime = Math.max(lastNtfyPollTime, eventObj.time);
+            }
+            if (eventObj.event === 'message' && eventObj.message) {
+              handleIncomingEncryptedString(eventObj.message);
+            }
+          } catch(e) {}
+        };
+        ntfyEventSource.onerror = function() {
+          // SSE will automatically try to reconnect; pollOnlineMessages acts as backup
+        };
+      } catch(e) {
+        console.warn('SSE connection init error:', e);
+      }
+    }
+
+    function pollOnlineMessages() {
+      // 1. If local Node server is running, poll it
+      if (serverOnline) {
+        fetch('/api/chat/state?since_id=' + lastReceivedId + '&viewer=' + encodeURIComponent(myNick))
+          .then(function(r) { return r.json(); })
+          .then(function(res) {
+            if (res.success && res.messages && res.messages.length > 0) {
+              res.messages.forEach(function(m) {
+                if (m.id > lastReceivedId) lastReceivedId = m.id;
+                handleIncomingMessage(m);
+              });
+            }
+          }).catch(function() {});
+      }
+
+      // 2. Global encrypted internet pubsub poll (cross-device/cross-browser sync)
+      var sinceParam = lastNtfyPollTime > 0 ? (lastNtfyPollTime + 1) : '24h';
+      fetch('https://ntfy.sh/soap_chat_ynd_2010_general/json?poll=1&since=' + sinceParam)
+        .then(function(r) { return r.text(); })
+        .then(function(txt) {
+          if (!txt || !txt.trim()) return;
+          var lines = txt.trim().split('\n');
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+            if (!line) continue;
+            try {
+              var obj = JSON.parse(line);
+              if (obj.time) {
+                lastNtfyPollTime = Math.max(lastNtfyPollTime, obj.time);
+              }
+              if (obj.event === 'message' && obj.message) {
+                handleIncomingEncryptedString(obj.message);
+              }
+            } catch(e) {}
+          }
+        }).catch(function() {});
+    }
+
+    // --- Database & Storage Initialization ---
     function initDatabase() {
       fetch('/api/chat/state')
         .then(function(r) { return r.json(); })
         .then(function(res) {
           if (res.success) {
             serverOnline = true;
-            document.getElementById('storageLabel').innerHTML = 'Сервер + Зашифрованный txt';
             messagesStream.innerHTML = '';
             res.messages.forEach(function(m) {
               addMessageToUi(m);
@@ -2043,7 +2232,7 @@
               } catch (e) {}
             });
 
-            setInterval(pollServer, 2000);
+            initRealtimeSync();
           }
         })
         .catch(function() {
@@ -2052,27 +2241,7 @@
         });
     }
 
-    function pollServer() {
-      if (!serverOnline) return;
-      fetch('/api/chat/state?since_id=' + lastReceivedId + '&viewer=' + encodeURIComponent(myNick))
-        .then(function(r) { return r.json(); })
-        .then(function(res) {
-          if (res.success && res.messages && res.messages.length > 0) {
-            res.messages.forEach(function(m) {
-              if (m.id > lastReceivedId) {
-                lastReceivedId = m.id;
-                addMessageToUi(m);
-                if (m.author !== myNick) {
-                  playBeep(650, 0.08);
-                }
-              }
-            });
-          }
-        }).catch(function() {});
-    }
-
     function initStaticEncryptedStorage() {
-      document.getElementById('storageLabel').innerHTML = 'Зашифровано AES-256 (chat_data.txt)';
       var saved = localStorage.getItem('soap_chat_data_encrypted');
 
       if (saved) {
@@ -2080,6 +2249,7 @@
           rawDbEncrypted = saved;
           rawDbDecrypted = JSON.parse(window.ChatCrypto.decrypt(saved, 'yndchatadmin2010!!'));
           renderInitialMessages();
+          initRealtimeSync();
           return;
         } catch (e) {
           console.warn('Saved local storage decode failed, loading from chat_data.txt');
@@ -2093,6 +2263,7 @@
           rawDbDecrypted = JSON.parse(window.ChatCrypto.decrypt(txt, 'yndchatadmin2010!!'));
           saveLocalEncryptedDb();
           renderInitialMessages();
+          initRealtimeSync();
         })
         .catch(function() {
           rawDbDecrypted = {
@@ -2104,6 +2275,7 @@
           };
           saveLocalEncryptedDb();
           renderInitialMessages();
+          initRealtimeSync();
         });
     }
 
