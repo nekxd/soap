@@ -481,90 +481,30 @@
       color: #ffcc66;
     }
 
-    /* Authentic 2010 Чат@Mail.Ru Sub-Toolbar */
-    .lobby-sub-toolbar {
-      background: #f4f7fb;
-      border-bottom: 1px solid #d0dbe8;
-      padding: 5px 12px;
-      font-size: 11px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .lobby-tools-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .lobby-tool-link {
-      color: #1b5ea8;
-      text-decoration: underline;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 11px;
-    }
-    .lobby-tool-link:hover { color: #f26522; }
-
-    /* Lobby Container and 3-Column Layout */
+    /* Lobby Container and 2-Column Layout (Center + Right) */
     .chat-lobby-container {
       max-width: 980px;
-      margin: 10px auto;
+      margin: 12px auto;
       padding: 0 10px;
       box-sizing: border-box;
     }
     .lobby-columns {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       margin-top: 10px;
       align-items: flex-start;
-    }
-    .lobby-col-left {
-      width: 185px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
     }
     .lobby-col-center {
       flex: 1;
       min-width: 0;
     }
     .lobby-col-right {
-      width: 220px;
+      width: 260px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
-    /* Left Sidebar Boxes (strictly no avatars) */
-    .lobby-box-user {
-      background: #fff8ee;
-      border: 1px solid #ffd8a8;
-      border-radius: 4px;
-      padding: 10px;
-      font-size: 11px;
-    }
-    .lobby-user-nick {
-      font-weight: bold;
-      color: #d90000;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    .lobby-user-links {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      line-height: 1.8;
-    }
-    .lobby-user-links a {
-      color: #1b5ea8;
-      text-decoration: underline;
-    }
-    .lobby-user-links a:hover { color: #f26522; }
 
     .lobby-card {
       background: #ffffff;
@@ -615,29 +555,6 @@
       outline: none;
       border-color: #00468c;
       box-shadow: 0 0 3px rgba(0,70,140,0.3);
-    }
-    .lobby-sort-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      margin-bottom: 6px;
-      color: #555;
-    }
-    .pill-sort-active {
-      background: #f26522;
-      color: #fff;
-      font-weight: bold;
-      padding: 2px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-    .pill-sort-idle {
-      color: #1b5ea8;
-      cursor: pointer;
-      text-decoration: underline;
-      padding: 2px 6px;
-    }
     .lobby-section-label {
       font-size: 11px;
       color: #666;
@@ -676,46 +593,6 @@
       background: #00468c;
       color: #ffffff;
       font-weight: bold;
-    }
-
-    /* Badges & Legend */
-    .lobby-legend-note {
-      font-size: 11px;
-      color: #444;
-      margin: 6px 0 4px 0;
-    }
-    .lobby-legend-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 8px;
-      font-size: 10px;
-    }
-    .legend-pill {
-      padding: 2px 6px;
-      border-radius: 2px;
-      border: 1px solid #ccc;
-      cursor: help;
-    }
-    .pill-permanent { background: #ccffff; border-color: #99e6e6; }
-    .pill-temporary { background: #ffccff; border-color: #e699e6; }
-    .pill-private { background: #ccccff; border-color: #9999e6; }
-    .pill-stream-yes { background: #b3ffb3; border-color: #80e680; }
-    .pill-stream-no { background: #d9ffd9; border-color: #b3e6b3; }
-
-    .lobby-checks-row {
-      margin: 6px 0;
-      font-size: 11px;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .lobby-checks-row label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
     }
 
     /* Authentic 3D Button [ Войти ] */
@@ -780,8 +657,8 @@
 
     @media (max-width: 780px) {
       .lobby-columns { flex-direction: column; }
-      .lobby-col-left, .lobby-col-right { width: 100%; }
-      .retro-room-box { height: 220px; }
+      .lobby-col-right { width: 100%; }
+      .retro-room-box { height: auto; }
       .lobby-input-name { width: 100%; }
     }
   </style>
@@ -811,82 +688,21 @@
     </div>
     <div style="display:flex; align-items:center; gap:12px; color:#ffffff; font-size:11px;">
       <span style="color:#cbdcf2;">chat-kontakt@soap.fun</span>
-      <span>Вы: <b id="headerNickGreeting" style="color:#ffcc66;">Гость</b> <span id="headerCookieBadge" style="background:#006600; color:#fff; font-size:9px; padding:1px 4px; border-radius:2px; margin-left:3px;" title="Аккаунт сохраняется в cookie">cookie</span></span>
-      <button type="button" class="btn-header-action" id="headerNavBtn" onclick="toggleLobbyChat()">Войти в чат</button>
+      <span>Вы: <b id="headerNickGreeting" style="color:#ffcc66;">Гость</b> <span id="headerCookieBadge" style="background:#006600; color:#fff; font-size:9px; padding:2px 5px; border-radius:2px; margin-left:3px; display:inline-flex; align-items:center; gap:2px;" title="Аккаунт сохраняется в cookie"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 13v.01"/></svg>cookie</span></span>
+      <button type="button" class="btn-header-action" id="headerNavBtn" onclick="toggleLobbyChat()" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg><span>Войти в чат</span></button>
     </div>
   </div>
 
-  <!-- Authentic 2010 Sub-Toolbar below Header (matching screenshot!) -->
-  <div class="lobby-sub-toolbar">
-    <div class="lobby-tools-left">
-      <span class="lobby-tool-link" onclick="submitLobbyEntry()">💬 <u>Единый ЧАТ@SOAP</u></span>
-      <span class="lobby-tool-link" onclick="quickSearchUser()">🔍 <u>Поиск посетителя</u></span>
-      <span class="lobby-tool-link" onclick="quickWhoInChat()">🧑‍🤝‍🧑 <u>Кто в чате?</u> <b style="color:#d90000; font-size:10px;">new</b></span>
-      <span class="lobby-tool-link" onclick="alert('Все данные аккаунта (ник и цвет) автоматически сохраняются в cookies вашего браузера на 365 дней!')">🍪 <u>Аккаунт в cookie</u></span>
-    </div>
-    <div>
-      <a href="help.html" class="lobby-tool-link">Помощь</a>
-    </div>
-  </div>
-
-  <!-- ==================== LOBBY VIEW: ВХОД В ЧАТ (matching screenshot) ==================== -->
+  <!-- ==================== LOBBY VIEW: ВХОД В ЧАТ ==================== -->
   <div id="viewLobby" class="chat-lobby-container">
     <div class="lobby-columns">
-      
-      <!-- LEFT COLUMN (strictly NO avatars) -->
-      <div class="lobby-col-left">
-        <!-- Kontakt Chat Box -->
-        <div class="lobby-box-user">
-          <div class="lobby-user-nick">
-            <span style="color:#f26522;">@</span> <span id="lobbyCardNick">Гость</span>
-          </div>
-          <ul class="lobby-user-links">
-            <li><a href="https://openvk.org/" target="_blank">🌐 Мой мир (OpenVK)</a></li>
-            <li><a href="index.html">📷 Фото</a></li>
-            <li><a href="index.html">🎬 Видео</a></li>
-            <li><a href="index.html">📝 Блог</a></li>
-          </ul>
-        </div>
-
-        <!-- Комната чата Box -->
-        <div class="lobby-card">
-          <div class="lobby-card-header">
-            <span>Комната</span>
-          </div>
-          <div class="lobby-card-body" style="padding: 6px;">
-            <div style="cursor:pointer; color:#1b5ea8; font-weight:bold; padding:2px 0;" onclick="submitLobbyEntry()">
-              ★ ЧАТ@SOAP (Единый для всех)
-            </div>
-            <div style="font-size:10px; color:#666; margin-top:2px;">
-              Все посетители общаются в одном общем потоке.
-            </div>
-          </div>
-        </div>
-
-        <!-- Мой игнор-лист Box -->
-        <div class="lobby-card">
-          <div class="lobby-card-header">
-            <span>🚫 Мой игнор-лист</span>
-          </div>
-          <div class="lobby-card-body" style="color:#777; font-size:11px;">
-            (Список пуст)
-          </div>
-        </div>
-
-        <!-- Подписка Box -->
-        <div class="lobby-card">
-          <div class="lobby-card-header">
-            <span>Подписка</span>
-          </div>
-          <div class="lobby-card-body" style="font-size:10px; color:#555;">
-            Я не хочу получать письма о назначении меня смотрителем и модератором, а также приглашения в комнаты.
-          </div>
-        </div>
-      </div>
 
       <!-- CENTER COLUMN: Вход в чат -->
       <div class="lobby-col-center">
-        <div class="lobby-form-title">Вход в Единый ЧАТ@SOAP</div>
+        <div class="lobby-form-title" style="display:flex; align-items:center; gap:6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#00468c"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          <span>Вход в Единый ЧАТ@SOAP</span>
+        </div>
 
         <div class="lobby-name-row">
           <label for="lobbyNickInput"><b>Имя в чате:</b></label>
@@ -904,36 +720,19 @@
           </span>
         </div>
 
-        <div class="lobby-sort-row">
-          <span>Формат общения:</span>
-          <span class="pill-sort-active">Один общий чат для всех</span>
-        </div>
-
         <div class="lobby-section-label">Единая комната:</div>
 
-        <!-- Big Retro Lime Green Room List Box (matching screenshot!) -->
+        <!-- Big Retro Lime Green Room List Box -->
         <div class="retro-room-box" id="lobbyRoomsContainer" style="height:auto; min-height:130px;">
           <!-- Populated dynamically via JS -->
         </div>
 
-        <!-- Legend Badges below room box -->
-        <div class="lobby-legend-note">
-          Единая комната портала soap — все сообщения в одном общем потоке <span title="Все посетители общаются в одном общем потоке" style="cursor:help; color:#1b5ea8;">❓</span>
-        </div>
-        <div class="lobby-legend-pills">
-          <span class="legend-pill pill-permanent" title="Постоянный единый чат">постоянный ❓</span>
-          <span class="legend-pill pill-stream-no" title="Обычный текстовый чат">текстовый ❓</span>
-          <span class="legend-pill" style="background:#e8f4d8; border-color:#b5d496;" title="Аккаунт сохраняется в cookie браузера на 365 дней">аккаунт в cookie 🍪</span>
-        </div>
-
-        <div class="lobby-checks-row">
-          <label><input type="checkbox" id="lobbyRememberCookie" checked="checked" /> <b>Сохранять аккаунт в cookie (входить сразу без вопросов)</b></label>
-          <label><input type="checkbox" id="lobbyNoIgnore" checked="checked" /> Без сообщений игнорирования</label>
-        </div>
-
         <!-- Authentic 3D Button [ Войти в чат ] -->
-        <div style="margin-top:6px;">
-          <button type="button" class="btn-lobby-enter" onclick="submitLobbyEntry()">Войти в чат</button>
+        <div style="margin-top:10px;">
+          <button type="button" class="btn-lobby-enter" onclick="submitLobbyEntry()" style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            <span>Войти в чат</span>
+          </button>
         </div>
 
         <div class="lobby-disclaimer">
@@ -946,15 +745,24 @@
         <!-- Лидеры чата Box -->
         <div class="lobby-card-leaders">
           <div class="leaders-title">
-            <span>⭐ Лидеры чата</span>
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#f26522" stroke="#cc5200" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Лидеры чата
+            </span>
             <a href="javascript:void(0)" onclick="alert('Статус лидера чата присваивается самым активным участникам!')" style="font-size:10px; color:#1b5ea8; text-decoration:underline;">Занять место</a>
           </div>
           <div class="leaders-item">
-            <div style="font-weight:bold; color:#d90000;">@ Gredo</div>
+            <div style="font-weight:bold; color:#d90000; display:inline-flex; align-items:center; gap:3px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              @ Gredo
+            </div>
             <div style="font-size:10px; color:#555;">в комнате: <b style="color:#00468c;">ЧАТ@SOAP (Единый)</b></div>
           </div>
           <div class="leaders-item">
-            <div style="font-weight:bold; color:#008800;">@ soap_user</div>
+            <div style="font-weight:bold; color:#008800; display:inline-flex; align-items:center; gap:3px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              @ soap_user
+            </div>
             <div style="font-size:10px; color:#555;">в комнате: <b style="color:#00468c;">ЧАТ@SOAP (Единый)</b></div>
           </div>
         </div>
@@ -962,7 +770,10 @@
         <!-- Новости проекта Box -->
         <div class="lobby-card">
           <div class="lobby-card-header">
-            <span>Новости проекта ЧАТ@SOAP</span>
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#003366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><line x1="7" y1="8" x2="13" y2="8"/><line x1="7" y1="12" x2="13" y2="12"/><line x1="7" y1="16" x2="10" y2="16"/></svg>
+              Новости проекта ЧАТ@SOAP
+            </span>
           </div>
           <div class="lobby-card-body">
             <ul class="news-bullet-list">
@@ -974,17 +785,6 @@
             </ul>
           </div>
         </div>
-
-        <!-- Рассылка Box -->
-        <div class="lobby-card">
-          <div class="lobby-card-header">
-            <span>✉️ Рассылка от ЧАТ@SOAP</span>
-          </div>
-          <div class="lobby-card-body">
-            <input type="text" id="lobbySubscribeEmail" class="lobby-input-name" style="width:100%; box-sizing:border-box; margin-bottom:6px;" placeholder="chat-kontakt@mail.ru" />
-            <button type="button" class="btn-lobby-enter" style="padding:3px 12px; font-size:11px; width:100%;" onclick="alert('Спасибо! Вы успешно подписались на рассылку чата.')">Подписаться</button>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -993,14 +793,29 @@
   <!-- ==================== LIVE CHAT VIEW ==================== -->
   <div id="viewChat" class="chat-box-container" style="display:none;">
     <div style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-      <div>
-        <button type="button" class="btn-lobby-enter" style="padding:3px 12px; font-size:11px;" onclick="goToLobby()">🚪 Сменить имя</button>
-        <button type="button" class="btn-lobby-enter" style="padding:3px 10px; font-size:11px; margin-left:4px; color:#cc0000;" onclick="resetAccount()">❌ Выйти</button>
-        <span style="margin-left:8px; font-size:12px;">Чат: <b id="activeChatRoomName" style="color:#00468c;">ЧАТ@SOAP (Единый чат для всех)</b></span>
+      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="btn-lobby-enter" style="padding:3px 10px; font-size:11px; display:inline-flex; align-items:center; gap:4px;" onclick="goToLobby()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+          <span>Сменить имя</span>
+        </button>
+        <button type="button" class="btn-lobby-enter" style="padding:3px 10px; font-size:11px; color:#cc0000; display:inline-flex; align-items:center; gap:4px;" onclick="resetAccount()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Выйти</span>
+        </button>
+        <span style="margin-left:6px; font-size:12px; display:inline-flex; align-items:center; gap:4px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00468c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Чат: <b id="activeChatRoomName" style="color:#00468c;">ЧАТ@SOAP (Единый чат для всех)</b>
+        </span>
       </div>
-      <div style="font-size:11px; color:#555;">
-        База сообщений: <span id="storageLabel" style="color:#008800; font-weight:bold;">Зашифрована (AES-256)</span>
-        <span style="margin-left:8px; color:#006600; font-weight:bold;" title="Аккаунт сохранён в cookie">🍪 Cookie активен</span>
+      <div style="font-size:11px; color:#555; display:flex; align-items:center; gap:12px;">
+        <span style="display:inline-flex; align-items:center; gap:3px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#008800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          База сообщений: <span id="storageLabel" style="color:#008800; font-weight:bold;">Зашифрована (AES-256)</span>
+        </span>
+        <span style="color:#006600; font-weight:bold; display:inline-flex; align-items:center; gap:3px;" title="Аккаунт сохранён в cookie">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#006600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 13v.01"/></svg>
+          Cookie активен
+        </span>
       </div>
     </div>
 
@@ -1025,19 +840,33 @@
               <option value="#660099">Фиолетовый</option>
             </select>
           </span>
-          <label><input type="checkbox" id="autoscrollCheck" checked="checked" /> Автопрокрутка</label>
-          <label><input type="checkbox" id="soundCheck" checked="checked" /> Звук</label>
+          <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer;">
+            <input type="checkbox" id="autoscrollCheck" checked="checked" />
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+            Автопрокрутка
+          </label>
+          <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer;">
+            <input type="checkbox" id="soundCheck" checked="checked" />
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            Звук
+          </label>
         </div>
 
         <div class="controls-row-2">
           <input type="text" id="msgInput" class="chat-input-text" placeholder="Введите сообщение..." maxlength="350" autocomplete="off" />
-          <button type="button" class="btn-smiles-toggle" id="smilesToggleBtn" onclick="toggleSmilies()">Смайлы :)</button>
-          <button type="button" class="btn-submit" id="sendBtn" onclick="sendMessage()">Отправить</button>
+          <button type="button" class="btn-smiles-toggle" id="smilesToggleBtn" onclick="toggleSmilies()" style="display:inline-flex; align-items:center; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            <span>Смайлы</span>
+          </button>
+          <button type="button" class="btn-submit" id="sendBtn" onclick="sendMessage()" style="display:inline-flex; align-items:center; gap:4px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            <span>Отправить</span>
+          </button>
         </div>
 
         <div class="spam-info-row">
           <div class="spam-indicator-tag" id="spamStatus">
-            <span class="spam-status-ready">● Готов к отправке</span>
+            <span class="spam-status-ready" style="display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#008800"><circle cx="12" cy="12" r="10"/></svg> Готов к отправке</span>
           </div>
           <div style="font-size:10px; color:#888;">
             Защита от спама: кулдаун 2.5 сек | дубликаты и Caps Lock блокируются
@@ -1050,8 +879,13 @@
   <!-- Smilies Popover (281 animated Kolobok smilies from smiles/) -->
   <div class="smilies-box" id="smiliesPopover">
     <div class="smilies-header">
-      <span>😊 Смайлики (smiles)</span>
-      <span class="smilies-close" onclick="toggleSmilies()">✕</span>
+      <span style="display:inline-flex; align-items:center; gap:4px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        Смайлики (smiles)
+      </span>
+      <span class="smilies-close" onclick="toggleSmilies()" style="display:inline-flex; align-items:center; cursor:pointer;" title="Закрыть">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </span>
     </div>
     <div class="smilies-toolbar">
       <input type="text" id="smiliesSearchInput" class="smilies-search" placeholder="Поиск (:), rofl, dance...)" oninput="filterSmilies(this.value)" />
@@ -1073,8 +907,13 @@
   <div class="admin-overlay" id="adminModalOverlay">
     <div class="admin-card">
       <div class="admin-top-bar">
-        <span>⚙️ Панель управления ЧАТ@SOAP (ynd)</span>
-        <span class="admin-close-x" onclick="closeAdmin()">✕</span>
+        <span style="display:inline-flex; align-items:center; gap:5px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Панель управления ЧАТ@SOAP (ynd)
+        </span>
+        <span class="admin-close-x" onclick="closeAdmin()" style="display:inline-flex; align-items:center; cursor:pointer;" title="Закрыть">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
       </div>
       <div class="admin-nav-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('actions')">Действия</button>
@@ -1122,7 +961,7 @@
           <p><b>Все данные хранятся в зашифрованном файле <code>chat_data.txt</code> (AES-256):</b></p>
           <textarea class="admin-file-box" id="adminDbViewer" readonly="readonly"></textarea>
           <div style="margin-top:8px; display:flex; gap:8px;">
-            <button class="btn-admin" onclick="adminDownloadEncryptedFile()">💾 Скачать chat_data.txt</button>
+            <button class="btn-admin" onclick="adminDownloadEncryptedFile()" style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Скачать chat_data.txt</button>
             <button class="btn-admin" onclick="adminToggleDbView()">Переключить: Зашифрованный / Расшифрованный</button>
           </div>
         </div>
@@ -1353,23 +1192,40 @@
     var currentSelectedRoom = 'ЧАТ@SOAP (Единый чат для всех)';
     var inChatView = false;
 
+    function setHeaderNavBtn(isChangeNick) {
+      var headerBtn = document.getElementById('headerNavBtn');
+      if (!headerBtn) return;
+      if (isChangeNick) {
+        headerBtn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg><span>Сменить имя</span>';
+      } else {
+        headerBtn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg><span>Войти в чат</span>';
+      }
+    }
+
     function renderLobbyRooms() {
       var box = document.getElementById('lobbyRoomsContainer');
       if (!box) return;
 
       var html = '<div class="retro-room-item selected" style="padding: 10px 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="submitLobbyEntry()" ondblclick="submitLobbyEntry()">' +
         '<div>' +
-        '<div style="font-size: 13px; font-weight: bold; color: #ffffff;">★ ЧАТ@SOAP — Единый чат для всех</div>' +
+        '<div style="font-size: 13px; font-weight: bold; color: #ffffff; display: flex; align-items: center; gap: 5px;">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="#ffcc00" stroke="#cc9900" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+        'ЧАТ@SOAP — Единый чат для всех' +
+        '</div>' +
         '<div style="font-size: 11px; font-weight: normal; margin-top: 4px; color: #d6e8ff;">' +
         'Все посетители портала soap общаются в одном общем потоке. Нажмите «Войти в чат», чтобы начать.' +
         '</div>' +
         '</div>' +
         '<div style="margin-left: 10px;">' +
-        '<span style="font-size: 11px; background: #28a745; color: #fff; padding: 3px 8px; border-radius: 3px; font-weight: bold; white-space: nowrap;">● Онлайн</span>' +
+        '<span style="font-size: 11px; background: #28a745; color: #fff; padding: 3px 8px; border-radius: 3px; font-weight: bold; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;">' +
+        '<svg width="8" height="8" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="10"/></svg>Онлайн' +
+        '</span>' +
         '</div>' +
         '</div>' +
-        '<div style="padding: 8px 12px; font-size: 11px; color: #003300; background: rgba(255,255,255,0.45); border-radius: 2px; margin-top: 6px; line-height: 1.5;">' +
-        '🔒 База данных зашифрована (AES-256) &bull; 🛡️ Защита от спама &bull; 🍪 Аккаунт сохраняется в cookie' +
+        '<div style="padding: 8px 12px; font-size: 11px; color: #003300; background: rgba(255,255,255,0.65); border-radius: 2px; margin-top: 6px; line-height: 1.5; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">' +
+        '<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> База зашифрована (AES-256)</span>' +
+        '<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Защита от спама</span>' +
+        '<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 13v.01"/></svg> Аккаунт в cookie</span>' +
         '</div>';
 
       box.innerHTML = html;
@@ -1423,8 +1279,7 @@
       document.getElementById('viewLobby').style.display = 'none';
       document.getElementById('viewChat').style.display = 'block';
 
-      var headerBtn = document.getElementById('headerNavBtn');
-      if (headerBtn) headerBtn.textContent = '🚪 Сменить имя';
+      setHeaderNavBtn(true);
 
       var activeRoomEl = document.getElementById('activeChatRoomName');
       if (activeRoomEl) activeRoomEl.textContent = 'ЧАТ@SOAP (Единый чат для всех)';
@@ -1450,8 +1305,7 @@
       document.getElementById('viewChat').style.display = 'none';
       document.getElementById('viewLobby').style.display = 'block';
 
-      var headerBtn = document.getElementById('headerNavBtn');
-      if (headerBtn) headerBtn.textContent = 'Войти в чат';
+      setHeaderNavBtn(false);
 
       updateNickDisplays();
       renderLobbyRooms();
@@ -1647,7 +1501,7 @@
       var now = Date.now();
       if (mutedUntil > now) {
         var left = Math.ceil((mutedUntil - now) / 1000);
-        spamStatus.innerHTML = '<span class="spam-status-muted">⛔ Заблокирован за спам (' + left + 'с)</span>';
+        spamStatus.innerHTML = '<span class="spam-status-muted" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg><span>Заблокирован за спам (' + left + 'с)</span></span>';
         sendBtn.disabled = true;
         return;
       }
@@ -1655,10 +1509,10 @@
       var cooldownMs = cooldownSeconds * 1000;
       if (now - lastSendTime < cooldownMs && !isAdmin) {
         var wait = ((cooldownMs - (now - lastSendTime)) / 1000).toFixed(1);
-        spamStatus.innerHTML = '<span class="spam-status-wait">⏳ Подождите ' + wait + 'с...</span>';
+        spamStatus.innerHTML = '<span class="spam-status-wait" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Подождите ' + wait + 'с...</span></span>';
         sendBtn.disabled = true;
       } else {
-        spamStatus.innerHTML = '<span class="spam-status-ready">● Готов к отправке</span>';
+        spamStatus.innerHTML = '<span class="spam-status-ready" style="display:inline-flex; align-items:center; gap:4px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="#008800"><circle cx="12" cy="12" r="10"/></svg><span>Готов к отправке</span></span>';
         sendBtn.disabled = false;
       }
     }
@@ -1672,12 +1526,12 @@
       div.id = 'msg_' + msg.id;
 
       var timeSpan = '<span class="msg-time">[' + escapeHtml(msg.time || '') + ']</span>';
-      var deleteBtn = isAdmin ? '<span class="msg-delete-btn" title="Удалить сообщение" onclick="deleteMessage(' + msg.id + ')">[x]</span>' : '';
+      var deleteBtn = isAdmin ? '<span class="msg-delete-btn" title="Удалить сообщение" onclick="deleteMessage(' + msg.id + ')" style="display:inline-flex; align-items:center; vertical-align:-1px; margin-left:6px; cursor:pointer; color:#d90000;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' : '';
 
       if (msg.is_system) {
-        div.innerHTML = timeSpan + ' <b>[СИСТЕМА]</b> ' + parseSmilies(msg.text) + deleteBtn;
+        div.innerHTML = timeSpan + ' <b style="display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>[СИСТЕМА]</b> ' + parseSmilies(msg.text) + deleteBtn;
       } else {
-        var adminBadge = msg.is_admin ? '<span class="msg-admin-badge">Админ</span>' : '';
+        var adminBadge = msg.is_admin ? '<span class="msg-admin-badge" style="display:inline-flex; align-items:center; gap:2px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Админ</span>' : '';
         var authorSpan = '<span class="msg-author" style="color:' + escapeHtml(msg.color || '#00468c') + ';">' + adminBadge + escapeHtml(msg.author) + ':</span>';
         var textSpan = '<span class="msg-text" style="color:' + escapeHtml(msg.color || '#222') + ';">' + parseSmilies(msg.text) + '</span>';
         div.innerHTML = timeSpan + ' ' + authorSpan + textSpan + deleteBtn;
@@ -1701,7 +1555,7 @@
       var text = msgInput.value.trim();
       if (!text) return;
 
-      // 🔑 SECRET ADMIN AUTHENTICATION INTERCEPTION
+      // [SECRET ADMIN AUTHENTICATION INTERCEPTION]
       // Format: admin ynd yndchatadmin2010!! or /admin ynd yndchatadmin2010!!
       var adminMatch = text.match(/^\/?admin\s+([^\s]+)\s+([^\s]+)/i);
       if (adminMatch) {
@@ -1938,7 +1792,7 @@
     try {
       Object.defineProperty(window.admin, 'toString', {
         value: function() {
-          return '💡 Чтобы войти в админку, вызовите функцию:\nadmin("ynd", "yndchatadmin2010!!")\nили введите прямо в строку сообщений чата:\nadmin ynd yndchatadmin2010!!';
+          return '[ЧАТ@SOAP] Чтобы войти в админку, вызовите функцию:\nadmin("ynd", "yndchatadmin2010!!")\nили введите прямо в строку сообщений чата:\nadmin ynd yndchatadmin2010!!';
         }
       });
     } catch(e) {}
@@ -2060,7 +1914,7 @@
         id: Date.now(),
         room: 'general',
         author: 'СИСТЕМА (Оповещение)',
-        text: '📢 ' + text,
+        text: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' + text,
         color: '#d90000',
         time: getCurrentTimeString(),
         is_system: true,
@@ -2319,14 +2173,12 @@
       inChatView = true;
       document.getElementById('viewLobby').style.display = 'none';
       document.getElementById('viewChat').style.display = 'block';
-      var headerBtn = document.getElementById('headerNavBtn');
-      if (headerBtn) headerBtn.textContent = '🚪 Сменить имя';
+      setHeaderNavBtn(true);
     } else {
       inChatView = false;
       document.getElementById('viewLobby').style.display = 'block';
       document.getElementById('viewChat').style.display = 'none';
-      var headerBtn = document.getElementById('headerNavBtn');
-      if (headerBtn) headerBtn.textContent = 'Войти в чат';
+      setHeaderNavBtn(false);
     }
 
     initDatabase();
