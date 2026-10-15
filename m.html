@@ -63,7 +63,7 @@
   </div>
 
   <!-- Section: Погода -->
-  <div class="m-sec-title">Погода <a href="http://weather.mail.ru/" class="m-sec-sublink">на 14 дней</a></div>
+  <div class="m-sec-title">Погода <span id="m_city_title" style="font-weight:normal; font-size:11px; color:#555;">(Москва)</span> <a href="javascript:void(0)" onclick="if(window.changeWeatherCity)changeWeatherCity();" class="m-sec-sublink">сменить город</a></div>
   <div class="m-sec-content">
     <div class="m-weather-box">
       <div class="m-weather-current">
@@ -251,6 +251,7 @@
         if (tempEl) setText(tempEl, fmt(w.temp));
         if (iconEl && w.icon) iconEl.src = 'assets/img/im/r/weather_new/pict_weather_big_' + w.icon + '.gif';
         if (lblEl && w.label) setText(lblEl, w.label);
+        if (w.city && document.getElementById('m_city_title')) setText(document.getElementById('m_city_title'), '(' + w.city + ')');
 
         var mornMin = (w.morn != null) ? (w.morn - 1) : ((w.todayMin != null) ? w.todayMin : ((w.temp != null) ? w.temp - 2 : null));
         var mornMax = (w.morn != null) ? (w.morn + 1) : ((w.temp != null) ? w.temp + 1 : null);

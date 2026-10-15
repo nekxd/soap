@@ -404,8 +404,7 @@
 
             <div class="line mb10"> </div>
 
-<!-- Weather + Currency + TV -->
-            <h2 class="mb10"><a href="http://pogoda.mail.ru/" target="_blank" id="cityHeader">Москва</a><span id="jsdate"></span></h2>
+            <h2 class="mb10"><a href="javascript:void(0)" onclick="if(window.changeWeatherCity)changeWeatherCity();" id="cityHeader" title="Нажмите, чтобы сменить город" style="cursor:pointer;">Москва</a><span style="font-size:10px; font-weight:normal; margin-left:6px;"><a href="javascript:void(0)" onclick="if(window.changeWeatherCity)changeWeatherCity();" style="color:#00468c; text-decoration:underline;">[сменить]</a></span><span id="jsdate"></span></h2>
 <table class="info_today2">
 <tr>
 <td class="weather_review" id="weather">
@@ -593,15 +592,20 @@ function initWeather(){
       p2Label = 'днём: ';
       p2Val = (w.day != null) ? w.day : (w.tomorrow != null ? w.tomorrow : w.temp);
     } else if (hour >= 6 && hour < 12) {
+      p1Label = 'утром: ';
+      p1Val = (w.morn != null) ? w.morn : w.temp;
+      p2Label = 'днём: ';
+      p2Val = (w.day != null) ? w.day : (w.tomorrow != null ? w.tomorrow : w.temp);
+    } else if (hour >= 12 && hour < 18) {
       p1Label = 'днём: ';
       p1Val = (w.day != null) ? w.day : w.temp;
       p2Label = 'вечером: ';
       p2Val = (w.evening != null) ? w.evening : w.tomorrow;
-    } else if (hour >= 12 && hour < 18) {
+    } else {
       p1Label = 'вечером: ';
       p1Val = (w.evening != null) ? w.evening : w.temp;
-      p2Label = 'ночью: ';
-      p2Val = (w.night != null) ? w.night : (w.tomorrowMin != null ? w.tomorrowMin : w.tomorrow);
+      p2Label = 'завтра: ';
+      p2Val = (w.tomorrow != null) ? w.tomorrow : w.temp;
     }
 
     if (eveEl && p1Val !== null && p1Val !== undefined) {
