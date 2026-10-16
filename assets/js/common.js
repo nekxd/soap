@@ -225,6 +225,12 @@
       img: 'assets/img/banners/faero.png',
       remoteImg: 'http://faero.top/ad/faero.png',
       url: 'http://faero.top'
+    },
+    {
+      title: 'OddMarket',
+      img: 'assets/img/banners/oddmarket.png',
+      remoteImg: 'assets/img/banners/oddmarket.png',
+      url: 'http://oddmarket.ct.ws/'
     }
   ];
 
@@ -238,9 +244,12 @@
 
     function render(idx) {
       var b = banners[idx];
+      var fallbackAttr = (b.remoteImg && b.remoteImg !== b.img)
+        ? 'onerror="if(this.src!=\'' + b.remoteImg + '\'){this.src=\'' + b.remoteImg + '\';}else{this.onerror=null;}" '
+        : 'onerror="this.onerror=null;" ';
       var html = '<a href="' + b.url + '" target="_blank" title="' + esc(b.title) + '">' +
         '<img src="' + b.img + '" width="300" height="259" border="0" alt="' + esc(b.title) + '" style="width:100%; max-width:300px; height:auto; border-radius:4px; display:block; margin:0 auto;" ' +
-        'onerror="if(this.src!=\'' + b.remoteImg + '\'){this.src=\'' + b.remoteImg + '\';}" /></a>';
+        fallbackAttr + '/></a>';
       el.innerHTML = html;
     }
 
