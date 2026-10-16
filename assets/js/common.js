@@ -231,6 +231,18 @@
       img: 'assets/img/banners/oddmarket.png',
       remoteImg: 'assets/img/banners/oddmarket.png',
       url: 'http://oddmarket.ct.ws/'
+    },
+    {
+      title: 'soap есть в OpenVK',
+      img: 'assets/img/banners/soap-in-ovk.png',
+      remoteImg: 'assets/img/banners/soap-in-ovk.png',
+      url: 'https://openvk.org/soap'
+    },
+    {
+      title: 'soap есть в Telegram',
+      img: 'assets/img/banners/soap-in-tg.png',
+      remoteImg: 'assets/img/banners/soap-in-tg.png',
+      url: 'https://t.me/soap_fun'
     }
   ];
 
