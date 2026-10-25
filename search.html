@@ -609,8 +609,9 @@ function getXHR() {
 }
 
 function makeRequest(url, callback, timeoutMs) {
-  timeoutMs = timeoutMs || 3000;
+  timeoutMs = timeoutMs || 8000;
   var settled = false;
+  var activeXhr = null;
 
   function onDone(err, text) {
     if (settled) return;
@@ -622,67 +623,45 @@ function makeRequest(url, callback, timeoutMs) {
   var timer = setTimeout(function () {
     if (settled) return;
     settled = true;
-    try { if (xhr && xhr.abort) xhr.abort(); } catch (e) {}
+    try { if (activeXhr && activeXhr.abort) activeXhr.abort(); } catch (e) {}
     callback(new Error('timeout'), null);
   }, timeoutMs);
 
-  // 1. Modern fetch if available
-  if (typeof fetch !== 'undefined') {
-    try {
-      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-      var fetchTimer = setTimeout(function () {
-        if (ctrl) try { ctrl.abort(); } catch (e) {}
-      }, timeoutMs);
-
-      fetch(url, { mode: 'cors', signal: ctrl ? ctrl.signal : undefined })
-        .then(function (resp) {
-          clearTimeout(fetchTimer);
-          if (!resp.ok) {
-            onDone(new Error('HTTP ' + resp.status), null);
-          } else {
-            return resp.text();
+  function tryXHR() {
+    var xhr = getXHR();
+    activeXhr = xhr;
+    if (xhr) {
+      try {
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              onDone(null, xhr.responseText);
+            } else if (xhr.status === 0 && typeof XDomainRequest !== 'undefined') {
+              tryXDR();
+            } else {
+              onDone(new Error('HTTP ' + xhr.status), null);
+            }
           }
-        })
-        .then(function (text) {
-          if (typeof text === 'string') onDone(null, text);
-        })
-        ['catch'](function (err) {
-          clearTimeout(fetchTimer);
-          onDone(err, null);
-        });
-      return;
-    } catch (e) {}
-  }
-
-  // 2. Standard / ActiveX XMLHttpRequest
-  var xhr = getXHR();
-  if (xhr) {
-    try {
-      xhr.open('GET', url, true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            onDone(null, xhr.responseText);
-          } else if (xhr.status === 0 && typeof XDomainRequest !== 'undefined') {
-            tryXDR();
-          } else {
-            onDone(new Error('HTTP ' + xhr.status), null);
-          }
+        };
+        xhr.send(null);
+        return;
+      } catch (e) {
+        if (typeof XDomainRequest !== 'undefined') {
+          tryXDR();
+          return;
         }
-      };
-      xhr.send(null);
-      return;
-    } catch (e) {
-      if (typeof XDomainRequest !== 'undefined') {
-        tryXDR();
+        onDone(e, null);
         return;
       }
-      onDone(e, null);
+    }
+    if (typeof XDomainRequest !== 'undefined') {
+      tryXDR();
       return;
     }
+    onDone(new Error('no transport'), null);
   }
 
-  // 3. XDomainRequest (IE8/IE9 cross-origin)
   function tryXDR() {
     try {
       var xdr = new XDomainRequest();
@@ -696,17 +675,46 @@ function makeRequest(url, callback, timeoutMs) {
     }
   }
 
-  if (typeof XDomainRequest !== 'undefined') {
-    tryXDR();
-    return;
+  // 1. Modern fetch if available
+  if (typeof fetch !== 'undefined') {
+    try {
+      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var fetchTimer = setTimeout(function () {
+        if (ctrl) try { ctrl.abort(); } catch (e) {}
+      }, timeoutMs);
+
+      fetch(url, { mode: 'cors', signal: ctrl ? ctrl.signal : undefined })
+        .then(function (resp) {
+          clearTimeout(fetchTimer);
+          if (!resp.ok) {
+            tryXHR();
+          } else {
+            return resp.text();
+          }
+        })
+        .then(function (text) {
+          if (typeof text === 'string') {
+            onDone(null, text);
+          }
+        })
+        ['catch'](function (err) {
+          clearTimeout(fetchTimer);
+          tryXHR();
+        });
+      return;
+    } catch (e) {
+      tryXHR();
+      return;
+    }
   }
 
-  onDone(new Error('no transport'), null);
+  // 2. Standard XHR / ActiveX
+  tryXHR();
 }
 
 var jsonpSeq = 0;
 function jsonp(url, callbackParam, callback, timeoutMs) {
-  timeoutMs = timeoutMs || 2500;
+  timeoutMs = timeoutMs || 3000;
   var callbackName = '_soap_jsonp_' + (++jsonpSeq) + '_' + Math.floor(Math.random() * 100000);
   var script = document.createElement('script');
   var timer = null;
@@ -812,7 +820,7 @@ function parseJinaMarkdown(text) {
   if (!text) return out;
 
   // 1. DuckDuckGo Lite format (1.[Title](url)\nSnippet\ndomain.com)
-  var ddgLiteRe = /(?:^|\n)\d+\.\[([^\]]+)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)\s*\n([\s\S]*?)(?=(?:\n\d+\.\[|\n*Next Page|\n*© DuckDuckGo|$))/g;
+  var ddgLiteRe = /(?:^|\n)\d+\.\[([^\]]+)\]\((https?:\/\/[^)]+)\)\s*\n([\s\S]*?)(?=(?:\n\d+\.\[|\n*Next Page|\n*© DuckDuckGo|$))/g;
   var m;
   while ((m = ddgLiteRe.exec(text)) !== null) {
     var rawTitle = m[1];
@@ -939,7 +947,7 @@ function fetchDdgLiteWebSearch(q, page, callback) {
   var jinaUrl = 'https://r.jina.ai/' + ddgLiteTarget;
 
   makeRequest(jinaUrl, function (err, text) {
-    if (!err && text && text.length > 100) {
+    if (!err && text && text.length > 80) {
       var items = parseJinaMarkdown(text);
       if (items && items.length > 0) {
         callback(null, items);
@@ -947,14 +955,12 @@ function fetchDdgLiteWebSearch(q, page, callback) {
       }
     }
     callback(err || new Error('no results'), null);
-  }, 3200);
+  }, 8000);
 }
 
 /* ===================== PARALLEL ACCELERATED SEARCH ===================== */
 function fetchWebSearch(q, page, callback) {
   var delivered = false;
-  var webResults = null;
-  var fastResults = [];
 
   function complete(items, isFallback, source) {
     if (delivered) return;
@@ -962,40 +968,33 @@ function fetchWebSearch(q, page, callback) {
     callback(items, isFallback, source);
   }
 
-  // 1. Parallel Probe A: Full Web Search (DuckDuckGo Lite via Jina)
+  // 1. Primary: DuckDuckGo Lite via Jina (gives 10 real web results)
   fetchDdgLiteWebSearch(q, page, function (err, items) {
     if (!err && items && items.length > 0) {
-      webResults = items;
       complete(items, false, 'web');
     } else {
-      webResults = false;
-      if (fastResults.length > 0) {
-        complete(fastResults, true, 'fast');
-      }
+      // 2. Fallback: DuckDuckGo Instant Answer API (JSONP)
+      fetchDdgApi(q, function (ddgItems) {
+        if (ddgItems && ddgItems.length > 0) {
+          complete(ddgItems, true, 'ddg_api');
+        } else {
+          complete([], false, 'none');
+        }
+      });
     }
   });
 
-  // 2. Parallel Probe B: DuckDuckGo Instant Answer API (JSONP)
-  fetchDdgApi(q, function (ddgItems) {
-    if (ddgItems && ddgItems.length > 0) {
-      fastResults = ddgItems.concat(fastResults);
-      if (webResults === false) {
-        complete(fastResults, true, 'fast');
-      }
-    }
-  });
-
-  // 3. Maximum race cutoff: 3.5 seconds
+  // Fallback cutoff timer after 8.5 seconds max
   setTimeout(function () {
     if (delivered) return;
-    if (webResults && webResults.length > 0) {
-      complete(webResults, false, 'web');
-    } else if (fastResults.length > 0) {
-      complete(fastResults, true, 'fast');
-    } else {
-      complete([], false, 'none');
-    }
-  }, 3500);
+    fetchDdgApi(q, function (ddgItems) {
+      if (ddgItems && ddgItems.length > 0) {
+        complete(ddgItems, true, 'ddg_api');
+      } else {
+        complete([], false, 'none');
+      }
+    });
+  }, 8500);
 }
 
 /* ===================== UI RENDERING & CACHING ===================== */
@@ -1050,19 +1049,20 @@ function showFallbackSearch(q) {
   var box = document.getElementById('results');
   var eb = document.getElementById('errbox');
   var qEnc = encodeURIComponent(q);
-  var html = '<div style="margin-bottom:8px; font-weight:bold; color:#00468c; font-size:14px;">Поиск по запросу «' + esc(q) + '» в интернете:</div>' +
-    '<div style="font-size:12px; color:#555; margin-bottom:12px;">Сетевой запрос не вернул прямых результатов на вашей системе. Вы можете мгновенно открыть результаты в поисковиках:</div>' +
-    '<div style="padding:6px 0; line-height:2.2em; font-size:13px;">' +
-    '&bull; <a href="http://lite.duckduckgo.com/lite/?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#0857a6;">⚡ DuckDuckGo Lite &rarr; (быстрый поиск без тяжелых скриптов, для старых ПК и телефонов)</a><br />' +
-    '&bull; <a href="https://www.google.com/search?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#2a6cd7;">🔍 Искать в Google &rarr;</a><br />' +
-    '&bull; <a href="https://duckduckgo.com/?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#de5833;">🦆 Искать в DuckDuckGo &rarr;</a>' +
+  var html = '<div style="background:#f4f7fb; border:1px solid #b8cde4; padding:16px 20px; margin-bottom:15px; border-radius:3px;">' +
+    '<div style="margin-bottom:8px; font-weight:bold; color:#00468c; font-size:15px;">Поиск по запросу «' + esc(q) + '»</div>' +
+    '<div style="font-size:13px; color:#444; margin-bottom:14px; line-height:1.5;">Нажмите кнопку ниже, чтобы открыть мгновенные результаты поиска в 1 клик:</div>' +
+    '<div style="margin-bottom:10px;">' +
+    '<a href="http://lite.duckduckgo.com/lite/?q=' + qEnc + '" style="display:inline-block; background:#00468c; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none; margin-right:10px;">⚡ Открыть в DuckDuckGo Lite (для старых ПК) &rarr;</a>' +
+    '<a href="https://www.google.com/search?q=' + qEnc + '" target="_blank" style="display:inline-block; background:#4285f4; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none;">🔍 Искать в Google &rarr;</a>' +
+    '</div>' +
     '</div>';
 
-  if (eb) {
+  if (box) {
+    box.innerHTML = html;
+  } else if (eb) {
     eb.style.display = 'block';
     eb.innerHTML = html;
-  } else if (box) {
-    box.innerHTML = html;
   }
 }
 
