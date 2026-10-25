@@ -339,7 +339,15 @@ body {background: #fff; min-width: 0;}
 					<div class="pl5" style="padding-top:3px">
 						<table border="0" cellpadding="0" cellspacing="0" class="t80" width="100%">
 							<tr valign="top">
-								<td align="right" style="width: 100%; white-space: nowrap;">
+								<td align="left" style="font-size:12px; color:#555; padding-top:2px;">
+									<span style="font-weight:bold; color:#333; margin-right:4px;">Искать в:</span>
+									<a href="http://lite.duckduckgo.com/lite/?q=" id="btnDdgLite" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#f4f7fb; border:1px solid #b8cde4; border-radius:2px; color:#0857a6; text-decoration:none; font-weight:bold;" title="Быстрый поиск HTML 4.01 для старых ПК и телефонов">⚡ DDG Lite (для старых ПК)</a>
+									<a href="https://ya.ru/search/?text=" id="btnYandex" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#c00; text-decoration:none;">Яндекс</a>
+									<a href="https://www.google.com/search?q=" id="btnGoogle" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#2a6cd7; text-decoration:none;">Google</a>
+									<a href="https://go.mail.ru/search?q=" id="btnMail" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#00468c; text-decoration:none;">Mail.ru</a>
+									<a href="https://ru.wikipedia.org/w/index.php?search=" id="btnWiki" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#333; text-decoration:none;">Википедия</a>
+								</td>
+								<td align="right" style="white-space: nowrap;">
 									<div id="sres" style="visibility: hidden; color: #999;">
 										Найдено:
 										<span class="sites">сайтов <b id="cntSites">0</b>,</span>
@@ -349,6 +357,12 @@ body {background: #fff; min-width: 0;}
 							</tr>
 						</table>
 					</div>
+					<noscript>
+						<div style="background:#fffbe8; border:1px solid #e2cb82; padding:6px 10px; margin-top:5px; font-size:12px; color:#333;">
+							<b>JavaScript отключен или не поддерживается.</b> Для мгновенного поиска на старом устройстве используйте:
+							<a href="http://lite.duckduckgo.com/lite/" target="_blank" style="font-weight:bold; color:#0857a6;">DuckDuckGo Lite (HTML 4.01)</a> или <a href="https://ya.ru" target="_blank" style="color:#c00;">Яндекс</a>.
+						</div>
+					</noscript>
 				</div>
 			</form>
 		</td>
@@ -375,11 +389,14 @@ body {background: #fff; min-width: 0;}
 				<div class="banner" id="searchBanner" style="text-align: center; margin-bottom: 15px;">
 					<a href="http://inori.faero.top" target="_blank"><img src="assets/img/banners/inori.png" width="260" height="224" border="0" alt="Inori Aizawa" /></a>
 				</div>
-				<div class="mb15" style="font-size:12px; color:#666; line-height: 1.6em; border-top: 1px solid #e0e0e0; padding-top: 10px; text-align: left;">
+				<div class="mb15" style="font-size:12px; color:#666; line-height: 1.7em; border-top: 1px solid #e0e0e0; padding-top: 10px; text-align: left;">
 					<b>Другие поисковики:</b><br />
-					&bull; <a href="http://faero.top/search?q=" id="linkFaero" target="_blank" style="color:#0857A6; font-weight:bold;">Faero.Top (для старых ПК)</a><br />
+					&bull; <a href="http://lite.duckduckgo.com/lite/?q=" id="linkDdgLite" target="_blank" style="color:#0857A6; font-weight:bold;">⚡ DuckDuckGo Lite (для старых ПК)</a><br />
+					&bull; <a href="https://ya.ru/search/?text=" id="linkYandex" target="_blank" style="color:#c00; font-weight:bold;">Яндекс</a><br />
+					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a><br />
+					&bull; <a href="https://go.mail.ru/search?q=" id="linkMail" target="_blank" style="color:#00468c;">Mail.ru</a><br />
 					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a><br />
-					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a>
+					&bull; <a href="https://ru.wikipedia.org/w/index.php?search=" id="linkWiki" target="_blank" style="color:#333;">Википедия</a>
 				</div>
 			</div>
 		</div>
@@ -439,7 +456,7 @@ body {background: #fff; min-width: 0;}
 
 <script src="assets/js/common.js"></script>
 <script type="text/javascript">
-/* ===================== RETRO SYSTEM POLYFILLS ===================== */
+/* ===================== RETRO SYSTEM POLYFILLS (IE6+, Opera 9+, NetFront, Symbian) ===================== */
 if (!Date.now) {
   Date.now = function () { return new Date().getTime(); };
 }
@@ -473,13 +490,15 @@ if (!Array.prototype.indexOf) {
 }
 if (!window.JSON) {
   window.JSON = {
-    parse: function (s) { return eval('(' + s + ')'); },
+    parse: function (s) {
+      return (new Function('return (' + s + ')'))();
+    },
     stringify: function (o) {
       if (o === null) return 'null';
       var t = typeof o;
       if (t === 'number' || t === 'boolean') return String(o);
       if (t === 'string') return '"' + o.replace(/"/g, '\\"') + '"';
-      if (o instanceof Array) {
+      if (o instanceof Array || Object.prototype.toString.call(o) === '[object Array]') {
         var a = [];
         for (var i = 0; i < o.length; i++) a.push(window.JSON.stringify(o[i]));
         return '[' + a.join(',') + ']';
@@ -495,7 +514,20 @@ if (!window.JSON) {
   };
 }
 
+function safeJsonParse(s) {
+  if (!s) return null;
+  if (window.JSON && window.JSON.parse) {
+    try { return window.JSON.parse(s); } catch (e) {}
+  }
+  try {
+    return (new Function('return (' + s + ')'))();
+  } catch (e2) {}
+  return null;
+}
+
+/* ===================== GLOBAL STATE & FAST IN-MEMORY CACHE ===================== */
 var curQuery = '', curPage = 1;
+var MEM_CACHE = {};
 
 function esc(s) {
   return String(s || '')
@@ -524,6 +556,62 @@ function doSearch(f) {
   return false;
 }
 
+/* ===================== DYNAMIC RETRO ENGINE LINKS UPDATER ===================== */
+function updateSearchEngineLinks(q) {
+  q = (q || '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  var enc = encodeURIComponent(q);
+
+  var ddgLiteUrl = q ? ('http://lite.duckduckgo.com/lite/?q=' + enc) : 'http://lite.duckduckgo.com/lite/';
+  var yandexUrl  = q ? ('https://ya.ru/search/?text=' + enc) : 'https://ya.ru';
+  var googleUrl  = q ? ('https://www.google.com/search?q=' + enc) : 'https://www.google.com';
+  var mailUrl    = q ? ('https://go.mail.ru/search?q=' + enc) : 'https://go.mail.ru';
+  var ddgUrl     = q ? ('https://duckduckgo.com/?q=' + enc) : 'https://duckduckgo.com';
+  var wikiUrl    = q ? ('https://ru.wikipedia.org/w/index.php?search=' + enc) : 'https://ru.wikipedia.org';
+
+  var btnDdgLite = document.getElementById('btnDdgLite');
+  var btnYandex  = document.getElementById('btnYandex');
+  var btnGoogle  = document.getElementById('btnGoogle');
+  var btnMail    = document.getElementById('btnMail');
+  var btnWiki    = document.getElementById('btnWiki');
+
+  if (btnDdgLite) btnDdgLite.href = ddgLiteUrl;
+  if (btnYandex)  btnYandex.href  = yandexUrl;
+  if (btnGoogle)  btnGoogle.href  = googleUrl;
+  if (btnMail)    btnMail.href    = mailUrl;
+  if (btnWiki)    btnWiki.href    = wikiUrl;
+
+  var linkDdgLite = document.getElementById('linkDdgLite');
+  var linkYandex  = document.getElementById('linkYandex');
+  var linkGg      = document.getElementById('linkGg');
+  var linkMail    = document.getElementById('linkMail');
+  var linkDdg     = document.getElementById('linkDdg');
+  var linkWiki    = document.getElementById('linkWiki');
+
+  if (linkDdgLite) linkDdgLite.href = ddgLiteUrl;
+  if (linkYandex)  linkYandex.href  = yandexUrl;
+  if (linkGg)      linkGg.href      = googleUrl;
+  if (linkMail)    linkMail.href    = mailUrl;
+  if (linkDdg)     linkDdg.href     = ddgUrl;
+  if (linkWiki)    linkWiki.href    = wikiUrl;
+
+  // Update tabs with query parameter
+  var tabPic = document.getElementById('tab_pic');
+  if (tabPic) {
+    var aPic = tabPic.getElementsByTagName('a')[0];
+    if (aPic) aPic.href = 'https://duckduckgo.com/?iax=images&ia=images&q=' + enc;
+  }
+  var tabLot = document.getElementById('tab_lot');
+  if (tabLot) {
+    var aLot = tabLot.getElementsByTagName('a')[0];
+    if (aLot) aLot.href = 'https://www.avito.ru/rossiya?s_query=' + enc;
+  }
+  var tabHitech = document.getElementById('tab_hitech');
+  if (tabHitech) {
+    var aHi = tabHitech.getElementsByTagName('a')[0];
+    if (aHi) aHi.href = 'https://habr.com/ru/search/?q=' + enc;
+  }
+}
+
 /* ===================== CROSS-BROWSER TRANSPORT (FETCH/XHR/XDR/JSONP) ===================== */
 function getXHR() {
   if (typeof XMLHttpRequest !== 'undefined') {
@@ -539,7 +627,7 @@ function getXHR() {
 }
 
 function makeRequest(url, callback, timeoutMs) {
-  timeoutMs = timeoutMs || 4500;
+  timeoutMs = timeoutMs || 3000;
   var settled = false;
 
   function onDone(err, text) {
@@ -556,12 +644,17 @@ function makeRequest(url, callback, timeoutMs) {
     callback(new Error('timeout'), null);
   }, timeoutMs);
 
-  // 1. Try modern fetch if available
+  // 1. Modern fetch if available
   if (typeof fetch !== 'undefined') {
     try {
       var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var fetchTimer = setTimeout(function () {
+        if (ctrl) try { ctrl.abort(); } catch (e) {}
+      }, timeoutMs);
+
       fetch(url, { mode: 'cors', signal: ctrl ? ctrl.signal : undefined })
         .then(function (resp) {
+          clearTimeout(fetchTimer);
           if (!resp.ok) {
             onDone(new Error('HTTP ' + resp.status), null);
           } else {
@@ -572,13 +665,14 @@ function makeRequest(url, callback, timeoutMs) {
           if (typeof text === 'string') onDone(null, text);
         })
         ['catch'](function (err) {
+          clearTimeout(fetchTimer);
           onDone(err, null);
         });
       return;
     } catch (e) {}
   }
 
-  // 2. Try standard / ActiveX XMLHttpRequest
+  // 2. Standard / ActiveX XMLHttpRequest
   var xhr = getXHR();
   if (xhr) {
     try {
@@ -606,7 +700,7 @@ function makeRequest(url, callback, timeoutMs) {
     }
   }
 
-  // 3. Try XDomainRequest (IE8/IE9 cross-origin)
+  // 3. XDomainRequest (IE8/IE9 cross-origin)
   function tryXDR() {
     try {
       var xdr = new XDomainRequest();
@@ -630,18 +724,24 @@ function makeRequest(url, callback, timeoutMs) {
 
 var jsonpSeq = 0;
 function jsonp(url, callbackParam, callback, timeoutMs) {
-  timeoutMs = timeoutMs || 5000;
-  var callbackName = '_ddg_jsonp_' + (++jsonpSeq) + '_' + Math.floor(Math.random() * 100000);
+  timeoutMs = timeoutMs || 2500;
+  var callbackName = '_soap_jsonp_' + (++jsonpSeq) + '_' + Math.floor(Math.random() * 100000);
   var script = document.createElement('script');
   var timer = null;
   var done = false;
 
   function cleanup() {
     if (timer) clearTimeout(timer);
-    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
-    if (script && script.parentNode) {
-      try { script.parentNode.removeChild(script); } catch (e) {}
+    try {
+      window[callbackName] = function () {};
+    } catch (e) {
+      window[callbackName] = undefined;
     }
+    setTimeout(function () {
+      if (script && script.parentNode) {
+        try { script.parentNode.removeChild(script); } catch (e) {}
+      }
+    }, 100);
   }
 
   window[callbackName] = function (data) {
@@ -659,6 +759,7 @@ function jsonp(url, callbackParam, callback, timeoutMs) {
   }, timeoutMs);
 
   script.type = 'text/javascript';
+  script.charset = 'utf-8';
   script.src = url + (url.indexOf('?') === -1 ? '?' : '&') + callbackParam + '=' + callbackName;
   script.onerror = function () {
     if (done) return;
@@ -671,11 +772,11 @@ function jsonp(url, callbackParam, callback, timeoutMs) {
   head.appendChild(script);
 }
 
-/* ===================== URL & TEXT PARSERS (NO NEW URL, IE COMPLIANT) ===================== */
+/* ===================== URL & TEXT PARSERS (IE COMPLIANT) ===================== */
 function resolveDdgHref(href) {
   try {
     if (href.indexOf('uddg=') !== -1) {
-      var m = href.match(/uddg=([^&]+)/);
+      var m = href.match(/[?&]uddg=([^&]+)/);
       if (m) return decodeURIComponent(m[1]);
     }
   } catch (e) {}
@@ -723,103 +824,78 @@ function cleanSnippet(text) {
   return s;
 }
 
-function parseDdgHtml(text) {
-  var out = [];
-  if (!text) return out;
-  var resBlocks = text.split(/class="[^"]*result\s+results_links[^"]*"/i);
-  if (resBlocks.length <= 1) {
-    resBlocks = text.split(/class="[^"]*result__body[^"]*"/i);
-  }
-  for (var i = 1; i < resBlocks.length; i++) {
-    var block = resBlocks[i];
-    var aMatch = block.match(/<a[^>]+class="[^"]*result__a[^"]*"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i);
-    if (!aMatch) continue;
-    var rawUrl = aMatch[1];
-    var rawTitle = aMatch[2];
-    var url = resolveDdgHref(rawUrl);
-    var title = stripHtml(rawTitle).trim();
-
-    var snipMatch = block.match(/class="[^"]*result__snippet[^"]*"[^>]*>([\s\S]*?)<\/(?:a|div|span)>/i);
-    var snippet = snipMatch ? stripHtml(snipMatch[1]).trim() : '';
-
-    var dispMatch = block.match(/class="[^"]*result__url[^"]*"[^>]*>([\s\S]*?)<\/(?:a|div|span)>/i);
-    var rawDisplay = dispMatch ? stripHtml(dispMatch[1]).trim() : '';
-    var displayUrl = formatDisplayUrl(url, rawDisplay);
-    var host = extractHostname(url);
-    var fav = host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '';
-
-    out.push({
-      title: title,
-      url: url,
-      snippet: snippet,
-      displayUrl: displayUrl,
-      favicon: fav
-    });
-  }
-  return out;
-}
-
+/* ===================== DUAL-FORMAT JINA PARSER (DDG LITE & STANDARD) ===================== */
 function parseJinaMarkdown(text) {
   var out = [];
   if (!text) return out;
-  var sections = text.split(/(?:\r?\n)+(?=##\s+\[)/);
 
+  // 1. DuckDuckGo Lite format (1.[Title](url)\nSnippet\ndomain.com)
+  var ddgLiteRe = /(?:^|\n)\d+\.\[([^\]]+)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)\s*\n([\s\S]*?)(?=(?:\n\d+\.\[|\n*Next Page|\n*© DuckDuckGo|$))/g;
+  var m;
+  while ((m = ddgLiteRe.exec(text)) !== null) {
+    var rawTitle = m[1];
+    var rawUrl = m[2];
+    var url = resolveDdgHref(rawUrl);
+    if (url.indexOf('duckduckgo.com/y.js') !== -1) {
+      var adMatch = url.match(/[?&]uddg=([^&]+)/);
+      if (adMatch) url = decodeURIComponent(adMatch[1]);
+    }
+    var title = stripHtml(rawTitle).replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    var lines = m[3].replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').split('\n');
+    var cleanedLines = [];
+    for (var li = 0; li < lines.length; li++) {
+      var tl = lines[li].replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+      if (tl) cleanedLines.push(tl);
+    }
+    var rawDisp = cleanedLines.length > 1 ? cleanedLines[cleanedLines.length - 1] : '';
+    var rawSnippet = (cleanedLines.length > 1 ? cleanedLines.slice(0, -1).join(' ') : (cleanedLines[0] || ''));
+    var snippet = cleanSnippet(rawSnippet);
+    var displayUrl = formatDisplayUrl(url, rawDisp);
+    var host = extractHostname(url);
+    var fav = host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '';
+
+    if (title && url) {
+      out.push({
+        title: title,
+        url: url,
+        displayUrl: displayUrl,
+        snippet: snippet,
+        favicon: fav
+      });
+    }
+  }
+
+  if (out.length > 0) return out;
+
+  // 2. Standard markdown format (## [Title](url))
+  var sections = text.split(/(?:\r?\n)+(?=##\s+\[)/);
   for (var i = 0; i < sections.length; i++) {
     var sec = sections[i];
     var hMatch = sec.match(/^##\s+\[([^\]]+)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/m);
     if (!hMatch) continue;
 
-    var title = (hMatch[1] || '').trim();
-    var rawUrl = hMatch[2];
-    var url = resolveDdgHref(rawUrl);
+    var title2 = stripHtml(hMatch[1] || '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    var url2 = resolveDdgHref(hMatch[2]);
+    var host2 = extractHostname(url2);
+    var fav2 = host2 ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host2) + '.ico' : '';
+    var dispMatch = sec.match(/\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]\(https:\/\/duckduckgo/i);
+    var rawDisplay2 = dispMatch ? dispMatch[1].replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
+    var displayUrl2 = formatDisplayUrl(url2, rawDisplay2);
     var rest = sec.slice(hMatch.index + hMatch[0].length);
-    var host = extractHostname(url);
+    var snippet2 = cleanSnippet(rest);
 
-    // Favicon
-    var favMatch = rest.match(/\[?!\[(?:Image \d+)?\]\((https?:\/\/[^\s)]+\.(?:ico|png|jpg|gif)[^)]*)\)\]?/i);
-    var favicon = favMatch ? favMatch[1] : (host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '');
-
-    // Display URL
-    var dispMatch = rest.match(/\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]\(https:\/\/duckduckgo/i);
-    if (!dispMatch) {
-      dispMatch = rest.match(/\]\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]/i);
+    if (title2 && url2) {
+      out.push({
+        title: title2,
+        url: url2,
+        displayUrl: displayUrl2,
+        favicon: fav2,
+        snippet: snippet2
+      });
     }
-    var rawDisplay = dispMatch ? dispMatch[1].trim() : '';
-    var displayUrl = formatDisplayUrl(url, rawDisplay);
-
-    // Snippet
-    var cleanedRest = rest.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
-    var snipMatches = cleanedRest.match(/\[([^\]]+)\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)/g) || [];
-    var snipParts = [];
-    for (var j = 0; j < snipMatches.length; j++) {
-      var sm = snipMatches[j].replace(/^\[|\]\(https:\/\/duckduckgo\.com\/l\/\?[^)]+\)$/g, '').trim();
-      if (sm === rawDisplay || sm.indexOf('Image ') === 0 || sm.length < 2) continue;
-      snipParts.push(sm);
-    }
-
-    var snippet = snipParts.join(' ');
-    if (!snippet) {
-      var lines = cleanedRest.split('\n');
-      for (var k = 0; k < lines.length; k++) {
-        var line = lines[k].trim();
-        if (line && line.indexOf('##') !== 0 && line.indexOf('[') !== 0 && line.length > 5) {
-          snippet = line;
-          break;
-        }
-      }
-    }
-
-    snippet = cleanSnippet(snippet);
-
-    out.push({
-      title: title,
-      url: url,
-      displayUrl: displayUrl,
-      favicon: favicon,
-      snippet: snippet
-    });
   }
 
+  // Deduplicate
   var seen = {}, res = [];
   for (var n = 0; n < out.length; n++) {
     if (!seen[out[n].url]) {
@@ -830,13 +906,14 @@ function parseJinaMarkdown(text) {
   return res;
 }
 
+/* ===================== DUCKDUCKGO INSTANT ANSWER API PARSER ===================== */
 function parseDdgApiResponse(d, q) {
   var res = [];
   if (!d) return res;
   if (d.AbstractText && d.AbstractURL) {
     res.push({
       title: d.Heading || q,
-      snippet: d.AbstractText,
+      snippet: cleanSnippet(d.AbstractText),
       url: d.AbstractURL,
       displayUrl: formatDisplayUrl(d.AbstractURL, d.AbstractSource || d.AbstractURL),
       favicon: d.Image || ''
@@ -847,8 +924,8 @@ function parseDdgApiResponse(d, q) {
       var t = d.RelatedTopics[i];
       if (t.Text && t.FirstURL) {
         res.push({
-          title: t.Text.slice(0, 70) + (t.Text.length > 70 ? '...' : ''),
-          snippet: t.Text,
+          title: t.Text.slice(0, 75) + (t.Text.length > 75 ? '...' : ''),
+          snippet: cleanSnippet(t.Text),
           url: t.FirstURL,
           displayUrl: formatDisplayUrl(t.FirstURL, ''),
           favicon: (t.Icon && t.Icon.URL) ? t.Icon.URL : ''
@@ -860,196 +937,181 @@ function parseDdgApiResponse(d, q) {
 }
 
 function fetchDdgApi(q, callback) {
-  var url = 'https://api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1';
-  makeRequest(url, function (err, text) {
-    if (!err && text) {
-      try {
-        var d = JSON.parse(text);
-        var r = parseDdgApiResponse(d, q);
-        if (r && r.length > 0) { callback(r); return; }
-      } catch (e) {}
+  var isHttp = location.protocol === 'http:';
+  var proto = isHttp ? 'http:' : 'https:';
+  var url = proto + '//api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1';
+
+  jsonp(url, 'callback', function (err, data) {
+    if (!err && data) {
+      callback(parseDdgApiResponse(data, q));
+    } else {
+      callback([]);
     }
-    // Fallback to JSONP
-    jsonp(url, 'callback', function (jErr, jData) {
-      if (!jErr && jData) {
-        callback(parseDdgApiResponse(jData, q));
-      } else {
-        callback([]);
-      }
-    }, 3500);
-  }, 3500);
+  }, 1800);
 }
 
+/* ===================== WIKIPEDIA OPENSEARCH & FULLTEXT SEARCH ===================== */
 function parseWikiResponse(d) {
   var res = [];
-  if (!d || !d[1] || !d[1].length) return res;
-  var titles = d[1];
-  var snippets = d[2] || [];
-  var urls = d[3] || [];
-  for (var i = 0; i < titles.length; i++) {
-    var title = titles[i];
-    var url = urls[i] || ('https://ru.wikipedia.org/wiki/' + encodeURIComponent(title));
-    var snip = snippets[i] || ('Статья о «' + title + '» в свободной энциклопедии Википедия.');
-    res.push({
-      title: title,
-      url: url,
-      snippet: snip,
-      displayUrl: 'ru.wikipedia.org/wiki/' + encodeURIComponent(title),
-      favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
-    });
+  if (!d) return res;
+  if (d instanceof Array || Object.prototype.toString.call(d) === '[object Array]') {
+    var titles = d[1] || [];
+    var snippets = d[2] || [];
+    var urls = d[3] || [];
+    for (var i = 0; i < titles.length; i++) {
+      var title = titles[i];
+      var url = urls[i] || ('https://ru.wikipedia.org/wiki/' + encodeURIComponent(title));
+      var snip = cleanSnippet(snippets[i] || ('Статья о «' + title + '» в свободной энциклопедии Википедия.'));
+      res.push({
+        title: title,
+        url: url,
+        snippet: snip,
+        displayUrl: 'ru.wikipedia.org/wiki/' + encodeURIComponent(title),
+        favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
+      });
+    }
+  } else if (d.query && d.query.search && d.query.search.length) {
+    for (var j = 0; j < d.query.search.length; j++) {
+      var item = d.query.search[j];
+      var wUrl = 'https://ru.wikipedia.org/wiki/' + encodeURIComponent(item.title);
+      var wSnip = cleanSnippet(item.snippet || ('Статья о «' + item.title + '» в свободной энциклопедии Википедия.'));
+      res.push({
+        title: item.title,
+        url: wUrl,
+        snippet: wSnip,
+        displayUrl: 'ru.wikipedia.org/wiki/' + encodeURIComponent(item.title),
+        favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
+      });
+    }
   }
   return res;
 }
 
 function fetchWikiSearch(q, callback) {
-  var url = 'https://ru.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(q) + '&format=json';
-  makeRequest(url, function (err, text) {
-    if (!err && text) {
-      try {
-        var d = JSON.parse(text);
-        var r = parseWikiResponse(d);
-        if (r && r.length > 0) { callback(r); return; }
-      } catch (e) {}
-    }
-    // Fallback to JSONP
-    jsonp(url, 'callback', function (jErr, jData) {
-      if (!jErr && jData) {
-        callback(parseWikiResponse(jData));
-      } else {
-        callback([]);
+  var isDone = false;
+  function finish(items) {
+    if (isDone) return;
+    isDone = true;
+    callback(items || []);
+  }
+
+  // Fast JSONP OpenSearch (~300-600ms)
+  var osUrl = 'https://ru.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(q) + '&limit=10&format=json';
+  jsonp(osUrl, 'callback', function (err, data) {
+    if (!err && data) {
+      var items = parseWikiResponse(data);
+      if (items && items.length > 0) {
+        finish(items);
+        return;
       }
-    }, 3500);
+    }
+    // Fulltext Query fallback
+    var qsUrl = 'https://ru.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(q) + '&srlimit=10&utf8=1&format=json';
+    jsonp(qsUrl, 'callback', function (err2, data2) {
+      if (!err2 && data2) {
+        var items2 = parseWikiResponse(data2);
+        if (items2 && items2.length > 0) {
+          finish(items2);
+          return;
+        }
+      }
+      finish([]);
+    }, 1800);
+  }, 1800);
+}
+
+/* ===================== PRIMARY DUCKDUCKGO LITE SEARCH VIA JINA ===================== */
+function fetchDdgLiteWebSearch(q, page, callback) {
+  var s = (page - 1) * 30;
+  var ddgLiteTarget = 'https://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q) + (s ? '&s=' + s : '');
+  var jinaUrl = 'https://r.jina.ai/' + ddgLiteTarget;
+
+  makeRequest(jinaUrl, function (err, text) {
+    if (!err && text && text.length > 100) {
+      var items = parseJinaMarkdown(text);
+      if (items && items.length > 0) {
+        callback(null, items);
+        return;
+      }
+    }
+    callback(err || new Error('no results'), null);
+  }, 3200);
+}
+
+/* ===================== PARALLEL ACCELERATED MULTI-STAGE SEARCH ===================== */
+function fetchWebSearch(q, page, callback) {
+  var delivered = false;
+  var webResults = null;
+  var fastResults = [];
+
+  function complete(items, isFallback, source) {
+    if (delivered) return;
+    delivered = true;
+    callback(items, isFallback, source);
+  }
+
+  // 1. Parallel Probe A: Full Web Search (DuckDuckGo Lite via Jina)
+  fetchDdgLiteWebSearch(q, page, function (err, items) {
+    if (!err && items && items.length > 0) {
+      webResults = items;
+      complete(items, false, 'web');
+    } else {
+      webResults = false;
+      if (fastResults.length > 0) {
+        complete(fastResults, true, 'fast');
+      }
+    }
+  });
+
+  // 2. Parallel Probe B: Fast Wikipedia Search (JSONP)
+  fetchWikiSearch(q, function (wikiItems) {
+    if (wikiItems && wikiItems.length > 0) {
+      fastResults = fastResults.concat(wikiItems);
+      if (webResults === false) {
+        complete(fastResults, true, 'fast');
+      }
+    }
+  });
+
+  // 3. Parallel Probe C: DuckDuckGo Instant Answer API (JSONP)
+  fetchDdgApi(q, function (ddgItems) {
+    if (ddgItems && ddgItems.length > 0) {
+      fastResults = ddgItems.concat(fastResults);
+      if (webResults === false) {
+        complete(fastResults, true, 'fast');
+      }
+    }
+  });
+
+  // 4. Maximum race cutoff: 3.5 seconds
+  setTimeout(function () {
+    if (delivered) return;
+    if (webResults && webResults.length > 0) {
+      complete(webResults, false, 'web');
+    } else if (fastResults.length > 0) {
+      complete(fastResults, true, 'fast');
+    } else {
+      complete([], false, 'none');
+    }
   }, 3500);
 }
 
-/* ===================== FAERO.TOP RETRO WEB SEARCH PARSER ===================== */
-function parseFaeroHtml(text) {
-  var out = [];
-  if (!text) return out;
-  var items = text.split(/class=['"]result-item['"]/i);
-  for (var i = 1; i < items.length; i++) {
-    var block = items[i];
-    var titleMatch = block.match(/<h3[^>]*class=['"]result-title['"][^>]*>[\s\S]*?<a[^>]+href=['"]([^'"]+)['"][^>]*>([\s\S]*?)<\/a>/i);
-    if (!titleMatch) continue;
-    var url = titleMatch[1];
-    var title = stripHtml(titleMatch[2]).trim();
-    var snipMatch = block.match(/<div[^>]*class=['"]result-snippet['"][^>]*>([\s\S]*?)<\/div>/i);
-    var snippet = snipMatch ? stripHtml(snipMatch[1]).trim() : '';
-    var urlMatch = block.match(/<div[^>]*class=['"]result-url['"][^>]*>([\s\S]*?)<\/div>/i);
-    var dispUrl = urlMatch ? stripHtml(urlMatch[1]).trim() : url;
-    var host = extractHostname(url);
-    var fav = host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '';
-    out.push({
-      title: title,
-      url: url,
-      snippet: snippet,
-      displayUrl: dispUrl,
-      favicon: fav
-    });
-  }
-  return out;
-}
-
-function fetchFaeroSearch(q, page, callback) {
-  var start = (page - 1) * 10;
-  var faeroUrl = 'http://faero.top/search?q=' + encodeURIComponent(q) + (start ? '&start=' + start : '');
-  makeRequest(faeroUrl, function (err, text) {
-    if (!err && text && text.indexOf('result-item') !== -1) {
-      var items = parseFaeroHtml(text);
-      if (items && items.length > 0) {
-        callback(items);
-        return;
-      }
-    }
-    callback(null);
-  }, 4500);
-}
-
-/* ===================== MULTI-STAGE SEARCH CONTROLLER ===================== */
-function fetchWebSearch(q, page, callback) {
-  var s = (page - 1) * 30;
-  var ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q) +
-    (s ? '&s=' + s + '&dc=' + (s + 1) : '') + '&kl=ru-ru';
-  var jinaUrl = 'https://r.jina.ai/' + ddgUrl;
-
-  // 1. Primary: Direct fetch of DuckDuckGo via fast CORS-enabled Jina reader (7s timeout for older connections)
-  makeRequest(jinaUrl, function (err, text) {
-    if (!err && text && text.length > 200) {
-      var items = parseJinaMarkdown(text);
-      if (items && items.length > 0) {
-        callback(items, false);
-        return;
-      }
-    }
-
-    // 2. Secondary: Retro HTTP full-web search via Faero.Top (designed for legacy browsers)
-    fetchFaeroSearch(q, page, function (faeroItems) {
-      if (faeroItems && faeroItems.length > 0) {
-        callback(faeroItems, false);
-        return;
-      }
-
-      // 3. Parallel proxy race (via common.js fetchViaProxy)
-      if (window.fetchViaProxy) {
-        window.fetchViaProxy(ddgUrl, 5000).then(function (raw) {
-          if (raw) {
-            if (raw.jina && raw.text) {
-              var items2 = parseJinaMarkdown(raw.text);
-              if (items2 && items2.length > 0) { callback(items2, false); return; }
-            } else if (typeof raw === 'string') {
-              var items3 = parseDdgHtml(raw);
-              if (items3 && items3.length > 0) { callback(items3, false); return; }
-            }
-          }
-          step4();
-        })['catch'](function () {
-          step4();
-        });
-      } else {
-        step4();
-      }
-    });
-  }, 7000);
-
-  function step4() {
-    // 4. DuckDuckGo Instant Answer API (encyclopedic fallback)
-    fetchDdgApi(q, function (apiItems) {
-      if (apiItems && apiItems.length > 0) {
-        callback(apiItems, true);
-        return;
-      }
-      step5();
-    });
-  }
-
-  function step5() {
-    // 5. Wikipedia OpenSearch API (encyclopedic fallback)
-    fetchWikiSearch(q, function (wikiItems) {
-      if (wikiItems && wikiItems.length > 0) {
-        callback(wikiItems, true);
-        return;
-      }
-      // No external results
-      callback([], false);
-    });
-  }
-}
-
-/* ===================== UI RENDERING ===================== */
+/* ===================== UI RENDERING & CACHING ===================== */
 function renderResults(items, isFallback) {
   var box = document.getElementById('results');
   if (!box) return;
   if (!items || !items.length) {
-    box.innerHTML = '<div class="notFound"><p>Ничего не найдено. Попробуйте изменить запрос.</p></div>';
+    showFallbackSearch(curQuery);
     return;
   }
   var html = '';
   if (isFallback) {
-    html += '<div style="background:#fffbe8; border:1px solid #e2cb82; padding:8px 12px; margin-bottom:15px; font-size:12px; color:#555; line-height:1.6;">' +
-      '<b>Внимание:</b> На вашей системе ограничен современный TLS/CORS для сквозного веб-поиска. Ниже показаны результаты из открытой энциклопедии.<br />' +
-      'Чтобы открыть поиск по всему интернету без ограничений: ' +
-      '<b><a href="http://faero.top/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6; text-decoration:underline;">Искать по всему интернету через Faero.Top &rarr;</a></b> (быстрый веб-поиск для старых ПК) ' +
-      'или в <a href="https://duckduckgo.com/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6;">DuckDuckGo</a>.' +
+    html += '<div style="background:#fffbe8; border:1px solid #e2cb82; padding:10px 14px; margin-bottom:15px; font-size:12px; color:#333; line-height:1.6; border-radius:3px;">' +
+      '<b>Результаты энциклопедии и быстрых ответов</b> (на вашей системе ограничен современный веб-поиск):<br />' +
+      'Для поиска по всему интернету на старом устройстве откройте: ' +
+      '<a href="http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6; font-weight:bold; text-decoration:underline;">⚡ DuckDuckGo Lite (для старых ПК)</a> &middot; ' +
+      '<a href="https://ya.ru/search/?text=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#c00; font-weight:bold;">Яндекс</a> &middot; ' +
+      '<a href="https://www.google.com/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#2a6cd7; font-weight:bold;">Google</a>' +
       '</div>';
   }
   for (var i = 0; i < items.length; i++) {
@@ -1084,16 +1146,25 @@ function renderPager(total) {
 }
 
 function showFallbackSearch(q) {
+  var box = document.getElementById('results');
   var eb = document.getElementById('errbox');
-  if (!eb) return;
-  eb.style.display = 'block';
-  eb.innerHTML = '<div style="margin-bottom:6px; font-weight:bold; color:#00468c;">Внешний поиск ограничен на вашей системе или в сети. Вы можете продолжить поиск напрямую:</div>' +
-    '<div style="padding:6px 0; line-height:2em;">' +
-    '&bull; <a href="http://faero.top/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#0857a6;">Искать по всему интернету через Faero.Top &rarr; (работает на старых ПК)</a><br />' +
-    '&bull; <a href="https://duckduckgo.com/?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#de5833;">Искать в DuckDuckGo &rarr;</a><br />' +
-    '&bull; <a href="https://www.google.com/search?q=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#4285f4;">Искать в Google &rarr;</a><br />' +
-    '&bull; <a href="https://ru.wikipedia.org/w/index.php?search=' + encodeURIComponent(q) + '" target="_blank" style="font-weight:bold; font-size:13px; color:#0857a6;">Искать в Википедии &rarr;</a>' +
+  var qEnc = encodeURIComponent(q);
+  var html = '<div style="margin-bottom:8px; font-weight:bold; color:#00468c; font-size:14px;">Поиск по запросу «' + esc(q) + '» в интернете:</div>' +
+    '<div style="font-size:12px; color:#555; margin-bottom:12px;">Сетевой запрос не вернул прямых результатов на вашей системе. Вы можете мгновенно открыть результаты в поисковиках:</div>' +
+    '<div style="padding:6px 0; line-height:2.2em; font-size:13px;">' +
+    '&bull; <a href="http://lite.duckduckgo.com/lite/?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#0857a6;">⚡ DuckDuckGo Lite &rarr; (быстрый легкий поиск, работает на любых старых ПК и телефонах)</a><br />' +
+    '&bull; <a href="https://ya.ru/search/?text=' + qEnc + '" target="_blank" style="font-weight:bold; color:#c00;">🌐 Искать в Яндекс &rarr;</a><br />' +
+    '&bull; <a href="https://www.google.com/search?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#2a6cd7;">🔍 Искать в Google &rarr;</a><br />' +
+    '&bull; <a href="https://go.mail.ru/search?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#00468c;">📧 Искать в Mail.ru &rarr;</a><br />' +
+    '&bull; <a href="https://ru.wikipedia.org/w/index.php?search=' + qEnc + '" target="_blank" style="font-weight:bold; color:#333;">📖 Искать в Википедии &rarr;</a>' +
     '</div>';
+
+  if (eb) {
+    eb.style.display = 'block';
+    eb.innerHTML = html;
+  } else if (box) {
+    box.innerHTML = html;
+  }
 }
 
 function runSearch() {
@@ -1104,14 +1175,22 @@ function runSearch() {
   curPage = parseInt(getParam('page') || '1', 10) || 1;
 
   var qEl = document.getElementById('q');
-  if (qEl) qEl.value = curQuery;
+  if (qEl) {
+    qEl.value = curQuery;
+    var onInput = function () {
+      updateSearchEngineLinks(qEl.value);
+    };
+    if (qEl.addEventListener) {
+      qEl.addEventListener('input', onInput, false);
+      qEl.addEventListener('keyup', onInput, false);
+      qEl.addEventListener('change', onInput, false);
+    } else if (qEl.attachEvent) {
+      qEl.attachEvent('onkeyup', onInput);
+      qEl.attachEvent('onchange', onInput);
+    }
+  }
 
-  var linkFaero = document.getElementById('linkFaero');
-  var linkDdg = document.getElementById('linkDdg');
-  var linkGg = document.getElementById('linkGg');
-  if (linkFaero) linkFaero.href = 'http://faero.top/search?q=' + encodeURIComponent(curQuery);
-  if (linkDdg) linkDdg.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(curQuery);
-  if (linkGg) linkGg.href = 'https://www.google.com/search?q=' + encodeURIComponent(curQuery);
+  updateSearchEngineLinks(curQuery);
 
   var resultsBox = document.getElementById('results');
   var loadingBox = document.getElementById('loading');
@@ -1124,19 +1203,21 @@ function runSearch() {
   }
   document.title = curQuery + ' — Поиск@soap.nekxd.fun';
 
-  // Check cache
-  var cacheKey = 'search_' + curQuery + '_' + curPage;
-  var cached = null;
-  try {
-    if (typeof sessionStorage !== 'undefined') {
-      var raw = sessionStorage.getItem(cacheKey);
-      if (raw) cached = JSON.parse(raw);
-    }
-  } catch (e) {}
+  // Check fast in-memory & session cache
+  var cacheKey = curQuery + '_' + curPage;
+  var cached = MEM_CACHE[cacheKey];
+  if (!cached) {
+    try {
+      if (typeof sessionStorage !== 'undefined') {
+        var raw = sessionStorage.getItem('soap_s_' + cacheKey);
+        if (raw) cached = safeJsonParse(raw);
+      }
+    } catch (e) {}
+  }
 
-  if (cached && cached.length) {
-    renderResults(cached, false);
-    renderPager(cached.length);
+  if (cached && cached.items && cached.items.length) {
+    renderResults(cached.items, cached.isFallback);
+    renderPager(cached.items.length);
     return;
   }
 
@@ -1148,9 +1229,11 @@ function runSearch() {
   fetchWebSearch(curQuery, curPage, function (items, isFallback) {
     if (loadingBox) loadingBox.style.display = 'none';
     if (items && items.length > 0) {
+      var entry = { items: items, isFallback: !!isFallback };
+      MEM_CACHE[cacheKey] = entry;
       try {
         if (typeof sessionStorage !== 'undefined' && !isFallback) {
-          sessionStorage.setItem(cacheKey, JSON.stringify(items));
+          sessionStorage.setItem('soap_s_' + cacheKey, window.JSON.stringify(entry));
         }
       } catch (e) {}
       renderResults(items, isFallback);
