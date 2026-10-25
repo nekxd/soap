@@ -342,10 +342,8 @@ body {background: #fff; min-width: 0;}
 								<td align="left" style="font-size:12px; color:#555; padding-top:2px;">
 									<span style="font-weight:bold; color:#333; margin-right:4px;">Искать в:</span>
 									<a href="http://lite.duckduckgo.com/lite/?q=" id="btnDdgLite" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#f4f7fb; border:1px solid #b8cde4; border-radius:2px; color:#0857a6; text-decoration:none; font-weight:bold;" title="Быстрый поиск HTML 4.01 для старых ПК и телефонов">⚡ DDG Lite (для старых ПК)</a>
-									<a href="https://ya.ru/search/?text=" id="btnYandex" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#c00; text-decoration:none;">Яндекс</a>
 									<a href="https://www.google.com/search?q=" id="btnGoogle" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#2a6cd7; text-decoration:none;">Google</a>
-									<a href="https://go.mail.ru/search?q=" id="btnMail" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#00468c; text-decoration:none;">Mail.ru</a>
-									<a href="https://ru.wikipedia.org/w/index.php?search=" id="btnWiki" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#333; text-decoration:none;">Википедия</a>
+									<a href="https://duckduckgo.com/?q=" id="btnDdg" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#de5833; text-decoration:none;">DuckDuckGo</a>
 								</td>
 								<td align="right" style="white-space: nowrap;">
 									<div id="sres" style="visibility: hidden; color: #999;">
@@ -360,7 +358,7 @@ body {background: #fff; min-width: 0;}
 					<noscript>
 						<div style="background:#fffbe8; border:1px solid #e2cb82; padding:6px 10px; margin-top:5px; font-size:12px; color:#333;">
 							<b>JavaScript отключен или не поддерживается.</b> Для мгновенного поиска на старом устройстве используйте:
-							<a href="http://lite.duckduckgo.com/lite/" target="_blank" style="font-weight:bold; color:#0857a6;">DuckDuckGo Lite (HTML 4.01)</a> или <a href="https://ya.ru" target="_blank" style="color:#c00;">Яндекс</a>.
+							<a href="http://lite.duckduckgo.com/lite/" target="_blank" style="font-weight:bold; color:#0857a6;">DuckDuckGo Lite (HTML 4.01)</a> или <a href="https://www.google.com" target="_blank" style="color:#2a6cd7;">Google</a>.
 						</div>
 					</noscript>
 				</div>
@@ -392,11 +390,8 @@ body {background: #fff; min-width: 0;}
 				<div class="mb15" style="font-size:12px; color:#666; line-height: 1.7em; border-top: 1px solid #e0e0e0; padding-top: 10px; text-align: left;">
 					<b>Другие поисковики:</b><br />
 					&bull; <a href="http://lite.duckduckgo.com/lite/?q=" id="linkDdgLite" target="_blank" style="color:#0857A6; font-weight:bold;">⚡ DuckDuckGo Lite (для старых ПК)</a><br />
-					&bull; <a href="https://ya.ru/search/?text=" id="linkYandex" target="_blank" style="color:#c00; font-weight:bold;">Яндекс</a><br />
 					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a><br />
-					&bull; <a href="https://go.mail.ru/search?q=" id="linkMail" target="_blank" style="color:#00468c;">Mail.ru</a><br />
-					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a><br />
-					&bull; <a href="https://ru.wikipedia.org/w/index.php?search=" id="linkWiki" target="_blank" style="color:#333;">Википедия</a>
+					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a>
 				</div>
 			</div>
 		</div>
@@ -562,37 +557,24 @@ function updateSearchEngineLinks(q) {
   var enc = encodeURIComponent(q);
 
   var ddgLiteUrl = q ? ('http://lite.duckduckgo.com/lite/?q=' + enc) : 'http://lite.duckduckgo.com/lite/';
-  var yandexUrl  = q ? ('https://ya.ru/search/?text=' + enc) : 'https://ya.ru';
   var googleUrl  = q ? ('https://www.google.com/search?q=' + enc) : 'https://www.google.com';
-  var mailUrl    = q ? ('https://go.mail.ru/search?q=' + enc) : 'https://go.mail.ru';
   var ddgUrl     = q ? ('https://duckduckgo.com/?q=' + enc) : 'https://duckduckgo.com';
-  var wikiUrl    = q ? ('https://ru.wikipedia.org/w/index.php?search=' + enc) : 'https://ru.wikipedia.org';
 
   var btnDdgLite = document.getElementById('btnDdgLite');
-  var btnYandex  = document.getElementById('btnYandex');
   var btnGoogle  = document.getElementById('btnGoogle');
-  var btnMail    = document.getElementById('btnMail');
-  var btnWiki    = document.getElementById('btnWiki');
+  var btnDdg     = document.getElementById('btnDdg');
 
   if (btnDdgLite) btnDdgLite.href = ddgLiteUrl;
-  if (btnYandex)  btnYandex.href  = yandexUrl;
   if (btnGoogle)  btnGoogle.href  = googleUrl;
-  if (btnMail)    btnMail.href    = mailUrl;
-  if (btnWiki)    btnWiki.href    = wikiUrl;
+  if (btnDdg)     btnDdg.href     = ddgUrl;
 
   var linkDdgLite = document.getElementById('linkDdgLite');
-  var linkYandex  = document.getElementById('linkYandex');
   var linkGg      = document.getElementById('linkGg');
-  var linkMail    = document.getElementById('linkMail');
   var linkDdg     = document.getElementById('linkDdg');
-  var linkWiki    = document.getElementById('linkWiki');
 
   if (linkDdgLite) linkDdgLite.href = ddgLiteUrl;
-  if (linkYandex)  linkYandex.href  = yandexUrl;
   if (linkGg)      linkGg.href      = googleUrl;
-  if (linkMail)    linkMail.href    = mailUrl;
   if (linkDdg)     linkDdg.href     = ddgUrl;
-  if (linkWiki)    linkWiki.href    = wikiUrl;
 
   // Update tabs with query parameter
   var tabPic = document.getElementById('tab_pic');
@@ -950,76 +932,6 @@ function fetchDdgApi(q, callback) {
   }, 1800);
 }
 
-/* ===================== WIKIPEDIA OPENSEARCH & FULLTEXT SEARCH ===================== */
-function parseWikiResponse(d) {
-  var res = [];
-  if (!d) return res;
-  if (d instanceof Array || Object.prototype.toString.call(d) === '[object Array]') {
-    var titles = d[1] || [];
-    var snippets = d[2] || [];
-    var urls = d[3] || [];
-    for (var i = 0; i < titles.length; i++) {
-      var title = titles[i];
-      var url = urls[i] || ('https://ru.wikipedia.org/wiki/' + encodeURIComponent(title));
-      var snip = cleanSnippet(snippets[i] || ('Статья о «' + title + '» в свободной энциклопедии Википедия.'));
-      res.push({
-        title: title,
-        url: url,
-        snippet: snip,
-        displayUrl: 'ru.wikipedia.org/wiki/' + encodeURIComponent(title),
-        favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
-      });
-    }
-  } else if (d.query && d.query.search && d.query.search.length) {
-    for (var j = 0; j < d.query.search.length; j++) {
-      var item = d.query.search[j];
-      var wUrl = 'https://ru.wikipedia.org/wiki/' + encodeURIComponent(item.title);
-      var wSnip = cleanSnippet(item.snippet || ('Статья о «' + item.title + '» в свободной энциклопедии Википедия.'));
-      res.push({
-        title: item.title,
-        url: wUrl,
-        snippet: wSnip,
-        displayUrl: 'ru.wikipedia.org/wiki/' + encodeURIComponent(item.title),
-        favicon: 'https://ru.wikipedia.org/static/favicon/wikipedia.ico'
-      });
-    }
-  }
-  return res;
-}
-
-function fetchWikiSearch(q, callback) {
-  var isDone = false;
-  function finish(items) {
-    if (isDone) return;
-    isDone = true;
-    callback(items || []);
-  }
-
-  // Fast JSONP OpenSearch (~300-600ms)
-  var osUrl = 'https://ru.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(q) + '&limit=10&format=json';
-  jsonp(osUrl, 'callback', function (err, data) {
-    if (!err && data) {
-      var items = parseWikiResponse(data);
-      if (items && items.length > 0) {
-        finish(items);
-        return;
-      }
-    }
-    // Fulltext Query fallback
-    var qsUrl = 'https://ru.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(q) + '&srlimit=10&utf8=1&format=json';
-    jsonp(qsUrl, 'callback', function (err2, data2) {
-      if (!err2 && data2) {
-        var items2 = parseWikiResponse(data2);
-        if (items2 && items2.length > 0) {
-          finish(items2);
-          return;
-        }
-      }
-      finish([]);
-    }, 1800);
-  }, 1800);
-}
-
 /* ===================== PRIMARY DUCKDUCKGO LITE SEARCH VIA JINA ===================== */
 function fetchDdgLiteWebSearch(q, page, callback) {
   var s = (page - 1) * 30;
@@ -1038,7 +950,7 @@ function fetchDdgLiteWebSearch(q, page, callback) {
   }, 3200);
 }
 
-/* ===================== PARALLEL ACCELERATED MULTI-STAGE SEARCH ===================== */
+/* ===================== PARALLEL ACCELERATED SEARCH ===================== */
 function fetchWebSearch(q, page, callback) {
   var delivered = false;
   var webResults = null;
@@ -1063,17 +975,7 @@ function fetchWebSearch(q, page, callback) {
     }
   });
 
-  // 2. Parallel Probe B: Fast Wikipedia Search (JSONP)
-  fetchWikiSearch(q, function (wikiItems) {
-    if (wikiItems && wikiItems.length > 0) {
-      fastResults = fastResults.concat(wikiItems);
-      if (webResults === false) {
-        complete(fastResults, true, 'fast');
-      }
-    }
-  });
-
-  // 3. Parallel Probe C: DuckDuckGo Instant Answer API (JSONP)
+  // 2. Parallel Probe B: DuckDuckGo Instant Answer API (JSONP)
   fetchDdgApi(q, function (ddgItems) {
     if (ddgItems && ddgItems.length > 0) {
       fastResults = ddgItems.concat(fastResults);
@@ -1083,7 +985,7 @@ function fetchWebSearch(q, page, callback) {
     }
   });
 
-  // 4. Maximum race cutoff: 3.5 seconds
+  // 3. Maximum race cutoff: 3.5 seconds
   setTimeout(function () {
     if (delivered) return;
     if (webResults && webResults.length > 0) {
@@ -1107,10 +1009,9 @@ function renderResults(items, isFallback) {
   var html = '';
   if (isFallback) {
     html += '<div style="background:#fffbe8; border:1px solid #e2cb82; padding:10px 14px; margin-bottom:15px; font-size:12px; color:#333; line-height:1.6; border-radius:3px;">' +
-      '<b>Результаты энциклопедии и быстрых ответов</b> (на вашей системе ограничен современный веб-поиск):<br />' +
+      '<b>Быстрый ответ</b> (на вашей системе ограничен современный веб-поиск):<br />' +
       'Для поиска по всему интернету на старом устройстве откройте: ' +
       '<a href="http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6; font-weight:bold; text-decoration:underline;">⚡ DuckDuckGo Lite (для старых ПК)</a> &middot; ' +
-      '<a href="https://ya.ru/search/?text=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#c00; font-weight:bold;">Яндекс</a> &middot; ' +
       '<a href="https://www.google.com/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#2a6cd7; font-weight:bold;">Google</a>' +
       '</div>';
   }
@@ -1152,11 +1053,9 @@ function showFallbackSearch(q) {
   var html = '<div style="margin-bottom:8px; font-weight:bold; color:#00468c; font-size:14px;">Поиск по запросу «' + esc(q) + '» в интернете:</div>' +
     '<div style="font-size:12px; color:#555; margin-bottom:12px;">Сетевой запрос не вернул прямых результатов на вашей системе. Вы можете мгновенно открыть результаты в поисковиках:</div>' +
     '<div style="padding:6px 0; line-height:2.2em; font-size:13px;">' +
-    '&bull; <a href="http://lite.duckduckgo.com/lite/?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#0857a6;">⚡ DuckDuckGo Lite &rarr; (быстрый легкий поиск, работает на любых старых ПК и телефонах)</a><br />' +
-    '&bull; <a href="https://ya.ru/search/?text=' + qEnc + '" target="_blank" style="font-weight:bold; color:#c00;">🌐 Искать в Яндекс &rarr;</a><br />' +
+    '&bull; <a href="http://lite.duckduckgo.com/lite/?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#0857a6;">⚡ DuckDuckGo Lite &rarr; (быстрый поиск без тяжелых скриптов, для старых ПК и телефонов)</a><br />' +
     '&bull; <a href="https://www.google.com/search?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#2a6cd7;">🔍 Искать в Google &rarr;</a><br />' +
-    '&bull; <a href="https://go.mail.ru/search?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#00468c;">📧 Искать в Mail.ru &rarr;</a><br />' +
-    '&bull; <a href="https://ru.wikipedia.org/w/index.php?search=' + qEnc + '" target="_blank" style="font-weight:bold; color:#333;">📖 Искать в Википедии &rarr;</a>' +
+    '&bull; <a href="https://duckduckgo.com/?q=' + qEnc + '" target="_blank" style="font-weight:bold; color:#de5833;">🦆 Искать в DuckDuckGo &rarr;</a>' +
     '</div>';
 
   if (eb) {
