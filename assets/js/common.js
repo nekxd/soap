@@ -243,6 +243,12 @@
       img: 'assets/img/banners/soap-in-tg.png',
       remoteImg: 'assets/img/banners/soap-in-tg.png',
       url: 'https://t.me/soap_fun'
+    },
+    {
+      title: 'Моя Страна (MyIntCountry)',
+      img: 'assets/img/banners/myintcountry.png',
+      remoteImg: 'assets/img/banners/myintcountry.png',
+      url: 'http://myintcountry.ru/'
     }
   ];
 
