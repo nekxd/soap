@@ -199,8 +199,7 @@
 						<tr>
 							<td class="bookmarksCell">
 								<ul class="bookmarksList">
-									<li class="current"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=site&amp;q=">По сайту</a></div></div></div></li>
-									<li class="common"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=int&amp;q=">В Интернете</a></div></div></div></li>
+									<li class="current"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="chat.html">Чат</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=images&amp;q=">Картинки</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Авито</a></div></div></div></li>
@@ -240,7 +239,7 @@
 					</form>
 					<table class="tnorm" width="100%" style="margin-top:4px">
 						<tr>
-							<td style="padding-left:25px"><span id="ttt"><b>Сейчас ищут:</b></span> <a href="search.html?tab=site&q=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0">погода в москве</a></td>
+							<td style="padding-left:25px"><span id="ttt"><b>Сейчас ищут:</b></span> <a href="search.html?q=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0">погода в москве</a></td>
 							<td align="right" style="padding-right:60px; text-align:right" class="spu"><a href="https://www.mozilla.org/ru/firefox/new/">Установить Спутник</a></td>
 						</tr>
 					</table>
@@ -546,7 +545,7 @@ function checkMainSearch(f) {
   if (!f || !f.q || !f.q.value) { if (f && f.q) f.q.focus(); return false; }
   var q = f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
   if (!q) { f.q.focus(); return false; }
-  location.href = 'search.html?tab=site&q=' + encodeURIComponent(q);
+  location.href = 'search.html?q=' + encodeURIComponent(q);
   return false;
 }
 function setText(el, val) {

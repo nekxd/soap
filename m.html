@@ -25,19 +25,19 @@
 
   <!-- Search Form (Authentic Mail.ru 2010 style) -->
   <div class="m-search-wrap">
-    <div><a href="search.html?tab=site" class="m-search-topic">Поиск по сайту</a> | <a href="search.html?tab=int" class="m-search-topic" style="color:#666; font-weight:normal;">В Интернете</a></div>
+    <div><a href="search.html" class="m-search-topic">Поиск в интернете</a></div>
     <form action="search.html" method="get" style="margin:0; padding:0;" onsubmit="return checkMobileSearch(this);">
       <table border="0" cellpadding="0" cellspacing="0" class="m-search-box-table">
         <tr>
           <td rowspan="2" class="m-inhold">
-            <input type="text" name="q" id="mq" class="m-search-input" value="" autocomplete="off" placeholder="Поиск по сайту soap.nekxd.fun" />
+            <input type="text" name="q" id="mq" class="m-search-input" value="" autocomplete="off" placeholder="Поиск в Интернете" />
           </td>
           <td class="ct"><img src="assets/img/gi/img/0.gif" height="9" width="18" border="0" alt="" /></td>
           <td rowspan="2" class="btnplace">
             <input type="submit" value="Найти" class="m-search-btn" />
           </td>
           <td rowspan="2" class="lensplace">
-            <a href="search.html?tab=site" title="Поиск по сайту"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Поиск по сайту" width="15" height="12" border="0" /></a>
+            <a href="search.html" title="Поиск в интернете"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Поиск в интернете" width="15" height="12" border="0" /></a>
           </td>
         </tr>
         <tr>
@@ -240,7 +240,7 @@
       if (!f || !f.q || !f.q.value) return false;
       var q = f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
       if (!q) return false;
-      location.href = 'search.html?tab=site&q=' + encodeURIComponent(q);
+      location.href = 'search.html?q=' + encodeURIComponent(q);
       return false;
     };
     function setText(el, val) {
