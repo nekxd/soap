@@ -541,10 +541,22 @@ function getParam(name) {
   return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
 }
 
+function isLegacyBrowser() {
+  if (typeof fetch === 'undefined') return true;
+  if (typeof document.documentMode !== 'undefined' || navigator.userAgent.indexOf('MSIE') !== -1) return true;
+  if (navigator.userAgent.indexOf('Android') !== -1 && typeof window.ReadableStream === 'undefined') return true;
+  if (/Opera Mini|Symbian|Series60|NetFront|Windows CE|IEMobile/i.test(navigator.userAgent)) return true;
+  return false;
+}
+
 function doSearch(f) {
   var q = (f.q && f.q.value) ? f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
   if (!q) {
     if (f.q) f.q.focus();
+    return false;
+  }
+  if (isLegacyBrowser()) {
+    location.href = 'http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
     return false;
   }
   location.href = 'search.html?q=' + encodeURIComponent(q);
@@ -955,7 +967,7 @@ function fetchDdgLiteWebSearch(q, page, callback) {
       }
     }
     callback(err || new Error('no results'), null);
-  }, 8000);
+  }, 4500);
 }
 
 /* ===================== PARALLEL ACCELERATED SEARCH ===================== */
@@ -968,33 +980,40 @@ function fetchWebSearch(q, page, callback) {
     callback(items, isFallback, source);
   }
 
-  // 1. Primary: DuckDuckGo Lite via Jina (gives 10 real web results)
-  fetchDdgLiteWebSearch(q, page, function (err, items) {
-    if (!err && items && items.length > 0) {
-      complete(items, false, 'web');
-    } else {
-      // 2. Fallback: DuckDuckGo Instant Answer API (JSONP)
-      fetchDdgApi(q, function (ddgItems) {
-        if (ddgItems && ddgItems.length > 0) {
-          complete(ddgItems, true, 'ddg_api');
-        } else {
-          complete([], false, 'none');
+  // 1. Probe local backend if available (e.g. chat_server.js running on local/custom host)
+  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8080' || location.port === '8000';
+  if (isLocal) {
+    makeRequest('/api/search?q=' + encodeURIComponent(q) + (page > 1 ? '&page=' + page : ''), function (err, text) {
+      if (!err && text) {
+        var data = safeJsonParse(text);
+        if (data && data.results && data.results.length > 0) {
+          complete(data.results, false, 'local_api');
+          return;
         }
-      });
-    }
-  });
+      }
+      runPrimarySearch();
+    }, 1500);
+    return;
+  }
 
-  // Fallback cutoff timer after 8.5 seconds max
-  setTimeout(function () {
-    if (delivered) return;
-    fetchDdgApi(q, function (ddgItems) {
-      if (ddgItems && ddgItems.length > 0) {
-        complete(ddgItems, true, 'ddg_api');
+  runPrimarySearch();
+
+  function runPrimarySearch() {
+    // 2. Primary: DuckDuckGo Lite via Jina (gives 10 real web results)
+    fetchDdgLiteWebSearch(q, page, function (err, items) {
+      if (!err && items && items.length > 0) {
+        complete(items, false, 'web');
       } else {
         complete([], false, 'none');
       }
     });
-  }, 8500);
+
+    // Accelerated fallback cutoff after 4.8 seconds (no more 8.5s hanging!)
+    setTimeout(function () {
+      if (delivered) return;
+      complete([], false, 'none');
+    }, 4800);
+  }
 }
 
 /* ===================== UI RENDERING & CACHING ===================== */
@@ -1101,6 +1120,26 @@ function runSearch() {
     return;
   }
   document.title = curQuery + ' — Поиск@soap.nekxd.fun';
+
+  // Fast path for legacy browsers (Android <= 4.4, IE 6-8, Symbian, NetFront):
+  // Since modern TLS 1.3/CORS to Jina is impossible over static GitHub Pages,
+  // immediately load pure HTTP DuckDuckGo Lite search results with zero delay!
+  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8080' || location.port === '8000';
+  if (isLegacyBrowser() && !isLocal) {
+    if (loadingBox) {
+      loadingBox.style.display = 'block';
+      loadingBox.innerHTML = '<div style="background:#f4f7fb; border:1px solid #b8cde4; padding:16px 20px; border-radius:3px; margin:15px 0;">' +
+        '<div style="font-weight:bold; color:#00468c; font-size:15px; margin-bottom:8px;">Поиск по запросу «' + esc(curQuery) + '»</div>' +
+        '<div style="font-size:13px; color:#444; margin-bottom:12px;">Загрузка быстрых результатов поиска для старых устройств...</div>' +
+        '<div>' +
+        '<a href="http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery) + '" style="display:inline-block; background:#00468c; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none; margin-right:10px;">⚡ Открыть DuckDuckGo Lite &rarr;</a>' +
+        '<a href="https://www.google.com/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="display:inline-block; background:#4285f4; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none;">🔍 Google</a>' +
+        '</div>' +
+        '</div>';
+    }
+    location.replace('http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery));
+    return;
+  }
 
   // Check fast in-memory & session cache
   var cacheKey = curQuery + '_' + curPage;

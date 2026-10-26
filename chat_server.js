@@ -236,6 +236,51 @@ function handleRequest(req, res) {
   }
 
   // --- API: Get Chat State ---
+  if (pathname === '/api/search') {
+    const q = parsedUrl.query.q || '';
+    if (!q) {
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ results: [] }));
+      return;
+    }
+    const targetUrl = 'https://r.jina.ai/https://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
+    const https = require('https');
+    https.get(targetUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (upstreamRes) => {
+      let body = '';
+      upstreamRes.on('data', chunk => body += chunk);
+      upstreamRes.on('end', () => {
+        const results = [];
+        const ddgLiteRe = /(?:^|\n)\d+\.\[([^\]]+)\]\((https?:\/\/[^)]+)\)\s*\n([\s\S]*?)(?=(?:\n\d+\.\[|\n*Next Page|\n*© DuckDuckGo|$))/g;
+        let m;
+        while ((m = ddgLiteRe.exec(body)) !== null) {
+          let url = m[2];
+          if (url.includes('uddg=')) {
+            const um = url.match(/[?&]uddg=([^&]+)/);
+            if (um) url = decodeURIComponent(um[1]);
+          }
+          const lines = m[3].trim().split('\n').map(l => l.trim()).filter(Boolean);
+          const snippet = lines.length > 1 ? lines.slice(0, -1).join(' ') : (lines[0] || '');
+          const displayUrl = lines.length > 1 ? lines[lines.length - 1] : url;
+          results.push({
+            title: m[1].replace(/<[^>]+>/g, '').trim(),
+            url: url,
+            snippet: snippet.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>'),
+            displayUrl: displayUrl
+          });
+        }
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        });
+        res.end(JSON.stringify({ results }));
+      });
+    }).on('error', (err) => {
+      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ error: err.message, results: [] }));
+    });
+    return;
+  }
+
   if (pathname === '/api/chat/state') {
     const room = parsedUrl.query.room || 'general';
     const sinceId = parseInt(parsedUrl.query.since_id || '0', 10);

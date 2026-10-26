@@ -541,8 +541,22 @@
 
 <script src="assets/js/common.js"></script>
 <script>
+function isLegacyBrowser() {
+  if (typeof fetch === 'undefined') return true;
+  if (typeof document.documentMode !== 'undefined' || navigator.userAgent.indexOf('MSIE') !== -1) return true;
+  if (navigator.userAgent.indexOf('Android') !== -1 && typeof window.ReadableStream === 'undefined') return true;
+  if (/Opera Mini|Symbian|Series60|NetFront|Windows CE|IEMobile/i.test(navigator.userAgent)) return true;
+  return false;
+}
 function checkMainSearch(f){
   if(!f.q.value){ f.q.focus(); return false; }
+  var q = f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  if(!q){ f.q.focus(); return false; }
+  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8080' || location.port === '8000';
+  if(isLegacyBrowser() && !isLocal){
+    location.href = 'http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
+    return false;
+  }
   return true;
 }
 function setText(el, val) {
