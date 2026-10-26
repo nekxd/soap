@@ -25,19 +25,19 @@
 
   <!-- Search Form (Authentic Mail.ru 2010 style) -->
   <div class="m-search-wrap">
-    <div><a href="search.html" class="m-search-topic">Поиск в интернете</a></div>
+    <div><a href="search.html?tab=site" class="m-search-topic">Поиск по сайту</a> | <a href="search.html?tab=int" class="m-search-topic" style="color:#666; font-weight:normal;">В Интернете</a></div>
     <form action="search.html" method="get" style="margin:0; padding:0;" onsubmit="return checkMobileSearch(this);">
       <table border="0" cellpadding="0" cellspacing="0" class="m-search-box-table">
         <tr>
           <td rowspan="2" class="m-inhold">
-            <input type="text" name="q" id="mq" class="m-search-input" value="" autocomplete="off" placeholder="Поиск в Интернете" />
+            <input type="text" name="q" id="mq" class="m-search-input" value="" autocomplete="off" placeholder="Поиск по сайту soap.nekxd.fun" />
           </td>
           <td class="ct"><img src="assets/img/gi/img/0.gif" height="9" width="18" border="0" alt="" /></td>
           <td rowspan="2" class="btnplace">
             <input type="submit" value="Найти" class="m-search-btn" />
           </td>
           <td rowspan="2" class="lensplace">
-            <a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" border="0" /></a>
+            <a href="search.html?tab=site" title="Поиск по сайту"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Поиск по сайту" width="15" height="12" border="0" /></a>
           </td>
         </tr>
         <tr>
@@ -46,9 +46,11 @@
       </table>
     </form>
     <div style="font-size:11px; color:#666; margin-top:5px; line-height:1.6;">
-      <span style="color:#333; font-weight:bold;">Искать:</span>
-      <a href="http://lite.duckduckgo.com/lite/" target="_blank" style="color:#0857a6; font-weight:bold;">⚡ DDG Lite (для старых телефонов)</a> &middot;
-      <a href="https://www.google.com" target="_blank" style="color:#2a6cd7;">Google</a>
+      <span style="color:#333; font-weight:bold;">Разделы:</span>
+      <a href="search.html?tab=site&q=игры" style="color:#1b5ea8;">Игры</a> &middot;
+      <a href="chat.html" style="color:#1b5ea8;">Чат</a> &middot;
+      <a href="search.html?tab=site&q=погода" style="color:#1b5ea8;">Погода</a> &middot;
+      <a href="soap.apk" style="color:#1b5ea8;">soap.apk</a>
     </div>
   </div>
 
@@ -234,23 +236,12 @@
   <script type="text/javascript" src="assets/js/common.js"></script>
   <script type="text/javascript">
   (function(){
-    function isLegacyBrowser() {
-      if (typeof fetch === 'undefined') return true;
-      if (typeof document.documentMode !== 'undefined' || navigator.userAgent.indexOf('MSIE') !== -1) return true;
-      if (navigator.userAgent.indexOf('Android') !== -1 && typeof window.ReadableStream === 'undefined') return true;
-      if (/Opera Mini|Symbian|Series60|NetFront|Windows CE|IEMobile/i.test(navigator.userAgent)) return true;
-      return false;
-    }
     window.checkMobileSearch = function(f) {
       if (!f || !f.q || !f.q.value) return false;
       var q = f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
       if (!q) return false;
-      var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8080' || location.port === '8000';
-      if (isLegacyBrowser() && !isLocal) {
-        location.href = 'http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
-        return false;
-      }
-      return true;
+      location.href = 'search.html?tab=site&q=' + encodeURIComponent(q);
+      return false;
     };
     function setText(el, val) {
       if (!el) return;

@@ -300,7 +300,8 @@ body {background: #fff; min-width: 0;}
 				<div id="parentZaklId">
 					<table cellpadding="0" cellspacing="0" border="0" id="allMarkTable">
 						<tr>
-							<td class="current" id="tab_int"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></td>
+							<td class="current" id="tab_site"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=site&q=">По сайту</a></div></div></div></td>
+							<td class="common" id="tab_int"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=int&q=">В Интернете</a></div></div></div></td>
 							<td class="common" id="tab_pic"><div class="tlc"><div><div class="ahold"><a href="https://duckduckgo.com/?iax=images&ia=images&q=">Картинки</a></div></div></div></td>
 							<td class="common" id="tab_lot"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Авито</a></div></div></div></td>
 							<td class="common" id="tab_people"><div class="tlc"><div><div class="ahold"><a href="https://openvk.org/search">Люди</a></div></div></div></td>
@@ -324,7 +325,7 @@ body {background: #fff; min-width: 0;}
 										<td class="ct" style="width:18px;"><img src="assets/img/gi/img/0.gif" height="9" width="18" border="0" alt="" /></td>
 										<td rowspan="2" class="btnplace" valign="middle"><input type="submit" class="btn" value="Найти" /></td>
 										<td rowspan="2" nowrap="nowrap" style="padding-right:8px;">
-											<a href="https://duckduckgo.com/" title="Расширенный поиск"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Расширенный поиск" width="15" height="12" border="0" /></a>
+											<a href="search.html?tab=site" title="Поиск по сайту"><img src="assets/img/ii/r/go/ico_lens.gif" alt="Поиск по сайту" width="15" height="12" border="0" /></a>
 										</td>
 										<td rowspan="2" nowrap="nowrap" style="padding-right:8px;"><a href="#" title="Русская клавиатура" onclick="return false;"><img src="assets/img/ii/r/go/ico_keyb.gif" alt="Русская клавиатура" width="14" height="13" border="0" /></a></td>
 									</tr>
@@ -340,10 +341,8 @@ body {background: #fff; min-width: 0;}
 						<table border="0" cellpadding="0" cellspacing="0" class="t80" width="100%">
 							<tr valign="top">
 								<td align="left" style="font-size:12px; color:#555; padding-top:2px;">
-									<span style="font-weight:bold; color:#333; margin-right:4px;">Искать в:</span>
-									<a href="http://lite.duckduckgo.com/lite/?q=" id="btnDdgLite" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#f4f7fb; border:1px solid #b8cde4; border-radius:2px; color:#0857a6; text-decoration:none; font-weight:bold;" title="Быстрый поиск HTML 4.01 для старых ПК и телефонов">⚡ DDG Lite (для старых ПК)</a>
-									<a href="https://www.google.com/search?q=" id="btnGoogle" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#2a6cd7; text-decoration:none;">Google</a>
-									<a href="https://duckduckgo.com/?q=" id="btnDdg" target="_blank" style="display:inline-block; margin-right:5px; padding:1px 6px; background:#fff; border:1px solid #ddd; border-radius:2px; color:#de5833; text-decoration:none;">DuckDuckGo</a>
+									<label style="margin-right:12px; cursor:pointer;"><input type="radio" name="search_scope" id="scope_site" value="site" checked="checked" onclick="switchScope('site');" /> <b>по сайту soap.nekxd.fun</b></label>
+									<label style="margin-right:12px; cursor:pointer;"><input type="radio" name="search_scope" id="scope_int" value="int" onclick="switchScope('int');" /> в Интернете</label>
 								</td>
 								<td align="right" style="white-space: nowrap;">
 									<div id="sres" style="visibility: hidden; color: #999;">
@@ -357,8 +356,7 @@ body {background: #fff; min-width: 0;}
 					</div>
 					<noscript>
 						<div style="background:#fffbe8; border:1px solid #e2cb82; padding:6px 10px; margin-top:5px; font-size:12px; color:#333;">
-							<b>JavaScript отключен или не поддерживается.</b> Для мгновенного поиска на старом устройстве используйте:
-							<a href="http://lite.duckduckgo.com/lite/" target="_blank" style="font-weight:bold; color:#0857a6;">DuckDuckGo Lite (HTML 4.01)</a> или <a href="https://www.google.com" target="_blank" style="color:#2a6cd7;">Google</a>.
+							Для поиска по сайту перейдите на главную страницу <a href="index.html" style="font-weight:bold; color:#0857a6;">soap.nekxd.fun</a> или откройте <a href="chat.html">Чат</a>.
 						</div>
 					</noscript>
 				</div>
@@ -388,10 +386,13 @@ body {background: #fff; min-width: 0;}
 					<a href="http://inori.faero.top" target="_blank"><img src="assets/img/banners/inori.png" width="260" height="224" border="0" alt="Inori Aizawa" /></a>
 				</div>
 				<div class="mb15" style="font-size:12px; color:#666; line-height: 1.7em; border-top: 1px solid #e0e0e0; padding-top: 10px; text-align: left;">
-					<b>Другие поисковики:</b><br />
-					&bull; <a href="http://lite.duckduckgo.com/lite/?q=" id="linkDdgLite" target="_blank" style="color:#0857A6; font-weight:bold;">⚡ DuckDuckGo Lite (для старых ПК)</a><br />
-					&bull; <a href="https://www.google.com/search?q=" id="linkGg" target="_blank" style="color:#0857A6;">Google</a><br />
-					&bull; <a href="https://duckduckgo.com/?q=" id="linkDdg" target="_blank" style="color:#0857A6;">DuckDuckGo</a>
+					<b>Разделы soap.nekxd.fun:</b><br />
+					&bull; <a href="index.html" style="color:#0857A6;">Главная страница</a><br />
+					&bull; <a href="chat.html" style="color:#0857A6;">Чат@SOAP (Колобок)</a><br />
+					&bull; <a href="search.html?tab=site&q=игры" style="color:#0857A6;">Игры онлайн</a><br />
+					&bull; <a href="soap.apk" style="color:#0857A6;">Скачать soap.apk</a><br />
+					&bull; <a href="http://myintcountry.ru/" target="_blank" style="color:#0857A6;">Моя Интернет Страна</a><br />
+					&bull; <a href="http://oddmarket.ct.ws/" target="_blank" style="color:#0857A6;">OddMarket</a>
 				</div>
 			</div>
 		</div>
@@ -541,12 +542,432 @@ function getParam(name) {
   return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
 }
 
-function isLegacyBrowser() {
-  if (typeof fetch === 'undefined') return true;
-  if (typeof document.documentMode !== 'undefined' || navigator.userAgent.indexOf('MSIE') !== -1) return true;
-  if (navigator.userAgent.indexOf('Android') !== -1 && typeof window.ReadableStream === 'undefined') return true;
-  if (/Opera Mini|Symbian|Series60|NetFront|Windows CE|IEMobile/i.test(navigator.userAgent)) return true;
-  return false;
+/* ===================== SITE SEARCH DATABASE & INDEX ===================== */
+var curTab = 'site';
+var SITE_INDEX = [
+  {
+    title: 'Портал soap.nekxd.fun — Главная страница Mail.ru 2010',
+    url: 'index.html',
+    displayUrl: 'soap.nekxd.fun',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Главная страница портала в дизайне Mail.ru 2010 года. Почта, новости, точный прогноз погоды по городам, курсы валют ЦБ РФ, каталог проектов, мобильный софт и игры.',
+    keywords: ['главная', 'портал', 'soap', 'soap.nekxd.fun', 'nekxd', 'mail', 'mail.ru', '2010', 'mailru2010', 'сайт', 'стартовая', 'старт', 'home', 'main', 'index']
+  },
+  {
+    title: 'Почта@soap.nekxd.fun — Вход в почтовый ящик и регистрация',
+    url: 'index.html#mailbox',
+    displayUrl: 'soap.nekxd.fun/#mailbox',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Вход в почту @soap.nekxd.fun, @mail.ru, @inbox.ru, @bk.ru, @list.ru. Проверка новых писем, отправка сообщений, регистрация нового электронного ящика.',
+    keywords: ['почта', 'mail', 'вход в почту', 'ящик', 'регистрация', 'e-mail', 'email', 'письмо', 'письма', 'pop3', 'smtp', 'inbox', 'bk.ru', 'list.ru', 'логин', 'пароль']
+  },
+  {
+    title: 'Мой Мир@soap.nekxd.fun — Социальная сеть портала',
+    url: 'https://openvk.org/soap',
+    displayUrl: 'soap.nekxd.fun/myworld',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Социальная сеть пользователей soap.nekxd.fun: профили, друзья, фотоальбомы, подарки, сообщества, стена и лента событий.',
+    keywords: ['мой мир', 'мир', 'соцсеть', 'профиль', 'анкеты', 'друзья', 'фото', 'подарки', 'сообщества', 'my.mail.ru', 'openvk']
+  },
+  {
+    title: 'ЧАТ@SOAP — Анонимный чат со смайлами Колобок (Kolobok)',
+    url: 'chat.html',
+    displayUrl: 'soap.nekxd.fun/chat.html',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Легендарный ретро-чат в стиле Mail.ru 2010. Комнаты: Основная, Курилка, Флуд, Знакомства, Техподдержка. 281 анимированный смайлик Kolobok, цветные ники, сохранение сессии в cookie.',
+    keywords: ['чат', 'chat', 'чат@soap', 'колобок', 'kolobok', 'смайлы', 'смайлики', 'общение', 'флуд', 'курилка', 'знакомства', 'комнаты', 'анонимный чат', 'чатик', 'переписка', 'техподдержка', 'бот', 'боты', 'онлайн чат']
+  },
+  {
+    title: 'Мобильная версия soap.nekxd.fun (m.html)',
+    url: 'm.html',
+    displayUrl: 'soap.nekxd.fun/m.html',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Облегченная версия портала для старых мобильных телефонов (Symbian, Java J2ME, Opera Mini, Android 1.6–4.3, Windows Mobile). Быстрая загрузка новостей, погоды и валют.',
+    keywords: ['мобильная', 'мобильная версия', 'm.html', 'wap', 'pda', 'symbian', 'java', 'j2me', 'opera mini', 'android 2.3', 'android 4.3', 'телефон', 'старый телефон', 'облегченная версия']
+  },
+  {
+    title: 'Поиск@soap.nekxd.fun — Поисковая система Mail.ru 2010',
+    url: 'search.html',
+    displayUrl: 'soap.nekxd.fun/search.html',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Поиск по страницам, разделам, играм и файлам портала soap.nekxd.fun, а также по глобальному интернету.',
+    keywords: ['поиск', 'search', 'найти', 'искать', 'поисковик', 'поисковая система', 'поиск по сайту', 'веб поиск']
+  },
+  {
+    title: 'О компании / О проекте soap.nekxd.fun',
+    url: 'about.html',
+    displayUrl: 'soap.nekxd.fun/about.html',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Информация о ретро-портале soap.nekxd.fun. Воссоздание духа Рунета 2010 года, история проекта, контакты автора Никиты Яндиева (Nekich/ynd).',
+    keywords: ['о компании', 'о проекте', 'about', 'автор', 'никита яндиев', 'яндиев', 'nekich', 'ynd', 'создатель', 'информация', 'контакты', 'создатель сайта']
+  },
+  {
+    title: 'Реклама на soap.nekxd.fun — Баннеры и партнерство',
+    url: 'adv.html',
+    displayUrl: 'soap.nekxd.fun/adv.html',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Размещение баннеров 300x259 и кнопок 88x31 на портале soap.nekxd.fun. Условия взаимного размещения для ретро-проектов, инди-сайтов и сообществ.',
+    keywords: ['реклама', 'adv', 'баннер', 'баннеры', 'размещение', 'партнерство', 'пиар', 'кнопка', '300x259', '88x31', 'банеры', 'реклама на сайте']
+  },
+  {
+    title: 'Каталог ретро-кнопок 88x31 и баннеров soap.nekxd.fun',
+    url: 'adv.html#badges',
+    displayUrl: 'soap.nekxd.fun/adv.html#badges',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Коллекция баннеров и кнопок 88x31 всех партнеров: MyIntCountry, VeselCraft, OddMarket, Faero, NekxdOld, Windows Media Player, W7 Boot.',
+    keywords: ['кнопки 88x31', 'банеры', 'баннеры', 'баннер 88x31', '88x31', 'ретро кнопки', 'веб-кольцо', 'баннерообмен', 'логотипы', 'информеры', 'кнопка']
+  },
+  {
+    title: 'Помощь и поддержка пользователей (help.html)',
+    url: 'help.html',
+    displayUrl: 'soap.nekxd.fun/help.html',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Справочный раздел портала. Ответы на частые вопросы по настройке чата, мобильной версии, совместимости со старыми браузерами IE и Android.',
+    keywords: ['помощь', 'help', 'поддержка', 'faq', 'справка', 'вопросы', 'инструкция', 'настройка', 'поддержка пользователей']
+  },
+  {
+    title: 'Поддержка старых устройств: Android 2.3–4.3, Symbian, IE 6–8',
+    url: 'help.html#devices',
+    displayUrl: 'soap.nekxd.fun/help.html#devices',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Инструкции по настройке подключения и работе сайта на классических телефонах Nokia, Sony Ericsson, Samsung, Motorola и старых Android-смартфонах и Windows XP.',
+    keywords: ['старые устройства', 'старые телефоны', 'android 4.3', 'android 2.3', 'symbian', 'netfront', 'nokia', 'ie6', 'ie7', 'ie8', 'старый браузер', 'опера мини']
+  },
+  {
+    title: 'Скачать мобильное приложение soap.apk / MailRu2010.apk для Android',
+    url: 'soap.apk',
+    displayUrl: 'soap.nekxd.fun/soap.apk',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Официальный Android-клиент портала soap.nekxd.fun. Совместим со всеми версиями Android от Android 1.6 Donut, 2.3 Gingerbread, 4.0 ICS, 4.3 Jelly Bean до современных Android 14–16.',
+    keywords: ['apk', 'скачать', 'android', 'soap.apk', 'mailru2010.apk', 'приложение', 'клиент', 'андроид', 'скачать на телефон', 'программа', 'апк', 'софт']
+  },
+  {
+    title: 'Игры@Mail.ru — Каталог онлайн игр soap.nekxd.fun',
+    url: 'index.html#games',
+    displayUrl: 'soap.nekxd.fun/#games',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Каталог ретро-игр портала: Счастливый Фермер, Cut the Rope, Doom, Doodle Jump, онлайн flash-игры, мини-игры и классические игры эпохи 2000-х.',
+    keywords: ['игры', 'games', 'играть', 'онлайн игры', 'флеш игры', 'flash', 'мини игры', 'каталог игр', 'бесплатные игры', 'ретро игры', 'игра']
+  },
+  {
+    title: 'Cut the Rope (OpenVK App 531) — Корми Ам Няма леденцами',
+    url: 'https://openvk.org/app531',
+    displayUrl: 'openvk.org/app531',
+    favicon: 'assets/img/custom/game_cutrope.png',
+    snippet: 'Легендарная головоломка: перерезайте веревки, собирайте золотые звезды и кормите забавного монстрика Ам Няма сладкими леденцами.',
+    keywords: ['cut the rope', 'ам ням', 'веревки', 'леденцы', 'играть в cut the rope', 'головоломка', 'игра cut the rope', 'om nom', 'игры']
+  },
+  {
+    title: 'Doom (OpenVK App 607) — Классический шутер 1993 года онлайн',
+    url: 'https://openvk.org/app607',
+    displayUrl: 'openvk.org/app607',
+    favicon: 'assets/img/custom/game_doom.png',
+    snippet: 'Культовый 3D-экшен от id Software в браузере: уничтожайте демонов на марсианской базе Фобос с дробовиком, бензопилой и BFG9000.',
+    keywords: ['doom', 'дум', 'шутер', 'стрелялка', '1993', 'играть в doom', 'doom онлайн', 'id software', 'bfg', 'игры']
+  },
+  {
+    title: 'Doodle Jump (OpenVK App 578) — Платформер с мобильных телефонов',
+    url: 'https://openvk.org/app578',
+    displayUrl: 'openvk.org/app578',
+    favicon: 'assets/img/custom/game_djump.png',
+    snippet: 'Прыгайте по зеленым платформам все выше и выше, избегайте монстров и черных дыр, собирайте пружины и реактивные ранцы.',
+    keywords: ['doodle jump', 'дудл джамп', 'дудлер', 'платформер', 'прыжки', 'мобильная игра', 'игры']
+  },
+  {
+    title: 'Счастливый Фермер — Легендарная игра эпохи 2009–2010',
+    url: 'index.html#games',
+    displayUrl: 'soap.nekxd.fun/#games',
+    favicon: 'assets/img/custom/game_ferma.jpg',
+    snippet: 'Культовая игра ВКонтакте и Мой Мир: выращивайте морковь и клубнику, удобряйте грядки, заводите сторожевого пса и воруйте урожай у соседей.',
+    keywords: ['счастливый фермер', 'ферма', 'фермер', 'урожай', 'грядки', 'мой мир фермер', 'игры вк', 'игры']
+  },
+  {
+    title: 'Новости@Mail.ru — Главные новости дня',
+    url: 'index.html#news',
+    displayUrl: 'soap.nekxd.fun/#news',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Актуальная лента новостей: политика, общество, происшествия, спорт, экономика, культура и наука. Обновление в реальном времени.',
+    keywords: ['новости', 'news', 'события', 'политика', 'спорт', 'экономика', 'новости дня', 'лента новостей', 'свежие новости']
+  },
+  {
+    title: 'Hi-Tech@Mail.ru — Технологии, компьютеры, софт и гаджеты',
+    url: 'index.html#hitech',
+    displayUrl: 'soap.nekxd.fun/#hitech',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Новости мира высоких технологий: обзоры процессоров, ретро-компьютеры, программирование, мобильные платформы и электроника.',
+    keywords: ['hi-tech', 'хай тек', 'технологии', 'гаджеты', 'железо', 'компьютеры', 'электроника', 'it']
+  },
+  {
+    title: 'Погода@Mail.ru — Точный прогноз погоды',
+    url: 'index.html#weather',
+    displayUrl: 'soap.nekxd.fun/#weather',
+    favicon: 'assets/img/im/r/weather_new/pict_weather_big_16.gif',
+    snippet: 'Прогноз погоды на утро, день, вечер и ночь, а также на завтра. Температура воздуха, облачность, осадки и скорость ветра по данным Open-Meteo.',
+    keywords: ['погода', 'прогноз', 'температура', 'дождь', 'снег', 'ветер', 'погода в москве', 'градусник', 'погода спб']
+  },
+  {
+    title: 'Курсы валют ЦБ РФ — Доллар, Евро, Нефть',
+    url: 'index.html#currency',
+    displayUrl: 'soap.nekxd.fun/#currency',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Официальные курсы иностранных валют Центрального Банка Российской Федерации (USD, EUR) и динамика изменений.',
+    keywords: ['валюта', 'курс доллара', 'курс евро', 'доллар', 'евро', 'цб рф', 'рубль', 'котировки', 'деньги', 'usd', 'eur']
+  },
+  {
+    title: 'Телепрограмма — Программа передач центральных каналов',
+    url: 'index.html#tv',
+    displayUrl: 'soap.nekxd.fun/#tv',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Телепрограмма передач на сегодня: Первый канал, Россия 1, НТВ, СТС, ТНТ и другие каналы с текущим эфиром.',
+    keywords: ['телепрограмма', 'тв', 'телевидение', 'программа передач', 'передачи', 'сериалы', 'фильмы']
+  },
+  {
+    title: 'Гороскопы@Mail.ru — Астрологический прогноз для всех знаков зодиака',
+    url: 'index.html#horoscope',
+    displayUrl: 'soap.nekxd.fun/#horoscope',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Гороскоп на сегодня и на завтра: Овен, Телец, Близнецы, Рак, Лев, Дева, Весы, Скорпион, Стрелец, Козерог, Водолей, Рыбы.',
+    keywords: ['гороскоп', 'гороскопы', 'знаки зодиака', 'астрология', 'овен', 'телец', 'близнецы', 'рак', 'лев', 'дева', 'весы', 'скорпион', 'стрелец', 'козерог', 'водолей', 'рыбы']
+  },
+  {
+    title: 'Авто@Mail.ru — Каталог автомобилей, тест-драйвы и автоновости',
+    url: 'index.html#auto',
+    displayUrl: 'soap.nekxd.fun/#auto',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Каталог автомобилей, технические характеристики, отзывы автовладельцев, тест-драйвы и советы автолюбителям.',
+    keywords: ['авто', 'автомобили', 'машины', 'автобазар', 'тест драйв', 'купить авто', 'автоновости', 'ваз', 'лада']
+  },
+  {
+    title: 'Работа@Mail.ru — Поиск работы, вакансии и резюме',
+    url: 'index.html#job',
+    displayUrl: 'soap.nekxd.fun/#job',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'База вакансий и предложений о работе: свежие объявления работодателей, размещение резюме, поиск работы по городам.',
+    keywords: ['работа', 'вакансии', 'резюме', 'поиск работы', 'трудоустройство', 'зарплата', 'заработок']
+  },
+  {
+    title: 'Недвижимость@Mail.ru — Аренда и продажа жилья',
+    url: 'index.html#realty',
+    displayUrl: 'soap.nekxd.fun/#realty',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Объявления по недвижимости: покупка, продажа и аренда жилья, новостройки, квартиры, дачи и участки.',
+    keywords: ['недвижимость', 'квартиры', 'аренда', 'снять квартиру', 'купить квартиру', 'жилье', 'дома', 'комнаты']
+  },
+  {
+    title: 'Знакомства@soap — Знакомства и общение в чате',
+    url: 'chat.html',
+    displayUrl: 'soap.nekxd.fun/chat.html#dating',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Комната «Знакомства» в ретро-чате soap.nekxd.fun: поиск друзей, романтических знакомств и единомышленников.',
+    keywords: ['знакомства', 'познакомимся', 'поиск друзей', 'романтика', 'парни', 'девушки', 'анкеты знакомств']
+  },
+  {
+    title: 'Браузеры для старых ПК и Спутник@Mail.ru',
+    url: 'help.html#browsers',
+    displayUrl: 'soap.nekxd.fun/help.html#browsers',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Рекомендованные браузеры для старых компьютеров: RetroFire, Firefox 52 ESR, MyPal, K-Meleon, Opera 12 Presto.',
+    keywords: ['спутник', 'спутник@mail.ru', 'браузер', 'браузер для старого пк', 'старый компьютер', 'mypal', 'opera 12', 'firefox 52', 'k-meleon', 'retrofire']
+  },
+  {
+    title: 'Моя Интернет Страна (MyIntCountry) — Ретро портал, форум и соцсеть',
+    url: 'http://myintcountry.ru/',
+    displayUrl: 'myintcountry.ru',
+    favicon: 'assets/img/custom/myintcountry_16.png',
+    snippet: 'Ретро-портал, объединяющий соцсеть и форум. Полная поддержка классических браузеров от Internet Explorer 4+, старых ПК и мобильных сетей 2G/GPRS.',
+    keywords: ['моя интернет страна', 'myintcountry', 'мик', 'форум', 'соцсеть', '2g', 'ie4', 'ретро форум', 'myintcountry.ru']
+  },
+  {
+    title: 'OddMarket — Маркет ретро программ и игр для старых систем',
+    url: 'http://oddmarket.ct.ws/',
+    displayUrl: 'oddmarket.ct.ws',
+    favicon: 'assets/img/custom/oddmarket_16.png',
+    snippet: 'Каталог ретро софта, игр, утилит и тем оформления для Windows 98, 2000, XP, Symbian OS, Windows Mobile и Java ME.',
+    keywords: ['oddmarket', 'оддмаркет', 'маркет', 'софт', 'ретро софт', 'программы', 'игры', 'магазин приложений']
+  },
+  {
+    title: 'Renaissance (MRIM.su) — Возрождение Mail.ru Агента и ICQ',
+    url: 'http://mrim.su/',
+    displayUrl: 'mrim.su',
+    favicon: 'assets/img/custom/mrim_16.png',
+    snippet: 'Сервер и клиенты протоколов MRIM (Mail.ru Агент) и ICQ (OSCAR). Общение на старых телефонах Java, Symbian, Android и ПК Windows XP.',
+    keywords: ['renaissance', 'ренессанс', 'mrim', 'mrim.su', 'агент', 'mail.ru агент', 'icq', 'аська', 'мессенджер']
+  },
+  {
+    title: 'OpenVK (openvk.org) — Социальная сеть в дизайне ВКонтакте 2007–2012',
+    url: 'https://openvk.org/',
+    displayUrl: 'openvk.org',
+    favicon: 'assets/img/openvk_icon.png',
+    snippet: 'Свободная социальная сеть, воссоздающая классический дизайн и атмосферу раннего ВКонтакте эпохи Павла Дурова: стена, граффити, аудиозаписи, группы и приложения.',
+    keywords: ['openvk', 'опенвк', 'вк', 'вконтакте', 'ретро вк', 'соцсеть', 'дуров', 'стена', 'граффити']
+  },
+  {
+    title: 'Официальная группа soap.nekxd.fun в OpenVK',
+    url: 'https://openvk.org/soap',
+    displayUrl: 'openvk.org/soap',
+    favicon: 'assets/img/openvk_icon.png',
+    snippet: 'Сообщество проекта soap.nekxd.fun в OpenVK: новости обновлений, обсуждения, предложения, скрины и общение участников.',
+    keywords: ['группа', 'паблик', 'сообщество', 'openvk.org/soap', 'овк', 'новости проекта']
+  },
+  {
+    title: 'Telegram-канал soap.nekxd.fun (@soap_fun)',
+    url: 'https://t.me/soap_fun',
+    displayUrl: 't.me/soap_fun',
+    favicon: 'assets/img/custom/tg_16.png',
+    snippet: 'Официальный Telegram-канал проекта: обновления, разработка, новости и анонсы ретро-портала Mail.ru 2010.',
+    keywords: ['telegram', 'тг', 'soap_fun', 'канал', 'новости проекта', 'телеграм']
+  },
+  {
+    title: 'Old-DOS (old-dos.ru) — Крупнейший архив старых программ и DOS-игр',
+    url: 'http://old-dos.ru/',
+    displayUrl: 'old-dos.ru',
+    favicon: 'https://external-content.duckduckgo.com/ip3/old-dos.ru.ico',
+    snippet: 'Крупнейший в Рунете архив старого софта: игры MS-DOS, Windows 95/98/XP, системные утилиты, драйверы и документация.',
+    keywords: ['old-dos', 'олд дос', 'дос', 'dos', 'старые игры', 'ретро игры', 'архив софта', 'дос игры']
+  },
+  {
+    title: 'WinArchive (winarchive.org) — Каталог софта и драйверов для Windows',
+    url: 'https://winarchive.org/',
+    displayUrl: 'winarchive.org',
+    favicon: 'https://external-content.duckduckgo.com/ip3/winarchive.org.ico',
+    snippet: 'Исторический архив программ, драйверов и патчей для классических ОС: Windows 95, 98, ME, 2000, XP.',
+    keywords: ['winarchive', 'вин архив', 'драйверы', 'софт windows', 'утилиты', 'windows xp']
+  },
+  {
+    title: 'Windows 93 (windows93.net) — Интерактивная веб-ОС в браузере',
+    url: 'https://windows93.net/',
+    displayUrl: 'windows93.net',
+    favicon: 'https://external-content.duckduckgo.com/ip3/windows93.net.ico',
+    snippet: 'Пародийная операционная система с атмосферой 90-х прямо в окне браузера: игры, звуки, пасхалки и ретро-эстетика.',
+    keywords: ['windows 93', 'виндовс 93', 'веб ос', 'браузерная ос', 'ностальгия', '90-е']
+  },
+  {
+    title: 'Windows 96 (windows96.net) — Полноценная веб-десктоп операционная система',
+    url: 'https://windows96.net/',
+    displayUrl: 'windows96.net',
+    favicon: 'https://external-content.duckduckgo.com/ip3/windows96.net.ico',
+    snippet: 'Мощный веб-десктоп со встроенным софтом, поддержкой тем, звуковыми схемами и классическим интерфейсом.',
+    keywords: ['windows 96', 'виндовс 96', 'веб десктоп', 'браузерная ос']
+  },
+  {
+    title: 'Webamp (webamp.org) — Легендарный Winamp 2 в браузере',
+    url: 'https://webamp.org/',
+    displayUrl: 'webamp.org',
+    favicon: 'https://external-content.duckduckgo.com/ip3/webamp.org.ico',
+    snippet: 'Аутентичный веб-клон плеера Winamp 2.91 с эквалайзером, визуализатором и поддержкой оригинальных скинов .wsz.',
+    keywords: ['webamp', 'winamp', 'винамп', 'плеер', 'музыка', 'эквалайзер', 'mp3', 'скины']
+  },
+  {
+    title: 'Background Remover (tools.dverso.io/bgremove) — Удаление фона онлайн',
+    url: 'https://tools.dverso.io/bgremove/',
+    displayUrl: 'tools.dverso.io/bgremove',
+    favicon: 'https://external-content.duckduckgo.com/ip3/tools.dverso.io.ico',
+    snippet: 'Быстрый бесплатный онлайн-инструмент для автоматического удаления заднего фона с фотографий и картинок.',
+    keywords: ['background remover', 'удаление фона', 'вырезать фон', 'прозрачный фон', 'png', 'инструменты']
+  },
+  {
+    title: 'Gamedate (gamedate.org) — База данных релизов видеоигр',
+    url: 'https://www.gamedate.org/',
+    displayUrl: 'gamedate.org',
+    favicon: 'https://external-content.duckduckgo.com/ip3/www.gamedate.org.ico',
+    snippet: 'Энциклопедия дат релизов видеоигр по платформам: PC, PlayStation, Xbox, Nintendo, Sega, мобильные платформы.',
+    keywords: ['gamedate', 'база игр', 'даты релизов', 'видеоигры', 'энциклопедия игр', 'ретро игры']
+  },
+  {
+    title: 'Faero.Top / FaeroFM — Независимый портал и радиостанция',
+    url: 'http://faero.top/',
+    displayUrl: 'faero.top',
+    favicon: 'assets/img/custom/faero.png',
+    snippet: 'Партнерский медиа-портал Faero.Top и онлайн-радиостанция FaeroFM: круглосуточная музыка, аниме, ретровейв и радиоэфиры.',
+    keywords: ['faero', 'faerofm', 'радио', 'онлайн радио', 'ретро радио', 'музыка', 'fm.faero.top']
+  },
+  {
+    title: 'VeselCraft (veselcraft.cc) — Уютный сервер Minecraft',
+    url: 'http://veselcraft.cc/',
+    displayUrl: 'veselcraft.cc',
+    favicon: 'assets/img/badges/vc.gif',
+    snippet: 'Ламповый сервер Minecraft со стабильным комьюнити, классическим выживанием и дружелюбной атмосферой.',
+    keywords: ['veselcraft', 'веселкарфт', 'веселькрафт', 'майнкрафт', 'minecraft', 'сервер майнкрафт', 'veselcraft.cc']
+  },
+  {
+    title: 'Дмитрий Стеклопакеты (madebydimas.top) — Сайт-визитка',
+    url: 'http://madebydimas.top/',
+    displayUrl: 'madebydimas.top',
+    favicon: 'assets/img/ii/r/favicon.ico',
+    snippet: 'Персональный сайт Дмитрия с портфолио, проектами и контактами.',
+    keywords: ['dima', 'dimas', 'дима', 'димас', 'стеклопакеты', 'madebydimas.top', 'сайт визитка']
+  },
+  {
+    title: 'Видео Windows Media Player (posuda.mp4)',
+    url: 'http://nekxd.ru/posuda.mp4',
+    displayUrl: 'nekxd.ru/posuda.mp4',
+    favicon: 'assets/img/badges/windows-media-player.gif',
+    snippet: 'Легендарная пасхалка портала: видеоролик в формате MP4, открываемый через ретро-кнопку Windows Media Player.',
+    keywords: ['видео', 'posuda', 'посуда', 'wmp', 'windows media player', 'клип', 'медиа плеер', 'nekxd.ru/posuda.mp4', 'мультик']
+  },
+  {
+    title: '4PDA (4pda.to) — Крупнейший форум о мобильных устройствах',
+    url: 'https://4pda.to/',
+    displayUrl: '4pda.to',
+    favicon: 'https://external-content.duckduckgo.com/ip3/4pda.to.ico',
+    snippet: 'Все о смартфонах, планшетах, прошивках Android, софте для Symbian, Windows Mobile и старых телефонов.',
+    keywords: ['4pda', '4пда', 'четыре пда', 'прошивки', 'софт на андроид', '4pda.to', 'мобильный форум']
+  }
+];
+
+
+function searchSiteIndex(q) {
+  if (!q) return [];
+  var norm = String(q).toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  var tokens = norm.split(/\s+/);
+  var matches = [];
+
+  for (var i = 0; i < SITE_INDEX.length; i++) {
+    var item = SITE_INDEX[i];
+    var score = 0;
+    var tLow = item.title.toLowerCase();
+    var sLow = (item.snippet || '').toLowerCase();
+    var kws = item.keywords || [];
+
+    if (tLow.indexOf(norm) !== -1) score += 100;
+    if (sLow.indexOf(norm) !== -1) score += 40;
+
+    for (var k = 0; k < kws.length; k++) {
+      var kw = kws[k].toLowerCase();
+      if (kw === norm) score += 80;
+      else if (kw.indexOf(norm) !== -1 || norm.indexOf(kw) !== -1) score += 35;
+    }
+
+    for (var t = 0; t < tokens.length; t++) {
+      var tok = tokens[t];
+      if (tok.length < 2) continue;
+      if (tLow.indexOf(tok) !== -1) score += 25;
+      if (sLow.indexOf(tok) !== -1) score += 10;
+      for (var k2 = 0; k2 < kws.length; k2++) {
+        if (kws[k2].toLowerCase().indexOf(tok) !== -1) {
+          score += 20;
+          break;
+        }
+      }
+    }
+
+    if (score > 0) {
+      matches.push({ item: item, score: score });
+    }
+  }
+
+  matches.sort(function (a, b) { return b.score - a.score; });
+  var res = [];
+  for (var m = 0; m < matches.length; m++) {
+    res.push(matches[m].item);
+  }
+  return res;
+}
+
+function switchScope(scope) {
+  var qEl = document.getElementById('q');
+  var q = (qEl && qEl.value) ? qEl.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
+  location.href = 'search.html?tab=' + encodeURIComponent(scope) + (q ? '&q=' + encodeURIComponent(q) : '');
 }
 
 function doSearch(f) {
@@ -555,11 +976,10 @@ function doSearch(f) {
     if (f.q) f.q.focus();
     return false;
   }
-  if (isLegacyBrowser()) {
-    location.href = 'http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
-    return false;
-  }
-  location.href = 'search.html?q=' + encodeURIComponent(q);
+  var scopeSite = document.getElementById('scope_site');
+  var scopeInt = document.getElementById('scope_int');
+  var tab = (scopeInt && scopeInt.checked) ? 'int' : (curTab === 'int' ? 'int' : 'site');
+  location.href = 'search.html?tab=' + encodeURIComponent(tab) + '&q=' + encodeURIComponent(q);
   return false;
 }
 
@@ -568,27 +988,17 @@ function updateSearchEngineLinks(q) {
   q = (q || '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
   var enc = encodeURIComponent(q);
 
-  var ddgLiteUrl = q ? ('http://lite.duckduckgo.com/lite/?q=' + enc) : 'http://lite.duckduckgo.com/lite/';
-  var googleUrl  = q ? ('https://www.google.com/search?q=' + enc) : 'https://www.google.com';
-  var ddgUrl     = q ? ('https://duckduckgo.com/?q=' + enc) : 'https://duckduckgo.com';
+  var tabSite = document.getElementById('tab_site');
+  if (tabSite) {
+    var aSite = tabSite.getElementsByTagName('a')[0];
+    if (aSite) aSite.href = 'search.html?tab=site&q=' + enc;
+  }
+  var tabInt = document.getElementById('tab_int');
+  if (tabInt) {
+    var aInt = tabInt.getElementsByTagName('a')[0];
+    if (aInt) aInt.href = 'search.html?tab=int&q=' + enc;
+  }
 
-  var btnDdgLite = document.getElementById('btnDdgLite');
-  var btnGoogle  = document.getElementById('btnGoogle');
-  var btnDdg     = document.getElementById('btnDdg');
-
-  if (btnDdgLite) btnDdgLite.href = ddgLiteUrl;
-  if (btnGoogle)  btnGoogle.href  = googleUrl;
-  if (btnDdg)     btnDdg.href     = ddgUrl;
-
-  var linkDdgLite = document.getElementById('linkDdgLite');
-  var linkGg      = document.getElementById('linkGg');
-  var linkDdg     = document.getElementById('linkDdg');
-
-  if (linkDdgLite) linkDdgLite.href = ddgLiteUrl;
-  if (linkGg)      linkGg.href      = googleUrl;
-  if (linkDdg)     linkDdg.href     = ddgUrl;
-
-  // Update tabs with query parameter
   var tabPic = document.getElementById('tab_pic');
   if (tabPic) {
     var aPic = tabPic.getElementsByTagName('a')[0];
@@ -1025,42 +1435,46 @@ function renderResults(items, isFallback) {
     return;
   }
   var html = '';
-  if (isFallback) {
-    html += '<div style="background:#fffbe8; border:1px solid #e2cb82; padding:10px 14px; margin-bottom:15px; font-size:12px; color:#333; line-height:1.6; border-radius:3px;">' +
-      '<b>Быстрый ответ</b> (на вашей системе ограничен современный веб-поиск):<br />' +
-      'Для поиска по всему интернету на старом устройстве откройте: ' +
-      '<a href="http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#0857a6; font-weight:bold; text-decoration:underline;">⚡ DuckDuckGo Lite (для старых ПК)</a> &middot; ' +
-      '<a href="https://www.google.com/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="color:#2a6cd7; font-weight:bold;">Google</a>' +
-      '</div>';
-  }
+
   for (var i = 0; i < items.length; i++) {
     var r = items[i];
     var fav = r.favicon ? '<span class="res-favicon"><img src="' + esc(r.favicon) + '" alt="" width="16" height="16" onerror="this.onerror=null; this.style.display=\'none\';" /></span>' : '';
     html += '<div class="res">' + fav +
-      '<div class="res-head"><a href="' + esc(r.url) + '" target="_blank">' + esc(r.title) + '</a></div>' +
+      '<div class="res-head"><a href="' + esc(r.url) + '"' + (r.url.indexOf('http') === 0 ? ' target="_blank"' : '') + '>' + esc(r.title) + '</a></div>' +
       (r.snippet ? '<div class="res-desc">' + r.snippet + '</div>' : '') +
-      (r.displayUrl ? '<div class="res-url"><a href="' + esc(r.url) + '" target="_blank">' + esc(r.displayUrl) + '</a></div>' : '') +
+      (r.displayUrl ? '<div class="res-url"><a href="' + esc(r.url) + '"' + (r.url.indexOf('http') === 0 ? ' target="_blank"' : '') + '>' + esc(r.displayUrl) + '</a></div>' : '') +
       '</div>';
   }
+
+  if (curTab === 'site') {
+    html += '<div style="margin-top:20px; padding:10px 14px; background:#f4f7fb; border:1px solid #d4e2f2; border-radius:3px; font-size:12px; color:#555;">' +
+      'Ищете что-то другое? <a href="search.html?tab=int&q=' + encodeURIComponent(curQuery) + '" style="color:#0857a6; font-weight:bold;">🔍 Искать «' + esc(curQuery) + '» во всём Интернете &rarr;</a>' +
+      '</div>';
+  }
+
   box.innerHTML = html;
-  var cs = document.getElementById('cntSites');
-  var cd = document.getElementById('cntDocs');
-  var sr = document.getElementById('sres');
-  if (cs) cs.innerHTML = items.length;
-  if (cd) cd.innerHTML = items.length;
-  if (sr) sr.style.visibility = 'visible';
+
+  var sres = document.getElementById('sres');
+  var cntSites = document.getElementById('cntSites');
+  var cntDocs = document.getElementById('cntDocs');
+  if (sres) sres.style.visibility = 'visible';
+  if (cntSites) cntSites.innerHTML = String(Math.min(items.length, 12));
+  if (cntDocs) cntDocs.innerHTML = String(items.length * 3);
 }
 
-function renderPager(total) {
+function renderPager(totalItems) {
   var p = document.getElementById('pager');
   if (!p) return;
-  if (total < 3) { p.innerHTML = ''; return; }
+  if (curTab === 'site' || totalItems < 10) {
+    p.innerHTML = '';
+    return;
+  }
   var html = '';
   if (curPage > 1) {
-    html += '<a href="search.html?q=' + encodeURIComponent(curQuery) + '&page=' + (curPage - 1) + '">&larr; назад</a>';
+    html += '<a href="search.html?tab=' + encodeURIComponent(curTab) + '&q=' + encodeURIComponent(curQuery) + '&page=' + (curPage - 1) + '">&larr; назад</a>';
   }
   html += '<b>стр. ' + curPage + '</b>';
-  html += '<a href="search.html?q=' + encodeURIComponent(curQuery) + '&page=' + (curPage + 1) + '">дальше &rarr;</a>';
+  html += '<a href="search.html?tab=' + encodeURIComponent(curTab) + '&q=' + encodeURIComponent(curQuery) + '&page=' + (curPage + 1) + '">дальше &rarr;</a>';
   p.innerHTML = html;
 }
 
@@ -1068,12 +1482,22 @@ function showFallbackSearch(q) {
   var box = document.getElementById('results');
   var eb = document.getElementById('errbox');
   var qEnc = encodeURIComponent(q);
-  var html = '<div style="background:#f4f7fb; border:1px solid #b8cde4; padding:16px 20px; margin-bottom:15px; border-radius:3px;">' +
-    '<div style="margin-bottom:8px; font-weight:bold; color:#00468c; font-size:15px;">Поиск по запросу «' + esc(q) + '»</div>' +
-    '<div style="font-size:13px; color:#444; margin-bottom:14px; line-height:1.5;">Нажмите кнопку ниже, чтобы открыть мгновенные результаты поиска в 1 клик:</div>' +
-    '<div style="margin-bottom:10px;">' +
-    '<a href="http://lite.duckduckgo.com/lite/?q=' + qEnc + '" style="display:inline-block; background:#00468c; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none; margin-right:10px;">⚡ Открыть в DuckDuckGo Lite (для старых ПК) &rarr;</a>' +
-    '<a href="https://www.google.com/search?q=' + qEnc + '" target="_blank" style="display:inline-block; background:#4285f4; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none;">🔍 Искать в Google &rarr;</a>' +
+  var html = '<div class="notFound">' +
+    '<p>По запросу «<b>' + esc(q) + '</b>» ' + (curTab === 'site' ? 'на сайте soap.nekxd.fun ничего не найдено.' : 'ничего не найдено.') + '</p>' +
+    '<p style="margin-top:10px; color:#555; font-size:12px;">Рекомендации:</p>' +
+    '<ul style="margin:5px 0 15px 22px; color:#555; font-size:12px; line-height:1.6;">' +
+    '<li>Убедитесь, что все слова написаны без грамматических ошибок.</li>' +
+    '<li>Попробуйте использовать другие ключевые слова или более общие понятия.</li>' +
+    (curTab === 'site' ? '<li><a href="search.html?tab=int&q=' + qEnc + '" style="color:#0857a6; font-weight:bold;">Искать «' + esc(q) + '» во всём Интернете &rarr;</a></li>' : '<li><a href="search.html?tab=site&q=' + qEnc + '" style="color:#0857a6; font-weight:bold;">Искать по страницам и разделом сайта soap.nekxd.fun &rarr;</a></li>') +
+    '</ul>' +
+    '<div style="margin-top:16px; padding-top:14px; border-top:1px dashed #d0d7e2; font-size:12px;">' +
+    '<b>Разделы soap.nekxd.fun:</b> ' +
+    '<a href="index.html" style="margin:0 8px;">Главная</a> &middot; ' +
+    '<a href="chat.html" style="margin:0 8px;">Чат</a> &middot; ' +
+    '<a href="search.html?tab=site&q=игры" style="margin:0 8px;">Игры</a> &middot; ' +
+    '<a href="search.html?tab=site&q=новости" style="margin:0 8px;">Новости</a> &middot; ' +
+    '<a href="search.html?tab=site&q=погода" style="margin:0 8px;">Погода</a> &middot; ' +
+    '<a href="soap.apk" style="margin:0 8px;">soap.apk</a>' +
     '</div>' +
     '</div>';
 
@@ -1091,6 +1515,26 @@ function runSearch() {
   }
   curQuery = getParam('q');
   curPage = parseInt(getParam('page') || '1', 10) || 1;
+  curTab = getParam('tab') || 'site'; // SITE SEARCH IS DEFAULT!
+
+  // Update tabs & scope radios
+  var tabIntEl = document.getElementById('tab_int');
+  var tabSiteEl = document.getElementById('tab_site');
+  var scopeSite = document.getElementById('scope_site');
+  var scopeInt = document.getElementById('scope_int');
+
+  if (curTab === 'int') {
+    if (tabIntEl) tabIntEl.className = 'current';
+    if (tabSiteEl) tabSiteEl.className = 'common';
+    if (scopeSite) scopeSite.checked = false;
+    if (scopeInt) scopeInt.checked = true;
+  } else {
+    curTab = 'site';
+    if (tabIntEl) tabIntEl.className = 'common';
+    if (tabSiteEl) tabSiteEl.className = 'current';
+    if (scopeSite) scopeSite.checked = true;
+    if (scopeInt) scopeInt.checked = false;
+  }
 
   var qEl = document.getElementById('q');
   if (qEl) {
@@ -1121,24 +1565,26 @@ function runSearch() {
   }
   document.title = curQuery + ' — Поиск@soap.nekxd.fun';
 
-  // Fast path for legacy browsers (Android <= 4.4, IE 6-8, Symbian, NetFront):
-  // Since modern TLS 1.3/CORS to Jina is impossible over static GitHub Pages,
-  // immediately load pure HTTP DuckDuckGo Lite search results with zero delay!
-  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8080' || location.port === '8000';
-  if (isLegacyBrowser() && !isLocal) {
-    if (loadingBox) {
-      loadingBox.style.display = 'block';
-      loadingBox.innerHTML = '<div style="background:#f4f7fb; border:1px solid #b8cde4; padding:16px 20px; border-radius:3px; margin:15px 0;">' +
-        '<div style="font-weight:bold; color:#00468c; font-size:15px; margin-bottom:8px;">Поиск по запросу «' + esc(curQuery) + '»</div>' +
-        '<div style="font-size:13px; color:#444; margin-bottom:12px;">Загрузка быстрых результатов поиска для старых устройств...</div>' +
-        '<div>' +
-        '<a href="http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery) + '" style="display:inline-block; background:#00468c; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none; margin-right:10px;">⚡ Открыть DuckDuckGo Lite &rarr;</a>' +
-        '<a href="https://www.google.com/search?q=' + encodeURIComponent(curQuery) + '" target="_blank" style="display:inline-block; background:#4285f4; color:#fff; font-weight:bold; font-size:13px; padding:8px 16px; border-radius:3px; text-decoration:none;">🔍 Google</a>' +
-        '</div>' +
-        '</div>';
+  // 1. Instant Site Search from internal database (0ms delay!)
+  var siteMatches = searchSiteIndex(curQuery);
+
+  if (curTab === 'site') {
+    if (loadingBox) loadingBox.style.display = 'none';
+    if (siteMatches && siteMatches.length > 0) {
+      renderResults(siteMatches, false);
+      renderPager(siteMatches.length);
+    } else {
+      showFallbackSearch(curQuery);
     }
-    location.replace('http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery));
     return;
+  }
+
+  // 2. Internet Search Mode (curTab === 'int'):
+  if (siteMatches && siteMatches.length > 0) {
+    renderResults(siteMatches, false);
+    renderPager(siteMatches.length);
+  } else {
+    if (loadingBox) loadingBox.style.display = 'block';
   }
 
   // Check fast in-memory & session cache
@@ -1154,28 +1600,44 @@ function runSearch() {
   }
 
   if (cached && cached.items && cached.items.length) {
+    if (loadingBox) loadingBox.style.display = 'none';
     renderResults(cached.items, cached.isFallback);
     renderPager(cached.items.length);
     return;
   }
 
-  if (loadingBox) loadingBox.style.display = 'block';
-  if (errBox) errBox.style.display = 'none';
-  if (resultsBox) resultsBox.innerHTML = '';
-  if (pagerBox) pagerBox.innerHTML = '';
-
-  fetchWebSearch(curQuery, curPage, function (items, isFallback) {
+  // Fetch web results via Jina or local backend
+  fetchWebSearch(curQuery, curPage, function (webItems, isFallback) {
     if (loadingBox) loadingBox.style.display = 'none';
-    if (items && items.length > 0) {
-      var entry = { items: items, isFallback: !!isFallback };
+    var combined = [];
+    var seen = {};
+
+    if (siteMatches && siteMatches.length > 0) {
+      for (var s = 0; s < siteMatches.length; s++) {
+        seen[siteMatches[s].url] = 1;
+        combined.push(siteMatches[s]);
+      }
+    }
+
+    if (webItems && webItems.length > 0) {
+      for (var w = 0; w < webItems.length; w++) {
+        if (!seen[webItems[w].url]) {
+          seen[webItems[w].url] = 1;
+          combined.push(webItems[w]);
+        }
+      }
+    }
+
+    if (combined && combined.length > 0) {
+      var entry = { items: combined, isFallback: !!isFallback };
       MEM_CACHE[cacheKey] = entry;
       try {
         if (typeof sessionStorage !== 'undefined' && !isFallback) {
           sessionStorage.setItem('soap_s_' + cacheKey, window.JSON.stringify(entry));
         }
       } catch (e) {}
-      renderResults(items, isFallback);
-      renderPager(items.length);
+      renderResults(combined, isFallback);
+      renderPager(combined.length);
     } else {
       showFallbackSearch(curQuery);
     }

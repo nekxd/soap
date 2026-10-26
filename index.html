@@ -199,7 +199,8 @@
 						<tr>
 							<td class="bookmarksCell">
 								<ul class="bookmarksList">
-									<li class="current"><div class="tlc"><div><div class="ahold"><a href="search.html?q=">Поиск в Интернете</a></div></div></div></li>
+									<li class="current"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=site&amp;q=">По сайту</a></div></div></div></li>
+									<li class="common"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=int&amp;q=">В Интернете</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="chat.html">Чат</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="search.html?tab=images&amp;q=">Картинки</a></div></div></div></li>
 									<li class="common"><div class="tlc"><div><div class="ahold"><a href="https://www.avito.ru/rossiya?s_query=">Авито</a></div></div></div></li>
@@ -239,7 +240,7 @@
 					</form>
 					<table class="tnorm" width="100%" style="margin-top:4px">
 						<tr>
-							<td style="padding-left:25px"><span id="ttt"><b>Сейчас ищут:</b></span> <a href="search.html?q=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0">погода в москве</a></td>
+							<td style="padding-left:25px"><span id="ttt"><b>Сейчас ищут:</b></span> <a href="search.html?tab=site&q=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0">погода в москве</a></td>
 							<td align="right" style="padding-right:60px; text-align:right" class="spu"><a href="https://www.mozilla.org/ru/firefox/new/">Установить Спутник</a></td>
 						</tr>
 					</table>
@@ -541,23 +542,12 @@
 
 <script src="assets/js/common.js"></script>
 <script>
-function isLegacyBrowser() {
-  if (typeof fetch === 'undefined') return true;
-  if (typeof document.documentMode !== 'undefined' || navigator.userAgent.indexOf('MSIE') !== -1) return true;
-  if (navigator.userAgent.indexOf('Android') !== -1 && typeof window.ReadableStream === 'undefined') return true;
-  if (/Opera Mini|Symbian|Series60|NetFront|Windows CE|IEMobile/i.test(navigator.userAgent)) return true;
-  return false;
-}
-function checkMainSearch(f){
-  if(!f.q.value){ f.q.focus(); return false; }
+function checkMainSearch(f) {
+  if (!f || !f.q || !f.q.value) { if (f && f.q) f.q.focus(); return false; }
   var q = f.q.value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-  if(!q){ f.q.focus(); return false; }
-  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8080' || location.port === '8000';
-  if(isLegacyBrowser() && !isLocal){
-    location.href = 'http://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
-    return false;
-  }
-  return true;
+  if (!q) { f.q.focus(); return false; }
+  location.href = 'search.html?tab=site&q=' + encodeURIComponent(q);
+  return false;
 }
 function setText(el, val) {
   if (!el) return;
