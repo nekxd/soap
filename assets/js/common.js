@@ -249,6 +249,12 @@
       img: 'assets/img/banners/myintcountry.png',
       remoteImg: 'assets/img/banners/myintcountry.png',
       url: 'http://myintcountry.ru/'
+    },
+    {
+      title: 'LainLife — Мы вернули твой 2007',
+      img: 'assets/img/banners/lainlife.png',
+      remoteImg: 'assets/img/banners/lainlife.png',
+      url: 'https://lainlife.org/'
     }
   ];
 
