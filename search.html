@@ -178,23 +178,23 @@ body {background: #fff; min-width: 0;}
   #menuWrap {
     padding: 8px 10px !important;
   }
+  /* Flex-раскладку не используем: старые WebKit (Android 2.3/4.0), NetFront и Opera Mini
+     её не поддерживают. Табличная вёрстка 2010 года работает везде — сжимаем колонки. */
   #tableitself {
-    display: block !important;
+    display: table !important;
     width: 100% !important;
+    table-layout: fixed !important;
   }
   #tableitself > tbody,
   #tableitself > tbody > tr,
   #tableitself > tr {
-    display: flex !important;
-    flex-direction: column !important;
+    display: table-row !important;
     width: 100% !important;
   }
   #tableitself > tbody > tr > td,
   #tableitself > tr > td {
-    display: block !important;
-    width: 100% !important;
+    display: table-cell !important;
     padding: 0 !important;
-    box-sizing: border-box !important;
   }
   .brand_back table {
     display: table !important;
@@ -523,6 +523,9 @@ function safeJsonParse(s) {
 /* ===================== GLOBAL STATE & FAST IN-MEMORY CACHE ===================== */
 var curQuery = '', curPage = 1;
 var MEM_CACHE = {};
+
+/* ===================== OLD DEVICE DETECTION (Opera Mini, Symbian, NetFront, Android 1.6–4.3) ===================== */
+var OLD_DEVICE = /Opera Mini|Opera Mobi|Opera Tablet|Symbian|SymbianOS|Series60|Series40|NetFront|MIDP|BlackBerry|SonyEricsson|Nokia|Windows Phone|IEMobile|Android [1-3](\.[0-9]+)?[;)]|Android 4\.[0-3][;)]/.test(navigator.userAgent || '');
 
 function esc(s) {
   return String(s || '')
@@ -1042,19 +1045,26 @@ function fetchDdgApi(q, callback) {
   jsonp(url, 'callback', function (err, data) {
     if (!err && data) {
       callback(parseDdgApiResponse(data, q));
+    } else if (err && OLD_DEVICE && proto === 'https:') {
+      /* Старые устройства (Android 1.6–2.3, Symbian) не умеют современный TLS —
+         пробуем незащищённый http, mixed content им не страшен */
+      jsonp('http://api.duckduckgo.com/?q=' + encodeURIComponent(q) + '&format=json&no_redirect=1&no_html=1', 'callback', function (err2, data2) {
+        callback((!err2 && data2) ? parseDdgApiResponse(data2, q) : []);
+      }, 5000);
     } else {
       callback([]);
     }
-  }, 1800);
+  }, OLD_DEVICE ? 5000 : 1800);
 }
 
 /* ===================== PRIMARY DUCKDUCKGO LITE SEARCH VIA JINA ===================== */
 function fetchDdgLiteWebSearch(q, page, callback) {
   var s = (page - 1) * 30;
   var ddgLiteTarget = 'https://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q) + (s ? '&s=' + s : '');
-  var jinaUrl = 'https://r.jina.ai/' + ddgLiteTarget;
+  /* На старых устройствах и медленных сетях (2G/GPRS) Jina отвечает долго — даём до 11 секунд */
+  var to = OLD_DEVICE ? 11000 : 4500;
 
-  makeRequest(jinaUrl, function (err, text) {
+  function handle(err, text) {
     if (!err && text && text.length > 80) {
       var items = parseJinaMarkdown(text);
       if (items && items.length > 0) {
@@ -1062,8 +1072,24 @@ function fetchDdgLiteWebSearch(q, page, callback) {
         return;
       }
     }
+    /* Ретрай по http для раритетов без современного TLS */
+    if (OLD_DEVICE && location.protocol === 'https:') {
+      makeRequest('http://r.jina.ai/' + ddgLiteTarget, function (err2, text2) {
+        if (!err2 && text2 && text2.length > 80) {
+          var items2 = parseJinaMarkdown(text2);
+          if (items2 && items2.length > 0) {
+            callback(null, items2);
+            return;
+          }
+        }
+        callback(err2 || err || new Error('no results'), null);
+      }, to);
+      return;
+    }
     callback(err || new Error('no results'), null);
-  }, 4500);
+  }
+
+  makeRequest('https://r.jina.ai/' + ddgLiteTarget, handle, to);
 }
 
 /* ===================== PARALLEL ACCELERATED WEB SEARCH ===================== */
@@ -1111,7 +1137,7 @@ function fetchWebSearch(q, page, callback) {
       }
     });
 
-    // Accelerated fallback cutoff after 4.5 seconds
+    // Accelerated fallback cutoff (на старых устройствах ждём дольше — сети медленные)
     setTimeout(function () {
       if (delivered) return;
       fetchDdgApi(q, function (ddgItems) {
@@ -1121,7 +1147,7 @@ function fetchWebSearch(q, page, callback) {
           complete([], false, 'none');
         }
       });
-    }, 4500);
+    }, OLD_DEVICE ? 13000 : 4500);
   }
 }
 
@@ -1181,6 +1207,8 @@ function showFallbackSearch(q) {
     '<li>Убедитесь, что все слова написаны без ошибок.</li>' +
     '<li>Попробуйте использовать другие ключевые слова или более общие понятия.</li>' +
     '</ul>' +
+    '<div style="margin:0 0 15px; font-size:12px;">Искать «<b>' + esc(curQuery) + '</b>» в <a href="https://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(curQuery) + '" target="_blank">обычном поиске (DuckDuckGo Lite)</a>' +
+    (OLD_DEVICE ? ' — работать будет даже на старом телефоне.' : '') + '</div>' +
     '<div style="margin-top:16px; padding-top:14px; border-top:1px dashed #d0d7e2; font-size:12px;">' +
     '<b>Разделы soap.nekxd.fun:</b> ' +
     '<a href="index.html" style="margin:0 8px;">Главная</a> &middot; ' +
