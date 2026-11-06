@@ -255,6 +255,12 @@
       img: 'assets/img/banners/lainlife.png',
       remoteImg: 'assets/img/banners/lainlife.png',
       url: 'https://lainlife.org/'
+    },
+    {
+      title: 'OldMarket - Каталог приложений Android 1.0-4.4',
+      img: 'assets/img/banners/oldmarket.png',
+      remoteImg: 'assets/img/banners/oldmarket.png',
+      url: 'https://oldmarket.xyz/'
     }
   ];
 
