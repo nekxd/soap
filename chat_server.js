@@ -219,6 +219,154 @@ function formatTime(d) {
   return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
+const https = require('https');
+
+function decodeBase64(s) {
+  const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  const str = String(s).replace(/[=]+$/, '');
+  let res = '';
+  for (let bc = 0, bs, buffer, idx = 0; buffer = str.charAt(idx++);
+    ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+      bc++ % 4) ? res += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
+  ) {
+    buffer = b64.indexOf(buffer);
+  }
+  return res;
+}
+
+function resolveSearchUrl(href) {
+  if (!href) return '';
+  try {
+    if (href.includes('uddg=')) {
+      const m = href.match(/[?&]uddg=([^&]+)/);
+      if (m) return decodeURIComponent(m[1]);
+    }
+  } catch (e) {}
+
+  try {
+    if (href.includes('bing.com') && href.includes('&u=a1')) {
+      const bm = href.match(/[?&]u=a1([A-Za-z0-9_-]+)/);
+      if (bm) {
+        let base64 = bm[1].replace(/-/g, '+').replace(/_/g, '/');
+        while (base64.length % 4 !== 0) base64 += '=';
+        const decoded = decodeBase64(base64);
+        if (decoded && decoded.startsWith('http')) return decoded;
+      }
+    }
+  } catch (e) {}
+
+  if (href.startsWith('//')) return 'https:' + href;
+  return href;
+}
+
+function cleanSearchSnippet(text) {
+  if (!text) return '';
+  let s = String(text);
+  s = s.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
+  s = s.replace(/\(https?:\/\/[^\s)]+\)/g, '');
+  s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\s*/, '');
+  return s;
+}
+
+function parseMarkdownResults(text) {
+  const results = [];
+  if (!text) return results;
+
+  const sections = text.split(/(?:\r?\n)+(?=(?:\d+\.\s+)?##\s+\[)/);
+  for (const sec of sections) {
+    const hMatch = sec.match(/(?:^|\n)(?:\d+\.\s+)?##\s+\[([^\]]+)\]\((https?:\/\/[^)]+)\)/m);
+    if (!hMatch) continue;
+
+    const rawTitle = hMatch[1];
+    const rawUrl = hMatch[2];
+    const url = resolveSearchUrl(rawUrl);
+    if (!url || url.includes('duckduckgo.com') || url.includes('bing.com') || url.startsWith('javascript:')) {
+      continue;
+    }
+
+    const title = rawTitle.replace(/<[^>]+>/g, '').replace(/\*\*([^*]+)\*\*/g, '$1').trim();
+    const rest = sec.slice(hMatch.index + hMatch[0].length);
+
+    let displayUrl = '';
+    let snippet = '';
+    const linkRe = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+    let m;
+    while ((m = linkRe.exec(rest)) !== null) {
+      const txt = m[1].trim();
+      if (txt.startsWith('![Image')) continue;
+      if (/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/.*)?$/.test(txt)) {
+        if (!displayUrl) displayUrl = txt;
+        continue;
+      }
+      if (txt.length > snippet.length) snippet = txt;
+    }
+
+    if (!snippet) snippet = rest;
+    snippet = cleanSearchSnippet(snippet);
+
+    if (!displayUrl) {
+      try {
+        const u = new URL(url);
+        displayUrl = u.hostname + (u.pathname !== '/' ? u.pathname : '');
+      } catch (e) {
+        displayUrl = url;
+      }
+    }
+
+    results.push({ title, url, displayUrl, snippet });
+  }
+
+  // Deduplicate
+  const seen = new Set();
+  const deduped = [];
+  for (const r of results) {
+    if (!seen.has(r.url)) {
+      seen.add(r.url);
+      deduped.push(r);
+    }
+  }
+  return deduped;
+}
+
+function fetchSearchEngine(engineUrl, callback) {
+  const req = https.get(engineUrl, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } }, (res) => {
+    let body = '';
+    res.on('data', chunk => body += chunk);
+    res.on('end', () => {
+      const items = parseMarkdownResults(body);
+      callback(null, items);
+    });
+  });
+  req.on('error', err => callback(err, []));
+  req.setTimeout(5000, () => {
+    req.destroy();
+    callback(new Error('timeout'), []);
+  });
+}
+
+function executeBackendSearch(query, page, callback) {
+  const s = (page - 1) * 30;
+  const ddgUrl = 'https://r.jina.ai/https://duckduckgo.com/html/?q=' + encodeURIComponent(query) + (s ? '&s=' + s : '');
+  const bingUrl = 'https://r.jina.ai/https://www.bing.com/search?q=' + encodeURIComponent(query) + (page > 1 ? '&first=' + ((page - 1) * 10 + 1) : '');
+
+  fetchSearchEngine(ddgUrl, (err, items) => {
+    if (!err && items && items.length > 0) {
+      return callback(null, items);
+    }
+    // Fallback to Bing
+    fetchSearchEngine(bingUrl, (err2, items2) => {
+      if (!err2 && items2 && items2.length > 0) {
+        return callback(null, items2);
+      }
+      callback(err2 || err || new Error('No search results'), []);
+    });
+  });
+}
+
+
 // Request dispatcher
 function handleRequest(req, res) {
   const parsedUrl = url.parse(req.url, true);
@@ -235,48 +383,21 @@ function handleRequest(req, res) {
     return;
   }
 
-  // --- API: Get Chat State ---
+  // --- API: Web Search Proxy ---
   if (pathname === '/api/search') {
     const q = parsedUrl.query.q || '';
+    const page = parseInt(parsedUrl.query.page || '1', 10) || 1;
     if (!q) {
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
       res.end(JSON.stringify({ results: [] }));
       return;
     }
-    const targetUrl = 'https://r.jina.ai/https://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q);
-    const https = require('https');
-    https.get(targetUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (upstreamRes) => {
-      let body = '';
-      upstreamRes.on('data', chunk => body += chunk);
-      upstreamRes.on('end', () => {
-        const results = [];
-        const ddgLiteRe = /(?:^|\n)\d+\.\[([^\]]+)\]\((https?:\/\/[^)]+)\)\s*\n([\s\S]*?)(?=(?:\n\d+\.\[|\n*Next Page|\n*© DuckDuckGo|$))/g;
-        let m;
-        while ((m = ddgLiteRe.exec(body)) !== null) {
-          let url = m[2];
-          if (url.includes('uddg=')) {
-            const um = url.match(/[?&]uddg=([^&]+)/);
-            if (um) url = decodeURIComponent(um[1]);
-          }
-          const lines = m[3].trim().split('\n').map(l => l.trim()).filter(Boolean);
-          const snippet = lines.length > 1 ? lines.slice(0, -1).join(' ') : (lines[0] || '');
-          const displayUrl = lines.length > 1 ? lines[lines.length - 1] : url;
-          results.push({
-            title: m[1].replace(/<[^>]+>/g, '').trim(),
-            url: url,
-            snippet: snippet.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>'),
-            displayUrl: displayUrl
-          });
-        }
-        res.writeHead(200, {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Access-Control-Allow-Origin': '*'
-        });
-        res.end(JSON.stringify({ results }));
+    executeBackendSearch(q, page, (err, results) => {
+      res.writeHead(200, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
       });
-    }).on('error', (err) => {
-      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-      res.end(JSON.stringify({ error: err.message, results: [] }));
+      res.end(JSON.stringify({ results: results || [] }));
     });
     return;
   }

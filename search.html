@@ -882,13 +882,40 @@ function jsonp(url, callbackParam, callback, timeoutMs) {
 }
 
 /* ===================== URL & TEXT PARSERS (IE COMPLIANT) ===================== */
+function decodeBase64(s) {
+  var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  var str = String(s).replace(/[=]+$/, '');
+  var res = '';
+  for (var bc = 0, bs, buffer, idx = 0; buffer = str.charAt(idx++);
+    ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+      bc++ % 4) ? res += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
+  ) {
+    buffer = b64.indexOf(buffer);
+  }
+  return res;
+}
+
 function resolveDdgHref(href) {
+  if (!href) return '';
   try {
     if (href.indexOf('uddg=') !== -1) {
       var m = href.match(/[?&]uddg=([^&]+)/);
       if (m) return decodeURIComponent(m[1]);
     }
   } catch (e) {}
+
+  try {
+    if (href.indexOf('bing.com') !== -1 && href.indexOf('&u=a1') !== -1) {
+      var bm = href.match(/[?&]u=a1([A-Za-z0-9_-]+)/);
+      if (bm) {
+        var base64 = bm[1].replace(/-/g, '+').replace(/_/g, '/');
+        while (base64.length % 4 !== 0) base64 += '=';
+        var decoded = decodeBase64(base64);
+        if (decoded && decoded.indexOf('http') === 0) return decoded;
+      }
+    }
+  } catch (e) {}
+
   if (href.indexOf('//') === 0) return 'https:' + href;
   return href;
 }
@@ -906,7 +933,7 @@ function extractHostname(url) {
 }
 
 function formatDisplayUrl(url, rawDisplayUrl) {
-  if (rawDisplayUrl && rawDisplayUrl.indexOf('http') !== 0 && rawDisplayUrl.indexOf('duckduckgo.com') === -1) {
+  if (rawDisplayUrl && rawDisplayUrl.indexOf('http') !== 0 && rawDisplayUrl.indexOf('duckduckgo.com') === -1 && rawDisplayUrl.indexOf('bing.com') === -1) {
     return rawDisplayUrl.replace(/^https?:\/\//i, '').replace(/\/$/, '');
   }
   try {
@@ -927,13 +954,64 @@ function cleanSnippet(text) {
   if (!text) return '';
   var s = String(text);
   s = s.replace(/\[?!\[[^\]]*\]\([^)]+\)\]?/g, '');
-  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  s = s.replace(/\(https?:\/\/[^\s)]+\)/g, '');
   s = s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
   s = s.replace(/\s+/g, ' ').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  s = s.replace(/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\s*/, '');
   return s;
 }
 
-/* ===================== DUAL-FORMAT JINA PARSER (DDG LITE & STANDARD) ===================== */
+function parseResultSection(sec) {
+  var hMatch = sec.match(/(?:^|\n)(?:\d+\.\s+)?##\s+\[([^\]]+)\]\((https?:\/\/[^)]+)\)/m);
+  if (!hMatch) return null;
+
+  var rawTitle = hMatch[1];
+  var rawUrl = hMatch[2];
+  var url = resolveDdgHref(rawUrl);
+  if (!url || url.indexOf('duckduckgo.com') !== -1 || url.indexOf('bing.com') !== -1 || url.indexOf('javascript:') === 0) {
+    return null;
+  }
+
+  var title = stripHtml(rawTitle).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  var host = extractHostname(url);
+  var fav = host ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host) + '.ico' : '';
+
+  var rest = sec.slice(hMatch.index + hMatch[0].length);
+  var linkRe = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  var m;
+  var displayUrl = '';
+  var snippet = '';
+
+  while ((m = linkRe.exec(rest)) !== null) {
+    var txt = m[1].replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    if (txt.indexOf('![Image') === 0) continue;
+    if (/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/.*)?$/.test(txt)) {
+      if (!displayUrl) displayUrl = txt;
+      continue;
+    }
+    if (txt.length > snippet.length) {
+      snippet = txt;
+    }
+  }
+
+  if (!snippet) {
+    snippet = rest;
+  }
+
+  snippet = cleanSnippet(snippet);
+  if (!displayUrl) displayUrl = formatDisplayUrl(url, '');
+
+  return {
+    title: title,
+    url: url,
+    displayUrl: displayUrl,
+    favicon: fav,
+    snippet: snippet
+  };
+}
+
+/* ===================== DUAL-FORMAT JINA PARSER (DDG & BING) ===================== */
 function parseJinaMarkdown(text) {
   var out = [];
   if (!text) return out;
@@ -976,32 +1054,11 @@ function parseJinaMarkdown(text) {
 
   if (out.length > 0) return out;
 
-  // 2. Standard markdown format (## [Title](url))
-  var sections = text.split(/(?:\r?\n)+(?=##\s+\[)/);
+  // 2. DDG HTML & Bing Markdown sections (## [Title](url))
+  var sections = text.split(/(?:\r?\n)+(?=(?:\d+\.\s+)?##\s+\[)/);
   for (var i = 0; i < sections.length; i++) {
-    var sec = sections[i];
-    var hMatch = sec.match(/^##\s+\[([^\]]+)\]\((https:\/\/duckduckgo\.com\/l\/\?[^)]+)\)/m);
-    if (!hMatch) continue;
-
-    var title2 = stripHtml(hMatch[1] || '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-    var url2 = resolveDdgHref(hMatch[2]);
-    var host2 = extractHostname(url2);
-    var fav2 = host2 ? 'https://external-content.duckduckgo.com/ip3/' + encodeURIComponent(host2) + '.ico' : '';
-    var dispMatch = sec.match(/\[([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s\]]*)?)\]\(https:\/\/duckduckgo/i);
-    var rawDisplay2 = dispMatch ? dispMatch[1].replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
-    var displayUrl2 = formatDisplayUrl(url2, rawDisplay2);
-    var rest = sec.slice(hMatch.index + hMatch[0].length);
-    var snippet2 = cleanSnippet(rest);
-
-    if (title2 && url2) {
-      out.push({
-        title: title2,
-        url: url2,
-        displayUrl: displayUrl2,
-        favicon: fav2,
-        snippet: snippet2
-      });
-    }
+    var item = parseResultSection(sections[i]);
+    if (item) out.push(item);
   }
 
   // Deduplicate
@@ -1065,40 +1122,57 @@ function fetchDdgApi(q, callback) {
   }, OLD_DEVICE ? 5000 : 1800);
 }
 
-/* ===================== PRIMARY DUCKDUCKGO LITE SEARCH VIA JINA ===================== */
-function fetchDdgLiteWebSearch(q, page, callback) {
+/* ===================== PRIMARY DUCKDUCKGO & BING SEARCH VIA JINA ===================== */
+function fetchWebSearchViaJina(q, page, callback) {
   var s = (page - 1) * 30;
-  var ddgLiteTarget = 'https://lite.duckduckgo.com/lite/?q=' + encodeURIComponent(q) + (s ? '&s=' + s : '');
-  /* На старых устройствах и медленных сетях (2G/GPRS) Jina отвечает долго — даём до 11 секунд */
+  var ddgTarget = 'https://duckduckgo.com/html/?q=' + encodeURIComponent(q) + (s ? '&s=' + s : '');
+  var bingTarget = 'https://www.bing.com/search?q=' + encodeURIComponent(q) + (page > 1 ? '&first=' + ((page - 1) * 10 + 1) : '');
   var to = OLD_DEVICE ? 11000 : 4500;
 
-  function handle(err, text) {
-    if (!err && text && text.length > 80) {
-      var items = parseJinaMarkdown(text);
-      if (items && items.length > 0) {
-        callback(null, items);
+  function tryFetch(targetUrl, nextFallback) {
+    function handle(err, text) {
+      if (!err && text && text.length > 80) {
+        var items = parseJinaMarkdown(text);
+        if (items && items.length > 0) {
+          callback(null, items);
+          return;
+        }
+      }
+      /* Ретрай по http для раритетов без современного TLS */
+      if (OLD_DEVICE && location.protocol === 'https:') {
+        makeRequest('http://r.jina.ai/' + targetUrl, function (err2, text2) {
+          if (!err2 && text2 && text2.length > 80) {
+            var items2 = parseJinaMarkdown(text2);
+            if (items2 && items2.length > 0) {
+              callback(null, items2);
+              return;
+            }
+          }
+          if (nextFallback) {
+            nextFallback();
+          } else {
+            callback(err2 || err || new Error('no results'), null);
+          }
+        }, to);
         return;
       }
+      if (nextFallback) {
+        nextFallback();
+      } else {
+        callback(err || new Error('no results'), null);
+      }
     }
-    /* Ретрай по http для раритетов без современного TLS */
-    if (OLD_DEVICE && location.protocol === 'https:') {
-      makeRequest('http://r.jina.ai/' + ddgLiteTarget, function (err2, text2) {
-        if (!err2 && text2 && text2.length > 80) {
-          var items2 = parseJinaMarkdown(text2);
-          if (items2 && items2.length > 0) {
-            callback(null, items2);
-            return;
-          }
-        }
-        callback(err2 || err || new Error('no results'), null);
-      }, to);
-      return;
-    }
-    callback(err || new Error('no results'), null);
+
+    makeRequest('https://r.jina.ai/' + targetUrl, handle, to);
   }
 
-  makeRequest('https://r.jina.ai/' + ddgLiteTarget, handle, to);
+  // 1. Try DuckDuckGo HTML via Jina
+  tryFetch(ddgTarget, function () {
+    // 2. Secondary fallback: Bing via Jina
+    tryFetch(bingTarget, null);
+  });
 }
+var fetchDdgLiteWebSearch = fetchWebSearchViaJina;
 
 /* ===================== PARALLEL ACCELERATED WEB SEARCH ===================== */
 function fetchWebSearch(q, page, callback) {
@@ -1129,10 +1203,10 @@ function fetchWebSearch(q, page, callback) {
   runPrimarySearch();
 
   function runPrimarySearch() {
-    // 2. Primary Web Search: DuckDuckGo Lite parsed via Jina Reader
-    fetchDdgLiteWebSearch(q, page, function (err, items) {
+    // 2. Primary Web Search: DuckDuckGo HTML & Bing parsed via Jina Reader
+    fetchWebSearchViaJina(q, page, function (err, items) {
       if (!err && items && items.length > 0) {
-        complete(items, false, 'jina_lite');
+        complete(items, false, 'jina_web');
       } else {
         // 3. Secondary Fallback: DuckDuckGo Instant Answer API (JSONP / CORS)
         fetchDdgApi(q, function (ddgItems) {
@@ -1158,6 +1232,7 @@ function fetchWebSearch(q, page, callback) {
     }, OLD_DEVICE ? 13000 : 4500);
   }
 }
+
 
 /* ===================== UI RENDERING & CACHING ===================== */
 function renderResults(items, isFallback) {
