@@ -113,11 +113,11 @@ buttons = '''<div style="text-align:center; padding:10px 0 20px;">
 <a href="https://myslivets.com" target="_blank"><img src="https://myslivets.com/img/button.png" width="88" height="31" alt="myslivets"></a>
 <a href="https://veselcraft.ru" target="_blank"><img src="https://veselcraft.ru/images/vc.gif" width="88" height="31" alt="veselcraft"></a>
 <a href="https://github.com" target="_blank"><img src="https://madebydimas.top/github.gif" width="88" height="31" alt="github"></a>
-<a href="https://firefox.com" target="_blank"><img src="http://nekxd.ru/firefox.gif" width="88" height="31" alt="Firefox"></a>
-<a href="http://nekxd.ru/posuda.mp4" target="_blank"><img src="http://nekxd.ru/windows-media-player.gif" width="88" height="31" alt="WMP"></a>
+<a href="https://firefox.com" target="_blank"><img src="http://old.ynd.su/firefox.gif" width="88" height="31" alt="Firefox"></a>
+<a href="http://old.ynd.su/posuda.mp4" target="_blank"><img src="http://old.ynd.su/windows-media-player.gif" width="88" height="31" alt="WMP"></a>
 <img src="https://88x31.kate.pet/w7-boot.gif" height="31" alt="">
-<a href="https://nekxd.ru" target="_blank"><img src="https://nekxd.ru/button.png" width="88" height="31" alt="nekxd"></a>
-<a href="https://nekxd.ru/old.html" target="_blank"><img src="https://nekxd.ru/old.png" width="88" height="31" alt="NekxdOld"></a>
+<a href="https://old.ynd.su" target="_blank"><img src="https://old.ynd.su/button.png" width="88" height="31" alt="nekxd"></a>
+<a href="https://old.ynd.su/old.html" target="_blank"><img src="https://old.ynd.su/old.png" width="88" height="31" alt="NekxdOld"></a>
 </div>
 
 <script src="assets/js/common.js"></script>'''
