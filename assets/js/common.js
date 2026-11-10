@@ -175,7 +175,7 @@
   /* ===================== LOCAL STORAGE CACHE ===================== */
   window.cacheGet = function (key, maxAgeMs) {
     try {
-      var item = localStorage.getItem('mailru_cache_' + key);
+      var item = window.localStorage.getItem('mailru_cache_' + key);
       if (!item) return null;
       var data = JSON.parse(item);
       if (Date.now() - data.ts > maxAgeMs) return null;
@@ -187,7 +187,7 @@
 
   window.cacheSet = function (key, val) {
     try {
-      localStorage.setItem('mailru_cache_' + key, JSON.stringify({
+      window.localStorage.setItem('mailru_cache_' + key, JSON.stringify({
         ts: Date.now(),
         val: val
       }));
@@ -703,7 +703,7 @@
       activeCity = { name: cityQuery, lat: 55.7558, lon: 37.6173 };
     } else {
       try {
-        var saved = localStorage.getItem('soap_weather_city');
+        var saved = window.localStorage.getItem('soap_weather_city');
         if (saved) {
           var parsed = JSON.parse(saved);
           if (parsed && parsed.name && parsed.lat) {
@@ -868,7 +868,7 @@
     var defaultCity = { lat: 55.7558, lon: 37.6173, name: 'Москва' };
     var currentName = defaultCity.name;
     try {
-      var saved = localStorage.getItem('soap_weather_city');
+      var saved = window.localStorage.getItem('soap_weather_city');
       if (saved) currentName = JSON.parse(saved).name || currentName;
     } catch (e) {}
 
@@ -891,7 +891,7 @@
             lat: res.latitude,
             lon: res.longitude
           };
-          localStorage.setItem('soap_weather_city', JSON.stringify(cityObj));
+          window.localStorage.setItem('soap_weather_city', JSON.stringify(cityObj));
           // Clear caches so updated city loads immediately
           localStorage.removeItem('weather_data');
           localStorage.removeItem('weather_data_' + encodeURIComponent(currentName));
@@ -1074,4 +1074,105 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   };
+
+  /* ===================== RELOCATION COUNTDOWN BANNER ===================== */
+  function ensureBannerStyles() {
+    if (document.getElementById('relocateBannerStyle')) return;
+    var style = document.createElement('style');
+    style.id = 'relocateBannerStyle';
+    style.type = 'text/css';
+    var css = '.relocate-top-banner { background: #fff8d6; background: -webkit-linear-gradient(top, #fffbe8 0%, #fff2bf 100%); background: linear-gradient(to bottom, #fffbe8 0%, #fff2bf 100%); border-bottom: 1px solid #e6c567; color: #333333; font-family: Arial, Tahoma, Verdana, sans-serif; font-size: 12px; line-height: 20px; padding: 6px 36px 6px 12px; text-align: center; position: relative; box-sizing: border-box; width: 100%; z-index: 9999; } .relocate-banner-inner { max-width: 1000px; margin: 0 auto; display: block; } .relocate-snow { color: #1b72c2; font-size: 13px; margin-right: 4px; vertical-align: middle; } .relocate-text { font-size: 12px; color: #222222; vertical-align: middle; } .relocate-link { color: #00468c !important; font-weight: bold; text-decoration: underline !important; } .relocate-link:hover { color: #d90000 !important; } .relocate-countdown { display: inline-block; background: #ffffff; color: #cc0000; border: 1px solid #e8bc4a; border-radius: 3px; padding: 1px 8px; margin-left: 6px; font-weight: bold; font-family: Tahoma, Arial, sans-serif; font-size: 12px; letter-spacing: 0.3px; white-space: nowrap; vertical-align: middle; box-shadow: 0 1px 2px rgba(0,0,0,0.05); } .relocate-close { position: absolute; right: 8px; top: 50%; margin-top: -10px; width: 20px; height: 20px; line-height: 16px; padding: 0; border: 1px solid #d4b45d; background: #ffffff; color: #777777; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 3px; text-align: center; outline: none; } .relocate-close:hover { background: #fbe39d; color: #000000; border-color: #bfa14a; } @media (max-width: 600px) { .relocate-top-banner { font-size: 11px; line-height: 17px; padding: 6px 30px 6px 8px; } .relocate-text { font-size: 11px; } .relocate-countdown { margin-top: 3px; font-size: 11px; padding: 1px 5px; } }';
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
+    var head = document.getElementsByTagName('head')[0] || document.documentElement;
+    head.appendChild(style);
+  }
+
+  window.initRelocateBanner = function () {
+    var STORAGE_KEY = 'soap_relocate_banner_closed_2027';
+
+    function isClosed() {
+      try {
+        if (window.localStorage && window.localStorage.getItem(STORAGE_KEY) === '1') return true;
+        if (window.sessionStorage && window.sessionStorage.getItem(STORAGE_KEY) === '1') return true;
+      } catch (e) {}
+      try {
+        if (document.cookie && document.cookie.indexOf(STORAGE_KEY + '=1') !== -1) return true;
+      } catch (e) {}
+      return false;
+    }
+
+    function setClosed() {
+      try {
+        if (window.localStorage) window.localStorage.setItem(STORAGE_KEY, '1');
+        if (window.sessionStorage) window.sessionStorage.setItem(STORAGE_KEY, '1');
+      } catch (e) {}
+      try {
+        document.cookie = STORAGE_KEY + '=1; path=/; max-age=31536000';
+      } catch (e) {}
+    }
+
+    var banner = document.getElementById('relocateBanner');
+    if (!banner) return;
+
+    if (isClosed()) {
+      banner.style.display = 'none';
+      return;
+    }
+
+    ensureBannerStyles();
+    banner.style.display = 'block';
+
+    var closeBtn = document.getElementById('relocateCloseBtn');
+    if (closeBtn) {
+      closeBtn.onclick = function () {
+        banner.style.display = 'none';
+        setClosed();
+      };
+    }
+
+    var countdownEl = document.getElementById('relocateCountdown');
+    if (!countdownEl) return;
+
+    // Target: 1 января 2027 03:33:00 (UTC+3) => 2027-01-01 00:33:00 UTC
+    var targetMs = Date.UTC(2027, 0, 1, 0, 33, 0);
+
+    function pad(n) {
+      return (n < 10 ? '0' : '') + n;
+    }
+
+    function update() {
+      var nowMs = Date.now ? Date.now() : new Date().getTime();
+      var diffMs = targetMs - nowMs;
+
+      if (diffMs <= 0) {
+        countdownEl.innerHTML = 'Переезд завершён!';
+        return;
+      }
+
+      var totalSec = Math.floor(diffMs / 1000);
+      var days = Math.floor(totalSec / 86400);
+      var hours = Math.floor((totalSec % 86400) / 3600);
+      var mins = Math.floor((totalSec % 3600) / 60);
+      var secs = totalSec % 60;
+
+      countdownEl.innerHTML = days + ' дн. ' + pad(hours) + ' ч. ' + pad(mins) + ' мин. ' + pad(secs) + ' сек.';
+    }
+
+    update();
+    setInterval(update, 1000);
+  };
+
+  // Auto-init countdown banner if DOM is ready, or on load
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(window.initRelocateBanner, 1);
+  } else if (window.addEventListener) {
+    window.addEventListener('DOMContentLoaded', window.initRelocateBanner, false);
+  } else if (window.attachEvent) {
+    window.attachEvent('onload', window.initRelocateBanner);
+  }
+
 })();
