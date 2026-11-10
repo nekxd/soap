@@ -1081,7 +1081,7 @@
     var style = document.createElement('style');
     style.id = 'relocateBannerStyle';
     style.type = 'text/css';
-    var css = '.relocate-top-banner { background: #fff8d6; background: -webkit-linear-gradient(top, #fffbe8 0%, #fff2bf 100%); background: linear-gradient(to bottom, #fffbe8 0%, #fff2bf 100%); border-bottom: 1px solid #e6c567; color: #333333; font-family: Arial, Tahoma, Verdana, sans-serif; font-size: 12px; line-height: 20px; padding: 6px 36px 6px 12px; text-align: center; position: relative; box-sizing: border-box; width: 100%; z-index: 9999; } .relocate-banner-inner { max-width: 1000px; margin: 0 auto; display: block; } .relocate-snow { color: #1b72c2; font-size: 13px; margin-right: 4px; vertical-align: middle; } .relocate-text { font-size: 12px; color: #222222; vertical-align: middle; } .relocate-link { color: #00468c !important; font-weight: bold; text-decoration: underline !important; } .relocate-link:hover { color: #d90000 !important; } .relocate-countdown { display: inline-block; background: #ffffff; color: #cc0000; border: 1px solid #e8bc4a; border-radius: 3px; padding: 1px 8px; margin-left: 6px; font-weight: bold; font-family: Tahoma, Arial, sans-serif; font-size: 12px; letter-spacing: 0.3px; white-space: nowrap; vertical-align: middle; box-shadow: 0 1px 2px rgba(0,0,0,0.05); } .relocate-close { position: absolute; right: 8px; top: 50%; margin-top: -10px; width: 20px; height: 20px; line-height: 16px; padding: 0; border: 1px solid #d4b45d; background: #ffffff; color: #777777; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 3px; text-align: center; outline: none; } .relocate-close:hover { background: #fbe39d; color: #000000; border-color: #bfa14a; } @media (max-width: 600px) { .relocate-top-banner { font-size: 11px; line-height: 17px; padding: 6px 30px 6px 8px; } .relocate-text { font-size: 11px; } .relocate-countdown { margin-top: 3px; font-size: 11px; padding: 1px 5px; } }';
+    var css = '.relocate-top-banner { background: #fff8d6; background: -webkit-linear-gradient(top, #fffbe8 0%, #fff2bf 100%); background: linear-gradient(to bottom, #fffbe8 0%, #fff2bf 100%); border-bottom: 1px solid #e6c567; color: #333333; font-family: Arial, Tahoma, Verdana, sans-serif; font-size: 12px; line-height: 20px; padding: 6px 36px 6px 12px; text-align: center; position: relative; box-sizing: border-box; width: 100%; z-index: 9999; } .relocate-banner-inner { max-width: 1000px; margin: 0 auto; display: block; } .relocate-snow { color: #1b72c2; font-size: 13px; margin-right: 4px; vertical-align: middle; } .relocate-text { font-size: 12px; color: #222222; vertical-align: middle; } .relocate-link { color: #00468c !important; font-weight: bold; text-decoration: underline !important; } .relocate-link:hover { color: #d90000 !important; } .relocate-countdown { display: inline-block; background: #ffffff; color: #cc0000; border: 1px solid #e8bc4a; border-radius: 3px; padding: 1px 8px; margin-left: 6px; font-weight: bold; font-family: Tahoma, Arial, sans-serif; font-size: 12px; letter-spacing: 0.3px; white-space: nowrap; vertical-align: middle; box-shadow: 0 1px 2px rgba(0,0,0,0.05); } .relocate-close { position: absolute; right: 8px; top: 50%; margin-top: -10px; width: 20px; height: 20px; line-height: 16px; padding: 0; border: 1px solid #d4b45d; background: #ffffff; color: #777777; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 3px; text-align: center; outline: none; } .relocate-close:hover { background: #fbe39d; color: #000000; border-color: #bfa14a; } @media (max-width: 600px) { .relocate-top-banner { font-size: 11px; line-height: 17px; padding: 6px 30px 6px 8px; } .relocate-text { font-size: 11px; } .relocate-countdown { margin-top: 3px; font-size: 11px; padding: 1px 5px; } } .snow-float-btn { position: fixed; bottom: 12px; right: 12px; z-index: 99999; background: #ffffff; background: -webkit-linear-gradient(top, #ffffff 0%, #f0f4f9 100%); background: linear-gradient(to bottom, #ffffff 0%, #f0f4f9 100%); border: 1px solid #b8c9d9; border-radius: 12px; padding: 3px 9px; font-family: Tahoma, Arial, sans-serif; font-size: 11px; color: #00468c; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15); line-height: 16px; outline: none; display: inline-block; white-space: nowrap; } .snow-float-btn:hover { background: #e6f0fa; border-color: #00468c; color: #f26d00; } .snow-float-btn.snow-off { color: #777777; border-color: #d0d0d0; background: #f7f7f7; opacity: 0.85; } .snow-banner-toggle { background: #ffffff; border: 1px solid #e0c268; border-radius: 3px; padding: 1px 7px; margin-left: 6px; color: #00468c; font-family: Tahoma, Arial, sans-serif; font-size: 11px; cursor: pointer; vertical-align: middle; line-height: 16px; outline: none; } .snow-banner-toggle:hover { background: #fff2bf; border-color: #c49d32; color: #f26d00; } .snow-banner-toggle.snow-off { color: #888888; border-color: #dcdcdc; background: #f5f5f5; }';
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
     } else {
@@ -1173,6 +1173,209 @@
     window.addEventListener('DOMContentLoaded', window.initRelocateBanner, false);
   } else if (window.attachEvent) {
     window.attachEvent('onload', window.initRelocateBanner);
+  }
+
+
+  /* ===================== WINTER SNOW EFFECT ===================== */
+  window.initSnowEngine = function () {
+    var SNOW_STORAGE_KEY = 'soap_snow_disabled';
+
+    function isSnowDisabled() {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage && window.localStorage.getItem(SNOW_STORAGE_KEY) === '1') return true;
+        if (typeof window !== 'undefined' && window.sessionStorage && window.sessionStorage.getItem(SNOW_STORAGE_KEY) === '1') return true;
+      } catch (e) {}
+      try {
+        if (document.cookie && document.cookie.indexOf(SNOW_STORAGE_KEY + '=1') !== -1) return true;
+      } catch (e) {}
+      return false;
+    }
+
+    function setSnowDisabled(disabled) {
+      var val = disabled ? '1' : '0';
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) window.localStorage.setItem(SNOW_STORAGE_KEY, val);
+        if (typeof window !== 'undefined' && window.sessionStorage) window.sessionStorage.setItem(SNOW_STORAGE_KEY, val);
+      } catch (e) {}
+      try {
+        document.cookie = SNOW_STORAGE_KEY + '=' + val + '; path=/; max-age=31536000';
+      } catch (e) {}
+    }
+
+    ensureBannerStyles();
+
+    // Check canvas support
+    var testCanvas = document.createElement('canvas');
+    if (!testCanvas || !testCanvas.getContext) {
+      // Legacy browser without canvas (e.g. IE6-8) — skip safely
+      return;
+    }
+
+    // Ensure floating toggle button exists
+    var floatBtn = document.getElementById('snowFloatBtn');
+    if (!floatBtn) {
+      floatBtn = document.createElement('button');
+      floatBtn.type = 'button';
+      floatBtn.id = 'snowFloatBtn';
+      floatBtn.className = 'snow-float-btn';
+      floatBtn.setAttribute('aria-label', 'Включить или выключить снег');
+      if (document.body) {
+        document.body.appendChild(floatBtn);
+      }
+    }
+
+    var bannerBtn = document.getElementById('snowBannerToggle');
+
+    var isRunning = false;
+    var animFrameId = null;
+    var canvas = document.getElementById('snowCanvas');
+
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'snowCanvas';
+      canvas.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998;';
+      if (document.body) {
+        document.body.appendChild(canvas);
+      }
+    }
+
+    var ctx = canvas.getContext ? canvas.getContext('2d') : null;
+    if (!ctx) return;
+
+    var flakes = [];
+    var maxFlakes = (window.innerWidth && window.innerWidth <= 768) ? 20 : 35;
+    var width = 0;
+    var height = 0;
+
+    function resize() {
+      width = window.innerWidth || document.documentElement.clientWidth || (document.body && document.body.clientWidth) || 800;
+      height = window.innerHeight || document.documentElement.clientHeight || (document.body && document.body.clientHeight) || 600;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    resize();
+    if (window.addEventListener) {
+      window.addEventListener('resize', resize, false);
+    } else if (window.attachEvent) {
+      window.attachEvent('onresize', resize);
+    }
+
+    for (var i = 0; i < maxFlakes; i++) {
+      flakes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2.5 + 1.2,
+        d: Math.random() * maxFlakes,
+        speed: Math.random() * 1.3 + 0.6,
+        alpha: Math.random() * 0.45 + 0.4
+      });
+    }
+
+    var angle = 0;
+
+    function render() {
+      if (!isRunning) return;
+
+      ctx.clearRect(0, 0, width, height);
+
+      angle += 0.01;
+      for (var i = 0; i < flakes.length; i++) {
+        var f = flakes[i];
+
+        ctx.fillStyle = 'rgba(235, 245, 255, ' + f.alpha + ')';
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, false);
+        ctx.fill();
+
+        f.y += f.speed;
+        f.x += Math.sin(angle + f.d) * 0.8;
+
+        if (f.y > height + 5) {
+          f.y = -5;
+          f.x = Math.random() * width;
+        }
+        if (f.x > width + 5) {
+          f.x = -5;
+        } else if (f.x < -5) {
+          f.x = width + 5;
+        }
+      }
+
+      if (window.requestAnimationFrame) {
+        animFrameId = window.requestAnimationFrame(render);
+      } else {
+        animFrameId = setTimeout(render, 33);
+      }
+    }
+
+    function updateBtnText(disabled) {
+      var text = disabled ? '❄ Снег: выкл' : '❄ Снег: вкл';
+      var title = disabled ? 'Включить падающий снег' : 'Выключить падающий снег';
+
+      if (floatBtn) {
+        floatBtn.innerHTML = text;
+        floatBtn.title = title;
+        floatBtn.className = disabled ? 'snow-float-btn snow-off' : 'snow-float-btn';
+      }
+      if (bannerBtn) {
+        bannerBtn.innerHTML = text;
+        bannerBtn.title = title;
+        bannerBtn.className = disabled ? 'snow-banner-toggle snow-off' : 'snow-banner-toggle';
+      }
+    }
+
+    function startSnow() {
+      if (isRunning) return;
+      isRunning = true;
+      canvas.style.display = 'block';
+      updateBtnText(false);
+      render();
+    }
+
+    function stopSnow() {
+      isRunning = false;
+      if (window.cancelAnimationFrame && animFrameId) {
+        window.cancelAnimationFrame(animFrameId);
+      } else if (animFrameId) {
+        clearTimeout(animFrameId);
+      }
+      animFrameId = null;
+      ctx.clearRect(0, 0, width, height);
+      canvas.style.display = 'none';
+      updateBtnText(true);
+    }
+
+    function toggleSnow() {
+      if (isRunning) {
+        stopSnow();
+        setSnowDisabled(true);
+      } else {
+        startSnow();
+        setSnowDisabled(false);
+      }
+    }
+
+    if (floatBtn) {
+      floatBtn.onclick = toggleSnow;
+    }
+    if (bannerBtn) {
+      bannerBtn.onclick = toggleSnow;
+    }
+
+    if (isSnowDisabled()) {
+      stopSnow();
+    } else {
+      startSnow();
+    }
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(window.initSnowEngine, 10);
+  } else if (window.addEventListener) {
+    window.addEventListener('DOMContentLoaded', window.initSnowEngine, false);
+  } else if (window.attachEvent) {
+    window.attachEvent('onload', window.initSnowEngine);
   }
 
 })();
